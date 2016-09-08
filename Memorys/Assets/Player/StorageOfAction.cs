@@ -21,11 +21,13 @@ public class StorageOfAction
     public StorageOfAction(GameObject player, Animator animator)
     {
         this.player = player;
-        IsRecording = false;
-        actionLog = new List<Vector3>();
+        this.animator = animator;
+
+        //初期化
         startPosition = Vector3.zero;
         oldPosition = Vector3.zero;
-        this.animator = animator;
+        IsRecording = false;
+        actionLog = new List<Vector3>();
     }
 
     /*記録*/
@@ -40,11 +42,14 @@ public class StorageOfAction
     {
         //座標を記録する
         Vector3 movement = player.transform.position - oldPosition;
-        movement.y = ToRoundDown(movement.y, 6);
+        //小数点5桁以下を切り捨てる
+        movement.y = ToRoundDown(movement.y, 4);
         actionLog.Add(movement);
         oldPosition = player.transform.position;
+
+
         //Debug.Log("log[" + (actionLog.Count - 1) + "] = " + actionLog[actionLog.Count - 1]);
-        Debug.Log("log[" + (actionLog.Count - 1) + "].y = " + actionLog[actionLog.Count - 1].y);
+        //Debug.Log("log[" + (actionLog.Count - 1) + "].y = " + actionLog[actionLog.Count - 1].y);
     }
     public void StopRecord()
     {
@@ -76,7 +81,7 @@ public class StorageOfAction
     //行動を解析しアニメーションを再生させる
     void AnalysisBehaior(int playTime)
     {
-        //Debug.Log(actionLog[playTime].y);
+        Debug.Log(actionLog[playTime].y);
 
         /*移動していない*/
         if (actionLog[playTime] == Vector3.zero)
@@ -91,30 +96,32 @@ public class StorageOfAction
         }
 
         /*移動している*/
-        if (actionLog[playTime].y < 0.1f)
+        if (actionLog[playTime].y == 0)
+        {
+            //地上()を歩いている
+            animator.SetBool("IsMove", true);
+        }
+        else if (actionLog[playTime].y < 0.01f)
         {
             //下降中
             int temp = playTime + 5;
             if (temp >= actionLog.Count) return;
             //5フレーム先で着地しているか？
-            if(actionLog[temp].y > -0.1f)
+            if (actionLog[temp].y >= 0)
             {
+                if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer.TopToGround")) return;
                 animator.CrossFade("TopToGround", 0.1f, 0);
             }
         }
-        else if (actionLog[playTime].y > 0.1f)
+        else
         {
             //上昇中
             if(actionLog[playTime - 2].y < 0.1f) animator.CrossFade("JumpToTop", 0.1f, 0);
         }
-        else
-        {
-            //地上()を歩いている
-            animator.SetBool("IsMove", true);
-        }
 
     }
 
+    //指定の桁数以下を切り捨てる
     float ToRoundDown(float dValue, int iDigits)
     {
         float dCoef = (float)System.Math.Pow(10, iDigits);
