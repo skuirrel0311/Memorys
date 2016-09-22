@@ -52,6 +52,12 @@ public class PlayerController : MonoBehaviour
     {
         //ジャンプ中に落ちているか？
         if (!IsOnGround && oldPosition.y >= transform.position.y) IsFall = true;
+
+        if (IsJump)
+        {
+            //ジャンプ中にUnderColliderとPlayerとの間にオブジェクトがあったら着地しているだろう。
+        }
+
     }
 
     void OnCollisionEnter(Collision col)
