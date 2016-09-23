@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerState : MonoBehaviour
+public abstract class PlayerState
 {
-    void Start()
-    {
+    public abstract void Enter();
 
-    }
+    public abstract void Update();
 
-    void Update()
-    {
-
-    }
+    public abstract void Exit();
 }

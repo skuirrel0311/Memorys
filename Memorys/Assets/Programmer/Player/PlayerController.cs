@@ -10,12 +10,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float airMoveSpeed = 5;
 
+    
     Rigidbody body = null;
     RecordOfAction recorder = null;
     public Vector3 oldPosition { get; private set; }
-
+    
+    //状態
     public bool IsOnGround = false;
-    public bool IsJump = false;
     public bool IsFall = true;
     public bool IsMove = false;
 
@@ -40,10 +41,9 @@ public class PlayerController : MonoBehaviour
     void Jumpping()
     {
         if (recorder.IsPlaying) return;
-        if (IsJump) return;
+        if (!IsOnGround) return;
 
         GetComponent<PlayerAnimationContoller>().JumpAnimation();
-        IsJump = true;
         IsOnGround = false;
         body.AddForce(Vector3.up * jumpPower);
     }
@@ -53,9 +53,10 @@ public class PlayerController : MonoBehaviour
         //ジャンプ中に落ちているか？
         if (!IsOnGround && oldPosition.y >= transform.position.y) IsFall = true;
 
-        if (IsJump)
+        if (!IsOnGround)
         {
             //ジャンプ中にUnderColliderとPlayerとの間にオブジェクトがあったら着地しているだろう。
+            Physics.OverlapSphere(Vector3.zero, 0.1f);
         }
 
     }
@@ -66,8 +67,7 @@ public class PlayerController : MonoBehaviour
         //上昇中には着地はできない
         if (IsOnGround) return;
         if (!IsFall) return;
-
-        IsJump = false;
+        
         IsFall = false;
         IsOnGround = true;
     }
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) movement.x += 1;
         IsMove = movement != Vector3.zero;
 
-        if (IsJump)
+        if (!IsOnGround)
             return movement * airMoveSpeed;
         else
             return movement * moveSpeed;
