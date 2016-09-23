@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (recorder.IsPlaying) return;
+        if (recorder.m_RecordState==RecordState.PLAY) return;
         Vector3 movement = GetInputVector();
 
         body.AddForce(movement);
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     void Jumpping()
     {
-        if (recorder.IsPlaying) return;
+        if (recorder.m_RecordState == RecordState.PLAY) return;
         if (IsJump) return;
 
         GetComponent<PlayerAnimationContoller>().JumpAnimation();

@@ -1,18 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+public  enum RecordState
+{
+    RECORD,
+    PLAY,
+    STAY
+}
+
 public class RecordOfAction : MonoBehaviour
 {
+
+    public RecordState m_RecordState;
+
     [SerializeField]
     float recordLength = 2;
 
     StorageOfAction[] actions = new StorageOfAction[3];
     Animator animator;
 
-    public bool IsRecording;
     Timer recordTimer;
 
-    public bool IsPlaying;
     int playTime;
 
     public int selectMemoryIndex;
@@ -30,7 +38,7 @@ public class RecordOfAction : MonoBehaviour
         {
             actions[i] = new StorageOfAction(gameObject, animator);
         }
-        IsRecording = false;
+        m_RecordState = RecordState.STAY;
         recordTimer = new Timer();
         selectMemoryIndex = 0;
 
@@ -38,20 +46,30 @@ public class RecordOfAction : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M)) RecordStart();
-        if (Input.GetKeyDown(KeyCode.P)) ActionStart();
+        if (Input.GetButtonDown("Fire3")) RecordStart();
+        if (Input.GetButtonDown("Jump")) ActionStart();
 
-        if (IsRecording) Recording();
-        if (IsPlaying) PlayingAction();
+        switch (m_RecordState)
+        {
+            case RecordState.RECORD:
+                Recording();
+                break;
+            case RecordState.PLAY:
+                PlayingAction();
+                break;
+        }
 
         ChangeMemory();
     }
 
     void RecordStart()
     {
-        if (IsRecording) return;
-        IsRecording = true;
+        if (m_RecordState == RecordState.RECORD) return;
+
+        m_RecordState = RecordState.RECORD;
+
         recordTimer.TimerStart(recordLength);
+        //選択されている要素にレコードを開始
         actions[selectMemoryIndex].RecordStart();
     }
 
@@ -60,11 +78,10 @@ public class RecordOfAction : MonoBehaviour
         recordTimer.Update();
 
         actions[selectMemoryIndex].Recording();
-
         if (recordTimer.IsLimitTime)
         {
             recordTimer.Stop(true);
-            IsRecording = false;
+            m_RecordState = RecordState.STAY;
             actions[selectMemoryIndex].StopRecord();
         }
     }
@@ -72,8 +89,9 @@ public class RecordOfAction : MonoBehaviour
     void ActionStart()
     {
         if (IsAllPlayed()) return;
-        IsPlaying = true;
+        m_RecordState = RecordState.PLAY;
         playTime = 0;
+        //データが保存されているものはスタートの状態をセット
         for (int i = 0; i < 3; i++)
         {
             if (!actions[i].IsRecorded) continue;
@@ -88,7 +106,10 @@ public class RecordOfAction : MonoBehaviour
         actions[playMemoryIndex].PlayingAction(playTime);
         playTime++;
 
-        if (actions[playMemoryIndex].actionLog.Count <= playTime) NextAction();
+        if (actions[playMemoryIndex].actionLog.Count <= playTime)
+        {
+            NextAction();
+        }
     }
 
     void NextAction()
@@ -104,7 +125,7 @@ public class RecordOfAction : MonoBehaviour
             if (playMemoryIndex >= actions.Length)
             {
                 //範囲外に出たら終了
-                IsPlaying = false;
+                m_RecordState = RecordState.STAY;
                 return;
             }
 
@@ -127,17 +148,13 @@ public class RecordOfAction : MonoBehaviour
 
     void OnGUI()
     {
-        if (IsRecording) GUI.TextField(new Rect(10, 10, 100, 30), "recording");
+        if (m_RecordState == RecordState.RECORD) GUI.TextField(new Rect(10, 10, 100, 30), "recording");
 
-        if (IsPlaying) GUI.TextField(new Rect(10, 10, 100, 30), "playing");
+        if (m_RecordState == RecordState.PLAY) GUI.TextField(new Rect(10, 10, 100, 30), "playing");
     }
 
     void ChangeMemory()
     {
-        //左右キーで保存するメモリ領域を変更する。
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) selectMemoryIndex--;
-        if (Input.GetKeyDown(KeyCode.RightArrow)) selectMemoryIndex++;
-
         selectMemoryIndex = Mathf.Clamp(selectMemoryIndex, 0, actions.Length - 1);
         char[] str1 = new char[3];
         char[] str2 = new char[3];

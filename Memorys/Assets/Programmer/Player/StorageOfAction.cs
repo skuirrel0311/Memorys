@@ -73,7 +73,7 @@ public class StorageOfAction
 
     public void StopAction()
     {
-        actionLog.Clear();
+        //actionLog.Clear();
         player.GetComponent<Rigidbody>().useGravity = true;
         IsPlaying = false;
     }
