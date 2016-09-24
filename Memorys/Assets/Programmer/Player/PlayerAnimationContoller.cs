@@ -20,17 +20,9 @@ public class PlayerAnimationContoller : MonoBehaviour
 
     void Update()
     {
-        animator.SetBool("IsMove", controller.IsMove);
+        animator.SetBool("IsMove", controller.currentState == PlayerState.Move);
 
-        if(controller.IsMove)
-        {
-            if(animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer.TopToGround"))
-            {
-                //現在のアニメーションが着地で、移動し始めていたら
-                if(controller.IsOnGround) animator.CrossFade("Run", 0, 0);
-            }
-        }
-        if (controller.IsFall && IsNearGround())
+        if (controller.currentState == PlayerState.Jump && IsNearGround())
             animator.CrossFade("TopToGround", 0.1f, 0);
 
         //なぜか回転するのでなおす
@@ -42,6 +34,12 @@ public class PlayerAnimationContoller : MonoBehaviour
         animator.CrossFade("JumpToTop", 0.1f, 0);
     }
 
+    public void LandingAnimation()
+    {
+        if (CheckAnimationName("TopToGround")) return;
+        animator.CrossFade("TopToGround", 0.1f, 0);
+    }
+
     bool IsNearGround()
     {
         //落ちている方向
@@ -49,7 +47,7 @@ public class PlayerAnimationContoller : MonoBehaviour
         Ray ray = new Ray(transform.position, direction);
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit))
         {
             if (hit.transform.gameObject.tag != "Floor") return false;
             //当たった地点の法線が上を向いていなかったら
@@ -58,7 +56,7 @@ public class PlayerAnimationContoller : MonoBehaviour
                 //真下も確認
                 Ray underRay = new Ray(transform.position, Vector3.down);
                 RaycastHit underObj;
-                if(Physics.Raycast(underRay, out underObj))
+                if (Physics.Raycast(underRay, out underObj))
                 {
                     if (underObj.transform.gameObject.tag != "Floor") return false;
                     return true;
@@ -70,5 +68,11 @@ public class PlayerAnimationContoller : MonoBehaviour
         }
 
         return false;
+    }
+
+    //一致していたらtrueを返す
+    public bool CheckAnimationName(string name)
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer." + name);
     }
 }
