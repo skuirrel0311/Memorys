@@ -44,7 +44,7 @@ public class RecordOfAction : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetButtonDown("Fire3")) RecordStart();
         if (Input.GetButtonDown("Jump")) ActionStart();
@@ -62,11 +62,34 @@ public class RecordOfAction : MonoBehaviour
         ChangeMemory();
     }
 
+    void Update()
+    {
+        switch (m_RecordState)
+        {
+            case RecordState.PLAY:
+                actions[playMemoryIndex].AnalysisBehaior(playTime);
+                break;
+        }
+
+    }
+
     void RecordStart()
     {
         if (m_RecordState == RecordState.RECORD) return;
 
         m_RecordState = RecordState.RECORD;
+
+        for(int  i = actions.Length-1; i>=0;i--)
+        {
+            if (i != 0)
+            {
+                actions[i] = actions[i - 1];
+            }
+            else
+            {
+                actions[i] = new StorageOfAction(gameObject,animator);
+            }
+        }
 
         recordTimer.TimerStart(recordLength);
         //選択されている要素にレコードを開始
@@ -89,6 +112,7 @@ public class RecordOfAction : MonoBehaviour
     void ActionStart()
     {
         if (IsAllPlayed()) return;
+        if (m_RecordState == RecordState.PLAY) return;
         m_RecordState = RecordState.PLAY;
         playTime = 0;
         //データが保存されているものはスタートの状態をセット

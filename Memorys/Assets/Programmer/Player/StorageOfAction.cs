@@ -67,7 +67,7 @@ public class StorageOfAction
         player.transform.position += actionLog[playTime];
 
         //アニメーション
-        AnalysisBehaior(playTime);
+        //AnalysisBehaior(playTime);
         oldPosition = player.transform.position;
     }
 
@@ -79,7 +79,7 @@ public class StorageOfAction
     }
 
     //行動を解析しアニメーションを再生させる
-    void AnalysisBehaior(int playTime)
+    public void AnalysisBehaior(int playTime)
     {
         Debug.Log(actionLog[playTime].y);
 
