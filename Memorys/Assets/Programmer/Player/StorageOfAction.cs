@@ -11,9 +11,8 @@ public class StorageOfAction
     Vector3 oldPosition;
     public List<Vector3> actionLog;
 
-    //記録中か？
-    public bool IsRecording;
-    public bool IsPlaying;
+    //記録再生の状態
+    RecordState m_RecordState;
     //記録されているか？
     public bool IsRecorded { get { return actionLog.Count != 0; } }
 
@@ -26,14 +25,14 @@ public class StorageOfAction
         //初期化
         startPosition = Vector3.zero;
         oldPosition = Vector3.zero;
-        IsRecording = false;
+        m_RecordState = RecordState.STAY;
         actionLog = new List<Vector3>();
     }
 
     /*記録*/
     public void RecordStart()
     {
-        IsRecording = true;
+        m_RecordState = RecordState.RECORD;
         startPosition = player.transform.position;
         oldPosition = player.transform.position;
         actionLog.Clear();
@@ -53,21 +52,24 @@ public class StorageOfAction
     }
     public void StopRecord()
     {
-        IsRecording = false;
+        m_RecordState = RecordState.STAY;
     }
 
     /*再生*/
     public void StartAction()
     {
-        IsPlaying = true;
+        m_RecordState = RecordState.PLAY;
         player.GetComponent<Rigidbody>().useGravity = false;
     }
     public void PlayingAction(int playTime)
     {
         player.transform.position += actionLog[playTime];
+        //+1フレームして再生速度を倍にする(indexから出ていれば追加しない)
+        if (actionLog.Count > playTime + 1)
+        {
+            player.transform.position += actionLog[playTime + 1];
+        }
 
-        //アニメーション
-        //AnalysisBehaior(playTime);
         oldPosition = player.transform.position;
     }
 
@@ -75,7 +77,7 @@ public class StorageOfAction
     {
         //actionLog.Clear();
         player.GetComponent<Rigidbody>().useGravity = true;
-        IsPlaying = false;
+        m_RecordState = RecordState.STAY;
     }
 
     //行動を解析しアニメーションを再生させる

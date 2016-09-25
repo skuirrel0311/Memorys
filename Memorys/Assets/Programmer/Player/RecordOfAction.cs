@@ -108,7 +108,7 @@ public class RecordOfAction : MonoBehaviour
             actions[selectMemoryIndex].StopRecord();
         }
     }
-
+    
     void ActionStart()
     {
         if (IsAllPlayed()) return;
@@ -128,7 +128,7 @@ public class RecordOfAction : MonoBehaviour
     void PlayingAction()
     {
         actions[playMemoryIndex].PlayingAction(playTime);
-        playTime++;
+        playTime+=2;
 
         if (actions[playMemoryIndex].actionLog.Count <= playTime)
         {
