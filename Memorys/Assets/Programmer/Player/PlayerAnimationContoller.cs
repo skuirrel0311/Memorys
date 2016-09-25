@@ -22,7 +22,7 @@ public class PlayerAnimationContoller : MonoBehaviour
     {
         animator.SetBool("IsMove", controller.currentState == PlayerState.Move);
 
-        if (controller.currentState == PlayerState.Jump && IsNearGround())
+        if (controller.currentState == PlayerState.Fall && IsNearGround())
             animator.CrossFade("TopToGround", 0.1f, 0);
 
         //なぜか回転するのでなおす
@@ -36,7 +36,6 @@ public class PlayerAnimationContoller : MonoBehaviour
 
     public void LandingAnimation()
     {
-        if (CheckAnimationName("TopToGround")) return;
         animator.CrossFade("TopToGround", 0.1f, 0);
     }
 

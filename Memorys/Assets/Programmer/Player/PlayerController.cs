@@ -5,7 +5,9 @@ public enum PlayerState
 {
     Idle,
     Move,
-    Jump
+    Jump,
+    Fall,
+    Land    //着地
 }
 
 public class PlayerController : MonoBehaviour
@@ -18,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float airMoveSpeed = 5;
     public PlayerState currentState;    //現在のステート
-    
+
     Rigidbody body = null;
     RecordOfAction recorder = null;
     PlayerAnimationContoller animationContoller = null;
@@ -26,8 +28,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     GameObject[] underCollider = new GameObject[3]; //着地判定用
-    //private enum ColliderPlace { Center, Left, Right, Back, Front }
     
+    //private enum ColliderPlace { Center, Left, Right, Back, Front }
+
     void Start()
     {
         body = GetComponent<Rigidbody>();
@@ -39,45 +42,67 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (recorder.m_RecordState==RecordState.PLAY) return;
+        if (recorder.m_RecordState == RecordState.PLAY) return;
         Vector3 movement = GetInputVector();
-        
+
         transform.Translate(movement);
         //body.AddForce(movement);
 
-        switch(currentState)
+        switch (currentState)
         {
             case PlayerState.Idle:
             case PlayerState.Move:
-                if (Input.GetKeyDown(KeyCode.Space)) Jumpping();
+                if (Input.GetButtonDown("Fire1")) Jumpping();
                 break;
-            case PlayerState.Jump:
-                if (IsLanding())
+            case PlayerState.Fall:
+                if(IsOnGround())
                 {
-                    Debug.Log("Landing");
-                    animationContoller.LandingAnimation();
-                    currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
+                    currentState = PlayerState.Land;
                 }
-
                 break;
         }
 
         oldPosition = transform.position;
     }
 
+    void Update()
+    {
+        Vector3 movement = transform.position - oldPosition;
+
+        switch (currentState)
+        {
+            case PlayerState.Jump:
+                if (movement.y < 0)
+                {
+                    currentState = PlayerState.Fall;
+                }
+                break;
+            case PlayerState.Land:
+                animationContoller.LandingAnimation();
+                currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
+                break;
+        }
+    }
+
     Vector3 GetInputVector()
     {
         Vector3 movement = Vector3.zero;
-        if (Input.GetKey(KeyCode.A)) movement.x -= 1;
-        if (Input.GetKey(KeyCode.D)) movement.x += 1;
 
-        if(currentState != PlayerState.Jump)
+        //movement.z = Input.GetAxis("Vertical");
+        movement.x = Input.GetAxis("Horizontal");
+
+        if (currentState != PlayerState.Jump && currentState != PlayerState.Fall)
         {
             //移動しているかしていないか
             currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
         }
 
-        if (currentState == PlayerState.Jump)
+        //if(animationContoller.CheckAnimationName("TopToGround"))
+        //{
+        //    return movement * 0.05f;
+        //}
+
+        if (currentState == PlayerState.Jump || currentState == PlayerState.Fall)
             return movement * airMoveSpeed;
         else
             return movement * moveSpeed;
@@ -90,14 +115,6 @@ public class PlayerController : MonoBehaviour
         animationContoller.JumpAnimation();
         currentState = PlayerState.Jump;
         body.AddForce(Vector3.up * jumpPower);
-    }
-
-    bool IsLanding()
-    {
-        //落下中ではない
-        if (transform.position.y - oldPosition.y > 0) return false;
-
-        return IsOnGround();
     }
 
     //UnderColliderのどれかが地面に触れていれば地面に接しているはず。
@@ -120,10 +137,8 @@ public class PlayerController : MonoBehaviour
     {
         if (col.gameObject.tag != "Floor") return;
 
-        Debug.Log("Called:OnCollisionExit");
-
         //落ちていない
-        if (IsLanding()) return;
+        if (IsOnGround()) return;
 
         //落ちたであろう
     }
