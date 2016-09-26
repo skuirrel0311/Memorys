@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     float airMoveSpeed = 5;
     public PlayerState currentState;    //現在のステート
 
+    GameObject cameraObject;
     Rigidbody body = null;
     RecordOfAction recorder = null;
     PlayerAnimationContoller animationContoller = null;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
         animationContoller = GetComponent<PlayerAnimationContoller>();
         oldPosition = transform.position;
         currentState = PlayerState.Idle;
+        cameraObject = GameObject.Find("MainCamera");
     }
 
     void FixedUpdate()
@@ -45,7 +47,15 @@ public class PlayerController : MonoBehaviour
         if (recorder.m_RecordState == RecordState.PLAY) return;
         Vector3 movement = GetInputVector();
 
-        transform.Translate(movement);
+        //弧を描くように移動
+        Vector3 forward = Vector3.Slerp(
+            transform.forward,  //正面から
+            movement,          //入力の角度まで
+            360 * Time.deltaTime / Vector3.Angle(transform.forward, movement)
+            );
+        transform.LookAt(transform.position + forward);
+
+        transform.Translate(movement, Space.World);
         //body.AddForce(movement);
 
         switch (currentState)
@@ -88,19 +98,20 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 movement = Vector3.zero;
 
-        //movement.z = Input.GetAxis("Vertical");
+        movement.z = Input.GetAxis("Vertical");
         movement.x = Input.GetAxis("Horizontal");
+
+        Quaternion cameraRotation = cameraObject.transform.rotation;
+        cameraRotation.x = 0;
+        cameraRotation.z = 0;
+
+        movement = cameraRotation * movement;
 
         if (currentState != PlayerState.Jump && currentState != PlayerState.Fall)
         {
             //移動しているかしていないか
             currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
         }
-
-        //if(animationContoller.CheckAnimationName("TopToGround"))
-        //{
-        //    return movement * 0.05f;
-        //}
 
         if (currentState == PlayerState.Jump || currentState == PlayerState.Fall)
             return movement * airMoveSpeed;

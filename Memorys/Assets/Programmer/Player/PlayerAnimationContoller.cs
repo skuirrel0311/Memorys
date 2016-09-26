@@ -26,7 +26,7 @@ public class PlayerAnimationContoller : MonoBehaviour
             animator.CrossFade("TopToGround", 0.1f, 0);
 
         //なぜか回転するのでなおす
-        unitychan.eulerAngles = new Vector3(0, 90, 0);
+        unitychan.eulerAngles = transform.eulerAngles;
     }
 
     public void JumpAnimation()
