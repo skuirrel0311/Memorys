@@ -16,6 +16,10 @@ public class RecordOfAction : MonoBehaviour
     [SerializeField]
     float recordLength = 2;
 
+    //記録しているアクションが切り替わったときの演出
+    [SerializeField]
+    ParticleSystem m_ChangeParticle;
+
     StorageOfAction[] actions = new StorageOfAction[3];
     Animator animator;
 
@@ -114,6 +118,7 @@ public class RecordOfAction : MonoBehaviour
         if (IsAllPlayed()) return;
         if (m_RecordState == RecordState.PLAY) return;
         m_RecordState = RecordState.PLAY;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
         playTime = 0;
         //データが保存されているものはスタートの状態をセット
         for (int i = 0; i < 3; i++)
@@ -132,6 +137,7 @@ public class RecordOfAction : MonoBehaviour
 
         if (actions[playMemoryIndex].actionLog.Count <= playTime)
         {
+
             NextAction();
         }
     }
@@ -156,6 +162,8 @@ public class RecordOfAction : MonoBehaviour
             if (actions[playMemoryIndex].IsRecorded) break;
         }
         playTime = 0;
+        m_ChangeParticle.transform.localPosition = transform.position;
+        m_ChangeParticle.Play();
         actions[playMemoryIndex].StartAction();
     }
 

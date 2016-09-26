@@ -63,12 +63,17 @@ public class StorageOfAction
     }
     public void PlayingAction(int playTime)
     {
-        player.transform.position += actionLog[playTime];
+
+        Vector3 vec = Vector3.zero;
+        vec += actionLog[playTime];
         //+1フレームして再生速度を倍にする(indexから出ていれば追加しない)
         if (actionLog.Count > playTime + 1)
         {
-            player.transform.position += actionLog[playTime + 1];
+            vec += actionLog[playTime + 1];
         }
+        player.transform.position += vec;
+
+        player.transform.rotation =Quaternion.Euler(player.transform.rotation.x,Mathf.Atan2(vec.x,vec.z)*Mathf.Rad2Deg,player.transform.rotation.z);
 
         oldPosition = player.transform.position;
     }
