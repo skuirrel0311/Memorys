@@ -69,6 +69,10 @@ public class PlayerController : MonoBehaviour
                 {
                     currentState = PlayerState.Land;
                 }
+                else
+                {
+                    Debug.Log("No Ground Hit");
+                }
                 break;
         }
 
