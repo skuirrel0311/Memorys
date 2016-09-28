@@ -60,10 +60,6 @@ public class PlayerController : MonoBehaviour
 
         switch (currentState)
         {
-            case PlayerState.Idle:
-            case PlayerState.Move:
-                if (Input.GetButtonDown("Fire1")) Jumpping();
-                break;
             case PlayerState.Fall:
                 if(IsOnGround())
                 {
@@ -71,7 +67,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("No Ground Hit");
+                    //Debug.Log("No Ground Hit");
                 }
                 break;
         }
@@ -83,8 +79,14 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 movement = transform.position - oldPosition;
 
+        if (Input.GetButtonDown("Fire2")) GetComponentInChildren<Animator>().CrossFade("punching", 0.1f);
+
         switch (currentState)
         {
+            case PlayerState.Idle:
+            case PlayerState.Move:
+                if (Input.GetButtonDown("Fire1")) Jumpping();
+                break;
             case PlayerState.Jump:
                 if (movement.y < 0)
                 {

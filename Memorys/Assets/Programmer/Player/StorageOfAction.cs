@@ -111,6 +111,7 @@ public class StorageOfAction
         else if (actionLog[playTime].y < 0.01f)
         {
             //下降中
+            player.GetComponent<PlayerController>().currentState = PlayerState.Fall;
             int temp = playTime + 5;
             if (temp >= actionLog.Count) return;
             //5フレーム先で着地しているか？
