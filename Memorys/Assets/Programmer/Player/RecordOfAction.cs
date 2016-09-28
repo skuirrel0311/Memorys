@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public  enum RecordState
@@ -19,6 +20,9 @@ public class RecordOfAction : MonoBehaviour
     //記録しているアクションが切り替わったときの演出
     [SerializeField]
     ParticleSystem m_ChangeParticle;
+
+    [SerializeField]
+    List<MonoBehaviour> PlayImageEffects;
 
     StorageOfAction[] actions = new StorageOfAction[3];
     Animator animator;
@@ -50,9 +54,6 @@ public class RecordOfAction : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Input.GetButtonDown("Fire3")) RecordStart();
-        if (Input.GetButtonDown("Jump")) ActionStart();
-
         switch (m_RecordState)
         {
             case RecordState.RECORD:
@@ -68,6 +69,9 @@ public class RecordOfAction : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetButtonDown("Fire3")) RecordStart();
+        if (Input.GetButtonDown("Jump")) ActionStart();
+
         switch (m_RecordState)
         {
             case RecordState.PLAY:
@@ -79,6 +83,7 @@ public class RecordOfAction : MonoBehaviour
 
     void RecordStart()
     {
+
         if (m_RecordState == RecordState.RECORD) return;
 
         m_RecordState = RecordState.RECORD;
@@ -118,6 +123,7 @@ public class RecordOfAction : MonoBehaviour
         if (IsAllPlayed()) return;
         if (m_RecordState == RecordState.PLAY) return;
         m_RecordState = RecordState.PLAY;
+        EnablePlayImageEffects(true);
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         playTime = 0;
         //データが保存されているものはスタートの状態をセット
@@ -142,6 +148,14 @@ public class RecordOfAction : MonoBehaviour
         }
     }
 
+    void EnablePlayImageEffects(bool isEnabled)
+    {
+        for(int i = 0;i< PlayImageEffects.Count;i++)
+        {
+            PlayImageEffects[i].enabled = isEnabled;
+        }
+    }
+
     void NextAction()
     {
         //現在のアクションは止める
@@ -156,6 +170,7 @@ public class RecordOfAction : MonoBehaviour
             {
                 //範囲外に出たら終了
                 m_RecordState = RecordState.STAY;
+                EnablePlayImageEffects(false);
                 return;
             }
 
