@@ -7,7 +7,8 @@ public enum PlayerState
     Move,
     Jump,
     Fall,
-    Land    //着地
+    Land,   //着地
+    Attack
 }
 
 public class PlayerController : MonoBehaviour
@@ -20,6 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float airMoveSpeed = 5;
     public PlayerState currentState;    //現在のステート
+    [SerializeField]
+    bool NoJumping = false;
 
     GameObject cameraObject;
     Rigidbody body = null;
@@ -65,10 +68,6 @@ public class PlayerController : MonoBehaviour
                 {
                     currentState = PlayerState.Land;
                 }
-                else
-                {
-                    //Debug.Log("No Ground Hit");
-                }
                 break;
         }
 
@@ -79,13 +78,12 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 movement = transform.position - oldPosition;
 
-        if (Input.GetButtonDown("Fire2")) GetComponentInChildren<Animator>().CrossFade("punching", 0.1f);
-
         switch (currentState)
         {
             case PlayerState.Idle:
             case PlayerState.Move:
-                if (Input.GetButtonDown("Fire1")) Jumpping();
+                if (!NoJumping && Input.GetButtonDown("Fire1")) Jumpping();
+                if (Input.GetButtonDown("Fire2")) Attack();
                 break;
             case PlayerState.Jump:
                 if (movement.y < 0)
@@ -97,11 +95,21 @@ public class PlayerController : MonoBehaviour
                 animationContoller.LandingAnimation();
                 currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
                 break;
+            case PlayerState.Attack:
+                //アニメーションの再生が終わったら戻る
+                if (!animationContoller.CheckAnimationName("punching"))
+                {
+                    currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
+                }
+                break;
         }
     }
 
     Vector3 GetInputVector()
     {
+        if (animationContoller.CheckAnimationName("punching"))
+            return Vector3.zero;
+
         Vector3 movement = Vector3.zero;
 
         movement.z = Input.GetAxis("Vertical");
@@ -132,6 +140,12 @@ public class PlayerController : MonoBehaviour
         animationContoller.JumpAnimation();
         currentState = PlayerState.Jump;
         body.AddForce(Vector3.up * jumpPower);
+    }
+
+    void Attack()
+    {
+        GetComponentInChildren<Animator>().CrossFade("punching", 0.1f);
+        currentState = PlayerState.Attack;
     }
 
     //UnderColliderのどれかが地面に触れていれば地面に接しているはず。

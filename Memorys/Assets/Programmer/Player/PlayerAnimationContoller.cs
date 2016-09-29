@@ -44,9 +44,10 @@ public class PlayerAnimationContoller : MonoBehaviour
         //落ちている方向
         Vector3 direction = transform.position - controller.oldPosition;
         Ray ray = new Ray(transform.position, direction);
+        float radius = 0.1f;
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.SphereCast(ray,radius,out hit))
         {
             if (hit.transform.gameObject.tag != "Floor") return false;
             //当たった地点の法線が上を向いていなかったら
@@ -58,7 +59,8 @@ public class PlayerAnimationContoller : MonoBehaviour
                 if (Physics.Raycast(underRay, out underObj))
                 {
                     if (underObj.transform.gameObject.tag != "Floor") return false;
-                    return true;
+                    if (underObj.distance < nearDistance) return true;
+                    return false;
                 }
                 return false;
             }

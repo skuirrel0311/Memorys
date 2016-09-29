@@ -29,7 +29,7 @@ public class CameraContoller : MonoBehaviour
         
         rotation += leftStickX * rotationSpeed * Time.deltaTime;
         transform.position = GetCameraPositoin(rotation);
-        transform.LookAt(player.transform.position + Vector3.up);
+        transform.LookAt(player.transform.position + Vector3.up * 2);
     }
 
     //指定された角度のときのカメラの位置を返す
