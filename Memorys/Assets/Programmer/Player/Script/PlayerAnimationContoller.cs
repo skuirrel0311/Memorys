@@ -23,23 +23,42 @@ public class PlayerAnimationContoller : MonoBehaviour
         animator.SetBool("IsMove", controller.currentState == PlayerState.Move);
 
         if (controller.currentState == PlayerState.Fall && IsNearGround())
-            animator.CrossFade("TopToGround", 0.1f, 0);
+        {
+            ChangeAnimation("TopToGround", 0.1f);
+            controller.currentState = PlayerState.Land;
+        }
 
         //なぜか回転するのでなおす
         unitychan.eulerAngles = transform.eulerAngles;
     }
 
-    public void JumpAnimation()
+    public void ChangeAnimation(string name,float transitionDuration, bool check = true)
     {
-        animator.CrossFade("JumpToTop", 0.1f, 0);
-    }
-
-    public void LandingAnimation()
-    {
-        animator.CrossFade("TopToGround", 0.1f, 0);
+        if (check && !CheckAnimationName(name))
+        {
+            animator.CrossFade(name, transitionDuration, 0);
+        }
     }
 
     bool IsNearGround()
+    {
+        //落ちている方向にRayを飛ばす
+       // Vector3 direction = transform.position - controller.oldPosition;
+        Ray ray = new Ray(transform.position, Vector3.down);
+        RaycastHit hit;
+
+        if(Physics.Raycast(ray, out hit))
+        {
+            if (hit.transform.tag != "Floor") return false;
+
+            //床が近いならtrueを返す
+            return hit.distance < nearDistance;
+        }
+
+        return false;
+    }
+
+    bool IsNearGround(int i)
     {
         //落ちている方向
         Vector3 direction = transform.position - controller.oldPosition;
@@ -74,6 +93,6 @@ public class PlayerAnimationContoller : MonoBehaviour
     //一致していたらtrueを返す
     public bool CheckAnimationName(string name)
     {
-        return animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer." + name);
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer." + name);
     }
 }
