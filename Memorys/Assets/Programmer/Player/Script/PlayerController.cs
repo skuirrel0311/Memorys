@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 oldPosition { get; private set; }
 
     [SerializeField]
-    GameObject[] underCollider = new GameObject[3]; //着地判定用
+    GameObject[] underCollider; //着地判定用
     
     //private enum ColliderPlace { Center, Left, Right, Back, Front }
 
@@ -63,10 +63,14 @@ public class PlayerController : MonoBehaviour
 
         switch (currentState)
         {
-            case PlayerState.Fall:
+            case PlayerState.Land:
                 if(IsOnGround())
                 {
-                    currentState = PlayerState.Land;
+                    currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
+                    if (currentState == PlayerState.Move)
+                        animationContoller.ChangeAnimation("Run", 0.1f);
+                    else
+                        animationContoller.ChangeAnimation("Idle", 0.1f);
                 }
                 break;
         }
@@ -90,10 +94,6 @@ public class PlayerController : MonoBehaviour
                 {
                     currentState = PlayerState.Fall;
                 }
-                break;
-            case PlayerState.Land:
-                animationContoller.LandingAnimation();
-                currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
                 break;
             case PlayerState.Attack:
                 //アニメーションの再生が終わったら戻る
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
 
         movement = cameraRotation * movement;
 
-        if (currentState != PlayerState.Jump && currentState != PlayerState.Fall)
+        if (currentState == PlayerState.Idle || currentState == PlayerState.Move)
         {
             //移動しているかしていないか
             currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
@@ -137,14 +137,14 @@ public class PlayerController : MonoBehaviour
     {
         if (recorder.m_RecordState == RecordState.PLAY) return;
 
-        animationContoller.JumpAnimation();
+        animationContoller.ChangeAnimation("JumpToTop", 0.1f);
         currentState = PlayerState.Jump;
         body.AddForce(Vector3.up * jumpPower);
     }
 
     void Attack()
     {
-        GetComponentInChildren<Animator>().CrossFade("punching", 0.1f);
+        animationContoller.ChangeAnimation("punching", 0.1f);
         currentState = PlayerState.Attack;
     }
 
@@ -155,11 +155,12 @@ public class PlayerController : MonoBehaviour
 
         foreach (GameObject g in underCollider)
         {
-            if (Physics.Linecast(transform.position, g.transform.position, out hit))
+            Ray underRay = new Ray(g.transform.position + (Vector3.up * 0.2f), Vector3.down);
+
+            if (Physics.Raycast(underRay, out hit, 0.3f))
             {
                 if (hit.transform.tag == "Floor") return true;
             }
-
         }
         return false;
     }
