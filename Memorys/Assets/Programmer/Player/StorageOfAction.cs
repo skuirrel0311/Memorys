@@ -11,6 +11,8 @@ public class StorageOfAction
     Vector3 oldPosition;
     public List<Vector3> actionLog;
 
+    private Quaternion StartRotation =Quaternion.identity;
+
     //記録再生の状態
     RecordState m_RecordState;
     //記録されているか？
@@ -35,6 +37,7 @@ public class StorageOfAction
         m_RecordState = RecordState.RECORD;
         startPosition = player.transform.position;
         oldPosition = player.transform.position;
+        StartRotation = Camera.main.transform.rotation;
         actionLog.Clear();
     }
     public void Recording()
@@ -45,8 +48,6 @@ public class StorageOfAction
         movement.y = ToRoundDown(movement.y, 4);
         actionLog.Add(movement);
         oldPosition = player.transform.position;
-
-
         //Debug.Log("log[" + (actionLog.Count - 1) + "] = " + actionLog[actionLog.Count - 1]);
         //Debug.Log("log[" + (actionLog.Count - 1) + "].y = " + actionLog[actionLog.Count - 1].y);
     }
@@ -71,9 +72,17 @@ public class StorageOfAction
         {
             vec += actionLog[playTime + 1];
         }
-        player.transform.position += vec;
 
-        player.transform.rotation =Quaternion.Euler(player.transform.rotation.x,Mathf.Atan2(vec.x,vec.z)*Mathf.Rad2Deg,player.transform.rotation.z);
+
+        float rotationY =  Camera.main.transform.rotation.eulerAngles.y- StartRotation.eulerAngles.y;
+        //Quaternion rota = (StartRotation * Camera.main.transform.rotation);
+        Quaternion rota = Quaternion.Euler(0,rotationY,0);
+        //rota = Quaternion.Euler(0,, 0);
+        Vector3 vec2 =  rota* vec;
+
+        player.transform.position += vec2;
+
+        player.transform.rotation =Quaternion.Euler(player.transform.rotation.x,Mathf.Atan2(vec2.x,vec2.z)*Mathf.Rad2Deg,player.transform.rotation.z);
 
         oldPosition = player.transform.position;
     }

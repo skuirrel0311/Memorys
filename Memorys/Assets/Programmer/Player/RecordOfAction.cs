@@ -34,6 +34,8 @@ public class RecordOfAction : MonoBehaviour
     public int selectMemoryIndex;
     public int playMemoryIndex;
 
+
+
     [SerializeField]
     Text selectText = null;
     [SerializeField]
@@ -84,7 +86,7 @@ public class RecordOfAction : MonoBehaviour
     void RecordStart()
     {
 
-        if (m_RecordState == RecordState.RECORD) return;
+        if (m_RecordState != RecordState.STAY) return;
 
         m_RecordState = RecordState.RECORD;
 
@@ -121,7 +123,7 @@ public class RecordOfAction : MonoBehaviour
     void ActionStart()
     {
         if (IsAllPlayed()) return;
-        if (m_RecordState == RecordState.PLAY) return;
+        if (m_RecordState != RecordState.STAY) return;
         m_RecordState = RecordState.PLAY;
         EnablePlayImageEffects(true);
         GetComponent<Rigidbody>().velocity = Vector3.zero;
