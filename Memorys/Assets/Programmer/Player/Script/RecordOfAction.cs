@@ -11,35 +11,29 @@ public  enum RecordState
 
 public class RecordOfAction : MonoBehaviour
 {
-
+    public static RecordOfAction I;
     public RecordState m_RecordState;
-
-    [SerializeField]
-    float recordLength = 2;
-
-    //記録しているアクションが切り替わったときの演出
-    [SerializeField]
-    ParticleSystem m_ChangeParticle;
-
-    [SerializeField]
-    List<MonoBehaviour> PlayImageEffects;
-
-    StorageOfAction[] actions = new StorageOfAction[3];
-    Animator animator;
-
-    Timer recordTimer;
-
-    int playTime;
-
     public int selectMemoryIndex;
     public int playMemoryIndex;
 
 
+    [SerializeField]
+    private float recordLength = 2;
+    //記録しているアクションが切り替わったときの演出
+    [SerializeField]
+    private ParticleSystem m_ChangeParticle;
+    [SerializeField]
+    private List<MonoBehaviour> PlayImageEffects;
+    [SerializeField]
+    private Text selectText = null;
+    [SerializeField]
+    private Text gaugeText = null;
 
-    [SerializeField]
-    Text selectText = null;
-    [SerializeField]
-    Text gaugeText = null;
+    private StorageOfAction[] actions = new StorageOfAction[3];
+    private Animator animator;
+    private Timer recordTimer;
+    private int playTime;
+
 
     void Start()
     {
@@ -51,7 +45,7 @@ public class RecordOfAction : MonoBehaviour
         m_RecordState = RecordState.STAY;
         recordTimer = new Timer();
         selectMemoryIndex = 0;
-
+        I = this;
     }
 
     void FixedUpdate()
@@ -110,7 +104,6 @@ public class RecordOfAction : MonoBehaviour
     void Recording()
     {
         recordTimer.Update();
-
         actions[selectMemoryIndex].Recording();
         if (recordTimer.IsLimitTime)
         {
@@ -122,7 +115,7 @@ public class RecordOfAction : MonoBehaviour
     
     void ActionStart()
     {
-        if (IsAllPlayed()) return;
+  //      if (IsAllPlayed()) return;
         if (m_RecordState != RecordState.STAY) return;
         m_RecordState = RecordState.PLAY;
         EnablePlayImageEffects(true);
@@ -145,7 +138,6 @@ public class RecordOfAction : MonoBehaviour
 
         if (actions[playMemoryIndex].actionLog.Count <= playTime)
         {
-
             NextAction();
         }
     }

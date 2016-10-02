@@ -5,6 +5,7 @@ using System.Collections.Generic;
 //プレイヤーの行動を記憶しておくクラス
 public class StorageOfAction
 {
+    public List<AnimationLoger> animationLog;
     GameObject player;
     Animator animator;
     Vector3 startPosition;
@@ -29,6 +30,14 @@ public class StorageOfAction
         oldPosition = Vector3.zero;
         m_RecordState = RecordState.STAY;
         actionLog = new List<Vector3>();
+        animationLog = new List<AnimationLoger>();
+        PlayerController.I.AttackCallBack = () =>
+        {
+            //録画中でなければ必要ない
+            if (RecordOfAction.I.m_RecordState != RecordState.RECORD) return;
+            animationLog.Add(new AnimationLoger(actionLog.Count, AnimationLog.ATK));
+            Debug.Log("AttackRecord");
+        };
     }
 
     /*記録*/
@@ -48,8 +57,6 @@ public class StorageOfAction
         movement.y = ToRoundDown(movement.y, 4);
         actionLog.Add(movement);
         oldPosition = player.transform.position;
-        //Debug.Log("log[" + (actionLog.Count - 1) + "] = " + actionLog[actionLog.Count - 1]);
-        //Debug.Log("log[" + (actionLog.Count - 1) + "].y = " + actionLog[actionLog.Count - 1].y);
     }
     public void StopRecord()
     {
@@ -64,7 +71,6 @@ public class StorageOfAction
     }
     public void PlayingAction(int playTime)
     {
-
         Vector3 vec = Vector3.zero;
         vec += actionLog[playTime];
         //+1フレームして再生速度を倍にする(indexから出ていれば追加しない)
@@ -72,18 +78,12 @@ public class StorageOfAction
         {
             vec += actionLog[playTime + 1];
         }
-
-
+        if (vec == Vector3.zero) return;
         float rotationY =  Camera.main.transform.rotation.eulerAngles.y- StartRotation.eulerAngles.y;
-        //Quaternion rota = (StartRotation * Camera.main.transform.rotation);
         Quaternion rota = Quaternion.Euler(0,rotationY,0);
-        //rota = Quaternion.Euler(0,, 0);
         Vector3 vec2 =  rota* vec;
-
         player.transform.position += vec2;
-
         player.transform.rotation =Quaternion.Euler(player.transform.rotation.x,Mathf.Atan2(vec2.x,vec2.z)*Mathf.Rad2Deg,player.transform.rotation.z);
-
         oldPosition = player.transform.position;
     }
 
@@ -92,13 +92,22 @@ public class StorageOfAction
         //actionLog.Clear();
         player.GetComponent<Rigidbody>().useGravity = true;
         m_RecordState = RecordState.STAY;
+        for (int i = 0; i < animationLog.Count; i++)
+        {
+            animationLog[i].PlayEnd() ;
+        }
     }
 
     //行動を解析しアニメーションを再生させる
     public void AnalysisBehaior(int playTime)
     {
         Debug.Log(actionLog[playTime].y);
+        for (int i = 0; i < animationLog.Count; i++)
+        {
+            animationLog[i].PlayAnimation(playTime);
+        }
 
+        if (PlayerController.I.currentState == PlayerState.Attack) return;
         /*移動していない*/
         if (actionLog[playTime] == Vector3.zero)
         {

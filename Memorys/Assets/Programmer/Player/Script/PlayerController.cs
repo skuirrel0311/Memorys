@@ -13,6 +13,10 @@ public enum PlayerState
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController I;
+    public  delegate void OnAttack();
+    public OnAttack AttackCallBack=null;
+
     /*パラメータ*/
     [SerializeField]
     float moveSpeed = 10;
@@ -34,6 +38,11 @@ public class PlayerController : MonoBehaviour
     GameObject[] underCollider; //着地判定用
     
     //private enum ColliderPlace { Center, Left, Right, Back, Front }
+
+     void Awake()
+    {
+        I = this;
+    }
 
     void Start()
     {
@@ -142,12 +151,14 @@ public class PlayerController : MonoBehaviour
         body.AddForce(Vector3.up * jumpPower);
     }
 
-    void Attack()
+    public void Attack()
     {
         animationContoller.ChangeAnimation("punching", 0.1f);
         currentState = PlayerState.Attack;
-    }
+        if (AttackCallBack != null) AttackCallBack();
 
+    }
+    
     //UnderColliderのどれかが地面に触れていれば地面に接しているはず。
     bool IsOnGround()
     {
