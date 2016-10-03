@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     GameObject[] underCollider; //着地判定用
-    
+
     //private enum ColliderPlace { Center, Left, Right, Back, Front }
 
      void Awake()
