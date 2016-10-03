@@ -101,7 +101,6 @@ public class StorageOfAction
     //行動を解析しアニメーションを再生させる
     public void AnalysisBehaior(int playTime)
     {
-        Debug.Log(actionLog[playTime].y);
         for (int i = 0; i < animationLog.Count; i++)
         {
             animationLog[i].PlayAnimation(playTime);
@@ -124,7 +123,7 @@ public class StorageOfAction
         if (actionLog[playTime].y == 0)
         {
             //地上()を歩いている
-            animator.SetBool("IsMove", true);
+            PlayerController.I.currentState = PlayerState.Move;
         }
         else if (actionLog[playTime].y < 0.01f)
         {

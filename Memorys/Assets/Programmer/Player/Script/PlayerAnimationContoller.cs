@@ -20,11 +20,11 @@ public class PlayerAnimationContoller : MonoBehaviour
 
     void Update()
     {
-        animator.SetBool("IsMove", controller.currentState == PlayerState.Move);
+        animator.SetInteger("State", (int)controller.currentState);
 
         if (controller.currentState == PlayerState.Fall && IsNearGround())
         {
-            ChangeAnimation("TopToGround", 0.1f);
+            //ChangeAnimation("TopToGround", 0.1f);
             controller.currentState = PlayerState.Land;
         }
 

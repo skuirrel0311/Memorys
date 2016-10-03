@@ -76,10 +76,6 @@ public class PlayerController : MonoBehaviour
                 if(IsOnGround())
                 {
                     currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
-                    if (currentState == PlayerState.Move)
-                        animationContoller.ChangeAnimation("Run", 0.1f);
-                    else
-                        animationContoller.ChangeAnimation("Idle", 0.1f);
                 }
                 break;
         }
@@ -90,7 +86,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Vector3 movement = transform.position - oldPosition;
-
+        Debug.Log("currentState:"+currentState);
         switch (currentState)
         {
             case PlayerState.Idle:
@@ -106,18 +102,14 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.Attack:
                 //アニメーションの再生が終わったら戻る
-                if (!animationContoller.CheckAnimationName("punching"))
-                {
-                    currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
-                }
+
                 break;
         }
     }
 
     Vector3 GetInputVector()
     {
-        if (animationContoller.CheckAnimationName("punching"))
-            return Vector3.zero;
+        if (currentState == PlayerState.Attack)return Vector3.zero;
 
         Vector3 movement = Vector3.zero;
 
@@ -146,14 +138,14 @@ public class PlayerController : MonoBehaviour
     {
         if (recorder.m_RecordState == RecordState.PLAY) return;
 
-        animationContoller.ChangeAnimation("JumpToTop", 0.1f);
+        //animationContoller.ChangeAnimation("JumpToTop", 0.1f);
         currentState = PlayerState.Jump;
         body.AddForce(Vector3.up * jumpPower);
     }
 
     public void Attack()
     {
-        animationContoller.ChangeAnimation("punching", 0.1f);
+        //animationContoller.ChangeAnimation("Attack", 0.1f);
         currentState = PlayerState.Attack;
         if (AttackCallBack != null) AttackCallBack();
 
