@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 
@@ -28,9 +29,15 @@ public class PlayerOverlap : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
+        if (PlayerController.I.currentState == PlayerState.Attack) return;
         if(col.gameObject.tag=="Enemy")
         {
             HP--;
+            if(HP<=0)
+            {
+                //ゲーム終了イベントへ飛ばす（セーブポイントへ戻す？）
+                SceneManager.LoadSceneAsync("Title");
+            }
         }
     }
 }

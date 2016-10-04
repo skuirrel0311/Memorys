@@ -115,7 +115,7 @@ public class RecordOfAction : MonoBehaviour
     
     void ActionStart()
     {
-  //      if (IsAllPlayed()) return;
+        if (IsAllPlayed()) return;
         if (m_RecordState != RecordState.STAY) return;
         m_RecordState = RecordState.PLAY;
         EnablePlayImageEffects(true);
