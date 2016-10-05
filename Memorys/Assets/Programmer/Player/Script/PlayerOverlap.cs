@@ -33,6 +33,7 @@ public class PlayerOverlap : MonoBehaviour {
         if(col.gameObject.tag=="Enemy")
         {
             HP--;
+            PlayerController.I.currentState = PlayerState.Damage;
             if(HP<=0)
             {
                 //ゲーム終了イベントへ飛ばす（セーブポイントへ戻す？）

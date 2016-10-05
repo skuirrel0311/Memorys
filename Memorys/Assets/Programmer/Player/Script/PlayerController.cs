@@ -8,7 +8,8 @@ public enum PlayerState
     Jump,
     Fall,
     Land,   //着地
-    Attack
+    Attack,
+    Damage
 }
 
 public class PlayerController : MonoBehaviour
@@ -86,7 +87,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Vector3 movement = transform.position - oldPosition;
-        Debug.Log("currentState:"+currentState);
+        //Debug.Log("currentState:"+currentState);
         switch (currentState)
         {
             case PlayerState.Idle:
