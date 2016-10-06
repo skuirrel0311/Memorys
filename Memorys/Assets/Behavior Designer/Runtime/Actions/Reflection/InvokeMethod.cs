@@ -28,6 +28,12 @@ namespace BehaviorDesigner.Runtime.Tasks
         [Tooltip("Store the result of the invoke call")]
         public SharedVariable storeResult;
 
+        public override void OnAwake()
+        {
+            if (targetGameObject == null)
+                targetGameObject = gameObject;
+        }
+
         public override TaskStatus OnUpdate()
         {
             var type = TaskUtility.GetTypeWithinAssembly(componentName.Value);
