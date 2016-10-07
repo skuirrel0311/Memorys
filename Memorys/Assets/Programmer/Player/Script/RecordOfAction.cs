@@ -65,9 +65,12 @@ public class RecordOfAction : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire3")) RecordStart();
-        if (Input.GetButtonDown("Jump")) ActionStart();
-
+        if (Input.GetButtonDown("Fire4")) RecordStart();
+        if (Input.GetButtonDown("Fire5")) ActionStart();
+        if(Input.GetButtonDown("Fire2"))
+        {
+            ActionReset();
+        }
         switch (m_RecordState)
         {
             case RecordState.PLAY:
@@ -75,6 +78,14 @@ public class RecordOfAction : MonoBehaviour
                 break;
         }
 
+    }
+
+    void ActionReset()
+    {
+        for (int i = 0; i < actions.Length; i++)
+        {
+            actions[i] = new StorageOfAction(gameObject, animator);
+        }
     }
 
     void RecordStart()

@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Idle:
             case PlayerState.Move:
                 if (!NoJumping && Input.GetButtonDown("Fire1")) Jumpping();
-                if (Input.GetButtonDown("Fire2")) Attack();
+                if (Input.GetButtonDown("Fire3")) Attack();
                 break;
             case PlayerState.Jump:
                 if (movement.y < 0)
