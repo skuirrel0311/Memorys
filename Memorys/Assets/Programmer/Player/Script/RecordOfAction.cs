@@ -94,33 +94,60 @@ public class RecordOfAction : MonoBehaviour
         if (m_RecordState != RecordState.STAY) return;
 
         m_RecordState = RecordState.RECORD;
-
-        for(int  i = actions.Length-1; i>=0;i--)
+        int count=0;
+        for(int i=0;i<actions.Length;i++)
         {
-            if (i != 0)
+            if (actions[i].IsRecorded)
             {
-                actions[i] = actions[i - 1];
-            }
-            else
-            {
-                actions[i] = new StorageOfAction(gameObject,animator);
+                count++;
             }
         }
+        if (count == actions.Length)
+        {
+            //一つずつずらす
+            for (int i = 0; i < actions.Length; i++)
+            {
+                if (i != actions.Length - 1)
+                {
+                    actions[i] = actions[i + 1];
+                }
+                else
+                {
+                    actions[0] = new StorageOfAction(gameObject, animator);
+                    //選択されている要素にレコードを開始
+                    recordTimer.TimerStart(recordLength);
+                    actions[0].RecordStart();
+                }
+            }
+        }
+        else
+        {
+            //選択されている要素にレコードを開始
+            actions[count] = new StorageOfAction(gameObject, animator);
+            recordTimer.TimerStart(recordLength);
+            actions[count].RecordStart();
+            Debug.Log("Count:"+count);
+        }
 
-        recordTimer.TimerStart(recordLength);
-        //選択されている要素にレコードを開始
-        actions[selectMemoryIndex].RecordStart();
     }
 
     void Recording()
     {
+        int count = 0;
+        for (int i = 0; i < actions.Length; i++)
+        {
+            if (actions[i].IsRecorded)
+            {
+                count++;
+            }
+        }
         recordTimer.Update();
-        actions[selectMemoryIndex].Recording();
+        actions[count].Recording();
         if (recordTimer.IsLimitTime)
         {
             recordTimer.Stop(true);
             m_RecordState = RecordState.STAY;
-            actions[selectMemoryIndex].StopRecord();
+            actions[count].StopRecord();
         }
     }
     
