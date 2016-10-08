@@ -26,8 +26,8 @@ public class AnimationLoger
         if (count <= m_TimeCount) return;
         if (isPlayed == true) return;
         PlayerController.I.Attack();
+        AttackState.AttackNotice();
          PlayerController.I.GetComponentInChildren<Animator>().speed =2;
-        Debug.Log("PlayAttack");
         isPlayed = true;
     }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public  enum RecordState
+public enum RecordState
 {
     RECORD,
     PLAY,
@@ -33,6 +33,7 @@ public class RecordOfAction : MonoBehaviour
     private Animator animator;
     private Timer recordTimer;
     private int playTime;
+    private int RecordedNum;
 
 
     void Start()
@@ -46,6 +47,7 @@ public class RecordOfAction : MonoBehaviour
         recordTimer = new Timer();
         selectMemoryIndex = 0;
         I = this;
+        RecordedNum = 0;
     }
 
     void FixedUpdate()
@@ -67,7 +69,7 @@ public class RecordOfAction : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire4")) RecordStart();
         if (Input.GetButtonDown("Fire5")) ActionStart();
-        if(Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2"))
         {
             ActionReset();
         }
@@ -94,44 +96,44 @@ public class RecordOfAction : MonoBehaviour
         if (m_RecordState != RecordState.STAY) return;
 
         m_RecordState = RecordState.RECORD;
-        int count=0;
-        for(int i=0;i<actions.Length;i++)
+
+        RecordedNum = RecordedCount();
+        if(RecordedNum == actions.Length)
         {
-            if (actions[i].IsRecorded)
-            {
-                count++;
-            }
-        }
-        if (count == actions.Length)
-        {
-            //一つずつずらす
-            for (int i = 0; i < actions.Length; i++)
-            {
-                if (i != actions.Length - 1)
-                {
-                    actions[i] = actions[i + 1];
-                }
-                else
-                {
-                    actions[0] = new StorageOfAction(gameObject, animator);
-                    //選択されている要素にレコードを開始
-                    recordTimer.TimerStart(recordLength);
-                    actions[0].RecordStart();
-                }
-            }
+            //今あるアクションをずらす
+            ActionPressed();
         }
         else
         {
             //選択されている要素にレコードを開始
-            actions[count] = new StorageOfAction(gameObject, animator);
+            actions[RecordedNum] = new StorageOfAction(gameObject, animator);
             recordTimer.TimerStart(recordLength);
-            actions[count].RecordStart();
-            Debug.Log("Count:"+count);
+            actions[RecordedNum].RecordStart();
+            Debug.Log("Count:" + RecordedNum);
         }
 
     }
 
-    void Recording()
+    void ActionPressed()
+    {
+        //一つずつずらす
+        for (int i = 0; i < actions.Length; i++)
+        {
+            if (i != actions.Length - 1)
+            {
+                actions[i] = actions[i + 1];
+            }
+            else
+            {
+                actions[0] = new StorageOfAction(gameObject, animator);
+                //選択されている要素にレコードを開始
+                recordTimer.TimerStart(recordLength);
+                actions[0].RecordStart();
+            }
+        }
+    }
+
+    int RecordedCount()
     {
         int count = 0;
         for (int i = 0; i < actions.Length; i++)
@@ -141,8 +143,18 @@ public class RecordOfAction : MonoBehaviour
                 count++;
             }
         }
+        return count;
+    }
+
+    void Recording()
+    {
+        if (m_RecordState != RecordState.RECORD) return;
+        int count = RecordedNum;
         recordTimer.Update();
+
+        Debug.Log("RectdingCount:"+count);
         actions[count].Recording();
+
         if (recordTimer.IsLimitTime)
         {
             recordTimer.Stop(true);
@@ -150,7 +162,7 @@ public class RecordOfAction : MonoBehaviour
             actions[count].StopRecord();
         }
     }
-    
+
     void ActionStart()
     {
         if (IsAllPlayed()) return;
@@ -172,7 +184,7 @@ public class RecordOfAction : MonoBehaviour
     void PlayingAction()
     {
         actions[playMemoryIndex].PlayingAction(playTime);
-        playTime+=2;
+        playTime += 2;
 
         if (actions[playMemoryIndex].actionLog.Count <= playTime)
         {
@@ -182,7 +194,7 @@ public class RecordOfAction : MonoBehaviour
 
     void EnablePlayImageEffects(bool isEnabled)
     {
-        for(int i = 0;i< PlayImageEffects.Count;i++)
+        for (int i = 0; i < PlayImageEffects.Count; i++)
         {
             PlayImageEffects[i].enabled = isEnabled;
         }
