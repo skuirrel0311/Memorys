@@ -4,7 +4,7 @@ using System.Collections;
 public class AttackState : StateMachineBehaviour
 {
     //攻撃しているかの通知
-    private static bool isAttack=false;
+    private static bool isAttack = false;
     [SerializeField]
     float PushDiray = 0.1f;
 
@@ -35,26 +35,30 @@ public class AttackState : StateMachineBehaviour
                 isNext = true;
             }
         }
-        if(isAttack)
+        if (isAttack)
         {
             isNext = true;
             isAttack = false;
         }
         Timer += Time.deltaTime;
 
-        if(isNext)
+      if(stateInfo.normalizedTime>0.8)
         {
-            PlayerController.I.currentState = PlayerState.Attack;
-        }
-        else
-        {
-            PlayerController.I.currentState = PlayerState.Idle;
+            if (isNext)
+            {
+                PlayerController.I.currentState = PlayerState.Attack;
+            }
+            else
+            {
+                PlayerController.I.currentState = PlayerState.Idle;
+            }
         }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+ 
         if (!isNext)
         {
             animator.speed = 1;
