@@ -118,8 +118,7 @@ public class PlayerController : MonoBehaviour
         movement.x = Input.GetAxis("Horizontal");
 
         Quaternion cameraRotation = cameraObject.transform.rotation;
-        cameraRotation.x = 0;
-        cameraRotation.z = 0;
+        cameraRotation = Quaternion.Euler(0, cameraRotation.eulerAngles.y, 0);
 
         movement = cameraRotation * movement;
 

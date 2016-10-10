@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Linq;
+using System.Collections.Generic;
 
 public class CameraContoller : MonoBehaviour
 {
@@ -8,38 +9,129 @@ public class CameraContoller : MonoBehaviour
     [SerializeField]
     float distance = 7;    //カメラとプレイヤーの距離
     [SerializeField]
-    float height = 3;
+    float rotationSpeedX = 150;
     [SerializeField]
-    float rotationSpeed = 250;
-    
+    float rotationSpeedY = 100;
+
     PlayerController controller;
-    float rotation;
+
+    /// <summary>
+    /// 緯度
+    /// </summary>
+    [SerializeField]
+    float latitude = 15;
+    /// <summary>
+    /// 経度
+    /// </summary>
+    [SerializeField]
+    float longitude = 180;
+
+    //カメラとプレイヤーの間にあるオブジェクト
+    List<GameObject> lineHitObjects = new List<GameObject>();
 
     void Start()
     {
-        rotation = 270;
         controller = player.GetComponent<PlayerController>();
-        transform.position = GetCameraPositoin(rotation);
     }
-    
+
     void Update()
     {
-        float leftStickX = Input.GetAxis("Horizontal2") * -1;
-        //Debug.Log("leftStickX = " + leftStickX);
-        
-        rotation += leftStickX * rotationSpeed * Time.deltaTime;
-        transform.position = GetCameraPositoin(rotation);
+        BetweenPlayerAndCamera();
+
+        float rightStickX = Input.GetAxis("Horizontal2");
+        float rightStickY = Input.GetAxis("Vertical2");
+
+        longitude += rightStickX * rotationSpeedX * Time.deltaTime;
+        latitude += rightStickY * rotationSpeedY * Time.deltaTime;
+        //経度には制限を掛ける
+        latitude = Mathf.Clamp(latitude, 10, 80);
+
+        transform.position = player.transform.position + SphereCoordinate(longitude, latitude);
         transform.LookAt(player.transform.position + Vector3.up * 2);
     }
 
-    //指定された角度のときのカメラの位置を返す
-    Vector3 GetCameraPositoin(float rotation)
+    /// <summary>
+    /// 指定した角度の球体座標を返します
+    /// </summary>
+    /// <param name="longitude">経度</param>
+    /// <param name="latitude">緯度</param>
+    /// <returns></returns>
+    public Vector3 SphereCoordinate(float longitude, float latitude)
     {
-        Vector3 cameraPosition = player.transform.position;
-        float temp = rotation * Mathf.Deg2Rad;
-        cameraPosition.x += Mathf.Cos(temp) * distance;
-        cameraPosition.z += Mathf.Sin(temp) * distance;
-        cameraPosition.y += height;
-        return cameraPosition;
+        Vector3 temp = Vector3.zero;
+
+        //重複した計算
+        float deg2Rad = Mathf.Deg2Rad;
+        float t = distance * Mathf.Cos(latitude * deg2Rad);
+
+        temp.x = t * Mathf.Sin(longitude * deg2Rad);
+        temp.y = distance * Mathf.Sin(latitude * deg2Rad);
+        temp.z = t * Mathf.Cos(longitude * deg2Rad);
+
+        return temp;
+    }
+
+    /// <summary>
+    /// プレイヤーとカメラの間にオブジェクトがあったら非表示にします
+    /// </summary>
+    void BetweenPlayerAndCamera()
+    {
+        //TwinWall,TwinScaffold,LongScaffold,lowScaffold
+
+        Vector3 direction = (player.transform.position + Vector3.up) - transform.position;
+        Ray ray = new Ray(transform.position, direction);
+
+
+        //rayにあたったオブジェクトをリストに格納
+        List<GameObject> hitList = Physics.RaycastAll(ray, direction.magnitude).Select(n => n.transform.gameObject).ToList();
+
+        if (hitList.Count == 0) return;
+
+        //containsでlinehitに無くてtagがBoxのものを判定しwhereで無かったものをlistに格納
+        lineHitObjects.AddRange(hitList.Where(n => (!lineHitObjects.Contains(n)) && (n.tag == "Wall")));
+
+        //半透明にする
+        foreach (GameObject n in lineHitObjects)
+        {
+            string parentName = n.transform.parent.name;
+            SetAlpha(n, 0.3f);
+        }
+
+        //今回ヒットしなかったものは透明度をリセットし、リムーブする。
+        lineHitObjects.RemoveAll(n =>
+        {
+            if (hitList.Contains(n)) return false;
+
+            string parentName = n.transform.parent.name;
+            ResetAlpha(n);
+            return true;
+        });
+    }
+
+    void SetAlpha(GameObject obj, float alpha)
+    {
+        Material mat = obj.GetComponent<Renderer>().material;
+        Color color = mat.color;
+        mat.SetFloat("_Mode", 2);
+        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        mat.SetInt("_ZWrite", 0);
+        mat.DisableKeyword("_ALPHATEST_ON");
+        mat.EnableKeyword("_ALPHABLEND_ON");
+        mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        mat.renderQueue = 3000;
+        mat.color = new Color(color.r, color.g, color.b, alpha);
+    }
+
+    void ResetAlpha(GameObject obj)
+    {
+        Material mat = obj.GetComponent<Renderer>().material;
+        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+        mat.SetInt("_ZWrite", 1);
+        mat.DisableKeyword("_ALPHATEST_ON");
+        mat.DisableKeyword("_ALPHABLEND_ON");
+        mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        mat.renderQueue = -1;
     }
 }
