@@ -10,29 +10,15 @@ public class ShotManager : MonoBehaviour
     [SerializeField]
     GameObject bulletPrefab = null;
     [SerializeField]
-    int bulletNum = 10;
-    [SerializeField]
     float bulletSpeed = 5.0f;
+    [SerializeField]
+    GameObject shotPosition = null;
 
-    int bulletIndex;
-
-    void Start()
-    {
-        bulletIndex = 0;
-        bulletList = new List<Bullet>();
-        for(int i = 0;i < bulletNum;i++)
-        {
-            bulletList.Add(Instantiate(bulletPrefab).GetComponent<Bullet>());
-            bulletList[i].gameObject.SetActive(false);
-        }
-    }
 
     public void Shot()
     {
-        bulletList[bulletIndex].gameObject.SetActive(true);
-        bulletList[bulletIndex].Shot(transform, bulletSpeed);
-
-        //カウントアップ
-        bulletIndex = (bulletIndex + 1) >= bulletNum ? 0 : (bulletIndex + 1);
+        GameObject g = (GameObject)Instantiate(bulletPrefab,shotPosition.transform.position, shotPosition.transform.rotation);
+        g.GetComponent<Bullet>().Shot(bulletSpeed);
+        Destroy(g, 3.0f);
     }
 }

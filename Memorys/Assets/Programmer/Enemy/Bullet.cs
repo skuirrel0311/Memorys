@@ -3,30 +3,26 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour
 {
-    Vector3 velocity;
+    Vector3 velocity = Vector3.zero;
 
-    void Start()
+    public void Shot(float speed)
     {
-        velocity = Vector3.zero;
-    }
-
-    public void Shot(Transform startPosition, float speed)
-    {
-        transform.position = startPosition.position;
-        transform.rotation = startPosition.rotation;
         velocity = transform.forward * speed;
     }
 
     void Update()
     {
-        if (transform == null) return;
+        //if (transform == null) return;
         
 
-        transform.Translate(velocity, Space.World);
+        transform.Translate(velocity * Time.deltaTime, Space.World);
     }
 
     void OnCollisionEnter(Collision col)
     {
+        if (col.gameObject.tag == "Enemy") return;
+        if (col.gameObject.name == "Bullet(Clone)") return;
+
         gameObject.SetActive(false);
     }
 }

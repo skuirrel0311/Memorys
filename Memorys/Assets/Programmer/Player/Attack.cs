@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using BehaviorDesigner.Runtime;
 using System.Collections;
 
 public class Attack : MonoBehaviour {
@@ -16,9 +17,9 @@ public class Attack : MonoBehaviour {
         if (!isAttack) return;
         if(col.gameObject.tag=="Enemy")
         {
-            //todo:当たった敵にダメージ
-            Destroy(col.gameObject);
-
+            BehaviorTree tree = col.gameObject.GetComponent<BehaviorTree>();
+            SharedInt hp = (SharedInt)tree.GetVariable("Hp");
+            hp.SetValue(hp.Value - 1);
             //エフェクト
             Destroy(GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity), 3);
         }
