@@ -86,6 +86,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (ActionSelect.I.isActive) return;
         Vector3 movement = transform.position - oldPosition;
         //Debug.Log("currentState:"+currentState);
         switch (currentState)
@@ -93,7 +94,7 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Idle:
             case PlayerState.Move:
                 if (!NoJumping && Input.GetButtonDown("Fire1")) Jumpping();
-                if (Input.GetButtonDown("Fire3")) Attack();
+                if (Input.GetButtonDown("Fire3")&&RecordOfAction.I.m_RecordState!=RecordState.PLAY) Attack();
                 break;
             case PlayerState.Jump:
                 if (movement.y < 0)
@@ -111,7 +112,7 @@ public class PlayerController : MonoBehaviour
     Vector3 GetInputVector()
     {
         if (currentState == PlayerState.Attack)return Vector3.zero;
-
+        if (ActionSelect.I.IsActionStint(ActionSelect.ActionSelected.Move)) return Vector3.zero;
         Vector3 movement = Vector3.zero;
 
         movement.z = Input.GetAxis("Vertical");
@@ -145,6 +146,7 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
+        if (ActionSelect.I.IsActionStint(ActionSelect.ActionSelected.Attack)) return;
         //animationContoller.ChangeAnimation("Attack", 0.1f);
         currentState = PlayerState.Attack;
         if (AttackCallBack != null) AttackCallBack();

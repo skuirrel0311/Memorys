@@ -50,6 +50,7 @@ public class RecordOfAction : MonoBehaviour
         RecordedNum = 0;
     }
 
+
     void FixedUpdate()
     {
         switch (m_RecordState)
@@ -67,7 +68,8 @@ public class RecordOfAction : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire4")) RecordStart();
+        if (ActionSelect.I.isActive) return;
+        //if (Input.GetButtonDown("Fire4")) RecordStart();
         if (Input.GetButtonDown("Fire5")) ActionStart();
         if (Input.GetButtonDown("Fire2"))
         {
@@ -90,7 +92,7 @@ public class RecordOfAction : MonoBehaviour
         }
     }
 
-    void RecordStart()
+    public  void RecordStart()
     {
 
         if (m_RecordState != RecordState.STAY) return;
@@ -125,10 +127,10 @@ public class RecordOfAction : MonoBehaviour
             }
             else
             {
-                actions[0] = new StorageOfAction(gameObject, animator);
+                actions[actions.Length-1] = new StorageOfAction(gameObject, animator);
                 //選択されている要素にレコードを開始
                 recordTimer.TimerStart(recordLength);
-                actions[0].RecordStart();
+                actions[actions.Length-1].RecordStart();
             }
         }
     }
@@ -151,7 +153,7 @@ public class RecordOfAction : MonoBehaviour
         if (m_RecordState != RecordState.RECORD) return;
         int count = RecordedNum;
         recordTimer.Update();
-
+        if (count == 3) count = 2;
         Debug.Log("RectdingCount:"+count);
         actions[count].Recording();
 
