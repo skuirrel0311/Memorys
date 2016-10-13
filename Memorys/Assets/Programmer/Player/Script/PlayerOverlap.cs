@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections;
-
+using System.Collections.Generic;
+using BehaviorDesigner.Runtime;
 
 //プレイヤーの接触判定用クラス
 public class PlayerOverlap : MonoBehaviour {
@@ -32,13 +32,29 @@ public class PlayerOverlap : MonoBehaviour {
         if (PlayerController.I.currentState == PlayerState.Attack) return;
         if(col.gameObject.tag=="Enemy")
         {
-            HP--;
-            PlayerController.I.currentState = PlayerState.Damage;
-            if(HP<=0)
+            Damage(1);
+        }
+        if(col.gameObject.tag == "Bullet")
+        {
+            Damage(1);
+        }
+    }
+
+    public void Damage(int point)
+    {
+        HP -= point;
+        PlayerController.I.currentState = PlayerState.Damage;
+        if (HP <= 0)
+        {
+            List<GameObject> enemyList = new List<GameObject>();
+            enemyList.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+
+            foreach(GameObject g in enemyList)
             {
-                //ゲーム終了イベントへ飛ばす（セーブポイントへ戻す？）
-                SceneManager.LoadSceneAsync("Title");
+                g.GetComponent<BehaviorTree>().DisableBehavior();
             }
+            //ゲーム終了イベントへ飛ばす（セーブポイントへ戻す？）
+            SceneManager.LoadSceneAsync("Title");
         }
     }
 }

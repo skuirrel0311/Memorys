@@ -9,16 +9,14 @@ public class DestroyGameObject : Action
 
     public override void OnStart()
     {
-
-
         if (targetObject.Value == null)
         {
             targetObject.Value = gameObject;
         }
-        BehaviorTree tree = targetObject.Value.GetComponent<BehaviorTree>();
-        
 
+        BehaviorTree tree = targetObject.Value.GetComponent<BehaviorTree>();
         if (tree != null) tree.DisableBehavior();
+
         GameObject.Destroy(targetObject.Value);
     }
 }
