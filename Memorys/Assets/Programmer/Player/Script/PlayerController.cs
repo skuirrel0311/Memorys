@@ -112,11 +112,17 @@ public class PlayerController : MonoBehaviour
     Vector3 GetInputVector()
     {
         if (currentState == PlayerState.Attack)return Vector3.zero;
-        if (ActionSelect.I.IsActionStint(ActionSelect.ActionSelected.Move)) return Vector3.zero;
+        if (recorder.m_RecordState == RecordState.PLAY) return Vector3.zero;
+
         Vector3 movement = Vector3.zero;
 
         movement.z = Input.GetAxis("Vertical");
         movement.x = Input.GetAxis("Horizontal");
+        if (ActionSelect.I.IsActionStint(ActionSelect.ActionSelected.Move))
+        {
+            movement = Vector3.zero;
+        }
+
 
         Quaternion cameraRotation = cameraObject.transform.rotation;
         cameraRotation = Quaternion.Euler(0, cameraRotation.eulerAngles.y, 0);

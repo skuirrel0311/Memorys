@@ -86,10 +86,14 @@ public class RecordOfAction : MonoBehaviour
 
     void ActionReset()
     {
+        if (m_RecordState != RecordState.STAY) return;
         for (int i = 0; i < actions.Length; i++)
         {
             actions[i] = new StorageOfAction(gameObject, animator);
         }
+        m_RecordState = RecordState.STAY;
+        selectMemoryIndex = 0;
+        RecordedNum = 0;
     }
 
     public  void RecordStart()
