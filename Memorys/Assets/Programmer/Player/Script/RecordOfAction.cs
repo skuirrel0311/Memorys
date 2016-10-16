@@ -36,6 +36,11 @@ public class RecordOfAction : MonoBehaviour
     private int RecordedNum;
     private GameObject m_clockEffect;
 
+    //クールタイム
+    Timer cooldown;
+    [SerializeField]
+    float intervalTime = 2.0f;
+
 
     void Start()
     {
@@ -51,6 +56,8 @@ public class RecordOfAction : MonoBehaviour
         RecordedNum = 0;
         m_clockEffect = GameObject.Find("ClockEffect");
         m_clockEffect.SetActive(false);
+
+        cooldown = new Timer();
     }
 
 
@@ -72,6 +79,7 @@ public class RecordOfAction : MonoBehaviour
     void Update()
     {
         if (ActionSelect.I.isActive) return;
+        UpdateTimer();
         //if (Input.GetButtonDown("Fire4")) RecordStart();
         if (Input.GetButtonDown("Fire5")) ActionStart();
         if (Input.GetButtonDown("Fire2"))
@@ -176,6 +184,14 @@ public class RecordOfAction : MonoBehaviour
     {
         if (IsAllPlayed()) return;
         if (m_RecordState != RecordState.STAY) return;
+        if (cooldown.IsWorking)
+        {
+            //todo:「まだ再生できないよ」のメッセージ表示
+            Debug.Log("まだ再生できないよ");
+            return;
+        }
+
+        cooldown.TimerStart(intervalTime);
         m_RecordState = RecordState.PLAY;
         EnablePlayImageEffects(true);
         GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -244,6 +260,15 @@ public class RecordOfAction : MonoBehaviour
         }
 
         return true;
+    }
+
+    void UpdateTimer()
+    {
+        cooldown.Update();
+        if (cooldown.IsLimitTime)
+        {
+            cooldown.Stop();
+        }
     }
 
     void OnGUI()
