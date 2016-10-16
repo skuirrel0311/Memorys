@@ -34,6 +34,7 @@ public class RecordOfAction : MonoBehaviour
     private Timer recordTimer;
     private int playTime;
     private int RecordedNum;
+    private GameObject m_clockEffect;
 
 
     void Start()
@@ -48,6 +49,8 @@ public class RecordOfAction : MonoBehaviour
         selectMemoryIndex = 0;
         I = this;
         RecordedNum = 0;
+        m_clockEffect = GameObject.Find("ClockEffect");
+        m_clockEffect.SetActive(false);
     }
 
 
@@ -102,7 +105,7 @@ public class RecordOfAction : MonoBehaviour
         if (m_RecordState != RecordState.STAY) return;
 
         m_RecordState = RecordState.RECORD;
-
+        m_clockEffect.SetActive(true);
         RecordedNum = RecordedCount();
         if(RecordedNum == actions.Length)
         {

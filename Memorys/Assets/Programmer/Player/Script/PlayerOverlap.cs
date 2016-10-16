@@ -40,6 +40,11 @@ public class PlayerOverlap : MonoBehaviour {
         }
     }
 
+    public void ReSpawn()
+    {
+        HP = maxHP;
+    }
+
     public void Damage(int point)
     {
         HP -= point;
@@ -54,7 +59,7 @@ public class PlayerOverlap : MonoBehaviour {
                 g.GetComponent<BehaviorTree>().DisableBehavior();
             }
             //ゲーム終了イベントへ飛ばす（セーブポイントへ戻す？）
-            SceneManager.LoadSceneAsync("Title");
+            SaveManager.I.Respawn();
         }
     }
 }
