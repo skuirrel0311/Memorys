@@ -7,6 +7,9 @@ public class MySceneManager : MonoBehaviour {
     [SerializeField]
     string NextSceneName;
 
+    public delegate void UpdateCallBack();
+    public UpdateCallBack OnUpdateCallBack;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -16,10 +19,14 @@ public class MySceneManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if(OnUpdateCallBack!=null)
         {
-            SceneManager.LoadScene(NextSceneName);
-        } 
-
+            OnUpdateCallBack();
+        }
 	}
+
+    public void NextScene()
+    {
+        SceneManager.LoadScene(NextSceneName);
+    }
 }
