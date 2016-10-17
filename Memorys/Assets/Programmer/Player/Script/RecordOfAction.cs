@@ -190,8 +190,7 @@ public class RecordOfAction : MonoBehaviour
             Debug.Log("まだ再生できないよ");
             return;
         }
-
-        cooldown.TimerStart(intervalTime);
+        
         m_RecordState = RecordState.PLAY;
         EnablePlayImageEffects(true);
         GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -240,6 +239,7 @@ public class RecordOfAction : MonoBehaviour
                 //範囲外に出たら終了
                 m_RecordState = RecordState.STAY;
                 EnablePlayImageEffects(false);
+                cooldown.TimerStart(intervalTime);
                 return;
             }
 
