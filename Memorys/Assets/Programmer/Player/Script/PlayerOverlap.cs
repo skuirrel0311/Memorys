@@ -62,4 +62,10 @@ public class PlayerOverlap : MonoBehaviour {
             SaveManager.I.Respawn();
         }
     }
+
+    public void Recovery(int point)
+    {
+        HP += point;
+        HP = Mathf.Clamp(HP, 0, maxHP);
+    }
 }

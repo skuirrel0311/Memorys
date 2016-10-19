@@ -46,7 +46,7 @@ public class CameraContoller : MonoBehaviour
         //経度には制限を掛ける
         latitude = Mathf.Clamp(latitude, 10, 80);
 
-        transform.position = player.transform.position + SphereCoordinate(longitude, latitude);
+        transform.position = player.transform.position + SphereCoordinate(longitude, latitude,distance);
         transform.LookAt(player.transform.position + Vector3.up * 2);
     }
 
@@ -56,7 +56,7 @@ public class CameraContoller : MonoBehaviour
     /// <param name="longitude">経度</param>
     /// <param name="latitude">緯度</param>
     /// <returns></returns>
-    public Vector3 SphereCoordinate(float longitude, float latitude)
+    public static Vector3 SphereCoordinate(float longitude, float latitude, float distance)
     {
         Vector3 temp = Vector3.zero;
 
