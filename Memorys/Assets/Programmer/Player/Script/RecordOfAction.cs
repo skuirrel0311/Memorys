@@ -40,8 +40,10 @@ public class RecordOfAction : MonoBehaviour
     Timer cooldown;
     [SerializeField]
     float intervalTime = 2.0f;
-
-
+    [SerializeField]
+    Image circle;
+    RectTransform canvasRect;
+    
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -56,8 +58,9 @@ public class RecordOfAction : MonoBehaviour
         RecordedNum = 0;
         m_clockEffect = GameObject.Find("ClockEffect");
         m_clockEffect.SetActive(false);
-
+        circle.gameObject.SetActive(false);
         cooldown = new Timer();
+        canvasRect = GameObject.Find("Canvas").GetComponent<RectTransform>();
     }
 
 
@@ -240,6 +243,7 @@ public class RecordOfAction : MonoBehaviour
                 m_RecordState = RecordState.STAY;
                 EnablePlayImageEffects(false);
                 cooldown.TimerStart(intervalTime);
+                circle.gameObject.SetActive(true);
                 return;
             }
 
@@ -265,8 +269,19 @@ public class RecordOfAction : MonoBehaviour
     void UpdateTimer()
     {
         cooldown.Update();
+
+        if(cooldown.IsWorking)
+        {
+            Vector2 circlePosition = Camera.main.WorldToViewportPoint(transform.position + (Vector3.up * 2.0f) + (transform.rotation * (Vector3.right * 0.5f)));
+            circlePosition.x = (circlePosition.x * canvasRect.sizeDelta.x) - (canvasRect.sizeDelta.x * 0.5f);
+            circlePosition.y = (circlePosition.y * canvasRect.sizeDelta.y) - (canvasRect.sizeDelta.y * 0.5f);
+            circle.fillAmount = 1.0f - cooldown.Progress;
+            circle.rectTransform.anchoredPosition = circlePosition;
+        }
+
         if (cooldown.IsLimitTime)
         {
+            circle.gameObject.SetActive(false);
             cooldown.Stop();
         }
     }
