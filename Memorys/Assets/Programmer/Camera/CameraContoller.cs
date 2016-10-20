@@ -5,47 +5,102 @@ using System.Collections.Generic;
 public class CameraContoller : MonoBehaviour
 {
     [SerializeField]
-    GameObject player = null;
+    Transform targetObject = null;
     [SerializeField]
-    float distance = 7;    //カメラとプレイヤーの距離
+    float distance = 7.0f;    //カメラとターゲットの距離
     [SerializeField]
-    float rotationSpeedX = 150;
+    float rotationSpeedX = 150.0f;
     [SerializeField]
-    float rotationSpeedY = 100;
-
-    PlayerController controller;
+    float rotationSpeedY = 100.0f;
 
     /// <summary>
     /// 緯度
     /// </summary>
     [SerializeField]
-    float latitude = 15;
+    float latitude = 15.0f;
     /// <summary>
     /// 経度
     /// </summary>
     [SerializeField]
-    float longitude = 180;
+    float longitude = 180.0f;
+
+    /// <summary>
+    /// 緯度の最大値
+    /// </summary>
+    [SerializeField]
+    float maxLatitude = 89.0f;
+    /// <summary>
+    /// 緯度の最小値
+    /// </summary>
+    [SerializeField]
+    float minLatitude = -85.0f;
+    /// <summary>
+    /// Slerpを開始する緯度の値
+    /// </summary>
+    [SerializeField]
+    float startSlerpLatitude = 30.0f;
 
     //カメラとプレイヤーの間にあるオブジェクト
     List<GameObject> lineHitObjects = new List<GameObject>();
 
     void Start()
     {
-        controller = player.GetComponent<PlayerController>();
+        //ターゲットが入ってなかったらプレイヤーを探す
+        if (targetObject == null)
+        {
+            targetObject = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+        if(targetObject == null)
+        {
+            targetObject = GameObject.Find("Player").transform;
+        }
     }
 
     void Update()
     {
-        BetweenPlayerAndCamera();
+        if (targetObject == null) return;
 
+        //右スティックで回転
         Vector2 rightStick = MyInputManager.GetAxis(MyInputManager.Axis.RightStick);
         longitude += rightStick.x * rotationSpeedX * Time.deltaTime;
+        // - はお好み
         latitude -= rightStick.y * rotationSpeedY * Time.deltaTime;
-        //経度には制限を掛ける
-        latitude = Mathf.Clamp(latitude, 10, 80);
 
-        transform.position = player.transform.position + SphereCoordinate(longitude, latitude,distance);
-        transform.LookAt(player.transform.position + Vector3.up * 2);
+        //経度には制限を掛ける
+        latitude = Mathf.Clamp(latitude, minLatitude, maxLatitude);
+        longitude = longitude % 360.0f;
+
+        BetweenPlayerAndCamera();
+        
+        SphereCameraControl();
+    }
+
+    void SphereCameraControl()
+    {
+        if (latitude < startSlerpLatitude)
+        {
+            //リープ開始
+            Vector3 vec1 = SphereCoordinate(longitude, startSlerpLatitude, distance);
+            //リープ終了時の座標
+            Vector3 vec2 = SphereCoordinate(longitude, minLatitude, distance);
+            vec2.y = 0.0f;
+            
+            float t;
+            //(開始位置からの移動量) / (全体の移動量) = 0 ～ 1
+            if (latitude >= 0.0f)
+                t = (startSlerpLatitude - latitude) / (-minLatitude + startSlerpLatitude);
+            else
+                t = ((-latitude) + startSlerpLatitude) / (-minLatitude + startSlerpLatitude);
+            
+            transform.position = targetObject.position + Vector3.Slerp(vec1, vec2, t);
+        }
+        else
+        {
+            //カメラが地面にめり込まない場合は球体座標をそのまま使う
+            transform.position = targetObject.position + SphereCoordinate(longitude, latitude, distance);
+        }
+
+        transform.LookAt(targetObject.position + (Vector3.up * 2.0f));
     }
 
     /// <summary>
@@ -74,9 +129,7 @@ public class CameraContoller : MonoBehaviour
     /// </summary>
     void BetweenPlayerAndCamera()
     {
-        //TwinWall,TwinScaffold,LongScaffold,lowScaffold
-
-        Vector3 direction = (player.transform.position + Vector3.up) - transform.position;
+        Vector3 direction = (targetObject.position + Vector3.up) - transform.position;
         Ray ray = new Ray(transform.position, direction);
 
 
@@ -110,7 +163,7 @@ public class CameraContoller : MonoBehaviour
     {
         Material mat = obj.GetComponent<Renderer>().material;
         Color color = mat.color;
-        mat.SetFloat("_Mode", 2);
+        mat.SetFloat("_Mode", 2.0f);
         mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
         mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
         mat.SetInt("_ZWrite", 0);
