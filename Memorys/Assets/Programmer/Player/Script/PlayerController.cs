@@ -93,8 +93,8 @@ public class PlayerController : MonoBehaviour
         {
             case PlayerState.Idle:
             case PlayerState.Move:
-                if (!NoJumping && Input.GetButtonDown("Fire1")) Jumpping();
-                if (Input.GetButtonDown("Fire3")&&RecordOfAction.I.m_RecordState!=RecordState.PLAY) Attack();
+                if (!NoJumping && MyInputManager.GetButtonDown(MyInputManager.Button.A)) Jumpping();
+                if (MyInputManager.GetButtonDown(MyInputManager.Button.X) && RecordOfAction.I.m_RecordState!=RecordState.PLAY) Attack();
                 break;
             case PlayerState.Jump:
                 if (movement.y < 0)
@@ -114,10 +114,9 @@ public class PlayerController : MonoBehaviour
         if (currentState == PlayerState.Attack)return Vector3.zero;
         if (recorder.m_RecordState == RecordState.PLAY) return Vector3.zero;
 
-        Vector3 movement = Vector3.zero;
-
-        movement.z = Input.GetAxis("Vertical");
-        movement.x = Input.GetAxis("Horizontal");
+        Vector2 leftStick = MyInputManager.GetAxis(MyInputManager.Axis.LeftStick);
+        Vector3 movement = new Vector3(leftStick.x, 0, leftStick.y);
+        
         if (ActionSelect.I.IsActionStint(ActionSelect.ActionSelected.Move))
         {
             movement = Vector3.zero;

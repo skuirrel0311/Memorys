@@ -27,7 +27,7 @@ public class AttackState : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (isNext) return;
-        if (Input.GetButtonDown("Fire3"))
+        if (MyInputManager.GetButtonDown(MyInputManager.Button.X))
         {
             if (Timer >= PushDiray)
             {

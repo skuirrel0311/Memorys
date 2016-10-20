@@ -38,11 +38,9 @@ public class CameraContoller : MonoBehaviour
     {
         BetweenPlayerAndCamera();
 
-        float rightStickX = Input.GetAxis("Horizontal2");
-        float rightStickY = Input.GetAxis("Vertical2");
-
-        longitude += rightStickX * rotationSpeedX * Time.deltaTime;
-        latitude += rightStickY * rotationSpeedY * Time.deltaTime;
+        Vector2 rightStick = MyInputManager.GetAxis(MyInputManager.Axis.RightStick);
+        longitude += rightStick.x * rotationSpeedX * Time.deltaTime;
+        latitude -= rightStick.y * rotationSpeedY * Time.deltaTime;
         //経度には制限を掛ける
         latitude = Mathf.Clamp(latitude, 10, 80);
 

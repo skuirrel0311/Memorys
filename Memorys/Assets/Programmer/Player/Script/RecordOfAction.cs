@@ -41,7 +41,7 @@ public class RecordOfAction : MonoBehaviour
     [SerializeField]
     float intervalTime = 2.0f;
     [SerializeField]
-    Image circle;
+    Image circle = null;
     RectTransform canvasRect;
     
     void Start()
@@ -61,6 +61,7 @@ public class RecordOfAction : MonoBehaviour
         circle.gameObject.SetActive(false);
         cooldown = new Timer();
         canvasRect = GameObject.Find("Canvas").GetComponent<RectTransform>();
+        if (circle == null) circle = GameObject.Find("Circle").GetComponent<Image>();
     }
 
 
@@ -83,9 +84,9 @@ public class RecordOfAction : MonoBehaviour
     {
         if (ActionSelect.I.isActive) return;
         UpdateTimer();
-        //if (Input.GetButtonDown("Fire4")) RecordStart();
-        if (Input.GetButtonDown("Fire5")) ActionStart();
-        if (Input.GetButtonDown("Fire2"))
+        if (MyInputManager.GetButtonDown(MyInputManager.Button.LeftShoulder)) RecordStart();
+        if (MyInputManager.GetButtonDown(MyInputManager.Button.RightShoulder)) ActionStart();
+        if (MyInputManager.GetButtonDown(MyInputManager.Button.B))
         {
             ActionReset();
         }

@@ -22,7 +22,7 @@ public class TopSceneController : MonoBehaviour
     }
     private void Push_A_Button()
     {
-        if (!Input.GetButtonDown("Fire1")) return;
+        if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
         m_sceneManager.NextScene();
     }
 }

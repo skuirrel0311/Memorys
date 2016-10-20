@@ -37,7 +37,7 @@ public class menuSceneController : MonoBehaviour
     }
     private void Push_A_Button()
     {
-        if (!Input.GetButtonDown("Fire1")) return;
+        if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
         if (m_SelectState == SelectState.STAGE)
         {
             m_sceneManager.NextScene();
@@ -51,12 +51,12 @@ public class menuSceneController : MonoBehaviour
 
     private void Push_B_Button()
     {
-        if (!Input.GetButtonDown("Fire2")) return;
+        if (!MyInputManager.GetButtonDown(MyInputManager.Button.B)) return;
     }
 
     private void InputAxis()
     {
-        float v = Input.GetAxis("Vertical");
+        float v = MyInputManager.GetAxis(MyInputManager.Axis.LeftStick).y;
         if (v == 0)
         {
             return;

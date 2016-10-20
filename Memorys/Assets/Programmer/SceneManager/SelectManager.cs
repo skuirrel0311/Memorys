@@ -25,7 +25,7 @@ public class SelectManager : MonoBehaviour
 
     private void InputAxis()
     {
-        float v = Input.GetAxis("Horizontal");
+        float v = MyInputManager.GetAxis(MyInputManager.Axis.LeftStick).x;
         if (v == 0)
         {
             return;
@@ -44,7 +44,7 @@ public class SelectManager : MonoBehaviour
 
     private void InputButtonA()
     {
-        if (!Input.GetButtonDown("Fire1")) return;
+        if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
         SceneManager.LoadSceneAsync("Stage"+(m_SelectNumber));
     }
 }
