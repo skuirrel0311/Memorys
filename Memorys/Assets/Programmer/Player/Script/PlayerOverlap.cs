@@ -12,7 +12,7 @@ public class PlayerOverlap : MonoBehaviour {
     [SerializeField]
     Slider m_slider;
 
-    int HP;
+    public int HP;
 
 	// Use this for initialization
 	void Start ()
@@ -56,7 +56,8 @@ public class PlayerOverlap : MonoBehaviour {
 
             foreach(GameObject g in enemyList)
             {
-                g.GetComponent<BehaviorTree>().DisableBehavior();
+                BehaviorTree tree = g.GetComponent<BehaviorTree>();
+                if(tree != null) tree.DisableBehavior();
             }
             //ゲーム終了イベントへ飛ばす（セーブポイントへ戻す？）
             SaveManager.I.Respawn();

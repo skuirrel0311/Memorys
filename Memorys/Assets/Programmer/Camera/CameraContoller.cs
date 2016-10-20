@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections;
 
 public class CameraContoller : MonoBehaviour
 {
@@ -43,6 +44,9 @@ public class CameraContoller : MonoBehaviour
     //カメラとプレイヤーの間にあるオブジェクト
     List<GameObject> lineHitObjects = new List<GameObject>();
 
+    //カメラを制御するか？
+    public bool IsWork = true;
+
     void Start()
     {
         //ターゲットが入ってなかったらプレイヤーを探す
@@ -60,6 +64,8 @@ public class CameraContoller : MonoBehaviour
     {
         if (targetObject == null) return;
 
+        BetweenPlayerAndCamera();
+        if (!IsWork) return;
         //右スティックで回転
         Vector2 rightStick = MyInputManager.GetAxis(MyInputManager.Axis.RightStick);
         longitude += rightStick.x * rotationSpeedX * Time.deltaTime;
@@ -69,8 +75,6 @@ public class CameraContoller : MonoBehaviour
         //経度には制限を掛ける
         latitude = Mathf.Clamp(latitude, minLatitude, maxLatitude);
         longitude = longitude % 360.0f;
-
-        BetweenPlayerAndCamera();
         
         SphereCameraControl();
     }
@@ -184,5 +188,23 @@ public class CameraContoller : MonoBehaviour
         mat.DisableKeyword("_ALPHABLEND_ON");
         mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
         mat.renderQueue = -1;
+    }
+
+    public IEnumerator SeeFellPlayer()
+    {
+        IsWork = false;
+        float time = 0;
+        while(time < 1.0f)
+        {
+            transform.LookAt(targetObject.transform);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        IsWork = true;
+        if (targetObject == null) yield return null;
+        PlayerOverlap overlap = targetObject.GetComponent<PlayerOverlap>();
+
+        //Hp分のダメージを与える=即死
+        overlap.Damage(overlap.HP);
     }
 }
