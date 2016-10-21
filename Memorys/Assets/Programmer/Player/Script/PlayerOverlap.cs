@@ -51,16 +51,20 @@ public class PlayerOverlap : MonoBehaviour {
         PlayerController.I.currentState = PlayerState.Damage;
         if (HP <= 0)
         {
-            List<GameObject> enemyList = new List<GameObject>();
-            enemyList.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
-
-            foreach(GameObject g in enemyList)
-            {
-                BehaviorTree tree = g.GetComponent<BehaviorTree>();
-                if(tree != null) tree.DisableBehavior();
-            }
             //ゲーム終了イベントへ飛ばす（セーブポイントへ戻す？）
             SaveManager.I.Respawn();
+        }
+    }
+
+    void DisableEnemy()
+    {
+        List<GameObject> enemyList = new List<GameObject>();
+        enemyList.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+
+        foreach (GameObject g in enemyList)
+        {
+            BehaviorTree tree = g.GetComponent<BehaviorTree>();
+            if (tree != null) tree.DisableBehavior();
         }
     }
 
