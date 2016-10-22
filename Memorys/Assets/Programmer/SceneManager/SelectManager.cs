@@ -4,12 +4,21 @@ using System.Collections;
 
 public class SelectManager : MonoBehaviour
 {
+    public Animator m_BookAnim;
     [SerializeField]
     int MaxStage = 1;
     [SerializeField]
-    Animator m_BookAnim;
+    Texture2D[] pages;
+    [SerializeField]
+    Renderer m_BookModel;
+    [SerializeField]
+    Renderer m_PageModel;
 
+    private Material[] m_Materials;
+    //ページのマテリアルはアサインの順番が逆
+    private Material[] m_PageMaterials;
     private FusenSpawner m_FusenSpawner;
+    private SelectManager m_selectManager;
     public int m_SelectNumber = 1;
     bool isInputAxis;
     // Use this for initialization
@@ -18,14 +27,34 @@ public class SelectManager : MonoBehaviour
         m_SelectNumber = 1;
         isInputAxis = false;
         m_FusenSpawner = GetComponent<FusenSpawner>();
-	}
+        m_Materials = m_BookModel.materials;
+        m_PageMaterials = m_PageModel.materials;
+        UpdateTexture();
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
         InputAxis();
         InputButtonA();
-	}
+    }
+
+    public void UpdateTexture()
+    {
+        ChangeTexture(0, pages[m_SelectNumber - 1]);
+        if (m_SelectNumber >= MaxStage) return;
+        ChangeTexture(1, pages[m_SelectNumber]);
+    }
+
+    void ChangeTexture(int index,Texture2D tex)
+    {
+        m_Materials[index].mainTexture = tex;
+
+        if (index == 0)
+            m_PageMaterials[1].mainTexture = tex;
+        else
+            m_PageMaterials[0].mainTexture = tex;
+    }
 
     private void InputAxis()
     {
@@ -36,20 +65,23 @@ public class SelectManager : MonoBehaviour
             return;
         }
         if (isInputAxis) return;
+        if (m_FusenSpawner.isSetRoot) return;
         isInputAxis = true;
 
         if (v > 0)
         {
-
+            if (m_SelectNumber == 1) return;
+            m_BookAnim.Play("L_R", 0);
             m_SelectNumber = (int)Mathf.Max(1, (float)m_SelectNumber - 1);
-            m_FusenSpawner.SetAnimationRoot(m_SelectNumber - 1);
-            m_BookAnim.Play("L_R",0);
+            m_FusenSpawner.SetAnimationRoot(m_SelectNumber - 1,false);
+            UpdateTexture();
         }
         else
         {
-            m_SelectNumber = (int)Mathf.Min((float)MaxStage, (float)m_SelectNumber + 1);
-            m_FusenSpawner.SetAnimationRoot(m_SelectNumber-1);
+            if (m_SelectNumber == MaxStage) return;
             m_BookAnim.Play("R_L", 0);
+            m_SelectNumber = (int)Mathf.Min((float)MaxStage, (float)m_SelectNumber + 1);
+            m_FusenSpawner.SetAnimationRoot(m_SelectNumber - 2,true);
 
         }
     }

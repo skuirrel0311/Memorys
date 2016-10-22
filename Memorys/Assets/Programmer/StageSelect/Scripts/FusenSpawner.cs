@@ -18,12 +18,15 @@ public class FusenSpawner : MonoBehaviour
     [HideInInspector]
     public List<GameObject> fusens;
 
-    bool isSetRoot = false;
+
+    public bool isSetRoot = false;
+
     // Use this for initialization
     void Start ()
     {
         fusens = new List<GameObject>();
-	    for(int i = 0;i < maxStage;i++)
+
+        for (int i = 0;i < maxStage;i++)
         {
             fusens.Add(GameObject.Instantiate(Fusen,RightAnchor +  new Vector3(0.0f,-0.006f*i,-0.05f*i),Quaternion.identity) as GameObject);
         }
@@ -33,9 +36,11 @@ public class FusenSpawner : MonoBehaviour
     {
         for (int i = 0; i < maxStage; i++)
         {
+            int index = i - (GetComponent<SelectManager>().m_SelectNumber-1);
+            index = (int)Mathf.Max(0.0f,index);
             if (GetComponent<SelectManager>().m_SelectNumber - 1 <= i)
             {
-                fusens[i].transform.position = RightAnchor + new Vector3(0.0f, -0.006f * i, -0.05f * i);
+                fusens[i].transform.position = RightAnchor + new Vector3(0.0f, -0.006f * index, -0.05f * i);
             }
             else
             {
@@ -47,24 +52,32 @@ public class FusenSpawner : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update ()
-    {
-	
-	}
+    { 
+    }
     
     IEnumerator ParentDetach()
     {
-        if (isSetRoot) yield return null;
-        isSetRoot = true;
-        yield return  new  WaitForSeconds(1.0f);
+        AnimatorStateInfo currentState = GetComponent<SelectManager>().m_BookAnim.GetCurrentAnimatorStateInfo(0);
+        float duration = currentState.length;
+        yield return  new  WaitForSeconds(0.34f);
         FusenRoot.transform.DetachChildren();
         PositionSet();
+        GetComponent<SelectManager>().UpdateTexture();
         isSetRoot = false;
         yield return null;
     }
 
-    public void SetAnimationRoot(int index)
+    public void SetAnimationRoot(int index,bool isRight)
     {
-        fusens[index-1].transform.parent = FusenRoot.transform;
+        if (isSetRoot) return;
+
+        if (!isRight)
+        {
+            fusens[index].transform.position = RightAnchor+ new Vector3(0.0f, -0.006f * index, -0.05f * index);
+        }
+
+        isSetRoot = true;
+        fusens[index].transform.parent = FusenRoot.transform;
         StartCoroutine("ParentDetach");
     }
 }
