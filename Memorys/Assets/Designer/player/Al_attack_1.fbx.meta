@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: b7294adae5bc95d48a9814245e2ca7d3
-timeCreated: 1477141458
+guid: 7f414614f33dca142893a7d8b5df1060
+timeCreated: 1477312970
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -180,7 +180,7 @@ ModelImporter:
     - serializedVersion: 16
       name: attack_1
       takeName: attack_1
-      firstFrame: 0
+      firstFrame: 1
       lastFrame: 16
       wrapMode: 0
       orientationOffsetY: 0
@@ -190,8 +190,8 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 1
-      loopBlendPositionY: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -793,7 +793,7 @@ ModelImporter:
       transformModified: 1
     - name: LeftToeBase
       position: {x: -0.12142008, y: -0.000000038221902, z: -0.000000013346145}
-      rotation: {x: -0.00000014783201, y: -0.0000006825938, z: -0.31537938, w: 0.94896567}
+      rotation: {x: -0.0000000048962723, y: 0.0000000019447606, z: -0.3153251, w: 0.9489837}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: joint12
