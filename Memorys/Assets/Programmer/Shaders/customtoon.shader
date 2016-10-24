@@ -61,9 +61,11 @@
 		fixed4 frag(v2f i) : SV_Target
 		{
 		fixed4 col = tex2D(_MainTex, i.uv);
-		float diff = tex2D(_Ramp, fixed2(i.diff.x, 0)).r;
+		//float diff = tex2D(_Ramp, fixed2(i.diff.x, 0)).r;
 		fixed shadow = min(SHADOW_ATTENUATION(i) + (tex2D(_ShadowCon, i.uv).a),1.0f);
-		if (shadow < diff)shadow *= diff;
+		//if (shadow < diff)shadow *= 0;
+		if (shadow <  _Threshold)shadow *= 0.0f;
+		else shadow = 1.0f;
 		fixed3 lighting = shadow + i.ambient;
 		col.rgb *= lighting*_Color;
 		return col;

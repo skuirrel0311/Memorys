@@ -15,6 +15,20 @@ public class RecordOfAction : MonoBehaviour
     public RecordState m_RecordState;
     public int selectMemoryIndex;
     public int playMemoryIndex;
+    public int RecordIndex
+    {
+        get
+        {
+
+            int len = 0;
+            for(int i=0; i<actions.Length;i++)
+            {
+                if (actions[i]!=null&&actions[i].IsRecorded)
+                    len++;
+            }
+            return len;
+        }
+    }
 
 
     [SerializeField]
@@ -297,21 +311,6 @@ public class RecordOfAction : MonoBehaviour
     void ChangeMemory()
     {
         selectMemoryIndex = Mathf.Clamp(selectMemoryIndex, 0, actions.Length - 1);
-        char[] str1 = new char[3];
-        char[] str2 = new char[3];
-
-        for (int i = 0; i < actions.Length; i++)
-        {
-            if (i != selectMemoryIndex) str1[i] = '　';
-            else str1[i] = '↓';
-
-            if (actions[i].IsRecorded) str2[i] = '●';
-            else str2[i] = '○';
-        }
-
-        selectText.text = new string(str1);
-
-        gaugeText.text = new string(str2);
     }
 
 }
