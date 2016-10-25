@@ -15,6 +15,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Basic.UnityAnimator
         [Tooltip("The normalized time at which the state will play")]
         public float normalizedTime = float.NegativeInfinity;
 
+        public SharedFloat transitionDuration;
+
         private Animator animator;
         private GameObject prevGameObject;
 
@@ -34,7 +36,9 @@ namespace BehaviorDesigner.Runtime.Tasks.Basic.UnityAnimator
                 return TaskStatus.Failure;
             }
 
-            animator.Play(stateName.Value, layer, normalizedTime);
+
+            animator.CrossFade(stateName.Value, transitionDuration.Value);
+            //animator.Play(stateName.Value, layer, normalizedTime);
 
             return TaskStatus.Success;
         }
