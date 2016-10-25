@@ -9,6 +9,7 @@ public class GetChildGameObject : Action
     private Transform targetTransform;
     public SharedInt index;
     public SharedGameObject returnObject;
+    public string objectName;
 
     public override void OnStart()
     {
@@ -32,8 +33,12 @@ public class GetChildGameObject : Action
             return TaskStatus.Failure;
         }
 
-        returnObject = targetGameObject.Value.transform.GetChild(index.Value).gameObject;
-        
+        if (objectName != "")
+        {
+            returnObject.SetValue(targetTransform.FindChild(objectName).gameObject);
+        }
+
+        returnObject.SetValue(targetGameObject.Value.transform.GetChild(index.Value).gameObject);
         return returnObject == null ? TaskStatus.Failure :TaskStatus.Success;
     }
 }
