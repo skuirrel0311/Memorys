@@ -29,6 +29,9 @@ public class EnemyAttack : MonoBehaviour
     {
         if (!IsAttacking) return;
 
-
+        if(col.gameObject.tag == "Player")
+        {
+            col.gameObject.GetComponent<PlayerOverlap>().Damage(AttackPoint);
+        }
     }
 }

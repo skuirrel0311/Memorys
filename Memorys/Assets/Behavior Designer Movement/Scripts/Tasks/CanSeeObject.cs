@@ -31,6 +31,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         [Tooltip("The object that is within sight")]
         public SharedGameObject returnedObject;
 
+        public bool IsViewGUI = false;
+
         // Returns success if an object was found otherwise failure
         public override TaskStatus OnUpdate()
         {
@@ -73,6 +75,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         // Draw the line of sight representation within the scene window
         public override void OnDrawGizmos()
         {
+            if (!IsViewGUI) return;
             MovementUtility.DrawLineOfSight(Owner.transform, offset.Value, fieldOfViewAngle.Value, angleOffset2D.Value, viewDistance.Value, usePhysics2D);
         }
     }

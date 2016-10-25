@@ -28,22 +28,34 @@ public class LookOutOver : Action
 
     private void AddPatten()
     {
+        Debug.Log("add");
         directionPattenList.Add(TargetDirection.left);
         directionPattenList.Add(TargetDirection.forward);
         directionPattenList.Add(TargetDirection.right);
         directionPattenList.Add(TargetDirection.forward);
-        directionPattenList.Add(TargetDirection.left);
+        directionPattenList.Add(TargetDirection.back);
         directionPattenList.Add(TargetDirection.forward);
-        directionPattenList.Add(TargetDirection.right);
-        directionPattenList.Add(TargetDirection.forward);
+        //directionPattenList.Add(TargetDirection.left);
+        //directionPattenList.Add(TargetDirection.forward);
+        //directionPattenList.Add(TargetDirection.right);
+        //directionPattenList.Add(TargetDirection.forward);
     }
 
     public override TaskStatus OnUpdate()
     {
         RotateTowards();
-        if (directionPattenList.Count <= currentIndex) return TaskStatus.Success;
+        if (directionPattenList.Count <= currentIndex)
+        {
+            Debug.Log("complete");
+            return TaskStatus.Success;
+        }
 
         return TaskStatus.Running;
+    }
+
+    public override void OnEnd()
+    {
+        directionPattenList.Clear();
     }
 
     private void RotateTowards()
@@ -55,8 +67,8 @@ public class LookOutOver : Action
             if (directionPattenList.Count <= currentIndex) return;
 
             currentTrargetDirection = directionPattenList[currentIndex];
+            Debug.Log("currentIndex = " + currentIndex);
             targetRotation = Quaternion.LookRotation(directionVec[(int)currentTrargetDirection]);
-            //targetRotation = Quaternion.LookRotation(Vector3.left);
             return;
         }
         
