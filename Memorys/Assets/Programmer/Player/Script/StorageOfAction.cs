@@ -101,6 +101,7 @@ public class StorageOfAction
     //行動を解析しアニメーションを再生させる
     public void AnalysisBehaior(int playTime)
     {
+        
         for (int i = 0; i < animationLog.Count; i++)
         {
             animationLog[i].PlayAnimation(playTime);
@@ -111,11 +112,11 @@ public class StorageOfAction
         if (actionLog[playTime] == Vector3.zero)
         {
             if (playTime == 0) return;
-            if (animator.GetCurrentAnimatorStateInfo(0).fullPathHash == Animator.StringToHash("Base Layer.Idle")) return;
+            if (PlayerController.I.currentState == PlayerState.Idle) return;
 
             //2フレーム連続で止まっていた
             if (actionLog[playTime - 1] == Vector3.zero)
-                animator.CrossFade("Idle", 0, 0);
+                PlayerController.I.currentState = PlayerState.Idle;
             return;
         }
 
@@ -128,7 +129,7 @@ public class StorageOfAction
         else if (actionLog[playTime].y < 0.01f)
         {
             //下降中
-            player.GetComponent<PlayerController>().currentState = PlayerState.Fall;
+            //player.GetComponent<PlayerController>().currentState = PlayerState.Fall;
             int temp = playTime + 5;
             if (temp >= actionLog.Count) return;
             //5フレーム先で着地しているか？
@@ -141,7 +142,7 @@ public class StorageOfAction
         else
         {
             //上昇中
-            if(actionLog[playTime - 2].y < 0.1f) animator.CrossFade("JumpToTop", 0.1f, 0);
+            if(actionLog[playTime - 2].y < 0.1f) PlayerController.I.currentState = PlayerState.Jump;
         }
 
     }

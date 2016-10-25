@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Jump:
                 if (movement.y < 0)
                 {
-                    currentState = PlayerState.Fall;
+                   // currentState = PlayerState.Fall;
                 }
                 break;
             case PlayerState.Attack:
