@@ -21,9 +21,9 @@ public class RecordOfAction : MonoBehaviour
         {
 
             int len = 0;
-            for(int i=0; i<actions.Length;i++)
+            for (int i = 0; i < actions.Length; i++)
             {
-                if (actions[i]!=null&&actions[i].IsRecorded)
+                if (actions[i] != null && actions[i].IsRecorded)
                     len++;
             }
             return len;
@@ -49,6 +49,7 @@ public class RecordOfAction : MonoBehaviour
     private int playTime;
     private int RecordedNum;
     private GameObject m_clockEffect;
+    private Vector3 NextPosition;
 
     //クールタイム
     Timer cooldown;
@@ -57,7 +58,7 @@ public class RecordOfAction : MonoBehaviour
     [SerializeField]
     Image circle = null;
     RectTransform canvasRect;
-    
+
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -125,7 +126,7 @@ public class RecordOfAction : MonoBehaviour
         RecordedNum = 0;
     }
 
-    public  void RecordStart()
+    public void RecordStart()
     {
 
         if (m_RecordState != RecordState.STAY) return;
@@ -133,7 +134,7 @@ public class RecordOfAction : MonoBehaviour
         m_RecordState = RecordState.RECORD;
         m_clockEffect.SetActive(true);
         RecordedNum = RecordedCount();
-        if(RecordedNum == actions.Length)
+        if (RecordedNum == actions.Length)
         {
             //今あるアクションをずらす
             ActionPressed();
@@ -160,10 +161,10 @@ public class RecordOfAction : MonoBehaviour
             }
             else
             {
-                actions[actions.Length-1] = new StorageOfAction(gameObject, animator);
+                actions[actions.Length - 1] = new StorageOfAction(gameObject, animator);
                 //選択されている要素にレコードを開始
                 recordTimer.TimerStart(recordLength);
-                actions[actions.Length-1].RecordStart();
+                actions[actions.Length - 1].RecordStart();
             }
         }
     }
@@ -187,7 +188,7 @@ public class RecordOfAction : MonoBehaviour
         int count = RecordedNum;
         recordTimer.Update();
         if (count == 3) count = 2;
-        Debug.Log("RectdingCount:"+count);
+        Debug.Log("RectdingCount:" + count);
         actions[count].Recording();
 
         if (recordTimer.IsLimitTime)
@@ -208,9 +209,10 @@ public class RecordOfAction : MonoBehaviour
             Debug.Log("まだ再生できないよ");
             return;
         }
-        
+
         m_RecordState = RecordState.PLAY;
         EnablePlayImageEffects(true);
+        NextPosition = PlayerController.I.transform.position; ;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         playTime = 0;
         //データが保存されているものはスタートの状態をセット
@@ -225,7 +227,7 @@ public class RecordOfAction : MonoBehaviour
 
     void PlayingAction()
     {
-        actions[playMemoryIndex].PlayingAction(playTime);
+        actions[playMemoryIndex].PlayingAction(playTime, ref NextPosition);
         playTime += 2;
 
         if (actions[playMemoryIndex].actionLog.Count <= playTime)
@@ -285,7 +287,7 @@ public class RecordOfAction : MonoBehaviour
     {
         cooldown.Update();
 
-        if(cooldown.IsWorking)
+        if (cooldown.IsWorking)
         {
             Vector2 circlePosition = Camera.main.WorldToViewportPoint(transform.position + (Vector3.up * 2.0f) + (transform.rotation * (Vector3.right * 0.5f)));
             circlePosition.x = (circlePosition.x * canvasRect.sizeDelta.x) - (canvasRect.sizeDelta.x * 0.5f);

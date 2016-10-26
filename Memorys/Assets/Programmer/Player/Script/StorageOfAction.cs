@@ -71,7 +71,7 @@ public class StorageOfAction
         PlayStartRotation = Camera.main.transform.rotation;
         player.GetComponent<Rigidbody>().useGravity = false;
     }
-    public void PlayingAction(int playTime)
+    public void PlayingAction(int playTime,ref Vector3   NextPosition)
     {
         Vector3 vec = Vector3.zero;
         vec += actionLog[playTime];
@@ -81,11 +81,15 @@ public class StorageOfAction
             vec += actionLog[playTime + 1];
         }
         if (vec == Vector3.zero) return;
+
+        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        cube.AddComponent<TimeDestroy>();
+        cube.transform.position = NextPosition + new Vector3(0.0f, -0.6f, 0.0f);
         float rotationY =  PlayStartRotation.eulerAngles.y- StartRotation.eulerAngles.y;
-        Quaternion rota = Quaternion.Euler(0,rotationY,0);
+        Quaternion rota = Quaternion.Euler(0.0f,rotationY,0.0f);
         Vector3 vec2 =  rota* vec;
-        player.transform.position += vec2;
-        player.transform.rotation =Quaternion.Euler(player.transform.rotation.x,Mathf.Atan2(vec2.x,vec2.z)*Mathf.Rad2Deg,player.transform.rotation.z);
+        NextPosition += vec2;
+        cube.transform.rotation = Quaternion.Euler(0.0f,Mathf.Atan2(vec2.x,vec2.z)*Mathf.Rad2Deg,0.0f);
         oldPosition = player.transform.position;
     }
 
