@@ -7,24 +7,31 @@ using BehaviorDesigner.Runtime;
 //プレイヤーの接触判定用クラス
 public class PlayerOverlap : MonoBehaviour {
 
-    const int maxHP=10;
+    const int maxHP=3;
 
     [SerializeField]
     Slider m_slider;
 
     public int HP;
 
-	// Use this for initialization
-	void Start ()
+    //無敵時間
+    Timer invincibleTimer;
+
+    // Use this for initialization
+    void Start ()
     {
         HP = maxHP;
         m_slider.value = HP;
+        invincibleTimer = new Timer();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
         m_slider.value = HP;
+
+        invincibleTimer.Update();
+        if (invincibleTimer.IsLimitTime) invincibleTimer.Stop(true);
 	}
 
     void OnCollisionEnter(Collision col)
@@ -47,6 +54,9 @@ public class PlayerOverlap : MonoBehaviour {
 
     public void Damage(int point)
     {
+        if (invincibleTimer.IsWorking) return;
+        invincibleTimer.TimerStart(0.5f);
+
         HP -= point;
         PlayerController.I.currentState = PlayerState.Damage;
         if (HP <= 0)

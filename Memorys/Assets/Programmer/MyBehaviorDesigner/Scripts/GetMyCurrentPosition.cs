@@ -9,7 +9,7 @@ public class GetMyCurrentPosition : Action
 
     public override TaskStatus OnUpdate()
     {
-        currentPosition.Value = transform.position;
+        currentPosition.SetValue(transform.position);
 
         if (transform == null)
             return TaskStatus.Failure;
