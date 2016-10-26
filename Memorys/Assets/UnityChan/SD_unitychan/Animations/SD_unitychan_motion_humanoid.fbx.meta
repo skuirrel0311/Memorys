@@ -4072,7 +4072,7 @@ ModelImporter:
       name: TopToGround
       takeName: Take 001
       firstFrame: 193
-      lastFrame: 238
+      lastFrame: 219
       wrapMode: 0
       orientationOffsetY: 0
       level: 1.1
