@@ -39,7 +39,7 @@ public class PlayerOverlap : MonoBehaviour {
         if (PlayerController.I.currentState == PlayerState.Attack) return;
         if(col.gameObject.tag=="Enemy")
         {
-            Damage(1);
+            //Damage(1);
         }
         if(col.gameObject.tag == "Bullet")
         {
