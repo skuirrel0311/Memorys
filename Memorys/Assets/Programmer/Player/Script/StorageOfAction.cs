@@ -13,6 +13,7 @@ public class StorageOfAction
     public List<Vector3> actionLog;
 
     private Quaternion StartRotation =Quaternion.identity;
+    private Quaternion PlayStartRotation = Quaternion.identity;
 
     //記録再生の状態
     RecordState m_RecordState;
@@ -67,6 +68,7 @@ public class StorageOfAction
     public void StartAction()
     {
         m_RecordState = RecordState.PLAY;
+        PlayStartRotation = Camera.main.transform.rotation;
         player.GetComponent<Rigidbody>().useGravity = false;
     }
     public void PlayingAction(int playTime)
@@ -79,7 +81,7 @@ public class StorageOfAction
             vec += actionLog[playTime + 1];
         }
         if (vec == Vector3.zero) return;
-        float rotationY =  Camera.main.transform.rotation.eulerAngles.y- StartRotation.eulerAngles.y;
+        float rotationY =  PlayStartRotation.eulerAngles.y- StartRotation.eulerAngles.y;
         Quaternion rota = Quaternion.Euler(0,rotationY,0);
         Vector3 vec2 =  rota* vec;
         player.transform.position += vec2;
