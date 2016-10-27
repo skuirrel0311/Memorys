@@ -4,30 +4,31 @@ using System.Collections;
 public class EnemyAttack : MonoBehaviour
 {
     public int AttackPoint = 1;
-    public bool IsAttacking = false;
+    Timer timer;
 
     void Start()
     {
+        timer = new Timer();
     }
 
     void Update()
     {
+        timer.Update();
 
+        if(timer.IsLimitTime)
+        {
+            timer.Stop(true);
+        }
     }
 
-    public virtual void Attack()
+    public virtual void Attack(float interval)
     {
-        IsAttacking = true;
-    }
-
-    public virtual void EndAttack()
-    {
-        IsAttacking = false;
+        timer.TimerStart(interval);
     }
 
     void OnCollisionEnter(Collision col)
     {
-        if (!IsAttacking) return;
+        if (!timer.IsWorking) return;
 
         if(col.gameObject.tag == "Player")
         {

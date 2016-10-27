@@ -28,9 +28,22 @@ public class CallMyMethod : BehaviorDesigner.Runtime.Tasks.Action
         FieldInfo fieldInfo = GetType().GetField("parameters");
         if (fieldInfo == null) return TaskStatus.Failure;
 
-        object obj = fieldInfo.GetValue(this);
+        var parameterList = new List<object>();
+        var parameterTypeList = new List<Type>();
 
-        component.SendMessage(methodName, obj);
+        object obj = fieldInfo.GetValue(this);
+        SharedVariable sharedVariable = null;
+        foreach (object o in (Array)obj)
+        {
+            sharedVariable = o as SharedVariable;
+            parameterList.Add(sharedVariable.GetValue());
+            parameterTypeList.Add(sharedVariable.GetType().GetProperty("Value").PropertyType);
+        }
+        
+        var methodInfo = component.GetType().GetMethod(methodName, parameterTypeList.ToArray());
+        if (methodInfo == null) return TaskStatus.Failure;
+
+        methodInfo.Invoke(component, parameterList.ToArray());
 
         return TaskStatus.Success;
     }

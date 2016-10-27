@@ -10,6 +10,7 @@ public class IsOutOfEncampment : Conditional
 {
     public SharedVector3 centerPosition;
     public SharedFloat distance;
+    public bool IsViewGUI = false;
 
     public override TaskStatus OnUpdate()
     {
@@ -26,6 +27,7 @@ public class IsOutOfEncampment : Conditional
     public override void OnDrawGizmos()
     {
 #if UNITY_EDITOR
+        if (!IsViewGUI) return;
         if (Owner == null)
         {
             return;

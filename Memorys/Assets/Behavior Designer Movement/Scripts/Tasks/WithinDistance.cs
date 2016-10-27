@@ -35,6 +35,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         // distance * distance, optimization so we don't have to take the square root
         private float sqrMagnitude;
 
+        public bool IsViewGUI = false;
+
         public override void OnStart()
         {
             sqrMagnitude = magnitude.Value * magnitude.Value;
@@ -112,6 +114,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public override void OnDrawGizmos()
         {
 #if UNITY_EDITOR
+            if (!IsViewGUI) return;
             if (Owner == null || magnitude == null) {
                 return;
             }

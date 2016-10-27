@@ -12,7 +12,7 @@ public class LookOutOver : Action
 
     Quaternion targetRotation;
     public int currentIndex;
-    public SharedFloat rotationSpeed;
+    public float delta = 1.0f;
 
     public override void OnStart()
     {
@@ -41,7 +41,6 @@ public class LookOutOver : Action
         RotateTowards();
         if (directionPattenList.Count <= currentIndex)
         {
-            Debug.Log("complete");
             return TaskStatus.Success;
         }
 
@@ -66,7 +65,7 @@ public class LookOutOver : Action
             return;
         }
         
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed.Value * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, delta);
 
         return;
     }
