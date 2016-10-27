@@ -26,6 +26,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         [Tooltip("The returned object that is heard")]
         public SharedGameObject returnedObject;
 
+        public bool IsViewGUI = false;
+
         // Returns success if an object was found otherwise failure
         public override TaskStatus OnUpdate()
         {
@@ -66,6 +68,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public override void OnDrawGizmos()
         {
 #if UNITY_EDITOR
+            if (!IsViewGUI) return;
             if (Owner == null || hearingRadius == null) {
                 return;
             }

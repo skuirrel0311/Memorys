@@ -26,7 +26,7 @@ public class EnemyAttack : MonoBehaviour
         timer.TimerStart(interval);
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
         if (!timer.IsWorking) return;
 
