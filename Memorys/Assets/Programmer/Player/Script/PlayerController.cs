@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         transform.LookAt(transform.position + forward);
 
         transform.Translate(movement, Space.World);
-        //body.AddForce(movement);
+        //body.AddForce(movement*50.0f,ForceMode.VelocityChange);
 
         switch (currentState)
         {

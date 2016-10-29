@@ -12,8 +12,9 @@ public class StorageOfAction
     Vector3 oldPosition;
     public List<Vector3> actionLog;
 
-    private Quaternion StartRotation =Quaternion.identity;
+    public Quaternion StartRotation =Quaternion.identity;
     private Quaternion PlayStartRotation = Quaternion.identity;
+    public Quaternion Rota;
 
     //記録再生の状態
     RecordState m_RecordState;
@@ -69,7 +70,10 @@ public class StorageOfAction
     {
         m_RecordState = RecordState.PLAY;
         PlayStartRotation = Camera.main.transform.rotation;
+        //PlayStartRotation = player.transform.rotation;
         player.GetComponent<Rigidbody>().useGravity = false;
+        float rotationY = PlayStartRotation.eulerAngles.y - StartRotation.eulerAngles.y;
+        Rota = Quaternion.Euler(0.0f, rotationY, 0.0f);
     }
     public void PlayingAction(int playTime,ref Vector3   NextPosition)
     {
@@ -99,21 +103,17 @@ public class StorageOfAction
 
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.AddComponent<TimeDestroy>();
-        cube.transform.position = NextPosition + new Vector3(0.0f, -0.6f, 0.0f);
-        float rotationY = PlayStartRotation.eulerAngles.y - StartRotation.eulerAngles.y;
-        Quaternion rota = Quaternion.Euler(0.0f, rotationY, 0.0f);
-        Vector3 vec2 = rota * vec;
+        cube.transform.position = NextPosition + new Vector3(0.0f, -0.5f, 0.0f);
+        Vector3 vec2 = Rota * vec;
         NextPosition += vec2;
         cube.transform.rotation = Quaternion.Euler(0.0f, Mathf.Atan2(vec2.x, vec2.z) * Mathf.Rad2Deg, 0.0f);
     }
 
     private void PlayingMove(Vector3 vec, ref Vector3 NextPosition)
     {
-        player.transform.position = NextPosition + new Vector3(0.0f, -0.6f, 0.0f);
-        float rotationY = PlayStartRotation.eulerAngles.y - StartRotation.eulerAngles.y;
-        Quaternion rota = Quaternion.Euler(0.0f, rotationY, 0.0f);
-        Vector3 vec2 = rota * vec;
-        NextPosition += vec2;
+
+        Vector3 vec2 = Rota * vec;
+        player.transform.Translate(vec2,Space.World);
         player.transform.rotation = Quaternion.Euler(player.transform.rotation.x, Mathf.Atan2(vec2.x, vec2.z) * Mathf.Rad2Deg, player.transform.rotation.z);
     }
 

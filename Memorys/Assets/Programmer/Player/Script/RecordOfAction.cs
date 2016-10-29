@@ -55,6 +55,8 @@ public class RecordOfAction : MonoBehaviour
     [SerializeField]
     //地形生成をするか、移動処理をするか
     private bool isCreateGraund = true;
+    [SerializeField]
+    LineRenderer m_lineRenderer;
 
     private StorageOfAction[] actions = new StorageOfAction[3];
     private Animator animator;
@@ -63,7 +65,7 @@ public class RecordOfAction : MonoBehaviour
     private int RecordedNum;
     private GameObject m_clockEffect;
     private Vector3 NextPosition;
-
+    private bool isLineRendered = false;
     //クールタイム
     Timer cooldown;
     [SerializeField]
@@ -71,6 +73,8 @@ public class RecordOfAction : MonoBehaviour
     [SerializeField]
     Image circle = null;
     RectTransform canvasRect;
+    List<Vector3> m_MotionList = new List<Vector3>();
+
 
     void Start()
     {
@@ -113,7 +117,8 @@ public class RecordOfAction : MonoBehaviour
         if (ActionSelect.I.isActive) return;
         UpdateTimer();
         if (MyInputManager.GetButtonDown(MyInputManager.Button.LeftShoulder)) RecordStart();
-        if (MyInputManager.GetButtonDown(MyInputManager.Button.RightShoulder)) ActionStart();
+        if (MyInputManager.GetButton(MyInputManager.Button.RightShoulder)) EnabledPrediction();
+        if (MyInputManager.GetButtonUp(MyInputManager.Button.RightShoulder)) ActionStart();
         if (MyInputManager.GetButtonDown(MyInputManager.Button.B))
         {
             ActionReset();
@@ -125,6 +130,29 @@ public class RecordOfAction : MonoBehaviour
                 break;
         }
 
+    }
+
+    private void EnabledPrediction()
+    {
+        m_MotionList.Clear();
+
+
+        Vector3 pos = Vector3.zero;
+        for (int i = 0; i < actions.Length; i++)
+        {
+            if (!actions[i].IsRecorded) continue;
+            float rotationY = Camera.main.transform.rotation.eulerAngles.y - actions[i].StartRotation.eulerAngles.y;
+            Quaternion rota = Quaternion.Euler(0.0f, rotationY, 0.0f);
+            for (int j = 0; j < actions[i].actionLog.Count; j++)
+            {
+                 if (actions[i].actionLog[j].sqrMagnitude < 0.01f) continue;
+                pos +=  rota*actions[i].actionLog[j];
+                m_MotionList.Add(transform.position + pos);
+
+            }
+        }
+        m_lineRenderer.SetVertexCount(m_MotionList.Count);
+        m_lineRenderer.SetPositions(m_MotionList.ToArray() as Vector3[]);
     }
 
     void ActionReset()
@@ -214,6 +242,7 @@ public class RecordOfAction : MonoBehaviour
 
     void ActionStart()
     {
+        m_lineRenderer.SetVertexCount(0);
         if (IsAllPlayed()) return;
         if (m_RecordState != RecordState.STAY) return;
         if (cooldown.IsWorking)
@@ -225,7 +254,7 @@ public class RecordOfAction : MonoBehaviour
 
         m_RecordState = RecordState.PLAY;
         EnablePlayImageEffects(true);
-        NextPosition = PlayerController.I.transform.position; ;
+        NextPosition = PlayerController.I.transform.position;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         playTime = 0;
         //データが保存されているものはスタートの状態をセット
