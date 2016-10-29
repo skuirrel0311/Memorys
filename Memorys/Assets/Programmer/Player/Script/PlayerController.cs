@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (recorder.m_RecordState == RecordState.PLAY) return;
+        if (recorder.IsPlaying) return;
         Vector3 movement = GetInputVector();
 
         //弧を描くように移動
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
     Vector3 GetInputVector()
     {
         if (currentState == PlayerState.Attack)return Vector3.zero;
-        if (recorder.m_RecordState == RecordState.PLAY) return Vector3.zero;
+        if (recorder.IsPlaying) return Vector3.zero;
 
         Vector2 leftStick = MyInputManager.GetAxis(MyInputManager.Axis.LeftStick);
         Vector3 movement = new Vector3(leftStick.x, 0, leftStick.y);
@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
 
     void Jumpping()
     {
-        if (recorder.m_RecordState == RecordState.PLAY) return;
+        if (recorder.IsPlaying) return;
 
         //animationContoller.ChangeAnimation("JumpToTop", 0.1f);
         currentState = PlayerState.Jump;

@@ -30,6 +30,16 @@ public class RecordOfAction : MonoBehaviour
         }
     }
 
+    public bool IsCreateGround { get { return isCreateGraund; } }
+
+    public bool IsPlaying
+    {
+        get
+        {
+            return !isCreateGraund && m_RecordState == RecordState.PLAY;
+        }
+    }
+
 
     [SerializeField]
     private float recordLength = 2;
@@ -42,6 +52,9 @@ public class RecordOfAction : MonoBehaviour
     private Text selectText = null;
     [SerializeField]
     private Text gaugeText = null;
+    [SerializeField]
+    //地形生成をするか、移動処理をするか
+    private bool isCreateGraund = true;
 
     private StorageOfAction[] actions = new StorageOfAction[3];
     private Animator animator;

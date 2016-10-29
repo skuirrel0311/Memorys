@@ -82,15 +82,39 @@ public class StorageOfAction
         }
         if (vec == Vector3.zero) return;
 
+        if(RecordOfAction.I.IsCreateGround)
+        {
+            CreateGround(vec, ref NextPosition);
+        }
+        else
+        {
+            PlayingMove(vec, ref NextPosition);
+        }
+
+        oldPosition = player.transform.position;
+    }
+
+    private void CreateGround(Vector3 vec,ref Vector3 NextPosition)
+    {
+
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.AddComponent<TimeDestroy>();
         cube.transform.position = NextPosition + new Vector3(0.0f, -0.6f, 0.0f);
-        float rotationY =  PlayStartRotation.eulerAngles.y- StartRotation.eulerAngles.y;
-        Quaternion rota = Quaternion.Euler(0.0f,rotationY,0.0f);
-        Vector3 vec2 =  rota* vec;
+        float rotationY = PlayStartRotation.eulerAngles.y - StartRotation.eulerAngles.y;
+        Quaternion rota = Quaternion.Euler(0.0f, rotationY, 0.0f);
+        Vector3 vec2 = rota * vec;
         NextPosition += vec2;
-        cube.transform.rotation = Quaternion.Euler(0.0f,Mathf.Atan2(vec2.x,vec2.z)*Mathf.Rad2Deg,0.0f);
-        oldPosition = player.transform.position;
+        cube.transform.rotation = Quaternion.Euler(0.0f, Mathf.Atan2(vec2.x, vec2.z) * Mathf.Rad2Deg, 0.0f);
+    }
+
+    private void PlayingMove(Vector3 vec, ref Vector3 NextPosition)
+    {
+        player.transform.position = NextPosition + new Vector3(0.0f, -0.6f, 0.0f);
+        float rotationY = PlayStartRotation.eulerAngles.y - StartRotation.eulerAngles.y;
+        Quaternion rota = Quaternion.Euler(0.0f, rotationY, 0.0f);
+        Vector3 vec2 = rota * vec;
+        NextPosition += vec2;
+        player.transform.rotation = Quaternion.Euler(player.transform.rotation.x, Mathf.Atan2(vec2.x, vec2.z) * Mathf.Rad2Deg, player.transform.rotation.z);
     }
 
     public void StopAction()
@@ -107,8 +131,8 @@ public class StorageOfAction
     //行動を解析しアニメーションを再生させる
     public void AnalysisBehaior(int playTime)
     {
-        
-        for (int i = 0; i < animationLog.Count; i++)
+        if (!RecordOfAction.I.IsPlaying) return;
+            for (int i = 0; i < animationLog.Count; i++)
         {
             animationLog[i].PlayAnimation(playTime);
         }
