@@ -3,9 +3,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
+using BehaviorDesigner.Runtime.Tactical;
 
 //プレイヤーの接触判定用クラス
-public class PlayerOverlap : MonoBehaviour {
+public class PlayerOverlap : MonoBehaviour,IDamageable {
 
     const int maxHP=3;
 
@@ -64,6 +65,11 @@ public class PlayerOverlap : MonoBehaviour {
             //ゲーム終了イベントへ飛ばす（セーブポイントへ戻す？）
             SaveManager.I.Respawn();
         }
+    }
+
+    public bool IsAlive()
+    {
+        return HP > 0;
     }
 
     void DisableEnemy()
