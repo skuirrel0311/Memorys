@@ -15,13 +15,11 @@ public class Attack : MonoBehaviour {
         //isAttack = isAttack && m_state != PlayerState.Attack;
         //m_state = PlayerController.I.currentState;
         if (!isAttack) return;
-        if(col.gameObject.tag=="Enemy")
+        if(col.gameObject.tag=="Target")
         {
-            BehaviorTree tree = col.gameObject.GetComponent<BehaviorTree>();
-            SharedInt hp = (SharedInt)tree.GetVariable("Hp");
-            hp.SetValue(hp.Value - 1);
+            GameManager.I.DestroyCancel();
             //エフェクト
-            Destroy(GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity), 3);
+            GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
         }
     }
 }
