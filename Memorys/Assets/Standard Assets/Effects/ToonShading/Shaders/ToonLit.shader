@@ -22,12 +22,12 @@ Shader "Toon/Lit" {
 #ifndef USING_DIRECTIONAL_LIGHT
 		lightDir = normalize(lightDir);
 #endif
-		
+
 		half d = (dot(s.Normal, lightDir) * 0.5 + 0.5) * atten; // ここで減衰率を適用させる
 		half3 ramp = tex2D(_Ramp, float2(d,d)).rgb; // Toon Rampの色を取得するためのパラメータとしてattenを利用する
 
 		half4 c;
-		c.rgb = (s.Albedo * _LightColor0.rgb*0.5f)+(ramp*0.5f); // attenを削除
+		c.rgb = (s.Albedo * _LightColor0.rgb*0.5f) + (ramp*0.5f); // attenを削除
 		c.a = 0;
 		return c;
 	}
@@ -48,5 +48,5 @@ Shader "Toon/Lit" {
 
 	}
 
-		Fallback "Diffuse"
+	Fallback "Diffuse"
 }

@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (recorder.IsPlaying) return;
         Vector3 movement = GetInputVector();
 
         //弧を描くように移動
@@ -86,7 +85,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (ActionSelect.I.isActive) return;
         Vector3 movement = transform.position - oldPosition;
         //Debug.Log("currentState:"+currentState);
         switch (currentState)
@@ -94,7 +92,7 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Idle:
             case PlayerState.Move:
                 if (!NoJumping && MyInputManager.GetButtonDown(MyInputManager.Button.A)) Jumpping();
-                if (MyInputManager.GetButtonDown(MyInputManager.Button.X) && RecordOfAction.I.m_RecordState!=RecordState.PLAY) Attack();
+                if (MyInputManager.GetButtonDown(MyInputManager.Button.X) ) Attack();
                 break;
             case PlayerState.Jump:
                 if (movement.y < 0)
@@ -112,15 +110,9 @@ public class PlayerController : MonoBehaviour
     Vector3 GetInputVector()
     {
         if (currentState == PlayerState.Attack)return Vector3.zero;
-        if (recorder.IsPlaying) return Vector3.zero;
 
         Vector2 leftStick = MyInputManager.GetAxis(MyInputManager.Axis.LeftStick);
         Vector3 movement = new Vector3(leftStick.x, 0, leftStick.y);
-        
-        if (ActionSelect.I.IsActionStint(ActionSelect.ActionSelected.Move))
-        {
-            movement = Vector3.zero;
-        }
 
 
         Quaternion cameraRotation = cameraObject.transform.rotation;
@@ -151,7 +143,6 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
-        if (ActionSelect.I.IsActionStint(ActionSelect.ActionSelected.Attack)) return;
         //animationContoller.ChangeAnimation("Attack", 0.1f);
         currentState = PlayerState.Attack;
         if (AttackCallBack != null) AttackCallBack();

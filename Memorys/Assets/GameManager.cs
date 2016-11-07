@@ -1,14 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager I;
 
+    public bool IsGameClear
+    {
+        get { return isGameClear; }
+        set
+        {
+            if(!isGameClear&&value)
+            {
+                isGameClear = true;
+                GameClearLogo.GetComponent<RectTransform>().DOMoveY(100.0f,1.0f,true).SetLoops(0,LoopType.Yoyo);
+                Debug.Log("GameClear");
+            }
+        }
+    }
+    private bool isGameClear = false;
+
     //ステージの崩壊間隔
     private const float c_IntervalSec = 30.0f;
     //一度に破壊されるオブジェクトの数
     private const int c_DestroyObjectNumber = 5;
+
+    [SerializeField]
+    private GameObject GameClearLogo;
 
     //プレイヤーの破壊目標
     private GameObject m_Target;
@@ -26,6 +45,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         I = this;
+        isGameClear = false;
         //ターゲットのオブジェクトを取得してポジションをセットする
         m_Target = GameObject.Instantiate(Resources.Load("Prefabs/Target") as GameObject) as GameObject;
         if (m_TargetPoints != null)
@@ -48,7 +68,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         m_Interval += Time.deltaTime;
-
         if(m_Interval > c_IntervalSec)
         {
             m_Interval = 0.0f;
@@ -65,7 +84,6 @@ public class GameManager : MonoBehaviour
                 m_SelectParticle.Emit(1);
             }
         }
-
     }
 
     //ターゲット（スイッチ）の場所をランダムで設置
@@ -93,9 +111,11 @@ public class GameManager : MonoBehaviour
 
     public void DestroyCancel()
     {
+        IsGameClear = true;
         m_Interval = 0.0f;
         SetTargetRandom();
         SetWillDestroy();
+
     }
 
     public void FieldObjectDestoy()
