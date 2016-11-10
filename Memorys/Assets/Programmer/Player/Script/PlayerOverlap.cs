@@ -10,8 +10,10 @@ public class PlayerOverlap : MonoBehaviour,IDamageable {
 
     const int maxHP=3;
 
+    //[SerializeField]
+    //Slider m_slider;
     [SerializeField]
-    Slider m_slider;
+    PointGauge pointGauge = null;
 
     public int HP;
 
@@ -22,14 +24,15 @@ public class PlayerOverlap : MonoBehaviour,IDamageable {
     void Start ()
     {
         HP = maxHP;
-        m_slider.value = HP;
+        //m_slider.value = HP;
+        pointGauge.Initialize(maxHP);
         invincibleTimer = new Timer();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        m_slider.value = HP;
+        //m_slider.value = HP;
 
         invincibleTimer.Update();
         if (invincibleTimer.IsLimitTime) invincibleTimer.Stop(true);
@@ -51,6 +54,7 @@ public class PlayerOverlap : MonoBehaviour,IDamageable {
     public void ReSpawn()
     {
         HP = maxHP;
+        pointGauge.Value = HP;
     }
 
     public void Damage(int point)
@@ -59,6 +63,7 @@ public class PlayerOverlap : MonoBehaviour,IDamageable {
         invincibleTimer.TimerStart(0.5f);
 
         HP -= point;
+        pointGauge.Value = HP;
         PlayerController.I.currentState = PlayerState.Damage;
         if (HP <= 0)
         {

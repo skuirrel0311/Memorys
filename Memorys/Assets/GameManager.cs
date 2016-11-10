@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     private float m_Interval=0.0f;
 
     private ParticleSystem m_SelectParticle;
+    [SerializeField]
+    LimitTime limitTime;
 
     private void Start()
     {
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         m_Interval += Time.deltaTime;
+        limitTime.DrawTime((int)((c_IntervalSec - m_Interval) / 0.01f), 4);
         if(m_Interval > c_IntervalSec)
         {
             m_Interval = 0.0f;
@@ -105,7 +108,7 @@ public class GameManager : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.TextArea(new Rect(0,0,200,50),"残り"+(int)(c_IntervalSec - m_Interval));
+        //GUI.TextArea(new Rect(0,0,200,50),"残り"+(int)(c_IntervalSec - m_Interval));
     }
 
 
