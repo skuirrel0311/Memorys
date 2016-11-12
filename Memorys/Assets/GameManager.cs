@@ -98,7 +98,15 @@ public class GameManager : MonoBehaviour
     //ターゲット（スイッチ）の場所をランダムで設置
     private void SetTargetRandom()
     {
-        m_Target.transform.position = m_TargetPoints[Random.Range(0, m_TargetPoints.Length)].transform.position + Vector3.up;
+        Vector3 NowPos = m_Target.transform.position;
+        while (true)
+        {
+            m_Target.transform.position = m_TargetPoints[Random.Range(0, m_TargetPoints.Length)].transform.position + Vector3.up;
+            if (!NowPos.Equals(m_Target.transform.position))
+            {
+                break;
+            }
+        }
     }
 
     //ターゲットが破壊しようとするオブジェクトを選択
