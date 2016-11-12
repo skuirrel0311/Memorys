@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Idle:
             case PlayerState.Move:
                 if (!NoJumping && MyInputManager.GetButtonDown(MyInputManager.Button.A)) Jumpping();
-                if (MyInputManager.GetButtonDown(MyInputManager.Button.X) ) Attack();
+                //if (MyInputManager.GetButtonDown(MyInputManager.Button.X) ) Attack();
                 break;
             case PlayerState.Jump:
                 if (movement.y < 0)

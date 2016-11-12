@@ -3,9 +3,22 @@ using System.Collections;
 
 public class BreakMessage : PopUpMessage
 {
+    GameObject m_Exposion;
+
+    void Awake()
+    {
+        m_Exposion = Resources.Load("ExplosionMobile") as GameObject;
+    }
+
     public override void DrawMessage()
     {
         //todo:押したらどうのこうの
+        if (IsViewMessage&&MyInputManager.GetButtonDown(MyInputManager.Button.A))
+        {
+            GameManager.I.DestroyCancel();
+            //エフェクト
+            GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
+        }
         base.DrawMessage();
     }
 
