@@ -11,9 +11,9 @@ public class PopUpMessage : MonoBehaviour
     [SerializeField]
     float UpperOffset =  2.0f;
     [SerializeField]
-    Vector3 offset = Vector3.zero;
+    protected Vector3 offset = Vector3.zero;
     [SerializeField]
-    Vector3 origin;
+    protected Vector3 origin;
     
     public bool IsViewMessage = false;
 

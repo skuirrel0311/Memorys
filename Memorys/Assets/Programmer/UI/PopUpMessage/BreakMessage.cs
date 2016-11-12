@@ -12,7 +12,7 @@ public class BreakMessage : PopUpMessage
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag != "Player") return;
-
+        origin = transform.position;
         IsViewMessage = true;
     }
 
