@@ -37,7 +37,7 @@ public class SaveManager : MonoBehaviour {
     public void Respawn()
     {
         int n = GetNowPoint();
-        PlayerController.I.GetComponent<PlayerOverlap>().ReSpawn();
+        PlayerController.I.GetComponent<PlayerOverlap>().Death();
         if (n==0)
         {
             PlayerController.I.transform.position = Vector3.zero;

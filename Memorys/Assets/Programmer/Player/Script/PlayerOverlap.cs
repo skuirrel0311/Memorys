@@ -33,7 +33,6 @@ public class PlayerOverlap : MonoBehaviour,IDamageable {
 	void Update ()
     {
         //m_slider.value = HP;
-
         invincibleTimer.Update();
         if (invincibleTimer.IsLimitTime) invincibleTimer.Stop(true);
 	}
@@ -43,18 +42,17 @@ public class PlayerOverlap : MonoBehaviour,IDamageable {
         if (PlayerController.I.currentState == PlayerState.Attack) return;
         if(col.gameObject.tag=="Enemy")
         {
-            //Damage(1);
+            Damage(1);
         }
         if(col.gameObject.tag == "Bullet")
         {
-            Damage(1);
+            Damage(3);
         }
     }
 
-    public void ReSpawn()
+    public void Death()
     {
-        HP = maxHP;
-        pointGauge.Value = HP;
+        GameManager.I.m_GameEnd.GameOver();
     }
 
     public void Damage(int point)
@@ -67,8 +65,7 @@ public class PlayerOverlap : MonoBehaviour,IDamageable {
         PlayerController.I.currentState = PlayerState.Damage;
         if (HP <= 0)
         {
-            //ゲーム終了イベントへ飛ばす（セーブポイントへ戻す？）
-            SaveManager.I.Respawn();
+            Death();
         }
     }
 

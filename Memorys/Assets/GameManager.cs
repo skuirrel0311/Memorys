@@ -6,21 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager I;
 
-    public bool IsGameClear
-    {
-        get { return isGameClear; }
-        set
-        {
-            if(!isGameClear&&value)
-            {
-                isGameClear = true;
-                GameClearLogo.GetComponent<RectTransform>().DOMoveY(100.0f,1.0f,true).SetLoops(0,LoopType.Yoyo);
-                Debug.Log("GameClear");
-            }
-        }
-    }
-    private bool isGameClear = false;
-
+    public GameEnd m_GameEnd;
     //ステージの崩壊間隔
     private const float c_IntervalSec = 30.0f;
     //一度に破壊されるオブジェクトの数
@@ -38,16 +24,35 @@ public class GameManager : MonoBehaviour
     private List<GameObject> m_FieldObjects;
     //ターゲットが破壊を宣言しているオブジェクト
     private List<GameObject> m_WillDestroyObjects;
-    private float m_Interval=0.0f;
+    private float m_Interval = 0.0f;
 
     private ParticleSystem m_SelectParticle;
     [SerializeField]
     LimitTime limitTime;
 
+    private void Awake()
+    {
+        m_GameEnd = new GameEnd();
+        m_GameEnd.Initialize();
+
+        m_GameEnd.OnGameClearCallBack = () =>
+        {
+            GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
+
+        };
+
+        m_GameEnd.OnGameOverCallBack = () =>
+        {
+            GameClearLogo.GetComponent<UnityEngine.UI.Image>().color = Color.black;
+              GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
+            Debug.Log("GameeOverCallBack",this);
+        };
+    }
+
     private void Start()
     {
         I = this;
-        isGameClear = false;
+
         //ターゲットのオブジェクトを取得してポジションをセットする
         m_Target = GameObject.Instantiate(Resources.Load("Prefabs/Target") as GameObject) as GameObject;
         if (m_TargetPoints != null)
@@ -71,7 +76,7 @@ public class GameManager : MonoBehaviour
     {
         m_Interval += Time.deltaTime;
         limitTime.DrawTime((int)((c_IntervalSec - m_Interval) / 0.01f), 4);
-        if(m_Interval > c_IntervalSec)
+        if (m_Interval > c_IntervalSec)
         {
             m_Interval = 0.0f;
             FieldObjectDestoy();
@@ -87,6 +92,7 @@ public class GameManager : MonoBehaviour
                 m_SelectParticle.Emit(1);
             }
         }
+        m_GameEnd.Update();
     }
 
     //ターゲット（スイッチ）の場所をランダムで設置
@@ -106,28 +112,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnGUI()
-    {
-        //GUI.TextArea(new Rect(0,0,200,50),"残り"+(int)(c_IntervalSec - m_Interval));
-    }
-
-
     public void DestroyCancel()
     {
-        IsGameClear = true;
         m_Interval = 0.0f;
         SetTargetRandom();
         SetWillDestroy();
-
+        m_GameEnd.DestroyCancel();
     }
 
     public void FieldObjectDestoy()
     {
-        for(int i=0; i < m_WillDestroyObjects.Count;i++)
+        for (int i = 0; i < m_WillDestroyObjects.Count; i++)
         {
             m_FieldObjects.Remove(m_WillDestroyObjects[i]);
             m_WillDestroyObjects[i].AddComponent<Rigidbody>();
-            Destroy(m_WillDestroyObjects[i],5.0f);
+            Destroy(m_WillDestroyObjects[i], 5.0f);
         }
     }
 
@@ -135,7 +134,7 @@ public class GameManager : MonoBehaviour
     {
         short[] ary = new short[m_FieldObjects.Count];
         short aryLength = (short)ary.Length;
-        for(short i = 0; i< aryLength;i++)
+        for (short i = 0; i < aryLength; i++)
         {
             ary[i] = i;
         }
