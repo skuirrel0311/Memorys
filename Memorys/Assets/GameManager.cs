@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     //ステージの崩壊間隔
     private const float c_IntervalSec = 30.0f;
     //一度に破壊されるオブジェクトの数
-    private const int c_DestroyObjectNumber = 5;
+    private const int c_DestroyObjectNumber = 80;
 
     [SerializeField]
     private GameObject GameClearLogo;
@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
         m_WillDestroyObjects = new List<GameObject>();
         m_Interval = 0.0f;
         SetWillDestroy();
+        NotificationSystem.I.Indication("ターゲットを５回破壊し、崩壊を止めろ！");
     }
 
     private void Update()

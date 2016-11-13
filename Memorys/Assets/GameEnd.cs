@@ -58,12 +58,15 @@ public class GameEnd
     public void DestroyCancel()
     {
         m_destoryCancelCount++;
-        Update();
+        if (!(m_destoryCancelCount >= c_MaxDestroyCalcel))
+            NotificationSystem.I.Indication("崩壊を止めた！　あと"+(c_MaxDestroyCalcel-m_destoryCancelCount)+"回!\nターゲットが別の場所に出現！");
+            Update();
     }
 
     public void StageDestroy()
     {
         m_StageDestroy++;
+        NotificationSystem.I.Indication("ステージが崩壊！　\n別の場所にターゲットが出現");
     }
 
     public void GameClear()
