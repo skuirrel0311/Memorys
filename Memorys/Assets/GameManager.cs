@@ -85,15 +85,15 @@ public class GameManager : MonoBehaviour
             SetTargetRandom();
         }
 
-        if (m_WillDestroyObjects.Count == c_DestroyObjectNumber)
-        {
-            for (int i = 0; i < c_DestroyObjectNumber; i++)
-            {
-                m_SelectParticle.transform.position = m_WillDestroyObjects[i].transform.position;
-                m_SelectParticle.Emit(1);
-            }
-        }
         m_GameEnd.Update();
+    }
+
+    private void ObjectEmission(GameObject obj,Color color)
+    {
+        //オブジェクトを光らせる
+        Renderer r = obj.GetComponent<Renderer>();
+        r.material.EnableKeyword("_EMISSION");
+        r.material.SetColor("_EmissionColor", color); 
     }
 
     //ターゲット（スイッチ）の場所をランダムで設置
@@ -118,12 +118,17 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < c_DestroyObjectNumber; i++)
         {
             m_WillDestroyObjects.Add(m_FieldObjects[ary[i]]);
+            ObjectEmission(m_FieldObjects[ary[i]],Color.red);
         }
     }
 
     public void DestroyCancel()
     {
         m_Interval = 0.0f;
+        for(int i = 0;i < m_WillDestroyObjects.Count;i++)
+        {
+            ObjectEmission(m_WillDestroyObjects[i],Color.black);
+        }
         SetTargetRandom();
         SetWillDestroy();
         m_GameEnd.DestroyCancel();
