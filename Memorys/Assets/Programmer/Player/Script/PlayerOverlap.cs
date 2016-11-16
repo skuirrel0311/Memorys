@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tactical;
@@ -14,8 +15,11 @@ public class PlayerOverlap : MonoBehaviour,IDamageable {
     //Slider m_slider;
     [SerializeField]
     PointGauge pointGauge = null;
+    BehaviorTree[] enemies;
 
     public int HP;
+
+    bool isFound = false;
 
     //無敵時間
     Timer invincibleTimer;
@@ -27,6 +31,8 @@ public class PlayerOverlap : MonoBehaviour,IDamageable {
         //m_slider.value = HP;
         pointGauge.Initialize(maxHP);
         invincibleTimer = new Timer();
+
+        enemies = GameObject.FindGameObjectsWithTag("Enemy").Select(n => n.GetComponent<BehaviorTree>()).ToArray();
 	}
 	
 	// Update is called once per frame
@@ -35,7 +41,20 @@ public class PlayerOverlap : MonoBehaviour,IDamageable {
         //m_slider.value = HP;
         invincibleTimer.Update();
         if (invincibleTimer.IsLimitTime) invincibleTimer.Stop(true);
-	}
+
+        isFound = false;
+
+        foreach(BehaviorTree enemy in enemies)
+        {
+            if((bool)enemy.GetVariable("IsSeePlayer").GetValue())
+            {
+                //1匹でも見ていたらtrueにする。
+                isFound = true;
+            }
+        }
+
+        Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.vignette.enabled = isFound;
+    }
 
     void OnCollisionEnter(Collision col)
     {
