@@ -6,7 +6,7 @@ public class PopUpMessage : MonoBehaviour
 {
     RectTransform canvasRect;
     [SerializeField]
-    Image messagePrefab = null;
+    protected Image messagePrefab = null;
 
     [SerializeField]
     float UpperOffset =  2.0f;

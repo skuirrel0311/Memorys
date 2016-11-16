@@ -7,9 +7,10 @@ using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tactical;
 
 //プレイヤーの接触判定用クラス
-public class PlayerOverlap : MonoBehaviour,IDamageable {
+public class PlayerOverlap : MonoBehaviour, IDamageable
+{
 
-    const int maxHP=3;
+    const int maxHP = 3;
 
     //[SerializeField]
     //Slider m_slider;
@@ -20,50 +21,66 @@ public class PlayerOverlap : MonoBehaviour,IDamageable {
     public int HP;
 
     bool isFound = false;
+    DistanceMessage distanceMessage;
+    Text distanceText;
 
     //無敵時間
     Timer invincibleTimer;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         HP = maxHP;
         //m_slider.value = HP;
         pointGauge.Initialize(maxHP);
         invincibleTimer = new Timer();
-
+        distanceMessage = GetComponent<DistanceMessage>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy").Select(n => n.GetComponent<BehaviorTree>()).ToArray();
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         //m_slider.value = HP;
         invincibleTimer.Update();
         if (invincibleTimer.IsLimitTime) invincibleTimer.Stop(true);
 
         isFound = false;
+        float distance = 10000.0f;
 
-        foreach(BehaviorTree enemy in enemies)
+        foreach (BehaviorTree enemy in enemies)
         {
-            if((bool)enemy.GetVariable("IsSeePlayer").GetValue())
+            if (!(bool)enemy.GetVariable("IsWarning").GetValue()) continue;
+            //1匹でも見ていたらtrueにする。
+            isFound = true;
+
+            float temp = Vector3.Distance(enemy.transform.position, transform.position);
+            if (temp < distance)
             {
-                //1匹でも見ていたらtrueにする。
-                isFound = true;
+                distance = temp;
             }
         }
 
         Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.vignette.enabled = isFound;
+        if(isFound)
+        {
+            distanceMessage.IsViewMessage = true;
+            distanceMessage.distance = distance;
+        }
+        else
+        {
+            distanceMessage.IsViewMessage = false;
+        }
     }
 
     void OnCollisionEnter(Collision col)
     {
         if (PlayerController.I.currentState == PlayerState.Attack) return;
-        if(col.gameObject.tag=="Enemy")
+        if (col.gameObject.tag == "Enemy")
         {
             Damage(1);
         }
-        if(col.gameObject.tag == "Bullet")
+        if (col.gameObject.tag == "Bullet")
         {
             Damage(3);
         }
