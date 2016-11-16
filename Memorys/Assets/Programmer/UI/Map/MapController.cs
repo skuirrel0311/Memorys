@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 
 public class MapController : MonoBehaviour
 {
+
+
     GameObject reducionMap;
     GameObject expansionMap; 
 
@@ -12,10 +15,12 @@ public class MapController : MonoBehaviour
         expansionMap = transform.GetChild(1).gameObject;
 
         reducionMap.SetActive(true);
+
     }
 
     void Update()
     {
+   
         if(MyInputManager.GetButtonDown(MyInputManager.Button.RightShoulder))
         {
             //切り替え

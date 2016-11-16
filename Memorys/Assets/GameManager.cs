@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using DG.Tweening;
 
 public class GameManager : MonoBehaviour
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject[] m_TargetPoints = null;
     //フィールド上の破壊可能オブジェクト
-    private List<GameObject> m_FieldObjects;
+    public List<GameObject> m_FieldObjects;
     //ターゲットが破壊を宣言しているオブジェクト
     private List<GameObject> m_WillDestroyObjects;
     private float m_Interval = 0.0f;
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
               GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
             Debug.Log("GameeOverCallBack",this);
         };
+
     }
 
     private void Start()
@@ -90,6 +92,7 @@ public class GameManager : MonoBehaviour
 
     private void ObjectEmission(GameObject obj,Color color)
     {
+        if (obj == null) return;
         //オブジェクトを光らせる
         Renderer r = obj.GetComponent<Renderer>();
         r.material.EnableKeyword("_EMISSION");
@@ -138,10 +141,18 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < m_WillDestroyObjects.Count; i++)
         {
-            m_FieldObjects.Remove(m_WillDestroyObjects[i]);
-            m_WillDestroyObjects[i].AddComponent<Rigidbody>();
-            Destroy(m_WillDestroyObjects[i], 5.0f);
+           DestroyObject(m_WillDestroyObjects[i]);
         }
+    }
+
+    void ObjectDestroy(GameObject go)
+    {
+        float rand = Random.Range(0.1f, 1.0f);
+        //yield return new WaitForSeconds(rand);
+        m_FieldObjects.Remove(go);
+        go.AddComponent<Rigidbody>();
+        //go.GetComponent<BoxCollider>().isTrigger =true;
+        Destroy(go, 5.0f);
     }
 
     private short[] RandomShuffle()

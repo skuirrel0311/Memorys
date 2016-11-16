@@ -26,7 +26,7 @@ public class MapManager : MonoBehaviour
     [SerializeField]
     bool isShowEnemy = true;
 
-    public void Start()
+    public virtual void Start()
     {
         playerImage = transform.FindChild("Player").GetComponent<Image>();
         switchImage = transform.FindChild("Switch").GetComponent<Image>();
@@ -82,7 +82,7 @@ public class MapManager : MonoBehaviour
 
     protected Quaternion ConvertMapRotation(Vector3 rotation)
     {
-        return Quaternion.Euler(180.0f, 0, rotation.y);
+        return Quaternion.Euler(0, 0, rotation.y);
     }
 
     //pos1とpos2の距離がdistanceより小さかったらtrueを返す
