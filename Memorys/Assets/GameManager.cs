@@ -45,8 +45,8 @@ public class GameManager : MonoBehaviour
         m_GameEnd.OnGameOverCallBack = () =>
         {
             GameClearLogo.GetComponent<UnityEngine.UI.Image>().color = Color.black;
-              GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
-            Debug.Log("GameeOverCallBack",this);
+            GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
+            Debug.Log("GameeOverCallBack", this);
         };
 
     }
@@ -91,13 +91,13 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void ObjectEmission(GameObject obj,Color color)
+    private void ObjectEmission(GameObject obj, Color color)
     {
         if (obj == null) return;
         //オブジェクトを光らせる
         Renderer r = obj.GetComponent<Renderer>();
         r.material.EnableKeyword("_EMISSION");
-        r.material.SetColor("_EmissionColor", color); 
+        r.material.SetColor("_EmissionColor", color);
     }
 
     //ターゲット（スイッチ）の場所をランダムで設置
@@ -120,12 +120,12 @@ public class GameManager : MonoBehaviour
         //short[] ary = RandomShuffle();
         m_WillDestroyObjects.Clear();
 
-        float distance = 50.0f - m_GameEnd.StageDestroyCount*10.0f;
+        float distance = 50.0f - m_GameEnd.StageDestroyCount * 10.0f;
         distance *= distance;
-        int wallSeceletCount = 0; 
+        int wallSeceletCount = 0;
         for (int i = 0; i < m_FieldObjects.Count; i++)
         {
-            if(wallSeceletCount<=5 && m_FieldObjects[i].GetComponent<MeshFilter>().sharedMesh.name == "wall")
+            if (wallSeceletCount <= 5 && m_FieldObjects[i].GetComponent<MeshFilter>().sharedMesh.name == "wall")
             {
                 wallSeceletCount++;
                 m_WillDestroyObjects.Add(m_FieldObjects[i]);
@@ -143,9 +143,9 @@ public class GameManager : MonoBehaviour
     public void DestroyCancel()
     {
         m_Interval = 0.0f;
-        for(int i = 0;i < m_WillDestroyObjects.Count;i++)
+        for (int i = 0; i < m_WillDestroyObjects.Count; i++)
         {
-            ObjectEmission(m_WillDestroyObjects[i],Color.black);
+            ObjectEmission(m_WillDestroyObjects[i], Color.black);
         }
         SetTargetRandom();
         SetWillDestroy();
@@ -156,7 +156,8 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < m_WillDestroyObjects.Count; i++)
         {
-            StartCoroutine("ObjectDestroy", m_WillDestroyObjects[i]);
+            if (m_WillDestroyObjects[i] != null)
+                StartCoroutine("ObjectDestroy", m_WillDestroyObjects[i]);
         }
         m_GameEnd.StageDestroy();
     }

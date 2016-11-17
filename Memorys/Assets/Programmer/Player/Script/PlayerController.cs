@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
     public PlayerState currentState;    //現在のステート
     [SerializeField]
     bool NoJumping = false;
+    [SerializeField]
+    private float MaxStamina;
+    public float stamina;
+    private bool  isStaminaDepletion;
 
     GameObject cameraObject;
     Rigidbody body = null;
@@ -53,11 +57,17 @@ public class PlayerController : MonoBehaviour
         oldPosition = transform.position;
         currentState = PlayerState.Idle;
         cameraObject = GameObject.Find("MainCamera");
+        stamina = MaxStamina;
+        isStaminaDepletion = false;
     }
 
     void FixedUpdate()
     {
         Vector3 movement = GetInputVector();
+        //スタミナ
+        stamina = Mathf.Min(MaxStamina,stamina+Time.deltaTime);
+        if (stamina == MaxStamina)
+            isStaminaDepletion = false;
 
         //弧を描くように移動
         Vector3 forward = Vector3.Slerp(
@@ -122,7 +132,18 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 movement = new Vector3(leftStick.x, 0, leftStick.y);
+        if(!isStaminaDepletion&&MyInputManager.GetButton(MyInputManager.Button.LeftShoulder))
+        {
+            movement *= 2.0f;
+            stamina = Mathf.Max(0.0f,stamina-(Time.deltaTime*2.0f));
+            if (stamina == 0.0f)
+                isStaminaDepletion = true;
+        }
 
+        if(isStaminaDepletion)
+        {
+            movement *= 0.0f;
+        }
 
         Quaternion cameraRotation = cameraObject.transform.rotation;
         cameraRotation = Quaternion.Euler(0, cameraRotation.eulerAngles.y, 0);
