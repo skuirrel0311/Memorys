@@ -46,6 +46,8 @@ public class CameraContoller : MonoBehaviour
 
     //カメラを制御するか？
     public bool IsWork = true;
+    [SerializeField]
+    bool CanMouseControl = false;
 
     void Start()
     {
@@ -67,7 +69,7 @@ public class CameraContoller : MonoBehaviour
         BetweenPlayerAndCamera();
         if (!IsWork) return;
         //右スティックで回転
-        Vector2 rightStick = MyInputManager.GetAxis(MyInputManager.Axis.RightStick);
+        Vector2 rightStick = GetInputVector();
         longitude += rightStick.x * rotationSpeedX * Time.deltaTime;
         // - はお好み
         latitude -= rightStick.y * rotationSpeedY * Time.deltaTime;
@@ -77,6 +79,34 @@ public class CameraContoller : MonoBehaviour
         longitude = longitude % 360.0f;
         
         SphereCameraControl();
+    }
+
+    Vector2 GetInputVector()
+    {
+        Vector2 rightStick = MyInputManager.GetAxis(MyInputManager.Axis.RightStick);
+
+        if(rightStick == Vector2.zero)
+        {
+            if (Input.GetKey(KeyCode.LeftArrow)) rightStick.x = -1;
+            if (Input.GetKey(KeyCode.RightArrow)) rightStick.x = 1;
+            if (Input.GetKey(KeyCode.UpArrow)) rightStick.y = 1;
+            if (Input.GetKey(KeyCode.DownArrow)) rightStick.y = -1;
+        }
+
+        if(CanMouseControl)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            rightStick.x = Input.GetAxis("MouseX");
+            rightStick.y = Input.GetAxis("MouseY");
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        return rightStick;
     }
 
     void SphereCameraControl()

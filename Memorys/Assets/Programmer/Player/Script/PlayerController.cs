@@ -112,6 +112,15 @@ public class PlayerController : MonoBehaviour
         if (currentState == PlayerState.Attack)return Vector3.zero;
 
         Vector2 leftStick = MyInputManager.GetAxis(MyInputManager.Axis.LeftStick);
+
+        if(leftStick == Vector2.zero)
+        {
+            if (Input.GetKey(KeyCode.A)) leftStick.x = -1;
+            if (Input.GetKey(KeyCode.D)) leftStick.x = 1;
+            if (Input.GetKey(KeyCode.W)) leftStick.y = 1;
+            if (Input.GetKey(KeyCode.S)) leftStick.y = -1;
+        }
+
         Vector3 movement = new Vector3(leftStick.x, 0, leftStick.y);
 
 
