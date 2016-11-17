@@ -30,6 +30,11 @@ public class GameEnd
     ///     何回ステージが崩壊したか
     /// </summary>
     private int m_StageDestroy=0;
+    public int StageDestroyCount
+    {
+        get { return m_StageDestroy; }
+    }
+
 
     public void Initialize()
     {

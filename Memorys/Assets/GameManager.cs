@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        m_GameEnd.Update();
         m_Interval += Time.deltaTime;
         limitTime.DrawTime((int)((c_IntervalSec - m_Interval) / 0.01f), 4);
         if (m_Interval > c_IntervalSec)
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour
             SetTargetRandom();
         }
 
-        m_GameEnd.Update();
+
     }
 
     private void ObjectEmission(GameObject obj,Color color)
@@ -116,12 +117,26 @@ public class GameManager : MonoBehaviour
     //ターゲットが破壊しようとするオブジェクトを選択
     private void SetWillDestroy()
     {
-        short[] ary = RandomShuffle();
+        //short[] ary = RandomShuffle();
         m_WillDestroyObjects.Clear();
-        for (int i = 0; i < c_DestroyObjectNumber; i++)
+
+        float distance = 50.0f - m_GameEnd.StageDestroyCount*10.0f;
+        distance *= distance;
+        int wallSeceletCount = 0; 
+        for (int i = 0; i < m_FieldObjects.Count; i++)
         {
-            m_WillDestroyObjects.Add(m_FieldObjects[ary[i]]);
-            ObjectEmission(m_FieldObjects[ary[i]],Color.red);
+            if(wallSeceletCount<=5 && m_FieldObjects[i].GetComponent<MeshFilter>().sharedMesh.name == "wall")
+            {
+                wallSeceletCount++;
+                m_WillDestroyObjects.Add(m_FieldObjects[i]);
+                ObjectEmission(m_FieldObjects[i], Color.red);
+            }
+
+            if (Vector3.SqrMagnitude(m_FieldObjects[i].transform.position) > distance)
+            {
+                m_WillDestroyObjects.Add(m_FieldObjects[i]);
+                ObjectEmission(m_FieldObjects[i], Color.red);
+            }
         }
     }
 
@@ -141,17 +156,18 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < m_WillDestroyObjects.Count; i++)
         {
-           DestroyObject(m_WillDestroyObjects[i]);
+            StartCoroutine("ObjectDestroy", m_WillDestroyObjects[i]);
         }
+        m_GameEnd.StageDestroy();
     }
 
-    void ObjectDestroy(GameObject go)
+    IEnumerator ObjectDestroy(GameObject go)
     {
         float rand = Random.Range(0.1f, 1.0f);
-        //yield return new WaitForSeconds(rand);
+        yield return new WaitForSeconds(rand);
         m_FieldObjects.Remove(go);
         go.AddComponent<Rigidbody>();
-        //go.GetComponent<BoxCollider>().isTrigger =true;
+        go.GetComponent<BoxCollider>().enabled = false;
         Destroy(go, 5.0f);
     }
 
