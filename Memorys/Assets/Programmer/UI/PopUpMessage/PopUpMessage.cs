@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PopUpMessage : MonoBehaviour
 {
-    RectTransform canvasRect;
+    protected RectTransform canvasRect;
     [SerializeField]
     protected Image messagePrefab = null;
 
@@ -17,7 +17,7 @@ public class PopUpMessage : MonoBehaviour
     
     public bool IsViewMessage = false;
 
-    void Start()
+    public virtual void Start()
     {
         canvasRect = GameObject.Find("Canvas").GetComponent<RectTransform>();
         origin = transform.position;

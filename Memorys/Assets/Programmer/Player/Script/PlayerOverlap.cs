@@ -58,19 +58,13 @@ public class PlayerOverlap : MonoBehaviour, IDamageable
             if (temp < distance)
             {
                 distance = temp;
+                distanceMessage.distance = distance;
+                distanceMessage.targetTransform = enemy.transform;
             }
         }
 
+        distanceMessage.IsViewMessage = isFound;
         Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.vignette.enabled = isFound;
-        if(isFound)
-        {
-            distanceMessage.IsViewMessage = true;
-            distanceMessage.distance = distance;
-        }
-        else
-        {
-            distanceMessage.IsViewMessage = false;
-        }
     }
 
     void OnCollisionEnter(Collision col)
