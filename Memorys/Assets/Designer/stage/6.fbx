@@ -10,11 +10,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2016
 		Month: 11
-		Day: 19
-		Hour: 14
-		Minute: 46
-		Second: 19
-		Millisecond: 347
+		Day: 21
+		Hour: 15
+		Minute: 56
+		Second: 1
+		Millisecond: 491
 	}
 	Creator: "FBX SDK/FBX Plugins version 2015.0"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -36,13 +36,13 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "2015"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "19/11/2016 05:46:19.330"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "21/11/2016 06:56:01.489"
 			P: "Original|FileName", "KString", "", "", "C:/Users/game/Desktop/stage/6.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2015"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "19/11/2016 05:46:19.330"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "21/11/2016 06:56:01.489"
 		}
 	}
 }
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 827357056, "", "Scene" {
+	Document: 1122594544, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -250,7 +250,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 874318400, "Geometry::", "Mesh" {
+	Geometry: 872959856, "Geometry::", "Mesh" {
 		Vertices: *36 {
 			a: 100.000045776367,0,-173.205062866211,-99.9999694824219,0,-173.205108642578,-200,0,-2.98023223876953e-005,-100.000022888184,0,173.205078125,99.9999923706055,0,173.205093383789,200,0,0,100.000045776367,1728.4462890625,-173.205062866211,-99.9999694824219,1728.4462890625,-173.205108642578,-200,1728.4462890625,-2.98023223876953e-005,-100.000022888184,1728.4462890625,173.205078125,99.9999923706055,1728.4462890625,173.205093383789,200,1728.4462890625,0
 		} 
@@ -310,9 +310,11 @@ Objects:  {
 			}
 		}
 	}
-	Model: 378510432, "Model::pCylinder1", "Mesh" {
+	Model: 1113429200, "Model::pCylinder1", "Mesh" {
 		Version: 232
 		Properties70:  {
+			P: "RotationPivot", "Vector3D", "Vector", "",0,1728.4462890625,0
+			P: "ScalingPivot", "Vector3D", "Vector", "",0,1728.4462890625,0
 			P: "RotationActive", "bool", "", "",1
 			P: "InheritType", "enum", "", "",1
 			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
@@ -322,7 +324,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1128694448, "Material::lambert1", "" {
+	Material: 901531728, "Material::lambert1", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -345,14 +347,14 @@ Objects:  {
 Connections:  {
 	
 	;Model::pCylinder1, Model::RootNode
-	C: "OO",378510432,0
+	C: "OO",1113429200,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1128447920,932836000
+	C: "OO",1115644512,1115908096
 	
 	;Geometry::, Model::pCylinder1
-	C: "OO",874318400,378510432
+	C: "OO",872959856,1113429200
 	
 	;Material::lambert1, Model::pCylinder1
-	C: "OO",1128694448,378510432
+	C: "OO",901531728,1113429200
 }
