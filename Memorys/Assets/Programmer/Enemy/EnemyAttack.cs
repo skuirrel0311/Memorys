@@ -6,6 +6,8 @@ public class EnemyAttack : MonoBehaviour
     public int AttackPoint = 1;
     Timer timer;
 
+    public bool IsAttacking { get { return timer.IsWorking; } }
+
     void Start()
     {
         timer = new Timer();

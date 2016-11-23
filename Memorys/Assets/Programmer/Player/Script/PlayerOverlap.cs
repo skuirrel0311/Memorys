@@ -10,7 +10,7 @@ using BehaviorDesigner.Runtime.Tactical;
 public class PlayerOverlap : MonoBehaviour, IDamageable
 {
 
-    const int maxHP = 3;
+    const int maxHP = 1;
 
     //[SerializeField]
     //Slider m_slider;
