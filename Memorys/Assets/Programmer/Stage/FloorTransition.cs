@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public enum FloorState
 {
@@ -51,12 +52,13 @@ public class FloorTransition : MonoBehaviour
     public void FloorTrans()
     {
         if (isTransition) return;
+        transform.DOShakePosition(5.0f,0.1f,10,90.0f,false,false);
         isTransition = true;
         m_Timer = 0.0f;
         SetFloorState();
-        Renderer r = GetComponent<Renderer>();
-        r.material.EnableKeyword("_EMISSION");
-        r.material.SetColor("_EmissionColor", Color.red);
+        //Renderer r = GetComponent<Renderer>();
+        //r.material.EnableKeyword("_EMISSION");
+        //r.material.SetColor("_EmissionColor", Color.red);
     }
 
     //座標を変化させる
@@ -86,9 +88,9 @@ public class FloorTransition : MonoBehaviour
             if (t > 1.0f) break;
             yield return null;
         }
-        Renderer r = GetComponent<Renderer>();
-        r.material.EnableKeyword("_EMISSION");
-        r.material.SetColor("_EmissionColor", Color.black);
+        //Renderer r = GetComponent<Renderer>();
+        //r.material.EnableKeyword("_EMISSION");
+        //r.material.SetColor("_EmissionColor", Color.black);
         isTransition = false;
     }
 }
