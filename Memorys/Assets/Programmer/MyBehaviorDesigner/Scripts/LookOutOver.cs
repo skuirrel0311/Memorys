@@ -20,7 +20,7 @@ public class LookOutOver : Action
         directionVec[(int)TargetDirection.left] = transform.rotation * Vector3.left;
         directionVec[(int)TargetDirection.right] = directionVec[(int)TargetDirection.left] * -1;
         directionVec[(int)TargetDirection.back] = directionVec[(int)TargetDirection.forward] * -1;
-        AddPatten();
+        AddRandomPatten(8);
         currentIndex = 0;
         currentTrargetDirection = directionPattenList[currentIndex];
         targetRotation = Quaternion.LookRotation(directionVec[(int)currentTrargetDirection]);
@@ -36,6 +36,15 @@ public class LookOutOver : Action
         directionPattenList.Add(TargetDirection.forward);
     }
 
+    private void AddRandomPatten(int num)
+    {
+        for (int i = 0; i < num; i++)
+        {
+            //0~3
+            directionPattenList.Add((TargetDirection)Random.Range(0, 4));
+        }
+    }
+    
     public override TaskStatus OnUpdate()
     {
         RotateTowards();
