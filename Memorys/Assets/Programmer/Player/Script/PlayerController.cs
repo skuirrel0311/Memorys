@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        
         Vector3 movement = transform.position - oldPosition;
         //Debug.Log("currentState:"+currentState);
         switch (currentState)
@@ -112,7 +113,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.Attack:
                 //アニメーションの再生が終わったら戻る
-
                 break;
         }
     }
@@ -164,7 +164,7 @@ public class PlayerController : MonoBehaviour
 
     void Jumpping()
     {
-        if (recorder.IsPlaying) return;
+        //if (recorder.IsPlaying) return;
 
         //animationContoller.ChangeAnimation("JumpToTop", 0.1f);
         currentState = PlayerState.Jump;
@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
 
             if (Physics.Raycast(underRay, out hit, 0.3f))
             {
-                if (hit.transform.tag == "Floor") return true;
+                return true;
             }
         }
         return false;
@@ -204,6 +204,15 @@ public class PlayerController : MonoBehaviour
         if (IsOnGround()) return;
 
         //落ちたであろう
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (currentState==PlayerState.Jump&& IsOnGround())
+        {
+            currentState = PlayerState.Idle;
+            return;
+        }
     }
 
 }
