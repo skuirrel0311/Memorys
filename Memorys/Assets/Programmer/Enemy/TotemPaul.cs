@@ -4,7 +4,7 @@ using System.Collections;
 public class TotemPaul : MonoBehaviour
 {
     [SerializeField]
-    GameObject beamParticle = null;
+    ParticleSystem chargeEffect = null;
     
     LineRenderer lineRenderer;
     Ray shotRay;
@@ -16,46 +16,67 @@ public class TotemPaul : MonoBehaviour
     Vector3 targetOffset = new Vector3(0,1.5f,0);
 
     GameObject player;
-    
-    Timer timer;
 
-    public bool IsAttacking { get { return timer.IsWorking; } }
+    public bool IsAttacking { get; private set; }
+
+    float chargeTime, intervalTime;
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         player = GameObject.FindGameObjectWithTag("Player");
-        timer = new Timer();
         lineRenderer.enabled = false;
+        IsAttacking = false;
+        chargeTime = intervalTime = 0;
     }
 
     void Update()
     {
-        timer.Update();
-
-        if(timer.IsLimitTime)
-        {
-            lineRenderer.enabled = false;
-            timer.Stop(true);
-        }
     }
 
-    public void Attack(float interval)
+    public void Attack(float chargeTime,float intervalTime)
     {
         if (IsAttacking) return;
-        timer.TimerStart(interval);
+        this.chargeTime = chargeTime;
+        this.intervalTime = intervalTime;
 
-        shotRay.origin = transform.position + offset;
+        StartCoroutine("Shot");
+    }
+
+    IEnumerator Shot()
+    {
+        IsAttacking = true;
+        chargeEffect.gameObject.SetActive(true);
+        chargeEffect.Play(true);
+
+        yield return new WaitForSeconds(chargeTime);
+
+        shotRay.origin = chargeEffect.transform.position;
         shotRay.direction = (player.transform.position + targetOffset) - shotRay.origin;
 
         lineRenderer.enabled = true;
         lineRenderer.SetPosition(0, shotRay.origin);
 
-
         if (Physics.Raycast(shotRay, out hit, range))
         {
-            //todo:damage
+            Debug.Log(hit.transform.name);
+            lineRenderer.SetPosition(1, hit.point);
+
+            if(hit.transform.gameObject.tag == "Player")
+            {
+                hit.transform.GetComponent<PlayerOverlap>().Damage(1);
+            }
         }
-        lineRenderer.SetPosition(1,shotRay.origin + shotRay.direction * range);
+        else
+        {
+            lineRenderer.SetPosition(1, shotRay.origin + shotRay.direction * range);
+        }
+
+        yield return new WaitForSeconds(intervalTime);
+
+        lineRenderer.enabled = false;
+        chargeEffect.gameObject.SetActive(false);
+        IsAttacking = false;
     }
+
 }
