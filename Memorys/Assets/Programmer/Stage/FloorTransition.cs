@@ -21,6 +21,19 @@ public class FloorTransition : MonoBehaviour
     void Start()
     {
         m_Timer = 0;
+        m_FloorState = (FloorState)Random.Range(0, 3);
+        if (m_FloorState == FloorState.NORMAL)
+        {
+            transform.position = new Vector3(transform.position.x, 0.0f, transform.position.z);
+        }
+        else if (m_FloorState == FloorState.HEGHT)
+        {
+            transform.position = new Vector3(transform.position.x, MaxHeght, transform.position.z);
+        }
+        else if (m_FloorState == FloorState.LOW)
+        {
+            transform.position = new Vector3(transform.position.x,MaxLow, transform.position.z);
+        }
     }
 
     void Update()
