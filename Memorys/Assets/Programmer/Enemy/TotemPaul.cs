@@ -18,6 +18,7 @@ public class TotemPaul : MonoBehaviour
     GameObject player;
 
     public bool IsAttacking { get; private set; }
+    bool IsCharge = false;
 
     float chargeTime, intervalTime;
 
@@ -32,6 +33,24 @@ public class TotemPaul : MonoBehaviour
 
     void Update()
     {
+        if (IsCharge)
+        {
+            shotRay.origin = chargeEffect.transform.position;
+            shotRay.direction = (player.transform.position + targetOffset) - shotRay.origin;
+            lineRenderer.SetPosition(0, shotRay.origin);
+
+            if (Physics.Raycast(shotRay, out hit, range))
+            {
+                lineRenderer.SetPosition(1, hit.point);
+            }
+            else
+            {
+                lineRenderer.SetPosition(1, shotRay.origin + shotRay.direction * range);
+            }
+        }
+
+
+
     }
 
     public void Attack(float chargeTime,float intervalTime)
@@ -48,13 +67,17 @@ public class TotemPaul : MonoBehaviour
         IsAttacking = true;
         chargeEffect.gameObject.SetActive(true);
         chargeEffect.Play(true);
+        IsCharge = true;
+        lineRenderer.enabled = true;
+        lineRenderer.SetWidth(0.1f, 0.1f);
 
         yield return new WaitForSeconds(chargeTime);
 
         shotRay.origin = chargeEffect.transform.position;
         shotRay.direction = (player.transform.position + targetOffset) - shotRay.origin;
+        lineRenderer.SetWidth(0.5f, 0.6f);
 
-        lineRenderer.enabled = true;
+        IsCharge = false;
         lineRenderer.SetPosition(0, shotRay.origin);
 
         if (Physics.Raycast(shotRay, out hit, range))

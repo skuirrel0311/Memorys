@@ -69,15 +69,15 @@ public class PlayerOverlap : MonoBehaviour, IDamageable
 
     void OnCollisionEnter(Collision col)
     {
-        if (PlayerController.I.currentState == PlayerState.Attack) return;
-        if (col.gameObject.tag == "Enemy")
-        {
-            Damage(1);
-        }
-        if (col.gameObject.tag == "Bullet")
-        {
-            Damage(3);
-        }
+        //if (PlayerController.I.currentState == PlayerState.Attack) return;
+        //if (col.gameObject.tag == "Enemy")
+        //{
+        //    Damage(1);
+        //}
+        //if (col.gameObject.tag == "Bullet")
+        //{
+        //    Damage(3);
+        //}
     }
 
     public void Death()
