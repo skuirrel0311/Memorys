@@ -54,16 +54,16 @@ public class PlayerOverlap : MonoBehaviour, IDamageable
             //1匹でも見ていたらtrueにする。
             isFound = true;
 
-            float temp = Vector3.Distance(enemy.transform.position, transform.position);
-            if (temp < distance)
-            {
-                distance = temp;
-                distanceMessage.distance = distance;
-                distanceMessage.targetTransform = enemy.transform;
-            }
+            //float temp = Vector3.Distance(enemy.transform.position, transform.position);
+            //if (temp < distance)
+            //{
+            //    distance = temp;
+            //    distanceMessage.distance = distance;
+            //    distanceMessage.targetTransform = enemy.transform;
+            //}
         }
 
-        distanceMessage.IsViewMessage = isFound;
+        //distanceMessage.IsViewMessage = isFound;
         Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.vignette.enabled = isFound;
     }
 
