@@ -9,7 +9,6 @@ using BehaviorDesigner.Runtime.Tactical;
 //プレイヤーの接触判定用クラス
 public class PlayerOverlap : MonoBehaviour, IDamageable
 {
-
     const int maxHP = 3;
 
     //[SerializeField]
@@ -21,8 +20,6 @@ public class PlayerOverlap : MonoBehaviour, IDamageable
     public int HP;
 
     bool isFound = false;
-    DistanceMessage distanceMessage;
-    Text distanceText;
 
     //無敵時間
     Timer invincibleTimer;
@@ -34,7 +31,6 @@ public class PlayerOverlap : MonoBehaviour, IDamageable
         //m_slider.value = HP;
         pointGauge.Initialize(maxHP);
         invincibleTimer = new Timer();
-        distanceMessage = GetComponent<DistanceMessage>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy").Select(n => n.GetComponent<BehaviorTree>()).ToArray();
     }
 
@@ -46,24 +42,14 @@ public class PlayerOverlap : MonoBehaviour, IDamageable
         if (invincibleTimer.IsLimitTime) invincibleTimer.Stop(true);
 
         isFound = false;
-        float distance = 10000.0f;
 
         foreach (BehaviorTree enemy in enemies)
         {
             if (!(bool)enemy.GetVariable("IsWarning").GetValue()) continue;
             //1匹でも見ていたらtrueにする。
             isFound = true;
-
-            //float temp = Vector3.Distance(enemy.transform.position, transform.position);
-            //if (temp < distance)
-            //{
-            //    distance = temp;
-            //    distanceMessage.distance = distance;
-            //    distanceMessage.targetTransform = enemy.transform;
-            //}
         }
-
-        //distanceMessage.IsViewMessage = isFound;
+        
         Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.vignette.enabled = isFound;
     }
 

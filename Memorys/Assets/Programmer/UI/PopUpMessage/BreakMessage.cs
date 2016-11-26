@@ -1,13 +1,34 @@
 ﻿using UnityEngine;
-using System.Collections;
+using BehaviorDesigner.Runtime;
 
 public class BreakMessage : PopUpMessage
 {
     GameObject m_Exposion;
+    BehaviorTree[] enemies;
+    int count = 0;
 
     void Awake()
     {
         m_Exposion = Resources.Load("ExplosionMobile") as GameObject;
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        GameObject[] tempArray = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = new BehaviorTree[tempArray.Length];
+        for(int i = 0;i < tempArray.Length;i++)
+        {
+            enemies[i] = tempArray[i].GetComponent<BehaviorTree>();
+            enemies[i].enabled = false;
+
+            //中心のトーテムポール
+            if(enemies[i].gameObject.name == "TotemPaul")
+            {
+                enemies[i].enabled = true;
+                count = 1;
+            }
+        }
     }
 
     public override void DrawMessage()
@@ -18,6 +39,16 @@ public class BreakMessage : PopUpMessage
             GameManager.I.DestroyCancel();
             //エフェクト
             GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
+
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                //中心のトーテムポール
+                if (enemies[i].gameObject.name == "TotemPaul (" + count.ToString() + ")")
+                {
+                    enemies[i].enabled = true;
+                    count++;
+                }
+            }
         }
         base.DrawMessage();
     }
