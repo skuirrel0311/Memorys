@@ -9,14 +9,15 @@ public enum PlayerState
     Fall,
     Land,   //着地
     Attack,
-    Damage
+    Damage,
+    Clamber
 }
 
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController I;
-    public  delegate void OnAttack();
-    public OnAttack AttackCallBack=null;
+    public delegate void OnAttack();
+    public OnAttack AttackCallBack = null;
 
     /*パラメータ*/
     [SerializeField]
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float MaxStamina;
     public float stamina;
-    private bool  isStaminaDepletion;
+    private bool isStaminaDepletion;
 
     GameObject cameraObject;
     Rigidbody body = null;
@@ -44,9 +45,11 @@ public class PlayerController : MonoBehaviour
 
     bool isSquat;
 
+    private float jumpTime = 0;
+
     //private enum ColliderPlace { Center, Left, Right, Back, Front }
 
-     void Awake()
+    void Awake()
     {
         I = this;
     }
@@ -69,7 +72,7 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = GetInputVector();
         if (isSquat) movement *= 0.5f;
         //スタミナ
-        stamina = Mathf.Min(MaxStamina,stamina+Time.deltaTime);
+        stamina = Mathf.Min(MaxStamina, stamina + Time.deltaTime);
         if (stamina == MaxStamina)
             isStaminaDepletion = false;
 
@@ -87,7 +90,7 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case PlayerState.Land:
-                if(IsOnGround())
+                if (IsOnGround())
                 {
                     currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
                 }
@@ -99,8 +102,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
+
         Vector3 movement = transform.position - oldPosition;
+        jumpTime += Time.deltaTime;
         //Debug.Log("currentState:"+currentState);
         switch (currentState)
         {
@@ -113,7 +117,7 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Jump:
                 if (movement.y < 0)
                 {
-                   // currentState = PlayerState.Fall;
+                    // currentState = PlayerState.Fall;
                 }
                 break;
             case PlayerState.Attack:
@@ -124,11 +128,11 @@ public class PlayerController : MonoBehaviour
 
     Vector3 GetInputVector()
     {
-        if (currentState == PlayerState.Attack)return Vector3.zero;
-
+        if (currentState == PlayerState.Jump) return Vector3.zero;
+        if (currentState == PlayerState.Clamber) return Vector3.zero;
         Vector2 leftStick = MyInputManager.GetAxis(MyInputManager.Axis.LeftStick);
 
-        if(leftStick == Vector2.zero)
+        if (leftStick == Vector2.zero)
         {
             if (Input.GetKey(KeyCode.A)) leftStick.x = -1;
             if (Input.GetKey(KeyCode.D)) leftStick.x = 1;
@@ -137,15 +141,15 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 movement = new Vector3(leftStick.x, 0, leftStick.y);
-        if(!isStaminaDepletion&&MyInputManager.GetButton(MyInputManager.Button.LeftShoulder))
+        if (!isStaminaDepletion && MyInputManager.GetButton(MyInputManager.Button.LeftShoulder))
         {
             movement *= 2.0f;
-            stamina = Mathf.Max(0.0f,stamina-(Time.deltaTime*2.0f));
+            stamina = Mathf.Max(0.0f, stamina - (Time.deltaTime * 2.0f));
             if (stamina == 0.0f)
                 isStaminaDepletion = true;
         }
 
-        if(isStaminaDepletion)
+        if (isStaminaDepletion)
         {
             movement *= 0.0f;
         }
@@ -169,32 +173,44 @@ public class PlayerController : MonoBehaviour
 
     void Jumpping()
     {
-        //if (recorder.IsPlaying) return;
+        if (currentState != PlayerState.Move) return;
 
-        //animationContoller.ChangeAnimation("JumpToTop", 0.1f);
-        ChangeSquat(false);
-        currentState = PlayerState.Jump;
-        body.AddForce(Vector3.up * jumpPower);
+        GameObject go = GetForwardObject();
+
+        if (go == null)
+        {
+            jumpTime = 0.0f;
+            ChangeSquat(false);
+            currentState = PlayerState.Jump;
+        }
+        else
+        {
+            ChangeSquat(false);
+            currentState = PlayerState.Clamber;
+            GetComponent<Animator>().CrossFadeInFixedTime("Clamber",0.1f);
+
+            Debug.Log("TransitionClamber");
+        }
     }
 
-   void ChangeSquat(bool issquat)
+    void ChangeSquat(bool issquat)
     {
         isSquat = issquat;
         CapsuleCollider cap = GetComponent<CapsuleCollider>();
         //しゃがみ
         if (isSquat)
         {
-            cap.center = new Vector3(0.0f,0.4f,0.0f);
+            cap.center = new Vector3(0.0f, 0.4f, 0.0f);
             cap.height = 0.8f;
         }
         //立ち
         else
         {
-            cap.center = new Vector3(0.0f,0.8f,0.0f);
+            cap.center = new Vector3(0.0f, 0.8f, 0.0f);
             cap.height = 1.6f;
         }
 
-        GetComponent<Animator>().SetBool("isSquat",isSquat);
+        GetComponent<Animator>().SetBool("isSquat", isSquat);
     }
 
     public void Attack()
@@ -204,20 +220,17 @@ public class PlayerController : MonoBehaviour
         if (AttackCallBack != null) AttackCallBack();
 
     }
-    
+
     //UnderColliderのどれかが地面に触れていれば地面に接しているはず。
     bool IsOnGround()
     {
         RaycastHit hit;
 
-        foreach (GameObject g in underCollider)
-        {
-            Ray underRay = new Ray(g.transform.position + (Vector3.up * 0.2f), Vector3.down);
+        Ray underRay = new Ray(transform.position + (Vector3.up * 0.2f), Vector3.down);
 
-            if (Physics.Raycast(underRay, out hit, 0.3f))
-            {
-                return true;
-            }
+        if (Physics.Raycast(underRay, out hit, 0.3f))
+        {
+            return true;
         }
         return false;
     }
@@ -234,11 +247,33 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (currentState==PlayerState.Jump&& IsOnGround())
+        if (currentState == PlayerState.Jump)
         {
-            currentState = PlayerState.Idle;
-            return;
+            if (IsOnGround())
+            {
+                currentState = PlayerState.Idle;
+                return;
+            }
         }
+    }
+
+
+    GameObject GetForwardObject()
+    {
+        RaycastHit hit;
+
+        Ray underRay = new Ray(transform.position + (Vector3.up * 0.2f), transform.forward);
+
+        if (!Physics.Raycast(underRay, out hit, 1.0f))
+        {
+            return null;
+        }
+
+        if(hit.transform.tag == "Player")
+        {
+            return null;
+        }
+        return hit.transform.gameObject;
     }
 
 }
