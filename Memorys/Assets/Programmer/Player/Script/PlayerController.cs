@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject[] underCollider; //着地判定用
 
+    bool isSquat;
+
     //private enum ColliderPlace { Center, Left, Right, Back, Front }
 
      void Awake()
@@ -59,11 +61,13 @@ public class PlayerController : MonoBehaviour
         cameraObject = GameObject.Find("MainCamera");
         stamina = MaxStamina;
         isStaminaDepletion = false;
+        isSquat = false;
     }
 
     void FixedUpdate()
     {
         Vector3 movement = GetInputVector();
+        if (isSquat) movement *= 0.5f;
         //スタミナ
         stamina = Mathf.Min(MaxStamina,stamina+Time.deltaTime);
         if (stamina == MaxStamina)
@@ -103,6 +107,7 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Idle:
             case PlayerState.Move:
                 if (!NoJumping && (MyInputManager.GetButtonDown(MyInputManager.Button.A) || Input.GetKeyDown(KeyCode.Space))) Jumpping();
+                if ((MyInputManager.GetButtonDown(MyInputManager.Button.B) || Input.GetKeyDown(KeyCode.B))) ChangeSquat(!isSquat);
                 //if (MyInputManager.GetButtonDown(MyInputManager.Button.X) ) Attack();
                 break;
             case PlayerState.Jump:
@@ -167,8 +172,29 @@ public class PlayerController : MonoBehaviour
         //if (recorder.IsPlaying) return;
 
         //animationContoller.ChangeAnimation("JumpToTop", 0.1f);
+        ChangeSquat(false);
         currentState = PlayerState.Jump;
         body.AddForce(Vector3.up * jumpPower);
+    }
+
+   void ChangeSquat(bool issquat)
+    {
+        isSquat = issquat;
+        CapsuleCollider cap = GetComponent<CapsuleCollider>();
+        //しゃがみ
+        if (isSquat)
+        {
+            cap.center = new Vector3(0.0f,0.4f,0.0f);
+            cap.height = 0.8f;
+        }
+        //立ち
+        else
+        {
+            cap.center = new Vector3(0.0f,0.8f,0.0f);
+            cap.height = 1.6f;
+        }
+
+        GetComponent<Animator>().SetBool("isSquat",isSquat);
     }
 
     public void Attack()
