@@ -1,0 +1,9 @@
+Event	ID	Name			Wwise Object Path	Notes
+	2385628198	Footsteps			\Default Work Unit\Footsteps	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	124329984	Fs_3	C:\Users\NAOTO\Documents\WwiseProjects\Memorys\.cache\Windows\SFX\Footsteps\Fs_3_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Fs_3		63064
+	266972089	Fs_4	C:\Users\NAOTO\Documents\WwiseProjects\Memorys\.cache\Windows\SFX\Footsteps\Fs_4_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Fs_4		63064
+	603158089	Fs_1	C:\Users\NAOTO\Documents\WwiseProjects\Memorys\.cache\Windows\SFX\Footsteps\Fs_1_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Fs_1		63064
+	753971549	Fs_2	C:\Users\NAOTO\Documents\WwiseProjects\Memorys\.cache\Windows\SFX\Footsteps\Fs_2_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Fs_2		63064
+
