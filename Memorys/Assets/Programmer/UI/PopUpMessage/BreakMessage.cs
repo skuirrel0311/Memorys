@@ -20,12 +20,12 @@ public class BreakMessage : PopUpMessage
         for(int i = 0;i < tempArray.Length;i++)
         {
             enemies[i] = tempArray[i].GetComponent<BehaviorTree>();
-            enemies[i].enabled = false;
 
             //中心のトーテムポール
             if(enemies[i].gameObject.name == "TotemPaul")
             {
-                enemies[i].enabled = true;
+                enemies[i].GetComponent<TotemPaul>().QuickStartUp();
+                
                 count = 1;
             }
         }
@@ -45,7 +45,7 @@ public class BreakMessage : PopUpMessage
                 //中心のトーテムポール
                 if (enemies[i].gameObject.name == "TotemPaul (" + count.ToString() + ")")
                 {
-                    enemies[i].enabled = true;
+                    enemies[i].GetComponent<TotemPaul>().StartUp();
                 }
             }
 

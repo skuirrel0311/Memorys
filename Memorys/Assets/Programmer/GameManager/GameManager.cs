@@ -144,14 +144,14 @@ public class GameManager : MonoBehaviour
 
     public void DestroyCancel()
     {
-        m_Interval = 0.0f;
-        for (int i = 0; i < m_WillDestroyObjects.Count; i++)
-        {
-            ObjectEmission(m_WillDestroyObjects[i], Color.black);
-        }
+        //m_Interval = 0.0f;
+        //for (int i = 0; i < m_WillDestroyObjects.Count; i++)
+        //{
+        //    ObjectEmission(m_WillDestroyObjects[i], Color.black);
+        //}
         SetTargetRandom();
-        SetWillDestroy();
-        m_GameEnd.DestroyCancel();
+        //SetWillDestroy();
+        //m_GameEnd.DestroyCancel();
     }
 
     public void FieldObjectDestoy()
