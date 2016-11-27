@@ -46,9 +46,10 @@ public class BreakMessage : PopUpMessage
                 if (enemies[i].gameObject.name == "TotemPaul (" + count.ToString() + ")")
                 {
                     enemies[i].enabled = true;
-                    count++;
                 }
             }
+
+            count++;
         }
         base.DrawMessage();
     }
