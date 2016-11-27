@@ -27,6 +27,8 @@ public class TotemPaul : MonoBehaviour
 
     Vector3 startPosition,underPosition;
 
+    public float rotationSpeed = 4.0f;
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -141,4 +143,54 @@ public class TotemPaul : MonoBehaviour
         isActive = true;
     }
 
+    public void Alarm()
+    {
+        int count = 0;
+        BehaviorTree[] enemies = GameManager.I.enemies;
+        for(int i = 0;i < enemies.Length;i++)
+        {
+            if (name == enemies[i].name) continue;
+            if (!enemies[i].enabled) continue;
+            if ((bool)enemies[i].GetVariable("IsCalled").GetValue()) continue;
+
+            enemies[i].SetVariable("IsCalled", (SharedBool)true);
+            count++;
+        }
+        
+        //友達はいない。
+        if (count == 0) return;
+        
+        //めっちゃ回る
+        StartCoroutine("CallFriends");
+    }
+
+    void AlarmReset()
+    {
+        BehaviorTree[] enemies = GameManager.I.enemies;
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            if (!enemies[i].enabled) continue;
+
+            enemies[i].SetVariable("IsCalled", (SharedBool)false);
+        }
+    }
+
+    //仲間を呼ぶ
+    IEnumerator CallFriends()
+    {
+        float time = 0.0f;
+        float rotationY = transform.eulerAngles.y;
+        while (true)
+        {
+            time += Time.deltaTime;
+
+            if (time > 3.0f) break;
+
+            rotationY += rotationSpeed;
+            transform.rotation = Quaternion.Euler(0, rotationY, 0);
+            yield return null;
+        }
+
+        AlarmReset();
+    }
 }

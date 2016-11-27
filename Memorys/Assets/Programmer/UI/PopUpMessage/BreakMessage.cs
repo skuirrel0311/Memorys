@@ -16,11 +16,9 @@ public class BreakMessage : PopUpMessage
     {
         base.Start();
         GameObject[] tempArray = GameObject.FindGameObjectsWithTag("Enemy");
-        enemies = new BehaviorTree[tempArray.Length];
+        enemies = GameManager.I.enemies;
         for(int i = 0;i < tempArray.Length;i++)
         {
-            enemies[i] = tempArray[i].GetComponent<BehaviorTree>();
-
             //中心のトーテムポール
             if(enemies[i].gameObject.name == "TotemPaul")
             {

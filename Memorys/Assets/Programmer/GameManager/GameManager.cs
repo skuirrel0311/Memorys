@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
+using BehaviorDesigner.Runtime;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     LimitTime limitTime;
 
+    public BehaviorTree[] enemies;
+
     private void Awake()
     {
         m_GameEnd = new GameEnd();
@@ -49,6 +52,12 @@ public class GameManager : MonoBehaviour
             Debug.Log("GameeOverCallBack", this);
         };
 
+        GameObject[] tempArray = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = new BehaviorTree[tempArray.Length];
+        for (int i = 0; i < tempArray.Length; i++)
+        {
+            enemies[i] = tempArray[i].GetComponent<BehaviorTree>();
+        }
     }
 
     private void Start()
