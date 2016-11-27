@@ -112,7 +112,6 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Move:
                 if (!NoJumping && (MyInputManager.GetButtonDown(MyInputManager.Button.A) || Input.GetKeyDown(KeyCode.Space))) Jumpping();
                 if ((MyInputManager.GetButtonDown(MyInputManager.Button.B) || Input.GetKeyDown(KeyCode.B))) ChangeSquat(!isSquat);
-                //if (MyInputManager.GetButtonDown(MyInputManager.Button.X) ) Attack();
                 break;
             case PlayerState.Jump:
                 if (movement.y < 0)
@@ -120,10 +119,22 @@ public class PlayerController : MonoBehaviour
                     // currentState = PlayerState.Fall;
                 }
                 break;
-            case PlayerState.Attack:
-                //アニメーションの再生が終わったら戻る
-                break;
         }
+        CheckFall();
+    }
+
+    void CheckFall()
+    {
+
+        if (currentState == PlayerState.Jump) return;
+        if (currentState == PlayerState.Clamber) return;
+        if (IsOnGround() || body.velocity.y > -0.5f)
+        {
+            if (currentState == PlayerState.Fall)
+                currentState = PlayerState.Idle;
+            return;
+        }
+        currentState = PlayerState.Fall;
     }
 
     Vector3 GetInputVector()
@@ -185,10 +196,19 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            ChangeSquat(false);
-            currentState = PlayerState.Clamber;
-            GetComponent<Animator>().CrossFadeInFixedTime("Clamber",0.1f);
+            //当たったオブジェクトの高さの差が小さければよじ登り
+            if (Mathf.Abs(transform.position.y - go.transform.position.y) <= 2.5f)
+            {
+                ChangeSquat(false);
+                currentState = PlayerState.Clamber;
+                transform.Translate(0.0f,0.5f,0.0f);
+                GetComponent<Animator>().CrossFadeInFixedTime("Clamber", 0.1f);
+            }
+            //よじ登り失敗
+            else
+            {
 
+            }
             Debug.Log("TransitionClamber");
         }
     }
