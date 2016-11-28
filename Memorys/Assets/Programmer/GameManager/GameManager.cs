@@ -91,15 +91,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         m_GameEnd.Update();
-        //m_Interval += Time.deltaTime;
-        //limitTime.DrawTime((int)((c_IntervalSec - m_Interval) / 0.01f), 4);
-        //if (m_Interval > c_IntervalSec)
-        //{
-        //    m_Interval = 0.0f;
-        //    FieldObjectDestoy();
-        //    SetWillDestroy();
-        //    SetTargetRandom();
-        //}
     }
 
     private void ObjectEmission(GameObject obj, Color color)
@@ -160,7 +151,7 @@ public class GameManager : MonoBehaviour
         //}
         SetTargetRandom();
         //SetWillDestroy();
-        //m_GameEnd.DestroyCancel();
+        m_GameEnd.DestroyCancel();
     }
 
     public void FieldObjectDestoy()
