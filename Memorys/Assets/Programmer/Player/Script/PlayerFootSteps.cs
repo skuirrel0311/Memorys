@@ -25,7 +25,9 @@ public class PlayerFootSteps : MonoBehaviour
     {
         if (PlayerController.I.currentState != PlayerState.Move) return;
         if (isPlay) return;
-        if(col.gameObject.tag=="FieldObject")
+        Debug.Log(isPlay);
+        Debug.Log(timer);
+        if (col.gameObject.tag!="Player")
         {
             AkSoundEngine.PostEvent("Footsteps",gameObject);
             isPlay = true;
