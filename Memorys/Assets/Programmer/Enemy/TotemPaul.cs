@@ -6,6 +6,8 @@ public class TotemPaul : MonoBehaviour
 {
     [SerializeField]
     ParticleSystem chargeEffect = null;
+    [SerializeField]
+    GameObject hitEffect = null;
     
     LineRenderer lineRenderer;
     Ray shotRay;
@@ -99,6 +101,8 @@ public class TotemPaul : MonoBehaviour
             if(hit.transform.gameObject.tag == "Player")
             {
                 hit.transform.GetComponent<PlayerOverlap>().Damage(1);
+                Quaternion temp = Quaternion.Euler(new Vector3(-90.0f, Mathf.Atan2(shotRay.direction.x,shotRay.direction.y) * Mathf.Rad2Deg, 0.0f));
+                Instantiate(hitEffect, hit.point, temp);
             }
         }
         else
