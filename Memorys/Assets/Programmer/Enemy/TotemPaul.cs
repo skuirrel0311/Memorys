@@ -41,7 +41,7 @@ public class TotemPaul : MonoBehaviour
         transform.GetChild(1).gameObject.SetActive(false);
 
         startPosition = transform.position;
-        underPosition = new Vector3(transform.position.x, -transform.position.y - 10, transform.position.z);
+        underPosition = new Vector3(transform.position.x, -transform.position.y - 15.0f, transform.position.z);
     }
 
     void Update()
@@ -111,6 +111,7 @@ public class TotemPaul : MonoBehaviour
         lineRenderer.enabled = false;
         chargeEffect.gameObject.SetActive(false);
         IsAttacking = false;
+        GetComponent<BehaviorTree>().SetVariable("IsCalled", (SharedBool)false);
     }
 
     //起動
@@ -156,23 +157,16 @@ public class TotemPaul : MonoBehaviour
             enemies[i].SetVariable("IsCalled", (SharedBool)true);
             count++;
         }
-        
+
         //友達はいない。
-        if (count == 0) return;
-        
+        if (count == 0)
+        {
+            GetComponent<BehaviorTree>().SetVariable("IsCalled",(SharedBool)true);
+            return;
+        }
+        GetComponent<BehaviorTree>().SetVariable("IsCalled", (SharedBool)false);
         //めっちゃ回る
         StartCoroutine("CallFriends");
-    }
-
-    void AlarmReset()
-    {
-        BehaviorTree[] enemies = GameManager.I.enemies;
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            if (!enemies[i].enabled) continue;
-
-            enemies[i].SetVariable("IsCalled", (SharedBool)false);
-        }
     }
 
     //仲間を呼ぶ
@@ -190,7 +184,5 @@ public class TotemPaul : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, rotationY, 0);
             yield return null;
         }
-
-        AlarmReset();
     }
 }
