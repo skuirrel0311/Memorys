@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     //プレイヤーの破壊目標
     private GameObject m_Target;
+    private GameObject m_TargetPoint;
     //破壊目標の出現位置
     [SerializeField]
     private GameObject[] m_TargetPoints = null;
@@ -84,13 +85,16 @@ public class GameManager : MonoBehaviour
         NotificationSystem.I.Indication("ターゲットを５回破壊し、崩壊を止めろ！");
         StartCoroutine("SetObjTransition");
     }
+
     private void OnDestroy()
     {
         StopCoroutine("SetObjTransition");
     }
+
     private void Update()
     {
         m_GameEnd.Update();
+        m_Target.transform.position = m_TargetPoint.transform.position;
     }
 
     private void ObjectEmission(GameObject obj, Color color)
@@ -108,8 +112,9 @@ public class GameManager : MonoBehaviour
         Vector3 NowPos = m_Target.transform.position;
         while (true)
         {
-            m_Target.transform.position = m_TargetPoints[Random.Range(0, m_TargetPoints.Length)].transform.position + Vector3.up;
-            if (!NowPos.Equals(m_Target.transform.position))
+            m_TargetPoint = m_TargetPoints[Random.Range(0, m_TargetPoints.Length)];
+            m_Target.transform.position = m_TargetPoint.transform.position + Vector3.up;
+            if (!(NowPos.x==m_Target.transform.position.x))
             {
                 break;
             }
@@ -144,11 +149,6 @@ public class GameManager : MonoBehaviour
 
     public void DestroyCancel()
     {
-        //m_Interval = 0.0f;
-        //for (int i = 0; i < m_WillDestroyObjects.Count; i++)
-        //{
-        //    ObjectEmission(m_WillDestroyObjects[i], Color.black);
-        //}
         SetTargetRandom();
         //SetWillDestroy();
         m_GameEnd.DestroyCancel();
