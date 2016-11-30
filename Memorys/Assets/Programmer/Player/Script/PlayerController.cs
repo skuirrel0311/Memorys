@@ -141,6 +141,10 @@ public class PlayerController : MonoBehaviour
     {
         if (currentState == PlayerState.Jump) return Vector3.zero;
         if (currentState == PlayerState.Clamber) return Vector3.zero;
+        if(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).shortNameHash== Animator.StringToHash("Base Layer.TopToGround"))
+        {
+            return Vector3.zero;
+        }
         Vector2 leftStick = MyInputManager.GetAxis(MyInputManager.Axis.LeftStick);
 
         if (leftStick == Vector2.zero)
