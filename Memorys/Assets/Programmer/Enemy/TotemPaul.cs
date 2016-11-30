@@ -4,36 +4,31 @@ using BehaviorDesigner.Runtime;
 
 public class TotemPaul : MonoBehaviour
 {
-    [SerializeField]
-    ParticleSystem chargeEffect = null;
+    ParticleSystem chargeEffect;
+    GameObject chargeEndEffect;
     [SerializeField]
     GameObject hitEffect = null;
-    
+
     LineRenderer lineRenderer;
-    Ray shotRay;
-    RaycastHit hit;
-    public float range = 20.0f;
+    public float range = 50.0f;
     [SerializeField]
-    Vector3 offset = new Vector3(0,5,0);
-    [SerializeField]
-    Vector3 targetOffset = new Vector3(0,1.5f,0);
+    Vector3 targetOffset = new Vector3(0, 1.5f, 0);
 
     Transform player;
+    Vector3 targetPosition;
 
     public bool IsAttacking { get; private set; }
-    bool IsCharge = false;
-
+    
     float chargeTime, intervalTime;
+    float lostTime;
 
-    bool isActive = false;
-
-    Vector3 startPosition,underPosition;
-
-    public float rotationSpeed = 4.0f;
+    Vector3 startPosition, underPosition;
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        chargeEffect = transform.FindChild("Sphere/Charge/ball").GetComponent<ParticleSystem>();
+        chargeEndEffect = transform.FindChild("Sphere/ChargeEnd").gameObject;
         player = GameObject.FindGameObjectWithTag("Player").transform.FindChild("Hips/Spine/Spine1/Spine2/Neck");
         lineRenderer.enabled = false;
         IsAttacking = false;
@@ -48,74 +43,160 @@ public class TotemPaul : MonoBehaviour
 
     void Update()
     {
-        if (!isActive) transform.position = underPosition;
-        if (IsCharge)
-        {
-            shotRay.origin = chargeEffect.transform.position;
-            shotRay.direction = (player.position + targetOffset) - shotRay.origin;
-            lineRenderer.SetPosition(0, shotRay.origin);
-
-            if (Physics.Raycast(shotRay, out hit, range))
-            {
-                lineRenderer.SetPosition(1, hit.point);
-            }
-            else
-            {
-                lineRenderer.SetPosition(1, shotRay.origin + shotRay.direction * range);
-            }
-        }
+        if (!GetComponent<BehaviorTree>().enabled) transform.position = underPosition;
     }
 
-    public void Attack(float chargeTime,float intervalTime)
+    //攻撃
+    public void Attack(float intervalTime, float chargeTime)
     {
         if (IsAttacking) return;
-        this.chargeTime = chargeTime;
         this.intervalTime = intervalTime;
-
-        StartCoroutine("Shot");
+        this.chargeTime = chargeTime;
+        targetPosition = player.position;
+        GetComponent<BehaviorTree>().SetVariable("TargetPosition", (SharedVector3)targetPosition);
+        StartCoroutine("Attacking");
     }
 
-    IEnumerator Shot()
+    IEnumerator Attacking()
     {
+        //チャージ開始
         IsAttacking = true;
+
         chargeEffect.gameObject.SetActive(true);
         chargeEffect.Play(true);
-        IsCharge = true;
+
         lineRenderer.enabled = true;
         lineRenderer.SetWidth(0.1f, 0.1f);
 
-        yield return new WaitForSeconds(chargeTime);
+        lostTime = 0.0f;
+        float time = 0.0f;
+        while (true)
+        {
+            time += Time.deltaTime;
+            if (time > chargeTime) break;
+            //チャージしつつプレイヤーの方に向く
+            Charge(GetTargetPosition());
+            yield return null;
+        }
 
-        shotRay.origin = chargeEffect.transform.position;
-        shotRay.direction = (player.position + targetOffset) - shotRay.origin;
+        //チャージ終了
         lineRenderer.SetWidth(0.5f, 0.6f);
+        //chargeEffect.gameObject.SetActive(false);
+        //chargeEndEffect.SetActive(true);
 
-        IsCharge = false;
+        while(true)
+        {
+            if (RotateTowards()) break;
+            yield return null;
+        }
+
+        //発射
+        Shot(GetTargetPosition());
+
+        yield return new WaitForSeconds(intervalTime);
+
+        //終了処理
+        lineRenderer.enabled = false;
+        chargeEffect.gameObject.SetActive(false);
+        //chargeEndEffect.SetActive(false);
+        IsAttacking = false;
+    }
+
+    void Charge(Vector3 target)
+    {
+        Ray shotRay;
+        if (RotateTowards())
+            shotRay = GetToPlayerRay(target);
+        else
+            shotRay = GetFrontRay(target);
+
+        RaycastHit hit;
         lineRenderer.SetPosition(0, shotRay.origin);
 
         if (Physics.Raycast(shotRay, out hit, range))
         {
-            Debug.Log(hit.transform.name);
             lineRenderer.SetPosition(1, hit.point);
-
-            if(hit.transform.gameObject.tag == "Player")
-            {
-                hit.transform.GetComponent<PlayerOverlap>().Damage(1);
-                Quaternion temp = Quaternion.Euler(new Vector3(-90.0f, Mathf.Atan2(shotRay.direction.x,shotRay.direction.y) * Mathf.Rad2Deg, 0.0f));
-                Instantiate(hitEffect, hit.point, temp);
-            }
         }
         else
         {
             lineRenderer.SetPosition(1, shotRay.origin + shotRay.direction * range);
         }
+    }
 
-        yield return new WaitForSeconds(intervalTime);
+    Ray GetFrontRay(Vector3 target)
+    {
+        Ray shotRay = new Ray();
+        shotRay.origin = chargeEffect.transform.position;
+        shotRay.direction = (target + targetOffset) - shotRay.origin;
 
-        lineRenderer.enabled = false;
-        chargeEffect.gameObject.SetActive(false);
-        IsAttacking = false;
-        GetComponent<BehaviorTree>().SetVariable("IsCalled", (SharedBool)false);
+        float y = shotRay.direction.y;
+        shotRay.direction = transform.forward * shotRay.direction.magnitude;
+        shotRay.direction = SetY(shotRay.direction, y);
+
+        return shotRay;
+    }
+
+    Ray GetToPlayerRay(Vector3 target)
+    {
+        return new Ray(chargeEffect.transform.position, (target + targetOffset) - chargeEffect.transform.position);
+    }
+
+    void Shot(Vector3 target)
+    {
+        Ray shotRay = new Ray(chargeEffect.transform.position, (target + targetOffset) - chargeEffect.transform.position);
+        RaycastHit hit;
+
+        lineRenderer.SetPosition(0, shotRay.origin);
+
+        if (Physics.Raycast(shotRay, out hit, range))
+        {
+            lineRenderer.SetPosition(1, hit.point);
+
+            if (hit.transform.gameObject.tag == "Player")
+            {
+                //hit
+                hit.transform.GetComponent<PlayerOverlap>().Damage(1);
+                Quaternion temp = Quaternion.Euler(new Vector3(-90.0f, Mathf.Atan2(shotRay.direction.x, shotRay.direction.y) * Mathf.Rad2Deg, 0.0f));
+                Instantiate(hitEffect, hit.point, temp);
+            }
+        }
+        else
+        {
+            //no hit
+            lineRenderer.SetPosition(1, shotRay.origin + shotRay.direction * range);
+        }
+    }
+
+    Vector3 GetTargetPosition()
+    {
+        if ((bool)GetComponent<BehaviorTree>().GetVariable("IsSeePlayer").GetValue())
+        {
+            //見えているときだけtargetPositionを更新する
+            targetPosition = player.position;
+        }
+        else
+        {
+            lostTime += Time.deltaTime;
+            //１秒以内なら壁をすり抜けてプレイヤーを見つけ出す
+            if(lostTime < 1)
+            {
+                targetPosition = player.position;
+            }
+        }
+        GetComponent<BehaviorTree>().SetVariable("TargetPosition", (SharedVector3)targetPosition);
+        return targetPosition;
+    }
+
+    bool RotateTowards()
+    {
+        Vector3 vec = targetPosition - transform.position;
+        vec.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(vec);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 0.5f);
+
+        if(Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
+            return true;
+        return false;
     }
 
     //起動
@@ -125,7 +206,6 @@ public class TotemPaul : MonoBehaviour
 
         GetComponent<BehaviorTree>().enabled = true;
         transform.GetChild(1).gameObject.SetActive(true);
-        isActive = true;
     }
 
     IEnumerator Rising()
@@ -145,14 +225,14 @@ public class TotemPaul : MonoBehaviour
         transform.position = startPosition;
         GetComponent<BehaviorTree>().enabled = true;
         transform.GetChild(1).gameObject.SetActive(true);
-        isActive = true;
     }
 
+    //警報
     public void Alarm()
     {
         int count = 0;
         BehaviorTree[] enemies = GameManager.I.enemies;
-        for(int i = 0;i < enemies.Length;i++)
+        for (int i = 0; i < enemies.Length; i++)
         {
             if (name == enemies[i].name) continue;
             if (!enemies[i].enabled) continue;
@@ -165,7 +245,7 @@ public class TotemPaul : MonoBehaviour
         //友達はいない。
         if (count == 0)
         {
-            GetComponent<BehaviorTree>().SetVariable("IsCalled",(SharedBool)true);
+            GetComponent<BehaviorTree>().SetVariable("IsCalled", (SharedBool)true);
             return;
         }
         GetComponent<BehaviorTree>().SetVariable("IsCalled", (SharedBool)false);
@@ -184,9 +264,14 @@ public class TotemPaul : MonoBehaviour
 
             if (time > 3.0f) break;
 
-            rotationY += rotationSpeed;
+            rotationY += 4.0f;
             transform.rotation = Quaternion.Euler(0, rotationY, 0);
             yield return null;
         }
+    }
+
+    Vector3 SetY(Vector3 vec,float y)
+    {
+        return new Vector3(vec.x, y, vec.z);
     }
 }
