@@ -24,6 +24,12 @@ public class TotemPaul : MonoBehaviour
 
     Vector3 startPosition, underPosition;
 
+    void Awake()
+    {
+
+        startPosition = transform.position;
+    }
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -37,7 +43,6 @@ public class TotemPaul : MonoBehaviour
         GetComponent<BehaviorTree>().enabled = false;
         transform.GetChild(1).gameObject.SetActive(false);
 
-        startPosition = transform.position;
         underPosition = new Vector3(transform.position.x, -transform.position.y - 15.0f, transform.position.z);
     }
 

@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 movement = GetInputVector();
         if (isSquat) movement *= 0.5f;
+        GetComponent<Animator>().SetFloat("RunSpeed",movement.magnitude*6.666f);
         //スタミナ
         stamina = Mathf.Min(MaxStamina, stamina + Time.deltaTime);
         if (stamina == MaxStamina)

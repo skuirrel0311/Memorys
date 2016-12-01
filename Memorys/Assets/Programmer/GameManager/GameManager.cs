@@ -7,6 +7,7 @@ using BehaviorDesigner.Runtime;
 public class GameManager : MonoBehaviour
 {
     public static GameManager I;
+    public  static bool isTargetAll = true;
 
     public GameEnd m_GameEnd;
     //ステージの崩壊間隔
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+
         m_GameEnd = new GameEnd();
         m_GameEnd.Initialize();
 
@@ -53,28 +55,27 @@ public class GameManager : MonoBehaviour
             Debug.Log("GameeOverCallBack", this);
         };
 
-        GameObject[] tempArray = GameObject.FindGameObjectsWithTag("Enemy");
-        enemies = new BehaviorTree[tempArray.Length];
-        for (int i = 0; i < tempArray.Length; i++)
-        {
-            enemies[i] = tempArray[i].GetComponent<BehaviorTree>();
-        }
+
+        I = this;
     }
 
     private void Start()
     {
-        I = this;
+       // I = this;
 
         //ターゲットのオブジェクトを取得してポジションをセットする
-        m_Target = GameObject.Instantiate(Resources.Load("Prefabs/Target") as GameObject) as GameObject;
-        if (m_TargetPoints != null)
-        {
-            SetTargetRandom();
-        }
+        //m_Target = GameObject.Instantiate(Resources.Load("Prefabs/Target") as GameObject) as GameObject;
+        //if (m_TargetPoints != null)
+        //{
+        //    if (isTargetAll)
+        //        SetTargetAll();
+        //    else
+        //        SetTargetRandom();
+        //}
         //プレイヤーにターゲットの情報を渡す
         DistanceMessage player = GameObject.FindGameObjectWithTag("Player").GetComponent<DistanceMessage>();
-        player.targetTransform = m_Target.transform;
-        player.IsViewMessage = true;
+        //player.targetTransform = m_Target.transform;
+        //player.IsViewMessage = true;
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
         m_SelectParticle = go.GetComponent<ParticleSystem>();
@@ -88,6 +89,21 @@ public class GameManager : MonoBehaviour
        // SetWillDestroy();
         NotificationSystem.I.Indication("ターゲットを５回破壊し、崩壊を止めろ！");
         StartCoroutine("SetObjTransition");
+
+        GameObject[] tempArray = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = new BehaviorTree[tempArray.Length];
+        for (int i = 0; i < tempArray.Length; i++)
+        {
+            enemies[i] = tempArray[i].GetComponent<BehaviorTree>();
+        }
+        for (int i = 0; i < tempArray.Length; i++)
+        {
+            //中心のトーテムポール
+            if (enemies[i].gameObject.name == "TotemPaul")
+            {
+                enemies[i].GetComponent<TotemPaul>().QuickStartUp();
+            }
+        }
     }
 
     private void OnDestroy()
@@ -98,7 +114,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         m_GameEnd.Update();
-        m_Target.transform.position = m_TargetPoint.transform.position;
+        //m_Target.transform.position = m_TargetPoint.transform.position;
     }
 
     private void ObjectEmission(GameObject obj, Color color)
@@ -113,6 +129,7 @@ public class GameManager : MonoBehaviour
     //ターゲット（スイッチ）の場所をランダムで設置
     private void SetTargetRandom()
     {
+        if (isTargetAll) return;
         Vector3 NowPos = m_Target.transform.position;
         while (true)
         {
@@ -124,6 +141,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
 
     //ターゲットが破壊しようとするオブジェクトを選択
     private void SetWillDestroy()
@@ -153,7 +171,7 @@ public class GameManager : MonoBehaviour
 
     public void DestroyCancel()
     {
-        SetTargetRandom();
+        //SetTargetRandom();
         //SetWillDestroy();
         m_GameEnd.DestroyCancel();
     }

@@ -5,28 +5,17 @@ public class BreakMessage : PopUpMessage
 {
     GameObject m_Exposion;
     BehaviorTree[] enemies;
-    int count = 0;
+    static int count = 1;
 
     void Awake()
     {
         m_Exposion = Resources.Load("ExplosionMobile") as GameObject;
+        count = 1;
     }
 
     public override void Start()
     {
         base.Start();
-        GameObject[] tempArray = GameObject.FindGameObjectsWithTag("Enemy");
-        enemies = GameManager.I.enemies;
-        for(int i = 0;i < tempArray.Length;i++)
-        {
-            //中心のトーテムポール
-            if(enemies[i].gameObject.name == "TotemPaul")
-            {
-                enemies[i].GetComponent<TotemPaul>().QuickStartUp();
-                
-                count = 1;
-            }
-        }
     }
 
     public override void DrawMessage()
@@ -38,16 +27,18 @@ public class BreakMessage : PopUpMessage
             //エフェクト
             GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
 
-            for (int i = 0; i < enemies.Length; i++)
+            for (int i = 0; i < GameManager.I.enemies.Length; i++)
             {
                 //中心のトーテムポール
-                if (enemies[i].gameObject.name == "TotemPaul (" + count.ToString() + ")")
+                if (GameManager.I.enemies[i].gameObject.name == "TotemPaul (" + count.ToString() + ")")
                 {
-                    enemies[i].GetComponent<TotemPaul>().StartUp();
+                    GameManager.I.enemies[i].GetComponent<TotemPaul>().StartUp();
                 }
             }
 
             count++;
+            IsViewMessage = false;
+            Destroy(gameObject);
         }
         base.DrawMessage();
     }

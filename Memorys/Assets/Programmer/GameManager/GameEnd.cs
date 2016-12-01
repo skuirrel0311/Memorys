@@ -8,7 +8,7 @@ public class GameEnd
     public static bool isGameEnd;
 
     //何回キャンセルすればゲームクリアになるか
-    private const int c_MaxDestroyCalcel = 5;
+    public static int c_MaxDestroyCalcel = 5;
 
     //何回ステージが崩壊したらゲームオーバーか
     private const int c_MaxDestroy = 5;
