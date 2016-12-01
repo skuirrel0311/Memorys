@@ -12,37 +12,53 @@ public class LookOutOver : Action
 
     Quaternion targetRotation;
     public int currentIndex;
+    //回転の速さ
     public float delta = 1.0f;
 
     public override void OnStart()
     {
+        //パターン作成
         directionVec[(int)TargetDirection.forward] = transform.forward;
         directionVec[(int)TargetDirection.left] = transform.rotation * Vector3.left;
         directionVec[(int)TargetDirection.right] = directionVec[(int)TargetDirection.left] * -1;
         directionVec[(int)TargetDirection.back] = directionVec[(int)TargetDirection.forward] * -1;
-        AddRandomPatten(8);
+        //ランダムなパターンをセットする。
+        SetRandomPatten();
         currentIndex = 0;
         currentTrargetDirection = directionPattenList[currentIndex];
         targetRotation = Quaternion.LookRotation(directionVec[(int)currentTrargetDirection]);
     }
 
-    private void AddPatten()
+    //時計回り
+    private void SetClockWisePatten()
     {
         directionPattenList.Add(TargetDirection.left);
-        directionPattenList.Add(TargetDirection.forward);
-        directionPattenList.Add(TargetDirection.right);
-        directionPattenList.Add(TargetDirection.forward);
         directionPattenList.Add(TargetDirection.back);
+        directionPattenList.Add(TargetDirection.right);
         directionPattenList.Add(TargetDirection.forward);
     }
 
-    private void AddRandomPatten(int num)
+    private void SetAntiClockWisePatten()
     {
-        for (int i = 0; i < num; i++)
-        {
-            //0~3
-            directionPattenList.Add((TargetDirection)Random.Range(0, 4));
-        }
+        directionPattenList.Add(TargetDirection.right);
+        directionPattenList.Add(TargetDirection.back);
+        directionPattenList.Add(TargetDirection.left);
+        directionPattenList.Add(TargetDirection.forward);
+    }
+
+    private void SetRandomPatten()
+    {
+        int rand = Random.Range(0, 2);
+        if (rand == 0)
+            SetClockWisePatten();
+        else
+            SetAntiClockWisePatten();
+
+        //for (int i = 0; i < num; i++)
+        //{
+        //    //0～3
+        //    directionPattenList.Add((TargetDirection)Random.Range(0, 4));
+        //}
     }
     
     public override TaskStatus OnUpdate()

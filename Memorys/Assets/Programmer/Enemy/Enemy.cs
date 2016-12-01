@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.Find("Player");
 
-        GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
+        GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(player.transform.position);
 
         StartCoroutine("TracePlayer");
     }
@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     {
         while(true)
         {
-            GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
+            GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(player.transform.position);
             yield return new WaitForSeconds(5);
         }
     }
