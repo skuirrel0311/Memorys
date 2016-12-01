@@ -28,6 +28,7 @@ public class DistanceMessage : PopUpMessage
         messagePrefab.rectTransform.anchoredPosition = GetEdgePosition(vec) - screenOrigin;
 
         //距離を小数点2桁まで表示する
+        distance = temp.magnitude;
         messagePrefab.GetComponentInChildren<Text>().text = distance.ToString("F2") + "m";
     }
 

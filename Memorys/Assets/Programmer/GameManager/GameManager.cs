@@ -71,6 +71,10 @@ public class GameManager : MonoBehaviour
         {
             SetTargetRandom();
         }
+        //プレイヤーにターゲットの情報を渡す
+        DistanceMessage player = GameObject.FindGameObjectWithTag("Player").GetComponent<DistanceMessage>();
+        player.targetTransform = m_Target.transform;
+        player.IsViewMessage = true;
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
         m_SelectParticle = go.GetComponent<ParticleSystem>();
