@@ -3,26 +3,46 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour
 {
-    Vector3 velocity = Vector3.zero;
+    Vector3 velocity;
+    [SerializeField]
+    GameObject hitEffect = null;
+    [SerializeField]
+    float speed = 4.0f;
 
-    public void Shot(float speed)
+    Ray ray;
+    RaycastHit hit;
+    [SerializeField]
+    LayerMask mask;
+
+    public void SetUp(Vector3 velocity)
     {
-        velocity = transform.forward * speed;
+        this.velocity = velocity * speed;
+        ray = new Ray();
+        ray.direction = velocity;
     }
 
     void Update()
     {
-        //if (transform == null) return;
-        
-
+        ray.origin = transform.position;
         transform.Translate(velocity * Time.deltaTime, Space.World);
+
+        if (Physics.Raycast(ray, out hit, (velocity * Time.deltaTime).magnitude, mask))
+        {
+            Destroy(this);
+        }
     }
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "Enemy") return;
-        if (col.gameObject.name == "Bullet(Clone)") return;
+        if (col.gameObject.tag == "Player")
+            PlayerHit(col.gameObject);
+    }
 
-        gameObject.SetActive(false);
+    void PlayerHit(GameObject playerObj)
+    {
+        Quaternion temp = Quaternion.Euler(new Vector3(90.0f, Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg, 0.0f));
+        Instantiate(hitEffect, transform.position, temp);
+        playerObj.GetComponent<PlayerOverlap>().Damage(1);
+        Destroy(this);
     }
 }

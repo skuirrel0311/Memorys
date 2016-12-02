@@ -18,7 +18,7 @@ public class ShotManager : MonoBehaviour
     public void Shot()
     {
         GameObject g = (GameObject)Instantiate(bulletPrefab,shotPosition.transform.position, shotPosition.transform.rotation);
-        g.GetComponent<Bullet>().Shot(bulletSpeed);
+        //g.GetComponent<Bullet>().Shot(bulletSpeed);
         Destroy(g, 3.0f);
     }
 }
