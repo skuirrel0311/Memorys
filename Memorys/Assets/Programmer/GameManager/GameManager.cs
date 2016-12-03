@@ -126,7 +126,9 @@ public class GameManager : MonoBehaviour
     {
         for(int i = 0;i< directionMessages.Length;i++)
         {
-            directionMessages[i].IsViewMessage = enemies[i].GetComponent<TotemPaul>().IsWarning;
+            TotemPaul t = enemies[i].GetComponent<TotemPaul>();
+            directionMessages[i].IsViewMessage = t.IsWarning;
+            directionMessages[i].messagePrefab.fillAmount = (t.Alertness / 3);
         }
     }
 
