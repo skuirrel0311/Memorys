@@ -159,8 +159,6 @@ static public class AkCallbackManager
         public float fDuration;             ///< Duration of the sound (unit: milliseconds )
         public float fEstimatedDuration;    ///< Estimated duration of the sound depending on source settings such as pitch. (unit: milliseconds )
         public uint audioNodeID;            ///< Audio Node ID of playing item
-        public uint mediaID;				///< Media ID of playing item. (corresponds to 'ID' attribute of 'File' element in SoundBank metadata file)
-        public bool bStreaming;				///< True if source is streaming, false otherwise.
     };
     
 	/// Music callback data
@@ -648,12 +646,6 @@ static public class AkCallbackManager
                         GotoEndOfCurrentStructMember_ValueType<float>(ref pData);
 
                         durInfoCB.audioNodeID = (uint)Marshal.ReadInt32(pData);
-                        GotoEndOfCurrentStructMember_ValueType<uint>(ref pData);
-
-                        durInfoCB.mediaID = (uint)Marshal.ReadInt32(pData);
-                        GotoEndOfCurrentStructMember_ValueType<uint>(ref pData);
-
-                        durInfoCB.bStreaming = Convert.ToBoolean(Marshal.ReadInt32(pData));
                         GotoEndOfCurrentStructMember_ValueType<uint>(ref pData);
 
                         eventPkg.m_Callback(eventPkg.m_Cookie, commonCB.eType, durInfoCB);

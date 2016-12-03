@@ -65,7 +65,8 @@ public enum AkWwiseMenuOrder : int
     XboxOneRelease,
 
     ConvertIDs = 200,
-    Reinstall
+    Reinstall,
+    Uninstall
 }
 
 public enum AkWwiseWindowOrder : int

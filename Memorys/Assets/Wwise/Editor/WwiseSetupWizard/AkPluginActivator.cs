@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR && UNITY_5
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
@@ -18,32 +18,27 @@ public class AkPluginActivator
 	public const string CONFIG_RELEASE = "Release";
 	
 	// Use reflection because projects that were created in Unity 4 won't have the CurrentPluginConfig field
-	public static string GetCurrentConfig()
+	static string GetCurrentConfig()
 	{		
 		FieldInfo CurrentPluginConfigField = typeof(AkWwiseProjectData).GetField("CurrentPluginConfig");
 		string CurrentConfig = string.Empty;
-		AkWwiseProjectData data = AkWwiseProjectInfo.GetData();
-
-		if (CurrentPluginConfigField != null && data != null)
+		if( CurrentPluginConfigField != null )
 		{
-			CurrentConfig = (string)CurrentPluginConfigField.GetValue(data);
-		}
-
+			CurrentConfig = (string)CurrentPluginConfigField.GetValue(AkWwiseProjectInfo.GetData ());
             if (string.IsNullOrEmpty(CurrentConfig))
-		{
                 CurrentConfig = "Profile";
 		}
 		
 		return CurrentConfig;
 	}
 
+
 	static void SetCurrentConfig(string config)
 	{		
 		FieldInfo CurrentPluginConfigField = typeof(AkWwiseProjectData).GetField("CurrentPluginConfig");
-		AkWwiseProjectData data = AkWwiseProjectInfo.GetData();
 		if( CurrentPluginConfigField != null )
 		{
-			CurrentPluginConfigField.SetValue(data, config);
+			CurrentPluginConfigField.SetValue(AkWwiseProjectInfo.GetData (), config);
 		}
         EditorUtility.SetDirty(AkWwiseProjectInfo.GetData());
 	}
@@ -259,7 +254,27 @@ public class AkPluginActivator
                 // For WSA, we use the plugin info for Windows, since they share banks.
                 pluginDSPPlatform = "Windows";
 
-                if (pluginArch == "WSA_UWP_Win32")
+                if (pluginArch == "WSA_ARM")
+                {
+                    pluginImporter.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "SDK81");
+                    pluginImporter.SetPlatformData(BuildTarget.WSAPlayer, "CPU", "ARM");
+                }
+                else if (pluginArch == "WSA_Win32")
+                {
+                    pluginImporter.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "SDK81");
+                    pluginImporter.SetPlatformData(BuildTarget.WSAPlayer, "CPU", "X86");
+                }
+                else if (pluginArch == "WSA_WindowsPhone81_ARM")
+                {
+                    pluginImporter.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "PhoneSDK81");
+                    pluginImporter.SetPlatformData(BuildTarget.WSAPlayer, "CPU", "ARM");
+                }
+                else if (pluginArch == "WSA_WindowsPhone81_Win32")
+                {
+                    pluginImporter.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "PhoneSDK81");
+                    pluginImporter.SetPlatformData(BuildTarget.WSAPlayer, "CPU", "X86");
+                }
+                else if (pluginArch == "WSA_UWP_Win32")
                 {
                     pluginImporter.SetPlatformData(BuildTarget.WSAPlayer, "SDK", "UWP");
                     pluginImporter.SetPlatformData(BuildTarget.WSAPlayer, "CPU", "X86");

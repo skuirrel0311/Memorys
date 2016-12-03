@@ -23,7 +23,9 @@ public static class AkWwiseProjectInfo
 			{
 				m_Data = (AkWwiseProjectData)AssetDatabase.LoadAssetAtPath("Assets/Wwise/Editor/ProjectData/AkWwiseProjectData.asset", typeof(AkWwiseProjectData));
 
-				if (m_Data == null)
+				// Create the asset only when not running in batch mode.
+				string[] arguments = Environment.GetCommandLineArgs();
+				if (m_Data == null && (Array.IndexOf(arguments, "-batchmode") == -1 || Environment.GetEnvironmentVariable("WWISE_UNITY_TESTSUITE") != null))
 				{
                     if (!Directory.Exists(Path.Combine(Application.dataPath, "Wwise/Editor/ProjectData")))
                     {

@@ -349,12 +349,6 @@ public class AkSoundEngine {
     return ret;
   }
 
-  public static AKRESULT DynamicSequenceGetPauseTimes(uint in_playingID, out uint out_uTime, out uint out_uDuration) {
-    AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_DynamicSequenceGetPauseTimes(in_playingID, out out_uTime, out out_uDuration);
-
-    return ret;
-  }
-
   public static Playlist DynamicSequenceLockPlaylist(uint in_playingID) {
     IntPtr cPtr = AkSoundEnginePINVOKE.CSharp_DynamicSequenceLockPlaylist(in_playingID);
     Playlist ret = (cPtr == IntPtr.Zero) ? null : new Playlist(cPtr, false);
@@ -2002,12 +1996,6 @@ public class AkSoundEngine {
     return ret;
   }
 
-  public static uint GetBufferTick() {
-    uint ret = AkSoundEnginePINVOKE.CSharp_GetBufferTick();
-
-    return ret;
-  }
-
   public static byte AK_INVALID_MIDI_CHANNEL {
     get {
       byte ret = AkSoundEnginePINVOKE.CSharp_AK_INVALID_MIDI_CHANNEL_get();
@@ -2036,98 +2024,14 @@ public class AkSoundEngine {
     return ret;
   }
 
-  public static AKRESULT PostCode(ErrorCode in_eError, ErrorLevel in_eErrorLevel, uint in_playingID, UnityEngine.GameObject in_gameObjID, uint in_audioNodeID, bool in_bIsBus) {
-    
-		AkAutoObject tempObj = null;   
-		uint tempin_gameObjID = (uint)AutoRegisterAkGameObj(in_gameObjID, ref tempObj);
-		
-    {
-      AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostCode__SWIG_0((int)in_eError, (int)in_eErrorLevel, in_playingID, tempin_gameObjID, in_audioNodeID, in_bIsBus);
-
-      return ret;
-    }
-  }
-
-  public static AKRESULT PostCode(ErrorCode in_eError, ErrorLevel in_eErrorLevel, uint in_playingID, UnityEngine.GameObject in_gameObjID, uint in_audioNodeID) {
-    
-		AkAutoObject tempObj = null;   
-		uint tempin_gameObjID = (uint)AutoRegisterAkGameObj(in_gameObjID, ref tempObj);
-		
-    {
-      AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostCode__SWIG_1((int)in_eError, (int)in_eErrorLevel, in_playingID, tempin_gameObjID, in_audioNodeID);
-
-      return ret;
-    }
-  }
-
-  public static AKRESULT PostCode(ErrorCode in_eError, ErrorLevel in_eErrorLevel, uint in_playingID, UnityEngine.GameObject in_gameObjID) {
-    
-		AkAutoObject tempObj = null;   
-		uint tempin_gameObjID = (uint)AutoRegisterAkGameObj(in_gameObjID, ref tempObj);
-		
-    {
-      AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostCode__SWIG_2((int)in_eError, (int)in_eErrorLevel, in_playingID, tempin_gameObjID);
-
-      return ret;
-    }
-  }
-
-  public static AKRESULT PostCode(ErrorCode in_eError, ErrorLevel in_eErrorLevel, uint in_playingID) {
-    AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostCode__SWIG_3((int)in_eError, (int)in_eErrorLevel, in_playingID);
-
-    return ret;
-  }
-
   public static AKRESULT PostCode(ErrorCode in_eError, ErrorLevel in_eErrorLevel) {
-    AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostCode__SWIG_4((int)in_eError, (int)in_eErrorLevel);
-
-    return ret;
-  }
-
-  public static AKRESULT PostString(string in_pszError, ErrorLevel in_eErrorLevel, uint in_playingID, UnityEngine.GameObject in_gameObjID, uint in_audioNodeID, bool in_bIsBus) {
-    
-		AkAutoObject tempObj = null;   
-		uint tempin_gameObjID = (uint)AutoRegisterAkGameObj(in_gameObjID, ref tempObj);
-		
-    {
-      AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostString__SWIG_0(in_pszError, (int)in_eErrorLevel, in_playingID, tempin_gameObjID, in_audioNodeID, in_bIsBus);
-
-      return ret;
-    }
-  }
-
-  public static AKRESULT PostString(string in_pszError, ErrorLevel in_eErrorLevel, uint in_playingID, UnityEngine.GameObject in_gameObjID, uint in_audioNodeID) {
-    
-		AkAutoObject tempObj = null;   
-		uint tempin_gameObjID = (uint)AutoRegisterAkGameObj(in_gameObjID, ref tempObj);
-		
-    {
-      AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostString__SWIG_1(in_pszError, (int)in_eErrorLevel, in_playingID, tempin_gameObjID, in_audioNodeID);
-
-      return ret;
-    }
-  }
-
-  public static AKRESULT PostString(string in_pszError, ErrorLevel in_eErrorLevel, uint in_playingID, UnityEngine.GameObject in_gameObjID) {
-    
-		AkAutoObject tempObj = null;   
-		uint tempin_gameObjID = (uint)AutoRegisterAkGameObj(in_gameObjID, ref tempObj);
-		
-    {
-      AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostString__SWIG_2(in_pszError, (int)in_eErrorLevel, in_playingID, tempin_gameObjID);
-
-      return ret;
-    }
-  }
-
-  public static AKRESULT PostString(string in_pszError, ErrorLevel in_eErrorLevel, uint in_playingID) {
-    AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostString__SWIG_3(in_pszError, (int)in_eErrorLevel, in_playingID);
+    AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostCode((int)in_eError, (int)in_eErrorLevel);
 
     return ret;
   }
 
   public static AKRESULT PostString(string in_pszError, ErrorLevel in_eErrorLevel) {
-    AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostString__SWIG_4(in_pszError, (int)in_eErrorLevel);
+    AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_PostString__SWIG_0(in_pszError, (int)in_eErrorLevel);
 
     return ret;
   }
@@ -2152,18 +2056,6 @@ public class AkSoundEngine {
 
   public static uint ResolveDialogueEvent(uint in_eventID, uint[] in_aArgumentValues, uint in_uNumArguments) {
     uint ret = AkSoundEnginePINVOKE.CSharp_ResolveDialogueEvent__SWIG_1(in_eventID, in_aArgumentValues, in_uNumArguments);
-
-    return ret;
-  }
-
-  public static AKRESULT GetDialogueEventCustomPropertyValue(uint in_eventID, uint in_uPropID, out int out_iValue) {
-    AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_GetDialogueEventCustomPropertyValue__SWIG_0(in_eventID, in_uPropID, out out_iValue);
-
-    return ret;
-  }
-
-  public static AKRESULT GetDialogueEventCustomPropertyValue(uint in_eventID, uint in_uPropID, out float out_fValue) {
-    AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_GetDialogueEventCustomPropertyValue__SWIG_1(in_eventID, in_uPropID, out out_fValue);
 
     return ret;
   }
@@ -2391,12 +2283,6 @@ public class AkSoundEngine {
 
   public static uint ChannelMaskFromNumChannels(uint in_uNumChannels) {
     uint ret = AkSoundEnginePINVOKE.CSharp_ChannelMaskFromNumChannels(in_uNumChannels);
-
-    return ret;
-  }
-
-  public static byte ChannelBitToIndex(uint in_uChannelBit, uint in_uChannelMask) {
-    byte ret = AkSoundEnginePINVOKE.CSharp_ChannelBitToIndex(in_uChannelBit, in_uChannelMask);
 
     return ret;
   }

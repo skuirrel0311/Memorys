@@ -17,9 +17,9 @@ public class WwiseSettings
 	public string SoundbankPath;
     public bool CreateWwiseGlobal = true;
     public bool CreateWwiseListener = true;
+    public bool OldProject = false; //True if the project dates from before integration 2013.2.8
     public string WwiseInstallationPathWindows;
     public string WwiseInstallationPathMac;
-    public bool CreatedPicker = false;
 
 	public const string WwiseSettingsFilename = "WwiseSettings.xml";
 	
@@ -27,6 +27,8 @@ public class WwiseSettings
 
     public WwiseSettings()
     {
+        //Check if this is an old project (pre-2013.2.8) to be migrated
+        OldProject = Directory.Exists(Application.dataPath + Path.DirectorySeparatorChar + "Wwise" + Path.DirectorySeparatorChar + "Deployment" + Path.DirectorySeparatorChar + "Examples" );		
     }
 
 	// Save the WwiseSettings structure to a serialized XML file
@@ -101,8 +103,6 @@ public class WwiseSettings
 
 public partial class AkUtilities
 {
-    public static bool IsMigrating = false;
-
     // Unity platform enum to Wwise soundbank reference platform name mapping.
     private static IDictionary<BuildTarget, string[]> platformMapping = new Dictionary<BuildTarget, string[]>()
     {
@@ -122,7 +122,9 @@ public partial class AkUtilities
         { BuildTarget.WSAPlayer, new string[] { "Windows" } },
         { BuildTarget.StandaloneLinux64, new string[] { "Linux" } },
         { BuildTarget.StandaloneLinuxUniversal, new string[] { "Linux" } },
-        // { BuildTarget.WP8Player, new string[] { "Windows" } },
+#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2
+        { BuildTarget.WP8Player, new string[] { "Windows" } },
+#endif
         { BuildTarget.StandaloneOSXIntel64, new string[] { "Mac" } },
         // { BuildTarget.BlackBerry, null },
         // { BuildTarget.Tizen, null },
