@@ -56,8 +56,21 @@ public class SniperTotemPaul : TotemPaul
         lineRenderer.enabled = false;
 
         //発射
-        Shot(base.GetTargetPosition());
+        Vector3 velocity;
+        GameObject bullet = Instantiate(shotEffect, chargeEffect.transform.position, chargeEffect.transform.rotation);
+        Shot(GetTargetPosition(),out velocity);
 
+        int t = 2;
+        velocity = velocity / t;
+        for (int i = 0; i < t; i++)
+        {
+            yield return null;
+
+            //tフレーム後に移動する。
+            bullet.transform.position += velocity;
+
+        }
+        Destroy(bullet, 1.5f);
         yield return new WaitForSeconds(intervalTime);
 
         //終了処理
@@ -103,6 +116,29 @@ public class SniperTotemPaul : TotemPaul
     Ray GetToPlayerRay(Vector3 target)
     {
         return new Ray(chargeEffect.transform.position, target - chargeEffect.transform.position);
+    }
+
+    protected void Shot(Vector3 target,out Vector3 velocity)
+    {
+        Ray ray = new Ray(chargeEffect.transform.position, (target - chargeEffect.transform.position));
+        RaycastHit hit;
+
+        if(Physics.Raycast(ray, out hit,range))
+        {
+            //当たった場所にエフェクトを出す
+            velocity = hit.point - ray.origin;
+
+            Quaternion temp = Quaternion.Euler(new Vector3(90.0f, Mathf.Atan2(velocity.normalized.y, velocity.normalized.x) * Mathf.Rad2Deg, 0.0f));
+            Instantiate(hitEffect, hit.point, temp);
+
+            if(hit.transform.tag == "Player")
+                hit.transform.GetComponent<PlayerOverlap>().Damage(1);
+        }
+        else
+        {
+            velocity = ray.origin + (ray.direction * range);
+            velocity = velocity - ray.origin;
+        }
     }
 
     protected override Vector3 GetTargetPosition()

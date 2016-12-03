@@ -5,8 +5,8 @@ using System.Collections;
 public class PopUpMessage : MonoBehaviour
 {
     protected RectTransform canvasRect;
-    [SerializeField]
-    protected Image messagePrefab = null;
+
+    public Image messagePrefab = null;
 
     [SerializeField]
     float UpperOffset =  2.0f;

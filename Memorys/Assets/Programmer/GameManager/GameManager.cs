@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using DG.Tweening;
 using BehaviorDesigner.Runtime;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
     LimitTime limitTime;
 
     public BehaviorTree[] enemies;
+    private AtScreenEdgeMessage[] directionMessages;
 
     private void Awake()
     {
@@ -72,10 +74,6 @@ public class GameManager : MonoBehaviour
         //    else
         //        SetTargetRandom();
         //}
-        //プレイヤーにターゲットの情報を渡す
-        DistanceMessage player = GameObject.FindGameObjectWithTag("Player").GetComponent<DistanceMessage>();
-        //player.targetTransform = m_Target.transform;
-        //player.IsViewMessage = true;
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
         m_SelectParticle = go.GetComponent<ParticleSystem>();
@@ -90,14 +88,19 @@ public class GameManager : MonoBehaviour
         NotificationSystem.I.Indication("ターゲットを５回破壊し、崩壊を止めろ！");
         StartCoroutine("SetObjTransition");
 
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Image messagePrefab = (Resources.Load("Prefabs/DirectionMessage") as GameObject).GetComponent<Image>();
+        
         GameObject[] tempArray = GameObject.FindGameObjectsWithTag("Enemy");
         enemies = new BehaviorTree[tempArray.Length];
+        directionMessages = new AtScreenEdgeMessage[tempArray.Length];
         for (int i = 0; i < tempArray.Length; i++)
         {
             enemies[i] = tempArray[i].GetComponent<BehaviorTree>();
-        }
-        for (int i = 0; i < tempArray.Length; i++)
-        {
+            directionMessages[i] = player.AddComponent<AtScreenEdgeMessage>() as AtScreenEdgeMessage;
+            directionMessages[i].targetTransform = enemies[i].transform;
+            directionMessages[i].messagePrefab = messagePrefab;
+
             //中心のトーテムポール
             if (enemies[i].gameObject.name == "TotemPaul")
             {
@@ -114,7 +117,17 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         m_GameEnd.Update();
+        UpdateDirectionMessage();
         //m_Target.transform.position = m_TargetPoint.transform.position;
+    }
+
+
+    private void UpdateDirectionMessage()
+    {
+        for(int i = 0;i< directionMessages.Length;i++)
+        {
+            directionMessages[i].IsViewMessage = enemies[i].GetComponent<TotemPaul>().IsWarning;
+        }
     }
 
     private void ObjectEmission(GameObject obj, Color color)

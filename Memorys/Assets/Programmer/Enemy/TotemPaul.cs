@@ -80,7 +80,7 @@ public class TotemPaul : MonoBehaviour
         return false;
     }
 
-    protected void Shot(Vector3 target)
+    protected virtual void Shot(Vector3 target)
     {
         GameObject g = Instantiate(shotEffect, chargeEffect.transform.position, chargeEffect.transform.rotation);
         Vector3 velocity = target - chargeEffect.transform.position;
