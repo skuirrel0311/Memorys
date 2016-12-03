@@ -42,6 +42,13 @@ public class AkGameObj : MonoBehaviour
 
     void Awake()
     {			
+#if UNITY_EDITOR
+        if (AkUtilities.IsMigrating)
+        {
+            return;
+        }
+#endif
+
 		// If the object was marked as static, don't update its position to save cycles.
 #if UNITY_EDITOR
 		if (!UnityEditor.EditorApplication.isPlaying)	
@@ -90,6 +97,12 @@ public class AkGameObj : MonoBehaviour
 	private void CheckStaticStatus()
 	{
 #if UNITY_EDITOR
+
+        if (AkUtilities.IsMigrating)
+        {
+            return;
+        }
+
 		if (gameObject != null && isStaticObject != gameObject.isStatic)
 		{
 			isStaticObject = gameObject.isStatic;
@@ -100,6 +113,13 @@ public class AkGameObj : MonoBehaviour
 	
 	void OnEnable()
 	{ 
+#if UNITY_EDITOR
+        if (AkUtilities.IsMigrating)
+        {
+            return;
+        }
+#endif
+
 		//if enabled is set to false, then the update function wont be called
 		enabled = !isStaticObject;
 	}
@@ -107,6 +127,12 @@ public class AkGameObj : MonoBehaviour
     void OnDestroy()
     {
 #if UNITY_EDITOR
+
+        if (AkUtilities.IsMigrating)
+        {
+            return;
+        }
+
 		if (!UnityEditor.EditorApplication.isPlaying)	
 		{
 			UnityEditor.EditorApplication.update -= this.CheckStaticStatus;
@@ -137,6 +163,12 @@ public class AkGameObj : MonoBehaviour
     void Update()
     {
 #if UNITY_EDITOR
+
+        if (AkUtilities.IsMigrating)
+        {
+            return;
+        }
+
 		if (!UnityEditor.EditorApplication.isPlaying)
 		{
 			return;
@@ -195,6 +227,12 @@ public class AkGameObj : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
 #if UNITY_EDITOR
+
+        if (AkUtilities.IsMigrating)
+        {
+            return;
+        }
+
 		if (!UnityEditor.EditorApplication.isPlaying)
 		{
 			return;
@@ -209,6 +247,15 @@ public class AkGameObj : MonoBehaviour
 
     void AddAuxSend(GameObject in_AuxSendObject)
     {
+#if UNITY_EDITOR
+
+        if (AkUtilities.IsMigrating)
+        {
+            return;
+        }
+
+#endif
+
 		AkEnvironmentPortal akPortal = in_AuxSendObject.GetComponent<AkEnvironmentPortal>();
 		if(akPortal != null)
 		{
@@ -251,6 +298,12 @@ public class AkGameObj : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
 #if UNITY_EDITOR
+
+        if (AkUtilities.IsMigrating)
+        {
+            return;
+        }
+
 		if (!UnityEditor.EditorApplication.isPlaying)
 		{
 			return;
@@ -310,6 +363,15 @@ public class AkGameObj : MonoBehaviour
 
     void UpdateAuxSend()
     {
+#if UNITY_EDITOR
+
+        if (AkUtilities.IsMigrating)
+        {
+            return;
+        }
+
+#endif
+
 		if (m_envData.auxSendValues == null)
         {
 #if UNITY_PS4
@@ -382,9 +444,52 @@ public class AkGameObj : MonoBehaviour
 #if UNITY_EDITOR
 	public void OnDrawGizmosSelected()
 	{
+        if (AkUtilities.IsMigrating)
+        {
+            return;
+        }
+
 		Vector3 position = GetPosition();
 		Gizmos.DrawIcon(position, "WwiseAudioSpeaker.png", false);
 	}
 #endif
+
+#region WwiseMigration
+
+#pragma warning disable 0414 // private field assigned but not used.
+
+	[SerializeField]
+	private AkGameObjPosOffsetData m_posOffsetData = null;
+
+#pragma warning restore 0414 // private field assigned but not used.
+
+
+#if UNITY_EDITOR
+
+    public void Migrate9()
+	{
+        Debug.Log("WwiseUnity: AkGameObj.Migrate9");
+
+		if ((listenerMask & ALL_LISTENER_MASK) == ALL_LISTENER_MASK)
+		{
+			listenerMask = 1;
+		}
+	}
+	
+	public void Migrate10()
+	{
+        Debug.Log("WwiseUnity: AkGameObj.Migrate10");
+
+		if (m_posOffsetData != null)
+		{
+			m_positionOffsetData = new AkGameObjPositionOffsetData(true);
+			m_positionOffsetData.positionOffset = m_posOffsetData.positionOffset;
+            m_posOffsetData = null;
+		}
+	}
+
+#endif
+
+#endregion
 }
 #endif // #if ! (UNITY_DASHBOARD_WIDGET || UNITY_WEBPLAYER || UNITY_WII || UNITY_NACL || UNITY_FLASH || UNITY_BLACKBERRY) // Disable under unsupported platforms.
