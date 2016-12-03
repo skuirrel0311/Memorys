@@ -21,7 +21,7 @@ public class BreakMessage : PopUpMessage
     public override void DrawMessage()
     {
         //todo:押したらどうのこうの
-        if (IsViewMessage&&(MyInputManager.GetButtonDown(MyInputManager.Button.A)||Input.GetKeyDown(KeyCode.Delete)))
+        if (IsViewMessage&&(MyInputManager.GetButtonDown(MyInputManager.Button.X)||Input.GetKeyDown(KeyCode.Delete)))
         {
             GameManager.I.DestroyCancel();
             //エフェクト

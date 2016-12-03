@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             //当たったオブジェクトの高さの差が小さければよじ登り
-            if (Mathf.Abs(transform.position.y - go.transform.position.y) <= 2.5f)
+            if (Mathf.Abs(transform.position.y - go.transform.position.y) <= 2.0f)
             {
                 ChangeSquat(false);
                 currentState = PlayerState.Clamber;
@@ -282,12 +282,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     GameObject GetForwardObject()
     {
         RaycastHit hit;
 
-        Ray underRay = new Ray(transform.position + (Vector3.up * 0.2f), transform.forward);
+        Ray underRay = new Ray(transform.position + Vector3.up*1.5f, transform.forward);
 
         if (!Physics.Raycast(underRay, out hit, 1.0f))
         {
