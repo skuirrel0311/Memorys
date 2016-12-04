@@ -1,79 +1,20 @@
 fileFormatVersion: 2
-guid: 32ad4dab41db4894fb727179e72bc1f0
-timeCreated: 1480787695
+guid: eed126a54cf9d6d4286c0a04822ec6f6
+timeCreated: 1480534729
 licenseType: Free
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
   executionOrder: {}
   isPreloaded: 0
-  isOverridable: 0
   platformData:
-    Android:
-      enabled: 0
-      settings:
-        CPU: ARMv7
     Any:
       enabled: 0
-      settings:
-        Exclude Android: 1
-        Exclude Editor: 1
-        Exclude Linux: 0
-        Exclude Linux64: 0
-        Exclude LinuxUniversal: 0
-        Exclude OSXIntel: 0
-        Exclude OSXIntel64: 0
-        Exclude OSXUniversal: 0
-        Exclude WebGL: 0
-        Exclude Win: 0
-        Exclude Win64: 1
-        Exclude iOS: 1
+      settings: {}
     Editor:
       enabled: 0
       settings:
-        CPU: AnyCPU
         DefaultValueInitialized: true
-        OS: AnyOS
-    Linux:
-      enabled: 1
-      settings:
-        CPU: None
-    Linux64:
-      enabled: 1
-      settings:
-        CPU: None
-    LinuxUniversal:
-      enabled: 1
-      settings:
-        CPU: None
-    OSXIntel:
-      enabled: 1
-      settings:
-        CPU: None
-    OSXIntel64:
-      enabled: 1
-      settings:
-        CPU: None
-    OSXUniversal:
-      enabled: 1
-      settings:
-        CPU: None
-    WebGL:
-      enabled: 1
-      settings: {}
-    Win:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
-    Win64:
-      enabled: 0
-      settings:
-        CPU: None
-    iOS:
-      enabled: 0
-      settings:
-        CompileFlags: 
-        FrameworkDependencies: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 

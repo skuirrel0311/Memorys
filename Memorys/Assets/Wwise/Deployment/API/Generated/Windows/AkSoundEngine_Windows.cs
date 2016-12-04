@@ -2495,12 +2495,11 @@ public class AkSoundEngine {
   }
 
   public static AKRESULT SetObjectPosition(UnityEngine.GameObject in_GameObjectID, float PosX, float PosY, float PosZ, float FrontX, float FrontY, float FrontZ, float TopX, float TopY, float TopZ) {
-    
-		AkAutoObject tempObj = null;   
-		uint tempin_GameObjectID = (uint)AutoRegisterAkGameObj(in_GameObjectID, ref tempObj);
+ 
+		uint Id = (in_GameObjectID != null ? (uint)in_GameObjectID.GetInstanceID() : (uint)AkSoundEngine.AK_INVALID_GAME_OBJECT);;
 		
     {
-      AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetObjectPosition(tempin_GameObjectID, PosX, PosY, PosZ, FrontX, FrontY, FrontZ, TopX, TopY, TopZ);
+      AKRESULT ret = (AKRESULT)AkSoundEnginePINVOKE.CSharp_SetObjectPosition(Id, PosX, PosY, PosZ, FrontX, FrontY, FrontZ, TopX, TopY, TopZ);
 
       return ret;
     }

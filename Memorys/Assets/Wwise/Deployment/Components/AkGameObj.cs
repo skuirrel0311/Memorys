@@ -209,6 +209,11 @@ public class AkGameObj : MonoBehaviour
 
     void AddAuxSend(GameObject in_AuxSendObject)
     {
+        if(m_envData == null )
+        {
+            return;
+        }
+
 		AkEnvironmentPortal akPortal = in_AuxSendObject.GetComponent<AkEnvironmentPortal>();
 		if(akPortal != null)
 		{
@@ -310,6 +315,11 @@ public class AkGameObj : MonoBehaviour
 
     void UpdateAuxSend()
     {
+        if (m_envData == null)
+        {
+            return;
+        }
+
 		if (m_envData.auxSendValues == null)
         {
 #if UNITY_PS4
