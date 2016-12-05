@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             //当たったオブジェクトの高さの差が小さければよじ登り
-            if (Mathf.Abs(transform.position.y - go.transform.position.y) <= 2.0f)
+            if (Mathf.Abs(transform.position.y - go.transform.position.y) <= 2.1f)
             {
                 ChangeSquat(false);
                 currentState = PlayerState.Clamber;

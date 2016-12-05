@@ -49,7 +49,7 @@ public class FloorTransition : MonoBehaviour
         if (!isTransition) return;
 
         m_Timer += Time.deltaTime;
-        if (m_Timer > 5.0f)
+        if (m_Timer > 2.0f)
         {
             StartCoroutine("FloorMove");
         }
@@ -78,7 +78,7 @@ public class FloorTransition : MonoBehaviour
     public void FloorTrans()
     {
         if (isTransition) return;
-        transform.DOShakePosition(5.0f,0.01f,10,90.0f,false,false);
+        transform.DOShakePosition(2.0f,0.025f,25,90.0f,false,false);
         isTransition = true;
         m_Timer = 0.0f;
         SetFloorState();
