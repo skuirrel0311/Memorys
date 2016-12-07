@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     float jumpPower = 250;
     [SerializeField]
     float airMoveSpeed = 5;
-    public PlayerState currentState;    //現在のステート
+    public PlayerState currentState;  //現在のステート
     [SerializeField]
     bool NoJumping = false;
     [SerializeField]
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     bool isSquat;
 
     private float jumpTime = 0;
-
+    private float m_accel;
     //private enum ColliderPlace { Center, Left, Right, Back, Front }
 
     void Awake()
@@ -65,13 +65,23 @@ public class PlayerController : MonoBehaviour
         stamina = MaxStamina;
         isStaminaDepletion = false;
         isSquat = false;
+        m_accel = 0;
     }
 
     void FixedUpdate()
     {
         Vector3 movement = GetInputVector();
         if (isSquat) movement *= 0.5f;
-        GetComponent<Animator>().SetFloat("RunSpeed",movement.magnitude*6.666f);
+
+        if (movement == Vector3.zero)
+        {
+            m_accel = 0.0f;
+        }
+        else
+        {
+            m_accel = Mathf.Min(movement.magnitude, m_accel + (movement.magnitude * 0.03f));
+        }
+        GetComponent<Animator>().SetFloat("RunSpeed",m_accel*6.666f);
         //スタミナ
         stamina = Mathf.Min(MaxStamina, stamina + Time.deltaTime);
         if (stamina == MaxStamina)
@@ -88,16 +98,6 @@ public class PlayerController : MonoBehaviour
         transform.Translate(movement, Space.World);
         //body.AddForce(movement*50.0f,ForceMode.VelocityChange);
 
-        switch (currentState)
-        {
-            case PlayerState.Land:
-                if (IsOnGround())
-                {
-                    currentState = movement == Vector3.zero ? PlayerState.Idle : PlayerState.Move;
-                }
-                break;
-        }
-
         oldPosition = transform.position;
     }
 
@@ -107,12 +107,16 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = transform.position - oldPosition;
         jumpTime += Time.deltaTime;
         //Debug.Log("currentState:"+currentState);
+
+
+
         switch (currentState)
         {
             case PlayerState.Idle:
             case PlayerState.Move:
-                if (!NoJumping && (MyInputManager.GetButtonDown(MyInputManager.Button.A) || Input.GetKeyDown(KeyCode.Space))) Jumpping();
-                if ((MyInputManager.GetButtonDown(MyInputManager.Button.B) || Input.GetKeyDown(KeyCode.B))) ChangeSquat(!isSquat);
+                bool isButtonDown = (MyInputManager.GetButtonDown(MyInputManager.Button.A) || Input.GetKeyDown(KeyCode.Space));
+                if (!NoJumping &&isButtonDown) Jumpping();
+                if (!NoJumping &&(isSquat||m_accel==0.0f)&&isButtonDown) ChangeSquat(!isSquat);
                 break;
             case PlayerState.Jump:
                 if (movement.y < 0)
@@ -121,7 +125,9 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
         }
+
         CheckFall();
+
     }
 
     void CheckFall()
@@ -159,7 +165,7 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(leftStick.x, 0, leftStick.y);
         if (!isStaminaDepletion && MyInputManager.GetButton(MyInputManager.Button.LeftShoulder))
         {
-            movement *= 2.0f;
+            movement *= 1.3f;
             stamina = Mathf.Max(0.0f, stamina - (Time.deltaTime * 2.0f));
             if (stamina == 0.0f)
                 isStaminaDepletion = true;
@@ -195,9 +201,14 @@ public class PlayerController : MonoBehaviour
 
         if (go == null)
         {
-            jumpTime = 0.0f;
+            if (isSquat) return;
             ChangeSquat(false);
+            if (currentState == PlayerState.Fall)
+                GetComponent<Animator>().CrossFadeInFixedTime("LongJump",0.1f);
             currentState = PlayerState.Jump;
+            GetComponent<Rigidbody>().velocity += Vector3.up*3.0f;
+            jumpTime = 0.0f;
+
         }
         else
         {
@@ -206,7 +217,7 @@ public class PlayerController : MonoBehaviour
             {
                 ChangeSquat(false);
                 currentState = PlayerState.Clamber;
-                transform.Translate(0.0f,0.5f,0.0f);
+                transform.Translate(0.0f,0.2f,0.0f);
                 GetComponent<Animator>().CrossFadeInFixedTime("Clamber", 0.1f);
             }
             //よじ登り失敗
