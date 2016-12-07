@@ -38,6 +38,13 @@ public class GameManager : MonoBehaviour
     public BehaviorTree[] enemies;
     private AtScreenEdgeMessage[] directionMessages;
 
+    
+    [SerializeField]
+    GameObject floorObj;
+    //置いた床の数
+    int placedFloorNum = 0;
+    int maxPlacedFloorNum;
+
     private void Awake()
     {
 
@@ -88,9 +95,15 @@ public class GameManager : MonoBehaviour
         NotificationSystem.I.Indication("ターゲットを５回破壊し、崩壊を止めろ！");
         StartCoroutine("SetObjTransition");
 
+        InitializeEnemy();
+        maxPlacedFloorNum = GameObject.FindGameObjectsWithTag("Target").Length;
+    }
+
+    private void InitializeEnemy()
+    {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Image messagePrefab = (Resources.Load("Prefabs/DirectionMessage") as GameObject).GetComponent<Image>();
-        
+
         GameObject[] tempArray = GameObject.FindGameObjectsWithTag("Enemy");
         enemies = new BehaviorTree[tempArray.Length];
         directionMessages = new AtScreenEdgeMessage[tempArray.Length];
@@ -120,8 +133,7 @@ public class GameManager : MonoBehaviour
         UpdateDirectionMessage();
         //m_Target.transform.position = m_TargetPoint.transform.position;
     }
-
-
+    
     private void UpdateDirectionMessage()
     {
         for(int i = 0;i< directionMessages.Length;i++)
@@ -156,8 +168,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-
+    
     //ターゲットが破壊しようとするオブジェクトを選択
     private void SetWillDestroy()
     {
@@ -244,4 +255,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PutFloor()
+    {
+        Vector3 goalPosition = new Vector3(-1, 0, -27.5f);
+        Vector3 floorPosition =  goalPosition + (Vector3.back * ((placedFloorNum + 1) * 3.4f));
+
+        Instantiate(floorObj, floorPosition, Quaternion.identity);
+
+        placedFloorNum++;
+        if(placedFloorNum >= maxPlacedFloorNum)
+        {
+            Debug.Log("call Game Clear");
+            m_GameEnd.GameClear();
+            return;
+        }
+        GenerateEnemy();
+    }
+
+    void GenerateEnemy()
+    {
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            //中心のトーテムポール
+            if (enemies[i].gameObject.name == "TotemPaul (" + placedFloorNum.ToString() + ")")
+            {
+                enemies[i].GetComponent<TotemPaul>().StartUp();
+            }
+        }
+    }
 }

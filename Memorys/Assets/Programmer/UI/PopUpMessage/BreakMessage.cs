@@ -5,7 +5,12 @@ public class BreakMessage : PopUpMessage
 {
     GameObject m_Exposion;
     BehaviorTree[] enemies;
+    GameObject player;
     static int count = 1;
+
+    [SerializeField]
+    int pushNum = 5;
+    int pushCount = 0;
 
     void Awake()
     {
@@ -16,12 +21,31 @@ public class BreakMessage : PopUpMessage
     public override void Start()
     {
         base.Start();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public override void DrawMessage()
     {
+        if (IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
+        {
+            //todo:担ぐ
+            player.GetComponent<PlayerHasItem>().ToHaveItem(gameObject);
+        }
+
+        base.DrawMessage();
+    }
+
+
+    public void DraMessage()
+    {
         //todo:押したらどうのこうの
-        if (IsViewMessage&&(MyInputManager.GetButtonDown(MyInputManager.Button.X)||Input.GetKeyDown(KeyCode.Delete)))
+        messagePrefab.fillAmount = (float)pushCount / pushNum;
+        if(IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
+        {
+            pushCount++;
+        }
+
+        if (pushCount > pushNum)
         {
             GameManager.I.DestroyCancel();
             //エフェクト
