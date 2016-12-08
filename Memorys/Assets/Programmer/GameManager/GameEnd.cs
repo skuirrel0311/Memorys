@@ -24,12 +24,12 @@ public class GameEnd
     /// <summary>
     /// ステージの崩壊を何回キャンセルしたか
     /// </summary>
-    private int m_destoryCancelCount=0;
+    public int m_destoryCancelCount { get; private set; }
 
     /// <summary>
     ///     何回ステージが崩壊したか
     /// </summary>
-    private int m_StageDestroy=0;
+    private int m_StageDestroy = 0;
     public int StageDestroyCount
     {
         get { return m_StageDestroy; }
@@ -56,7 +56,7 @@ public class GameEnd
         //ゲームがクリアされた
         if (m_destoryCancelCount >= c_MaxDestroyCalcel)
         {
-            GameClear();
+           // GameClear();
         }
     }
 
@@ -64,8 +64,8 @@ public class GameEnd
     {
         m_destoryCancelCount++;
         if (!(m_destoryCancelCount >= c_MaxDestroyCalcel))
-            NotificationSystem.I.Indication("崩壊を止めた！　あと"+(c_MaxDestroyCalcel-m_destoryCancelCount)+"回!\nターゲットが別の場所に出現！");
-            Update();
+            NotificationSystem.I.Indication("脱出まで　あと" + (c_MaxDestroyCalcel - m_destoryCancelCount) + "回!\nターゲットが別の場所に出現！");
+        Update();
     }
 
     public void StageDestroy()

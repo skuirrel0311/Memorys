@@ -44,7 +44,7 @@ public class PlayerHasItem : MonoBehaviour
 
         if(MyInputManager.GetButtonDown(MyInputManager.Button.X))
         {
-            GameManager.I.PutFloor();
+            GameManager.I.PushSwitch();
 
             Destroy(item);
             item = null;

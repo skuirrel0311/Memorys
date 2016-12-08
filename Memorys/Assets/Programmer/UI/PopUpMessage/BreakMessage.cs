@@ -4,65 +4,34 @@ using BehaviorDesigner.Runtime;
 public class BreakMessage : PopUpMessage
 {
     GameObject m_Exposion;
-    BehaviorTree[] enemies;
-    GameObject player;
-    static int count = 1;
 
+    //何回ボタンを押せばいいか
     [SerializeField]
-    int pushNum = 5;
+    int maxPushCount = 5;
     int pushCount = 0;
 
     void Awake()
     {
         m_Exposion = Resources.Load("ExplosionMobile") as GameObject;
-        count = 1;
-    }
-
-    public override void Start()
-    {
-        base.Start();
-        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public override void DrawMessage()
     {
-        if (IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
-        {
-            //todo:担ぐ
-            player.GetComponent<PlayerHasItem>().ToHaveItem(gameObject);
-        }
-
-        base.DrawMessage();
-    }
-
-
-    public void DraMessage()
-    {
         //todo:押したらどうのこうの
-        messagePrefab.fillAmount = (float)pushCount / pushNum;
+        messagePrefab.fillAmount = (float)pushCount / maxPushCount;
         if(IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
         {
             pushCount++;
         }
 
-        if (pushCount > pushNum)
+        if (pushCount > maxPushCount)
         {
-            GameManager.I.DestroyCancel();
             //エフェクト
             GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
+            GameManager.I.PushSwitch();
 
-            for (int i = 0; i < GameManager.I.enemies.Length; i++)
-            {
-                //中心のトーテムポール
-                if (GameManager.I.enemies[i].gameObject.name == "TotemPaul (" + count.ToString() + ")")
-                {
-                    GameManager.I.enemies[i].GetComponent<TotemPaul>().StartUp();
-                }
-            }
-
-            count++;
             IsViewMessage = false;
-            Destroy(gameObject);
+            pushCount = 0;
         }
         base.DrawMessage();
     }
