@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
         Vector3 forward = Vector3.Slerp(
             transform.forward,  //正面から
             movement,          //入力の角度まで
-            360 * Time.deltaTime / Vector3.Angle(transform.forward, movement)
+            700 * Time.deltaTime / Vector3.Angle(transform.forward, movement)
             );
         transform.LookAt(transform.position + forward);
 
@@ -107,8 +107,6 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = transform.position - oldPosition;
         jumpTime += Time.deltaTime;
         //Debug.Log("currentState:"+currentState);
-
-
 
         switch (currentState)
         {
@@ -135,7 +133,19 @@ public class PlayerController : MonoBehaviour
 
         if (currentState == PlayerState.Jump) return;
         if (currentState == PlayerState.Clamber) return;
+
         if (IsOnGround() || body.velocity.y > -0.5f)
+        {
+            if (currentState == PlayerState.Fall)
+                currentState = PlayerState.Idle;
+            return;
+        }
+        currentState = PlayerState.Fall;
+    }
+
+    public void JumpCheckFall()
+    {
+        if (IsOnGround(1.0f))
         {
             if (currentState == PlayerState.Fall)
                 currentState = PlayerState.Idle;
@@ -148,10 +158,12 @@ public class PlayerController : MonoBehaviour
     {
         if (currentState == PlayerState.Jump) return Vector3.zero;
         if (currentState == PlayerState.Clamber) return Vector3.zero;
-        if(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).shortNameHash== Animator.StringToHash("Base Layer.TopToGround"))
+        int hash = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).shortNameHash;
+        if (hash == Animator.StringToHash("Base Layer.TopToGround")||hash == Animator.StringToHash("Base Layer.Damage"))
         {
             return Vector3.zero;
         }
+
         Vector2 leftStick = MyInputManager.GetAxis(MyInputManager.Axis.LeftStick);
 
         if (leftStick == Vector2.zero)
@@ -208,7 +220,6 @@ public class PlayerController : MonoBehaviour
             currentState = PlayerState.Jump;
             GetComponent<Rigidbody>().velocity += Vector3.up*3.0f;
             jumpTime = 0.0f;
-
         }
         else
         {
@@ -256,15 +267,15 @@ public class PlayerController : MonoBehaviour
         if (AttackCallBack != null) AttackCallBack();
 
     }
+    
 
-    //UnderColliderのどれかが地面に触れていれば地面に接しているはず。
-    bool IsOnGround()
+    bool IsOnGround(float distance = 0.3f)
     {
         RaycastHit hit;
 
         Ray underRay = new Ray(transform.position + (Vector3.up * 0.2f), Vector3.down);
 
-        if (Physics.Raycast(underRay, out hit, 0.3f))
+        if (Physics.Raycast(underRay, out hit, distance))
         {
             return true;
         }
