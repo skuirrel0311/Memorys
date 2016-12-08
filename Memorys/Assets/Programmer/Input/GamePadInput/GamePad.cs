@@ -15,6 +15,12 @@ namespace GamepadInput
         public enum Trigger { LeftTrigger, RightTrigger }
         public enum Axis { LeftStick, RightStick, Dpad }
         public enum Index { Any, One, Two, Three, Four }
+        public static GamepadState state;
+
+        public static void GamePadInitialize()
+        {
+            state = new GamepadState();
+        }
 
         public static bool GetButtonDown(Button button, Index controlIndex)
         {
@@ -198,7 +204,7 @@ namespace GamepadInput
 
         public static GamepadState GetState(Index controlIndex, bool raw = false)
         {
-            GamepadState state = new GamepadState();
+
 
             state.A = GetButton(Button.A, controlIndex);
             state.B = GetButton(Button.B, controlIndex);

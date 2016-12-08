@@ -147,7 +147,6 @@ public class PlayerController : MonoBehaviour
     {
         if (IsOnGround(1.0f))
         {
-            if (currentState == PlayerState.Fall)
                 currentState = PlayerState.Idle;
             return;
         }
