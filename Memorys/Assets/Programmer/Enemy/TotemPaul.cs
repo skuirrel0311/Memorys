@@ -33,6 +33,7 @@ public class TotemPaul : MonoBehaviour
         IsWarning = false;
 
         GetComponent<BehaviorTree>().enabled = false;
+        //ライトをoffにする
         transform.GetChild(1).gameObject.SetActive(false);
 
         startPosition = transform.position;
@@ -116,6 +117,4 @@ public class TotemPaul : MonoBehaviour
             yield return null;
         }
     }
-
-
 }

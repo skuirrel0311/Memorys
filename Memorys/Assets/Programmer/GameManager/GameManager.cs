@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private GameObject GameClearLogo;
 
     //プレイヤーの破壊目標
-    private GameObject m_Target;
+    public GameObject m_Target;
     private GameObject m_TargetPoint;
     //破壊目標の出現位置
     [SerializeField]
@@ -57,6 +57,12 @@ public class GameManager : MonoBehaviour
             Debug.Log("GameeOverCallBack", this);
         };
 
+        //ターゲットのオブジェクトを取得してポジションをセットする
+        m_Target = GameObject.Instantiate(Resources.Load("Prefabs/Target") as GameObject) as GameObject;
+        if (m_TargetPoints != null)
+        {
+            SetTargetRandom();
+        }
 
         I = this;
     }
@@ -64,13 +70,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // I = this;
-
-        //ターゲットのオブジェクトを取得してポジションをセットする
-        m_Target = GameObject.Instantiate(Resources.Load("Prefabs/Target") as GameObject) as GameObject;
-        if (m_TargetPoints != null)
-        {
-            SetTargetRandom();
-        }
+        
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
         m_SelectParticle = go.GetComponent<ParticleSystem>();
@@ -284,6 +284,7 @@ public class GameManager : MonoBehaviour
 
     private void PutFloor()
     {
+        if (floorObj == null) return;
         //床を置く座標を計算で求める
         Vector3 goalPosition = new Vector3(-1, 0, -27.5f);
         Vector3 floorPosition = goalPosition + (Vector3.back * ((m_GameEnd.m_destoryCancelCount) * 3.4f));
