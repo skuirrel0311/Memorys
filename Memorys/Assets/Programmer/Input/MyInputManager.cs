@@ -13,6 +13,7 @@ public class MyInputManager : BaseManager<MyInputManager>
 
     public void Awake()
     {
+        GamePad.GamePadInitialize();
         //見つけてきたInstanceが自身でない場合はManagerが２つ存在している
         if (this != Instance)
         {
