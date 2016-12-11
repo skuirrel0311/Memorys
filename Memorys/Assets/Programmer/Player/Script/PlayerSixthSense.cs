@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerSixthSense : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class PlayerSixthSense : MonoBehaviour
     float startSenseTime = 6.0f;
     TotemPaul[] enemies;
     Light[] enemiesLight;
-    
+
     Light directionalLight = null;
 
     //敵の視界を見るセンスがあるか？
@@ -21,6 +22,13 @@ public class PlayerSixthSense : MonoBehaviour
 
     bool wasSeen = false;
 
+    public float sonarPower = 0.0f;
+    [SerializeField]
+    float maxSonarPower = 5.0f;
+
+    [SerializeField]
+    Text debugText = null;
+
     void Start()
     {
         GameObject[] enemyArray = GameObject.FindGameObjectsWithTag("Enemy");
@@ -31,7 +39,7 @@ public class PlayerSixthSense : MonoBehaviour
             enemies[i] = enemyArray[i].GetComponent<TotemPaul>();
             enemiesLight[i] = enemyArray[i].transform.GetChild(1).GetComponent<Light>();
         }
-        
+
         directionalLight = GameObject.Find("Directional Light").GetComponent<Light>();
     }
 
@@ -40,12 +48,22 @@ public class PlayerSixthSense : MonoBehaviour
         //見つかっていなかったらtimerが増える
         wasSeen = WasSeen();
         if (wasSeen)
+        {
             timer -= Time.deltaTime * 5.0f;
+        }
         else
+        {
             timer += Time.deltaTime;
+            if (hasSense) sonarPower += Time.deltaTime;
+        }
+
+        sonarPower = Mathf.Min(sonarPower, maxSonarPower);
+        debugText.text = sonarPower.ToString("F2");
+
         timer = Mathf.Clamp(timer, 0.0f, startSenseTime);
 
         hasSense = (timer == startSenseTime);
+        GetComponent<SoundWaveFinder>().IsUseable = (sonarPower == maxSonarPower);
 
         UpdateLight();
 
@@ -122,6 +140,7 @@ public class PlayerSixthSense : MonoBehaviour
     {
         return a - ((a - b) * t);
     }
+
     void SetLight(float intensity, Color color)
     {
         for (int i = 0; i < enemiesLight.Length; i++)

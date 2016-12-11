@@ -27,6 +27,8 @@ public class SoundWaveFinder : MonoBehaviour
     Coroutine coroutine;
 
     Timer timer;
+    //ソナーが使用可能か？
+    public bool IsUseable = false;
 
     void Start()
     {
@@ -45,6 +47,17 @@ public class SoundWaveFinder : MonoBehaviour
         timer.Update();
         if (timer.IsLimitTime) timer.Stop(true);
 
+        //指定回数スイッチを押したらターゲットは消える
+        if (targetRenderer == null)
+        {
+            if (timer.IsWorking)
+            {
+                StopCoroutine(coroutine);
+                timer.Stop();
+            }
+            return;
+        }
+
         Vector3 myPosition = transform.position;
         Vector3 targetPosition = targetRenderer.transform.position;
         myPosition.y = 0.0f;
@@ -54,8 +67,12 @@ public class SoundWaveFinder : MonoBehaviour
 
         if (MyInputManager.GetButtonDown(MyInputManager.Button.Y) || Input.GetKeyDown(KeyCode.Y))
         {
+            if (!IsUseable) return;
             if (timer.IsWorking) return;
+            
             SendSoundWave();
+
+            GetComponent<PlayerSixthSense>().sonarPower = 0;
         }
     }
 
