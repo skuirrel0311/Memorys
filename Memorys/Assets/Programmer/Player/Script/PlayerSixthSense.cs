@@ -9,22 +9,15 @@ public class PlayerSixthSense : MonoBehaviour
     float startSenseTime = 6.0f;
     TotemPaul[] enemies;
     Light[] enemiesLight;
-
-    Renderer targetRenderer;
-    Material targetMat;
-    //光らせるマテリアル
-    [SerializeField]
-    Material strongMat = null;
-
-    [SerializeField]
+    
     Light directionalLight = null;
 
     //敵の視界を見るセンスがあるか？
     bool hasSense = false;
     bool oldHasSense = false;
 
-    [SerializeField]
     bool IsWorkingCoroutine = false;
+    Coroutine coroutine;
 
     bool wasSeen = false;
 
@@ -38,9 +31,8 @@ public class PlayerSixthSense : MonoBehaviour
             enemies[i] = enemyArray[i].GetComponent<TotemPaul>();
             enemiesLight[i] = enemyArray[i].transform.GetChild(1).GetComponent<Light>();
         }
-
-        targetRenderer = GameManager.I.m_Target.GetComponent<Renderer>();
-        targetMat = targetRenderer.material;
+        
+        directionalLight = GameObject.Find("Directional Light").GetComponent<Light>();
     }
 
     void Update()
@@ -63,20 +55,30 @@ public class PlayerSixthSense : MonoBehaviour
 
     void UpdateLight()
     {
-        if (IsWorkingCoroutine) return;
+        if (IsWorkingCoroutine)
+        {
+            if ((hasSense == true && oldHasSense == false) || (hasSense == false && oldHasSense == true))
+            {
+                //コルーチンが走っている間に変更したい場合
+                StopCoroutine(coroutine);
+                IsWorkingCoroutine = false;
+            }
+            else
+            {
+                return;
+            }
+        }
 
         if (hasSense == true && oldHasSense == false)
         {
             IsWorkingCoroutine = true;
-            if(targetRenderer != null) targetRenderer.material = strongMat;
-            StartCoroutine(SetLightSettings(Color.red, 3.0f, 0.3f, 0.0f));
+            coroutine = StartCoroutine(SetLightSettings(Color.white, 5.0f, 0.3f, 0.0f));
         }
 
         if (hasSense == false && oldHasSense == true)
         {
             IsWorkingCoroutine = true;
-            if (targetRenderer != null) targetRenderer.material = targetMat;
-            StartCoroutine(SetLightSettings(Color.white, 1.0f, 1.0f, 1.0f));
+            coroutine = StartCoroutine(SetLightSettings(Color.white, 1.0f, 1.0f, 1.0f));
         }
     }
 
