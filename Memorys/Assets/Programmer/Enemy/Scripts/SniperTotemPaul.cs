@@ -48,7 +48,6 @@ public class SniperTotemPaul : TotemPaul
 
             //チャージしつつプレイヤーの方に向く
             Charge(GetTargetPosition());
-            RotateTowards();
             yield return null;
         }
 

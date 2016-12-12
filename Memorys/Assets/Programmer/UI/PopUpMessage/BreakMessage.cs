@@ -30,6 +30,8 @@ public class BreakMessage : PopUpMessage
             GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
             GameManager.I.PushSwitch();
 
+            if(!GameManager.I.OneByOne) Destroy(gameObject);
+
             IsViewMessage = false;
             pushCount = 0;
         }

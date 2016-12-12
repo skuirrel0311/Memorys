@@ -41,6 +41,7 @@ public class PlayerSixthSense : MonoBehaviour
         }
 
         directionalLight = GameObject.Find("Directional Light").GetComponent<Light>();
+        sonarPower = maxSonarPower;
     }
 
     void Update()
@@ -146,7 +147,7 @@ public class PlayerSixthSense : MonoBehaviour
         for (int i = 0; i < enemiesLight.Length; i++)
         {
             enemiesLight[i].intensity = intensity;
-            enemiesLight[i].color = color;
+            //enemiesLight[i].color = color;
         }
     }
 

@@ -27,6 +27,9 @@ public class FloorTransition : MonoBehaviour
 
         m_Timer = 0;
         m_FloorState = (FloorState)Random.Range(1, 4);
+
+        if (GameManager.I.IsFlat) return;
+
         if (m_FloorState == FloorState.NORMAL)
         {
             transform.position = new Vector3(transform.position.x, BaseHeight, transform.position.z);

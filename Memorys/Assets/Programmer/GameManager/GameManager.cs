@@ -34,9 +34,16 @@ public class GameManager : MonoBehaviour
 
     public BehaviorTree[] enemies;
     private AtScreenEdgeMessage[] directionMessages;
-    
+
     [SerializeField]
     GameObject floorObj = null;
+
+    [SerializeField]
+    public bool OneByOne = true;
+
+    [SerializeField]
+    public bool IsFlat = false;
+
 
     private void Awake()
     {
@@ -58,10 +65,19 @@ public class GameManager : MonoBehaviour
         };
 
         //ターゲットのオブジェクトを取得してポジションをセットする
-        m_Target = GameObject.Instantiate(Resources.Load("Prefabs/Target") as GameObject) as GameObject;
+        if (OneByOne)
+            m_Target = GameObject.Instantiate(Resources.Load("Prefabs/Target") as GameObject) as GameObject;
+        else
+            m_Target = Resources.Load<GameObject>("Prefabs/Target");
+
         if (m_TargetPoints != null)
         {
-            SetTargetRandom();
+            if(OneByOne)
+                SetTargetRandom();
+            else
+                SetTarget();
+
+            GameEnd.c_MaxDestroyCalcel = m_TargetPoints.Length;
         }
 
         I = this;
@@ -70,7 +86,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // I = this;
-        
+
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
         m_SelectParticle = go.GetComponent<ParticleSystem>();
@@ -82,8 +98,8 @@ public class GameManager : MonoBehaviour
         m_WillDestroyObjects = new List<GameObject>();
         m_Interval = 0.0f;
         // SetWillDestroy();
-        NotificationSystem.I.Indication("レバーを５回押し、脱出せよ！");
-        StartCoroutine("SetObjTransition");
+        NotificationSystem.I.Indication("スイッチを" + GameEnd.c_MaxDestroyCalcel.ToString() + "回押し、脱出せよ！");
+        if(!IsFlat) StartCoroutine("SetObjTransition");
 
         InitializeEnemy();
     }
@@ -134,8 +150,8 @@ public class GameManager : MonoBehaviour
                 continue;
             }
             directionMessages[i].enabled = true;
-            directionMessages[i].IsViewMessage = t.IsWarning;
-            directionMessages[i].messagePrefab.fillAmount = (t.Alertness / 3);
+            directionMessages[i].IsViewMessage = t.Alertness > 0.5f;
+            directionMessages[i].messagePrefab.fillAmount = (t.Alertness / 3.0f);
         }
     }
 
@@ -164,6 +180,15 @@ public class GameManager : MonoBehaviour
             {
                 break;
             }
+        }
+    }
+
+    private void SetTarget()
+    {
+        for (int i = 0; i < m_TargetPoints.Length; i++)
+        {
+            GameObject g = Instantiate(m_Target, m_TargetPoints[i].transform);
+            g.transform.localPosition = Vector3.zero;
         }
     }
 
@@ -258,16 +283,15 @@ public class GameManager : MonoBehaviour
         m_GameEnd.DestroyCancel();
         PutFloor();
         GenerateEnemy();
-
         //クリア条件を満たしている
         if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
         {
             NotificationSystem.I.Indication("脱出可能になった！");
-            Destroy(m_Target);
+            if(OneByOne) Destroy(m_Target);
             return;
         }
 
-        SetTargetRandom();
+        if(OneByOne)SetTargetRandom();
     }
 
     private void GenerateEnemy()
