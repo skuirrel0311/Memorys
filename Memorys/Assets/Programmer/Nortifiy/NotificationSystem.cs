@@ -28,7 +28,7 @@ public class NotificationSystem : MonoBehaviour {
     {
         float time=0.0f;
         Image img = m_NotificationImage.GetComponent<Image>();
-        img.color = new Color(0.0f,0.0f,0.0f,0.0f);
+        img.color = Color.clear;
         m_text.color = Color.white;
         while (true)
         {

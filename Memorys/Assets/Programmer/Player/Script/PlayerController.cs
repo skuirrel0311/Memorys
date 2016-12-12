@@ -27,8 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float airMoveSpeed = 5;
     public PlayerState currentState;  //現在のステート
-    [SerializeField]
-    bool NoJumping = false;
+
     [SerializeField]
     private float MaxStamina;
     public float stamina;
@@ -36,7 +35,6 @@ public class PlayerController : MonoBehaviour
 
     GameObject cameraObject;
     Rigidbody body = null;
-    RecordOfAction recorder = null;
     PlayerAnimationContoller animationContoller = null;
     public Vector3 oldPosition { get; private set; }
 
@@ -57,7 +55,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody>();
-        recorder = GetComponent<RecordOfAction>();
         animationContoller = GetComponent<PlayerAnimationContoller>();
         oldPosition = transform.position;
         currentState = PlayerState.Idle;
@@ -79,9 +76,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            m_accel = Mathf.Min(movement.magnitude, m_accel + (movement.magnitude * 0.03f));
+            m_accel = movement.magnitude * 6.666f;
         }
-        GetComponent<Animator>().SetFloat("RunSpeed",m_accel*6.666f);
+        GetComponent<Animator>().SetFloat("RunSpeed",m_accel);
         //スタミナ
         stamina = Mathf.Min(MaxStamina, stamina + Time.deltaTime);
         if (stamina == MaxStamina)
@@ -107,25 +104,13 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = transform.position - oldPosition;
         jumpTime += Time.deltaTime;
         //Debug.Log("currentState:"+currentState);
-
-        switch (currentState)
+        bool isButtonDown = (MyInputManager.GetButtonDown(MyInputManager.Button.A) || Input.GetKeyDown(KeyCode.Space));
+        if (currentState == PlayerState.Move)
         {
-            case PlayerState.Idle:
-            case PlayerState.Move:
-                bool isButtonDown = (MyInputManager.GetButtonDown(MyInputManager.Button.A) || Input.GetKeyDown(KeyCode.Space));
-                if (!NoJumping &&isButtonDown) Jumpping();
-                if (!NoJumping &&(isSquat||m_accel==0.0f)&&isButtonDown) ChangeSquat(!isSquat);
-                break;
-            case PlayerState.Jump:
-                if (movement.y < 0)
-                {
-                    // currentState = PlayerState.Fall;
-                }
-                break;
+            if ( isButtonDown) Jumpping();
         }
-
+        if ((isSquat || m_accel < 0.5f) && isButtonDown && currentState != PlayerState.Clamber) ChangeSquat(!isSquat);
         CheckFall();
-
     }
 
     void CheckFall()
@@ -158,7 +143,7 @@ public class PlayerController : MonoBehaviour
         if (currentState == PlayerState.Jump) return Vector3.zero;
         if (currentState == PlayerState.Clamber) return Vector3.zero;
         int hash = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).shortNameHash;
-        if (hash == Animator.StringToHash("Base Layer.TopToGround")||hash == Animator.StringToHash("Base Layer.Damage"))
+        if (hash == Animator.StringToHash("Damage")|| hash == Animator.StringToHash("LongJump"))
         {
             return Vector3.zero;
         }
@@ -189,7 +174,6 @@ public class PlayerController : MonoBehaviour
 
         Quaternion cameraRotation = cameraObject.transform.rotation;
         cameraRotation = Quaternion.Euler(0, cameraRotation.eulerAngles.y, 0);
-
         movement = cameraRotation * movement;
 
         if (currentState == PlayerState.Idle || currentState == PlayerState.Move)
@@ -217,7 +201,7 @@ public class PlayerController : MonoBehaviour
             if (currentState == PlayerState.Fall)
                 GetComponent<Animator>().CrossFadeInFixedTime("LongJump",0.1f);
             currentState = PlayerState.Jump;
-            GetComponent<Rigidbody>().velocity += Vector3.up*3.0f;
+            GetComponent<Rigidbody>().velocity = Vector3.up*3.0f;
             jumpTime = 0.0f;
         }
         else
@@ -225,7 +209,6 @@ public class PlayerController : MonoBehaviour
             //当たったオブジェクトの高さの差が小さければよじ登り
             if (Mathf.Abs(transform.position.y - go.transform.position.y) <= 2.1f)
             {
-                ChangeSquat(false);
                 currentState = PlayerState.Clamber;
                 transform.Translate(0.0f,0.2f,0.0f);
                 GetComponent<Animator>().CrossFadeInFixedTime("Clamber", 0.1f);
@@ -257,14 +240,6 @@ public class PlayerController : MonoBehaviour
         }
 
         GetComponent<Animator>().SetBool("isSquat", isSquat);
-    }
-
-    public void Attack()
-    {
-        //animationContoller.ChangeAnimation("Attack", 0.1f);
-        currentState = PlayerState.Attack;
-        if (AttackCallBack != null) AttackCallBack();
-
     }
     
 
