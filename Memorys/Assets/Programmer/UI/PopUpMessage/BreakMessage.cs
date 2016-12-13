@@ -10,9 +10,17 @@ public class BreakMessage : PopUpMessage
     int maxPushCount = 5;
     int pushCount = 0;
 
+    SoundWaveFinder finder;
+
     void Awake()
     {
         m_Exposion = Resources.Load("ExplosionMobile") as GameObject;
+    }
+
+    public override void Start()
+    {
+        finder = GameObject.FindGameObjectWithTag("Player").GetComponent<SoundWaveFinder>();
+        base.Start();
     }
 
     public override void DrawMessage()
@@ -30,7 +38,8 @@ public class BreakMessage : PopUpMessage
             GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
             GameManager.I.PushSwitch();
 
-            if(!GameManager.I.OneByOne) Destroy(gameObject);
+            if (!GameManager.I.OneByOne) Destroy(gameObject);
+            else finder.StopSetMaterial();
 
             IsViewMessage = false;
             pushCount = 0;

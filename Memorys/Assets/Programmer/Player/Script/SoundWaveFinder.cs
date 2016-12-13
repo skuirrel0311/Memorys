@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 //探知機
 //音を発してスイッチを探す。スイッチが一定距離内に存在していたら発光する。
@@ -12,10 +10,10 @@ public class SoundWaveFinder : MonoBehaviour
 
     //音が届く最大の距離
     [SerializeField]
-    float maxDistance = 15.0f;
+    float maxDistance = 30.0f;
     //ターゲットを光らせる時間
     [SerializeField]
-    float changingTime = 20.0f;
+    float changingTime = 10.0f;
 
     Renderer[] targetRenderers;
     //もともと付いているマテリアル
@@ -56,10 +54,9 @@ public class SoundWaveFinder : MonoBehaviour
         for(int i = 0;i< coroutines.Length;i++)
         {
             if (targetRenderers[i] != null) continue;
-
+            
             if (IsWorkingCoroutines[i]) StopCoroutine(coroutines[i]);
         }
-
 
         if (MyInputManager.GetButtonDown(MyInputManager.Button.Y) || Input.GetKeyDown(KeyCode.Y))
         {
@@ -140,25 +137,13 @@ public class SoundWaveFinder : MonoBehaviour
 
         Destroy(Instantiate(starParticle, transform.position + Vector3.up, Quaternion.identity), 1.5f);
     }
-
-
-    bool IsWorkingAnyCoroutine()
+    
+    //マテリアルを切り替える処理を停止させる
+    public void StopSetMaterial(int index = 0)
     {
-        for (int i = 0; i < IsWorkingCoroutines.Length; i++)
-        {
-            if (IsWorkingCoroutines[i]) return true;
-        }
-
-        return false;
-    }
-
-    bool IsAllBroke()
-    {
-        for (int i = 0; i < targetRenderers.Length; i++)
-        {
-            if (targetRenderers[i] != null) return false;
-        }
-
-        return true;
+        if (!IsWorkingCoroutines[index]) return;
+        IsWorkingCoroutines[index] = false;
+        StopCoroutine(coroutines[index]);
+        targetRenderers[index].material = targetMat;
     }
 }
