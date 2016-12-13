@@ -23,7 +23,6 @@ public class AggloTotemPaul : TotemPaul
             time += Time.deltaTime;
             if (time > intervalTime) break;
 
-            RotateTowards();
             yield return null;
         }
         yield return new WaitForSeconds(intervalTime);

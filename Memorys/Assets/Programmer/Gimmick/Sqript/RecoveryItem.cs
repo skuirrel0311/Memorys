@@ -49,16 +49,16 @@ public class RecoveryItem : MonoBehaviour
         itemEffect[2].transform.position = itemEffect[0].position + CameraContoller.SphereCoordinate(longitude, latitude + 180, 0.7f);
     }
 
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag != "Player") return;
+    //void OnTriggerEnter(Collider col)
+    //{
+    //    if (col.gameObject.tag != "Player") return;
 
-        //回復
-        col.gameObject.GetComponent<PlayerOverlap>().Recovery(recoveryPoint);
-        GameObject obj = (GameObject)Instantiate(healEffect, transform.position + Vector3.down, transform.rotation);
-        obj.transform.parent = col.gameObject.transform;
-        obj.transform.localPosition += Vector3.back * 0.4f;
-        Destroy(obj, 3.0f);
-        Destroy(gameObject);
-    }
+    //    //回復
+    //    col.gameObject.GetComponent<PlayerOverlap>().Recovery(recoveryPoint);
+    //    GameObject obj = (GameObject)Instantiate(healEffect, transform.position + Vector3.down, transform.rotation);
+    //    obj.transform.parent = col.gameObject.transform;
+    //    obj.transform.localPosition += Vector3.back * 0.4f;
+    //    Destroy(obj, 3.0f);
+    //    Destroy(gameObject);
+    //}
 }

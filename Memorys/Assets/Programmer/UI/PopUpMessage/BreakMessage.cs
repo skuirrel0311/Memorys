@@ -4,41 +4,36 @@ using BehaviorDesigner.Runtime;
 public class BreakMessage : PopUpMessage
 {
     GameObject m_Exposion;
-    BehaviorTree[] enemies;
-    static int count = 1;
+
+    //何回ボタンを押せばいいか
+    [SerializeField]
+    int maxPushCount = 5;
+    int pushCount = 0;
 
     void Awake()
     {
         m_Exposion = Resources.Load("ExplosionMobile") as GameObject;
-        count = 1;
-    }
-
-    public override void Start()
-    {
-        base.Start();
     }
 
     public override void DrawMessage()
     {
         //todo:押したらどうのこうの
-        if (IsViewMessage&&(MyInputManager.GetButtonDown(MyInputManager.Button.X)||Input.GetKeyDown(KeyCode.Delete)))
+        messagePrefab.fillAmount = (float)pushCount / maxPushCount;
+        if(IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
         {
-            GameManager.I.DestroyCancel();
+            pushCount++;
+        }
+
+        if (pushCount > maxPushCount)
+        {
             //エフェクト
             GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
+            GameManager.I.PushSwitch();
 
-            for (int i = 0; i < GameManager.I.enemies.Length; i++)
-            {
-                //中心のトーテムポール
-                if (GameManager.I.enemies[i].gameObject.name == "TotemPaul (" + count.ToString() + ")")
-                {
-                    GameManager.I.enemies[i].GetComponent<TotemPaul>().StartUp();
-                }
-            }
+            if(!GameManager.I.OneByOne) Destroy(gameObject);
 
-            count++;
             IsViewMessage = false;
-            Destroy(gameObject);
+            pushCount = 0;
         }
         base.DrawMessage();
     }

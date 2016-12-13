@@ -17,12 +17,9 @@ public class TotemPaul : MonoBehaviour
     //警戒度
     public float Alertness = 0.0f;
 
-    Vector3 startPosition, underPosition;
-
-    void Awake()
-    {
-        startPosition = transform.position;
-    }
+    //動いている時のマテリアル
+    [SerializeField]
+    private Material activeMat = null;
 
     public virtual void Start()
     {
@@ -33,23 +30,36 @@ public class TotemPaul : MonoBehaviour
         IsWarning = false;
 
         GetComponent<BehaviorTree>().enabled = false;
+        //ライトをoffにする
         transform.GetChild(1).gameObject.SetActive(false);
-
-        startPosition = transform.position;
-        underPosition = new Vector3(transform.position.x, -transform.position.y - 15.0f, transform.position.z);
     }
 
     public virtual void Update()
     {
-        if (!GetComponent<BehaviorTree>().enabled) transform.position = underPosition;
+        //起動していなかったら
+        if (!GetComponent<BehaviorTree>().enabled) return;
 
         if ((bool)GetComponent<BehaviorTree>().GetVariable("IsSeePlayer").GetValue())
-            Alertness += Time.deltaTime * 5;
+            Alertness += Time.deltaTime * 3;
         else
             Alertness -= Time.deltaTime;
 
         Alertness = Mathf.Clamp(Alertness, 0.0f, 3.0f);
-        IsWarning = Alertness > 0.5f;
+
+        if (IsWarning)
+        {
+            IsWarning = Alertness > 0.5f;
+        }
+        else
+        {
+            IsWarning = Alertness > 2.5f;
+        }
+
+        if (Alertness > 0.5f)
+        {
+            RotateTowards(playerNeck.position);
+        }
+
     }
 
     protected virtual Vector3 GetTargetPosition()
@@ -80,6 +90,14 @@ public class TotemPaul : MonoBehaviour
         return false;
     }
 
+    protected void RotateTowards(Vector3 targetPosition)
+    {
+        Vector3 vec = targetPosition - transform.position;
+        vec.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(vec);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 0.5f);
+    }
+
     protected virtual void Shot(Vector3 target)
     {
         GameObject g = Instantiate(shotEffect, chargeEffect.transform.position, chargeEffect.transform.rotation);
@@ -92,30 +110,14 @@ public class TotemPaul : MonoBehaviour
     //起動
     public void StartUp()
     {
-        StartCoroutine("Rising");
+        QuickStartUp();
 
-        GetComponent<BehaviorTree>().enabled = true;
-        transform.GetChild(1).gameObject.SetActive(true);
     }
 
     public void QuickStartUp()
     {
-        transform.position = startPosition;
         GetComponent<BehaviorTree>().enabled = true;
         transform.GetChild(1).gameObject.SetActive(true);
+        GetComponent<Renderer>().material = activeMat;
     }
-
-    IEnumerator Rising()
-    {
-        float time = 0.0f;
-        while (true)
-        {
-            time += Time.deltaTime * 0.5f;
-            transform.position = Vector3.Lerp(underPosition, startPosition, time * time);
-            if (transform.position.y > startPosition.y) break;
-            yield return null;
-        }
-    }
-
-
 }

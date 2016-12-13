@@ -38,8 +38,37 @@ public class AtScreenEdgeMessage : PopUpMessage
         while (true)
         {
             temp += vec;
-            if (IsOutScreen(temp)) return temp -= vec * 100;
+            //if (IsOutScreen(temp)) return temp -= vec * 100;
+            if (IsOutScreen(temp)) break;
         }
+        Vector2 messageSize = messagePrefab.GetComponent<RectTransform>().sizeDelta * 0.5f;
+
+        Vector2 max = new Vector2(temp.x + (messageSize.x * 0.5f), temp.y + (messageSize.y * 0.5f));
+        if (IsOutScreen(max))
+        {
+            vec = VectorForInScreen(max);
+        }
+        temp += vec;
+
+        vec = Vector2.zero;
+        Vector2 min = new Vector2(temp.x - (messageSize.x * 0.5f), temp.y - (messageSize.y * 0.5f));
+        if (IsOutScreen(min)) vec = VectorForInScreen(min);
+        temp += vec;
+
+        return temp;
+    }
+
+    //点を画面内に移動するためのベクトルを返します
+    Vector2 VectorForInScreen(Vector2 point)
+    {
+        Vector2 vec = Vector2.zero;
+        if (point.x < 0) vec.x = 0.0f - point.x;
+        if (point.y < 0) vec.y = 0.0f - point.y;
+        if (point.x > canvasRect.sizeDelta.x) vec.x = canvasRect.sizeDelta.x - point.x;
+        if (point.y > canvasRect.sizeDelta.y) vec.y = canvasRect.sizeDelta.y - point.y;
+
+        return vec;
+
     }
 
     Vector2 ToEdgeVector(Vector3 targetPosition)

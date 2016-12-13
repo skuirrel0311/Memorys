@@ -4,14 +4,15 @@ using DG.Tweening;
 
 public enum FloorState
 {
-     VLOW, LOW, NORMAL, HEGHT,VHEGHT
+    VLOW, LOW, NORMAL, HEGHT, VHEGHT
 }
 
 public class FloorTransition : MonoBehaviour
 {
 
-    private const float MaxHeght = 2.0f;
-    private const float MaxLow = -2.0f;
+    private float MaxHeight = 2.0f;
+    private float MaxLow = -2.0f;
+    private float BaseHeight = 0.0f;
     private bool isTransition = false;
     private float m_Timer;
     private FloorState m_FloorState;
@@ -20,27 +21,34 @@ public class FloorTransition : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        BaseHeight = transform.position.y;
+        MaxHeight = BaseHeight + 2.0f;
+        MaxLow = BaseHeight - 2.0f;
+
         m_Timer = 0;
         m_FloorState = (FloorState)Random.Range(1, 4);
+
+        if (GameManager.I.IsFlat) return;
+
         if (m_FloorState == FloorState.NORMAL)
         {
-            transform.position = new Vector3(transform.position.x, 0.0f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, BaseHeight, transform.position.z);
         }
         else if (m_FloorState == FloorState.HEGHT)
         {
-            transform.position = new Vector3(transform.position.x, MaxHeght, transform.position.z);
+            transform.position = new Vector3(transform.position.x, MaxHeight, transform.position.z);
         }
-        else if(m_FloorState == FloorState.VHEGHT)
+        else if (m_FloorState == FloorState.VHEGHT)
         {
-            transform.position = new Vector3(transform.position.x, MaxHeght*2, transform.position.z);
+            transform.position = new Vector3(transform.position.x, MaxHeight + 2.0f, transform.position.z);
         }
         else if (m_FloorState == FloorState.LOW)
         {
-            transform.position = new Vector3(transform.position.x,MaxLow, transform.position.z);
+            transform.position = new Vector3(transform.position.x, MaxLow, transform.position.z);
         }
         else if (m_FloorState == FloorState.VLOW)
         {
-            transform.position = new Vector3(transform.position.x, MaxLow*2.0f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, MaxLow - 2.0f, transform.position.z);
         }
     }
 
@@ -60,7 +68,7 @@ public class FloorTransition : MonoBehaviour
     {
         if (m_FloorState == FloorState.VHEGHT)
         {
-            m_FloorState --;
+            m_FloorState--;
         }
         else if (m_FloorState == FloorState.LOW)
         {
@@ -71,14 +79,14 @@ public class FloorTransition : MonoBehaviour
             int r = Random.Range(0, 2);
             r *= 2;
             r -= 1;
-            m_FloorState = m_FloorState+r;
+            m_FloorState = m_FloorState + r;
         }
     }
 
     public void FloorTrans()
     {
         if (isTransition) return;
-        transform.DOShakePosition(2.0f,0.025f,25,90.0f,false,false);
+        transform.DOShakePosition(2.0f, 0.025f, 25, 90.0f, false, false);
         isTransition = true;
         m_Timer = 0.0f;
         SetFloorState();
@@ -92,15 +100,15 @@ public class FloorTransition : MonoBehaviour
     {
         float t = 0.0f;
         Vector3 startPos = transform.position;
-        Vector3 targetPos = Vector3.zero; 
+        Vector3 targetPos = Vector3.zero;
 
         if (m_FloorState == FloorState.NORMAL)
         {
-            targetPos = new Vector3(startPos.x, 0.0f, startPos.z);
+            targetPos = new Vector3(startPos.x, BaseHeight, startPos.z);
         }
         else if (m_FloorState == FloorState.HEGHT)
         {
-            targetPos = new Vector3(startPos.x, MaxHeght, startPos.z);
+            targetPos = new Vector3(startPos.x, MaxHeight, startPos.z);
         }
         else if (m_FloorState == FloorState.LOW)
         {
@@ -108,11 +116,11 @@ public class FloorTransition : MonoBehaviour
         }
         else if (m_FloorState == FloorState.VHEGHT)
         {
-            targetPos = new Vector3(startPos.x, MaxHeght*2.0f, startPos.z);
+            targetPos = new Vector3(startPos.x, MaxHeight + 2.0f, startPos.z);
         }
         else if (m_FloorState == FloorState.VLOW)
         {
-            targetPos = new Vector3(startPos.x, MaxLow*2.0f, startPos.z);
+            targetPos = new Vector3(startPos.x, MaxLow - 2.0f, startPos.z);
         }
 
         while (true)
