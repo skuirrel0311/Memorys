@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private float jumpTime = 0;
     private float m_accel;
+    private bool isJump;
     //private enum ColliderPlace { Center, Left, Right, Back, Front }
 
     void Awake()
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
         isStaminaDepletion = false;
         isSquat = false;
         m_accel = 0;
+        isJump = false;
     }
 
     void FixedUpdate()
@@ -118,14 +120,24 @@ public class PlayerController : MonoBehaviour
 
         if (currentState == PlayerState.Jump) return;
         if (currentState == PlayerState.Clamber) return;
-
-        if (IsOnGround() || body.velocity.y > -0.5f)
+        bool isonGround = IsOnGround();
+        if (isonGround || body.velocity.y > -0.5f)
         {
             if (currentState == PlayerState.Fall)
+            {
                 currentState = PlayerState.Idle;
+            }
+            if (isonGround)
+            {
+                isJump = false;
+            }
             return;
         }
         currentState = PlayerState.Fall;
+        if (isJump)
+        {
+            Clamb(GetForwardObject());
+        }
     }
 
     public void JumpCheckFall()
@@ -201,24 +213,33 @@ public class PlayerController : MonoBehaviour
             if (currentState == PlayerState.Fall)
                 GetComponent<Animator>().CrossFadeInFixedTime("LongJump",0.1f);
             currentState = PlayerState.Jump;
+            isJump = true;
             GetComponent<Rigidbody>().velocity = Vector3.up*3.0f;
             jumpTime = 0.0f;
         }
         else
         {
-            //当たったオブジェクトの高さの差が小さければよじ登り
-            if (Mathf.Abs(transform.position.y - go.transform.position.y) <= 2.1f)
-            {
-                currentState = PlayerState.Clamber;
-                transform.Translate(0.0f,0.2f,0.0f);
-                GetComponent<Animator>().CrossFadeInFixedTime("Clamber", 0.1f);
-            }
-            //よじ登り失敗
-            else
-            {
-
-            }
+            Clamb(go);
             Debug.Log("TransitionClamber");
+        }
+    }
+
+    void Clamb(GameObject go)
+    {
+        if (currentState == PlayerState.Clamber) return;
+        if (go == null) return;
+        //当たったオブジェクトの高さの差が小さければよじ登り
+        if (Mathf.Abs(transform.position.y - go.transform.position.y) <= 2.1f)
+        {
+            currentState = PlayerState.Clamber;
+            transform.Translate(0.0f, 0.2f, 0.0f);
+            GetComponent<Animator>().CrossFadeInFixedTime("Clamber", 0.1f);
+            isJump = false;
+        }
+        //よじ登り失敗
+        else
+        {
+
         }
     }
 
