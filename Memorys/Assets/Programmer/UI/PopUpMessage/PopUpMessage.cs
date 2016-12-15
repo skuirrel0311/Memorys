@@ -24,7 +24,7 @@ public class PopUpMessage : MonoBehaviour
         messagePrefab = (Image)Instantiate(messagePrefab, canvasRect.transform);
     }
 
-    public void Update()
+    public virtual void Update()
     {
         DrawMessage();
     }
