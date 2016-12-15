@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool IsFlat = false;
 
-
     private void Awake()
     {
 
@@ -66,9 +65,9 @@ public class GameManager : MonoBehaviour
 
         //ターゲットのオブジェクトを取得してポジションをセットする
         if (OneByOne)
-            m_Target = GameObject.Instantiate(Resources.Load("Prefabs/Target") as GameObject) as GameObject;
+            m_Target = GameObject.Instantiate(Resources.Load("Prefabs/Switch") as GameObject) as GameObject;
         else
-            m_Target = Resources.Load<GameObject>("Prefabs/Target");
+            m_Target = Resources.Load<GameObject>("Prefabs/Switch");
 
         if (m_TargetPoints != null)
         {

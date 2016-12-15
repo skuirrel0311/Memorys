@@ -21,17 +21,28 @@ public class TotemPaul : MonoBehaviour
     [SerializeField]
     private Material activeMat = null;
 
+    [SerializeField]
+    bool IsAwakeActive = false;
+
     public virtual void Start()
     {
-        chargeEffect = transform.FindChild("Sphere/Charge/ball").GetComponent<ParticleSystem>();
+        chargeEffect = transform.FindChild("Charge/ball").GetComponent<ParticleSystem>();
         playerNeck = GameObject.FindGameObjectWithTag("Player").transform.FindChild("Hips/Spine/Spine1/Spine2/Neck");
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         IsAttacking = false;
         IsWarning = false;
 
-        GetComponent<BehaviorTree>().enabled = false;
-        //ライトをoffにする
-        transform.GetChild(1).gameObject.SetActive(false);
+
+        if (!IsAwakeActive)
+        {
+            GetComponent<BehaviorTree>().enabled = false;
+            //ライトをoffにする
+            transform.GetChild(1).gameObject.SetActive(false);
+        }
+        else
+        {
+            QuickStartUp();
+        }
     }
 
     public virtual void Update()
@@ -110,6 +121,8 @@ public class TotemPaul : MonoBehaviour
     //起動
     public void StartUp()
     {
+
+        if (IsAwakeActive) return;
         QuickStartUp();
 
     }

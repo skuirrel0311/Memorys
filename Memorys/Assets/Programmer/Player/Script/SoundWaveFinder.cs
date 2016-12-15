@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 //探知機
 //音を発してスイッチを探す。スイッチが一定距離内に存在していたら発光する。
 public class SoundWaveFinder : MonoBehaviour
 {
+    //エフェクト
     GameObject waveParticle;
     GameObject starParticle;
 
@@ -14,7 +16,7 @@ public class SoundWaveFinder : MonoBehaviour
     //ターゲットを光らせる時間
     [SerializeField]
     float changingTime = 10.0f;
-
+    
     Renderer[] targetRenderers;
     //もともと付いているマテリアル
     Material targetMat;
@@ -23,13 +25,19 @@ public class SoundWaveFinder : MonoBehaviour
 
     bool[] IsWorkingCoroutines;
     Coroutine[] coroutines;
-
-    //ソナーが使用可能か？
-    public bool IsUseable = true;
+    
+    [SerializeField]
+    float power = 0.0f;
+    [SerializeField]
+    float maxPower = 5.0f;
+    PlayerSixthSense sense;
 
     //ソナーに反応があったか？
     bool IsFound = false;
     float longestWaitTime = 0.0f;
+
+    [SerializeField]
+    Text debugText = null;
 
     void Start()
     {
@@ -46,6 +54,8 @@ public class SoundWaveFinder : MonoBehaviour
         starParticle = Resources.Load<GameObject>("Particle/StarParticle");
         IsWorkingCoroutines = new bool[targetRenderers.Length];
         coroutines = new Coroutine[targetRenderers.Length];
+        sense = GetComponent<PlayerSixthSense>();
+        power = maxPower;
     }
 
     void Update()
@@ -58,12 +68,24 @@ public class SoundWaveFinder : MonoBehaviour
             if (IsWorkingCoroutines[i]) StopCoroutine(coroutines[i]);
         }
 
+        //if (sense.hasSense) power += Time.deltaTime;
+        //power = Mathf.Min(power, maxPower);
+
+        if (debugText != null)
+        {
+            if (power > 0)
+                debugText.text = "あと " + power.ToString() + "回";
+            else
+                debugText.text = "使用不可";
+        }
+
         if (MyInputManager.GetButtonDown(MyInputManager.Button.Y) || Input.GetKeyDown(KeyCode.Y))
         {
-            if (!IsUseable) return;
+            if (power <= 0) return;
 
             IsFound = false;
             longestWaitTime = 0.0f;
+            power -= 1.0f;
             //パーティクルを生成
             Destroy(Instantiate(waveParticle, transform.position + (Vector3.up * 1.5f), Quaternion.identity), 1.5f);
 
@@ -73,16 +95,13 @@ public class SoundWaveFinder : MonoBehaviour
                 SendSoundWave(targetRenderers[i], i);
             }
 
-            GetComponent<PlayerSixthSense>().sonarPower = 0;
-
-            if(IsFound)
+            if (IsFound)
             {
                 //１つでも見つかったら
                 StartCoroutine(DrawStarParticle(longestWaitTime));
             }
         }
     }
-
     //音波を発生させる
     void SendSoundWave(Renderer target, int index)
     {

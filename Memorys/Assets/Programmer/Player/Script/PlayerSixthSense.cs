@@ -14,20 +14,11 @@ public class PlayerSixthSense : MonoBehaviour
     Light directionalLight = null;
 
     //敵の視界を見るセンスがあるか？
-    bool hasSense = false;
+    public bool hasSense = false;
     bool oldHasSense = false;
 
     bool IsWorkingCoroutine = false;
     Coroutine coroutine;
-
-    bool wasSeen = false;
-
-    public float sonarPower = 0.0f;
-    [SerializeField]
-    float maxSonarPower = 5.0f;
-
-    [SerializeField]
-    Text debugText = null;
 
     void Start()
     {
@@ -41,30 +32,25 @@ public class PlayerSixthSense : MonoBehaviour
         }
 
         directionalLight = GameObject.Find("Directional Light").GetComponent<Light>();
-        sonarPower = maxSonarPower;
     }
 
     void Update()
     {
         //見つかっていなかったらtimerが増える
-        wasSeen = WasSeen();
-        if (wasSeen)
+        if (WasSeen())
         {
             timer -= Time.deltaTime * 5.0f;
         }
         else
         {
             timer += Time.deltaTime;
-            if (hasSense) sonarPower += Time.deltaTime;
-        }
 
-        sonarPower = Mathf.Min(sonarPower, maxSonarPower);
-        debugText.text = sonarPower.ToString("F2");
+        }
 
         timer = Mathf.Clamp(timer, 0.0f, startSenseTime);
 
         hasSense = (timer == startSenseTime);
-        GetComponent<SoundWaveFinder>().IsUseable = (sonarPower == maxSonarPower);
+
 
         UpdateLight();
 
@@ -152,7 +138,7 @@ public class PlayerSixthSense : MonoBehaviour
     }
 
     //見つかったか？
-    bool WasSeen()
+    public bool WasSeen()
     {
         for (int i = 0; i < enemies.Length; i++)
         {

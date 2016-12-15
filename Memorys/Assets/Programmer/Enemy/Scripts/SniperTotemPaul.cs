@@ -19,21 +19,17 @@ public class SniperTotemPaul : TotemPaul
         base.Start();
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.enabled = false;
-        chargeEndEffect = transform.FindChild("Sphere/ChargeEnd").gameObject;
     }
 
     //攻撃
     public void Attack(float intervalTime, float chargeTime)
     {
-        if (IsAttacking) return;
         targetPosition = playerNeck.position;
         StartCoroutine(Attacking(intervalTime,chargeTime));
     }
 
     IEnumerator Attacking(float intervalTime, float chargeTime)
     {
-        IsAttacking = true;
-
         chargeEffect.gameObject.SetActive(true);
         chargeEffect.Play(true);
 
@@ -65,7 +61,7 @@ public class SniperTotemPaul : TotemPaul
         {
             yield return null;
 
-            //tフレーム後に移動する。
+            //tフレーム後に到達する。
             bullet.transform.position += velocity;
 
         }
@@ -75,7 +71,6 @@ public class SniperTotemPaul : TotemPaul
         //終了処理
 
         chargeEffect.gameObject.SetActive(false);
-        IsAttacking = false;
     }
 
     void Charge(Vector3 target)

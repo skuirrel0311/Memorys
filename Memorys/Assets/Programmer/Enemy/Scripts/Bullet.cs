@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour
     void PlayerHit(GameObject playerObj)
     {
         Quaternion temp = Quaternion.Euler(new Vector3(90.0f, Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg, 0.0f));
-        Instantiate(hitEffect, transform.position, temp);
+        Destroy(Instantiate(hitEffect, transform.position, temp),1.5f);
         playerObj.GetComponent<PlayerOverlap>().Damage(1);
         Destroy(this);
     }
