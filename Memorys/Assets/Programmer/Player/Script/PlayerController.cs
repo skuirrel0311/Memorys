@@ -38,9 +38,6 @@ public class PlayerController : MonoBehaviour
     PlayerAnimationContoller animationContoller = null;
     public Vector3 oldPosition { get; private set; }
 
-    [SerializeField]
-    GameObject[] underCollider; //着地判定用
-
     bool isSquat;
 
     private float jumpTime = 0;

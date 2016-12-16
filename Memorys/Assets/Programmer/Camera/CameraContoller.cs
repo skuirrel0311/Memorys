@@ -173,7 +173,7 @@ public class CameraContoller : MonoBehaviour
         if (hitList.Count == 0) return;
 
         //containsでlinehitに無くてtagがBoxのものを判定しwhereで無かったものをlistに格納
-        lineHitObjects.AddRange(hitList.Where(n => (!lineHitObjects.Contains(n)) && (n.tag == "Wall")));
+        lineHitObjects.AddRange(hitList.Where(n => (!lineHitObjects.Contains(n))&& (n.tag != "Enemy")  && (n.layer == LayerMask.NameToLayer("Floor"))));
 
         //半透明にする
         foreach (GameObject n in lineHitObjects)

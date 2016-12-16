@@ -9,7 +9,7 @@ public class GoalObject : PopUpMessage
 
     public override void Start()
     {
-        arrow = GameObject.FindGameObjectWithTag("Player").transform.GetChild(7);
+        arrow = GameObject.FindGameObjectWithTag("Player").transform.GetChild(2);
         lineRenderer = arrow.GetComponentInChildren<LineRenderer>();
 
         if (lineRenderer == null)

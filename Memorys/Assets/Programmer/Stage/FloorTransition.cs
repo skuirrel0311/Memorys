@@ -137,4 +137,24 @@ public class FloorTransition : MonoBehaviour
         //r.material.SetColor("_EmissionColor", Color.black);
         isTransition = false;
     }
+
+    //上げる
+    public void Raise()
+    {
+        if (isTransition) return;
+
+        Debug.Log("old state = " + m_FloorState);
+        int temp = (int)m_FloorState;
+        temp++;
+
+        temp = Mathf.Clamp(temp, (int)FloorState.VLOW, (int)FloorState.VHEGHT);
+
+        if (temp != (int)m_FloorState)
+        {
+            isTransition = true;
+            m_FloorState = (FloorState)temp;
+            Debug.Log("floor state = " + m_FloorState);
+            //coroutine = StartCoroutine("FloorMove");
+        }
+    }
 }
