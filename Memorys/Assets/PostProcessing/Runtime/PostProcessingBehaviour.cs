@@ -272,21 +272,21 @@ namespace UnityEngine.PostProcessing
             m_RenderTextureFactory.ReleaseAll();
         }
 
-        void OnGUI()
-        {
-            if (Event.current.type != EventType.Repaint)
-                return;
+        //void OnGUI()
+        //{
+        //    if (Event.current.type != EventType.Repaint)
+        //        return;
 
-            if (profile == null)
-                return;
+        //    if (profile == null)
+        //        return;
 
-            if (m_EyeAdaptation.active && profile.debugViews.IsModeActive(DebugMode.EyeAdaptation))
-                m_EyeAdaptation.OnGUI();
-            else if (m_ColorGrading.active && profile.debugViews.IsModeActive(DebugMode.LogLut))
-                m_ColorGrading.OnGUI();
-            else if (m_UserLut.active && profile.debugViews.IsModeActive(DebugMode.UserLut))
-                m_UserLut.OnGUI();
-        }
+        //    if (m_EyeAdaptation.active && profile.debugViews.IsModeActive(DebugMode.EyeAdaptation))
+        //        m_EyeAdaptation.OnGUI();
+        //    else if (m_ColorGrading.active && profile.debugViews.IsModeActive(DebugMode.LogLut))
+        //        m_ColorGrading.OnGUI();
+        //    else if (m_UserLut.active && profile.debugViews.IsModeActive(DebugMode.UserLut))
+        //        m_UserLut.OnGUI();
+        //}
 
         void OnDisable()
         {

@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
         m_Interval = 0.0f;
         // SetWillDestroy();
         NotificationSystem.I.Indication("スイッチを" + GameEnd.c_MaxDestroyCalcel.ToString() + "回押し、脱出せよ！");
-        if(!IsFlat) StartCoroutine("SetObjTransition");
+        if (!IsFlat) StartCoroutine("SetObjTransition");
 
         InitializeEnemy();
     }
@@ -129,6 +129,7 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         StopCoroutine("SetObjTransition");
+        I = null;
     }
 
     private void Update()
@@ -270,10 +271,11 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SetObjTransition()
     {
+        var wait = new WaitForSeconds(0.1f);
         while (true)
         {
             m_FieldObjects[Random.Range(0, m_FieldObjects.Count)].GetComponent<FloorTransition>().FloorTrans();
-            yield return new WaitForSeconds(0.1f);
+            yield return wait;
         }
     }
 

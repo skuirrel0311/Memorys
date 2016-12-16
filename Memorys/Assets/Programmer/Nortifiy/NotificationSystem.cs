@@ -22,6 +22,7 @@ public class NotificationSystem : MonoBehaviour {
         m_NotificationImage.SetActive(true);
         m_text.text = message;
         StartCoroutine("TimeOut");
+        //TimeOut().MoveNext();
     }
 
     IEnumerator TimeOut()
@@ -50,7 +51,7 @@ public class NotificationSystem : MonoBehaviour {
             yield return null;
         }
         m_NotificationImage.SetActive(false);
-        yield return null;
+        Debug.Log("TimeOutBreak");
     }
 
 }

@@ -16,6 +16,7 @@ public class FloorTransition : MonoBehaviour
     private bool isTransition = false;
     private float m_Timer;
     private FloorState m_FloorState;
+    private IEnumerator e_FloorMove;
 
 
     // Use this for initialization
@@ -59,7 +60,7 @@ public class FloorTransition : MonoBehaviour
         m_Timer += Time.deltaTime;
         if (m_Timer > 2.0f)
         {
-            StartCoroutine("FloorMove");
+            e_FloorMove.MoveNext();
         }
 
     }
@@ -89,6 +90,7 @@ public class FloorTransition : MonoBehaviour
         transform.DOShakePosition(2.0f, 0.025f, 25, 90.0f, false, false);
         isTransition = true;
         m_Timer = 0.0f;
+        e_FloorMove = FloorMove();
         SetFloorState();
         //Renderer r = GetComponent<Renderer>();
         //r.material.EnableKeyword("_EMISSION");
