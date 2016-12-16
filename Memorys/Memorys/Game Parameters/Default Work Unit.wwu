@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{E73AA58A-CF2A-4084-A234-833B7B932E56}" SchemaVersion="72">
 	<GameParameters>
-		<WorkUnit Name="Default Work Unit" ID="{E73AA58A-CF2A-4084-A234-833B7B932E56}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{E73AA58A-CF2A-4084-A234-833B7B932E56}" PersistMode="Standalone">
+			<ChildrenList>
+				<GameParameter Name="BGM_transition" ID="{7609EDAB-1F25-4387-823D-009AA919D0B6}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="100"/>
+					</PropertyList>
+				</GameParameter>
+			</ChildrenList>
+		</WorkUnit>
 	</GameParameters>
 </WwiseDocument>

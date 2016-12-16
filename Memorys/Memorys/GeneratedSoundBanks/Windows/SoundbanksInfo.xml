@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="11" SoundbankVersion="118">
 	<RootPaths>
-		<ProjectRoot>C:\Users\tachibana\Documents\Memorys\Memorys\Memorys\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\tachibana\Documents\Memorys\Memorys\Memorys\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\tachibana\Documents\Memorys\Memorys\Memorys\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\tachibana\Documents\Memorys\Memorys\Memorys\GeneratedSoundBanks\Windows\</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\GeneratedSoundBanks\Windows\</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
@@ -21,7 +21,7 @@
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<IncludedEvents>
-				<Event Id="2385628198" Name="Footsteps" ObjectPath="\Events\Default Work Unit\Footsteps"/>
+				<Event Id="2385628198" Name="Footsteps" ObjectPath="\Events\Default Work Unit\SE\Footsteps"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
 				<File Id="124329984" Language="SFX">

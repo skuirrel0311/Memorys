@@ -5,6 +5,7 @@
 			<ChildrenList>
 				<SoundBank Name="Main" ID="{7142CB87-4284-4DD7-9B3C-86A46A60A847}">
 					<ObjectInclusionList>
+						<ObjectRef Name="Babble" ID="{2913F8BB-8432-467C-BC3A-4E2615AFFCE1}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Footsteps" ID="{1B1B2438-4301-4BF1-9EF9-2AA80479FA50}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>

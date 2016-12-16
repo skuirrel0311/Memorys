@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{58C01D9E-2A8B-4B93-AFB1-E1F394149DC5}" SchemaVersion="72">
 	<States>
-		<WorkUnit Name="Default Work Unit" ID="{58C01D9E-2A8B-4B93-AFB1-E1F394149DC5}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{58C01D9E-2A8B-4B93-AFB1-E1F394149DC5}" PersistMode="Standalone">
+			<ChildrenList>
+				<StateGroup Name="BGM_change" ID="{9E98ED34-39A5-4574-8256-53A8987AA820}">
+					<ChildrenList>
+						<State Name="None" ID="{82532A0F-58CB-4E8C-82CC-C9BF29FC2354}"/>
+						<State Name="Emergency" ID="{F4645CC1-02A3-455A-B3E0-D5732936B5BC}"/>
+						<State Name="Normal" ID="{5017403C-79BB-436C-8F21-E5C956F6E241}"/>
+						<State Name="Stealth" ID="{15F12046-7A07-4213-B5B6-FCFD05DF3854}"/>
+					</ChildrenList>
+				</StateGroup>
+			</ChildrenList>
+		</WorkUnit>
 	</States>
 </WwiseDocument>
