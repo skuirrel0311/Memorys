@@ -13,7 +13,7 @@ public class FloorTransition : MonoBehaviour
     private float MaxHeight = 2.0f;
     private float MaxLow = -2.0f;
     private float BaseHeight = 0.0f;
-    private bool isTransition = false;
+    public bool isTransition = false;
     private float m_Timer;
     private FloorState m_FloorState;
     private IEnumerator e_FloorMove;
