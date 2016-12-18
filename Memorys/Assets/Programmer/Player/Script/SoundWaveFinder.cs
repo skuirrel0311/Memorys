@@ -82,7 +82,7 @@ public class SoundWaveFinder : MonoBehaviour
         if (MyInputManager.GetButtonDown(MyInputManager.Button.Y) || Input.GetKeyDown(KeyCode.Y))
         {
             if (power <= 0) return;
-
+            AkSoundEngine.PostEvent("Player_Search",gameObject);
             IsFound = false;
             longestWaitTime = 0.0f;
             power -= 1.0f;
@@ -111,6 +111,7 @@ public class SoundWaveFinder : MonoBehaviour
         if (distance < maxDistance)
         {
             IsFound = true;
+            AkSoundEngine.PostEvent("Player_Discovery",target.gameObject);
             //音波が届くまでの時間を求める
             float waitTime = (distance / maxDistance) * 1.5f;
 

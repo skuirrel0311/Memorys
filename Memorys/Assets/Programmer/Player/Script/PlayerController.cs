@@ -43,8 +43,8 @@ public class PlayerController : MonoBehaviour
     private float jumpTime = 0;
     private float m_accel;
     private bool isJump;
-    //private enum ColliderPlace { Center, Left, Right, Back, Front }
 
+  
     void Awake()
     {
         I = this;
@@ -123,6 +123,7 @@ public class PlayerController : MonoBehaviour
             if (currentState == PlayerState.Fall)
             {
                 currentState = PlayerState.Idle;
+                AkSoundEngine.PostEvent("Player_Landing",gameObject);
             }
             if (isonGround)
             {
@@ -210,9 +211,15 @@ public class PlayerController : MonoBehaviour
             if (currentState == PlayerState.Fall)
                 GetComponent<Animator>().CrossFadeInFixedTime("LongJump",0.1f);
             currentState = PlayerState.Jump;
+            if (!isJump)
+            {
+                AkSoundEngine.PostEvent("Player_Jump", gameObject);
+                GetComponent<Rigidbody>().velocity = Vector3.up * 3.0f;
+                jumpTime = 0.0f;
+
+            }
+
             isJump = true;
-            GetComponent<Rigidbody>().velocity = Vector3.up*3.0f;
-            jumpTime = 0.0f;
         }
         else
         {
@@ -231,6 +238,7 @@ public class PlayerController : MonoBehaviour
             currentState = PlayerState.Clamber;
             transform.Translate(0.0f, 0.2f, 0.0f);
             GetComponent<Animator>().CrossFadeInFixedTime("Clamber", 0.1f);
+            AkSoundEngine.PostEvent("Player_Climb", gameObject);
             isJump = false;
         }
         //よじ登り失敗
@@ -274,15 +282,6 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    void OnCollisionExit(Collision col)
-    {
-        if (col.gameObject.tag != "Floor") return;
-
-        //落ちていない
-        if (IsOnGround()) return;
-
-        //落ちたであろう
-    }
 
     void OnCollisionEnter(Collision col)
     {
@@ -313,5 +312,4 @@ public class PlayerController : MonoBehaviour
         }
         return hit.transform.gameObject;
     }
-
 }

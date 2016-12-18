@@ -30,6 +30,7 @@ public class BreakMessage : PopUpMessage
         if(IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
         {
             pushCount++;
+            AkSoundEngine.PostEvent("Get_Switch",gameObject);
         }
 
         if (pushCount > maxPushCount)
