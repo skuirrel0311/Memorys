@@ -35,6 +35,8 @@ public class SoundWaveFinder : MonoBehaviour
     //ソナーに反応があったか？
     bool IsFound = false;
     float longestWaitTime = 0.0f;
+    
+    public Timer workingTimer;
 
     [SerializeField]
     Text debugText = null;
@@ -56,6 +58,9 @@ public class SoundWaveFinder : MonoBehaviour
         coroutines = new Coroutine[targetRenderers.Length];
         sense = GetComponent<PlayerSixthSense>();
         power = maxPower;
+
+        workingTimer = new Timer();
+        workingTimer.Stop(true);
     }
 
     void Update()
@@ -68,6 +73,11 @@ public class SoundWaveFinder : MonoBehaviour
             if (IsWorkingCoroutines[i]) StopCoroutine(coroutines[i]);
         }
 
+        workingTimer.Update();
+        if(workingTimer.IsLimitTime)
+        {
+            workingTimer.Stop(true);
+        }
         //if (sense.hasSense) power += Time.deltaTime;
         //power = Mathf.Min(power, maxPower);
 
@@ -95,6 +105,8 @@ public class SoundWaveFinder : MonoBehaviour
                 SendSoundWave(targetRenderers[i], i);
             }
 
+
+            workingTimer.TimerStart(longestWaitTime);
             if (IsFound)
             {
                 //１つでも見つかったら

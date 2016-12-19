@@ -1,9 +1,54 @@
 Event	ID	Name			Wwise Object Path	Notes
+	191248761	Menu_Decision			\Default Work Unit\SE\Menu_Decision	
+	205371738	Menu_Page			\Default Work Unit\SE\Menu_Page	
+	652491268	BGM_Main1			\Default Work Unit\BGM\Music\BGM_Main1	
+	652491271	BGM_Main2			\Default Work Unit\BGM\Music\BGM_Main2	
+	1063083385	Player_Discovery			\Default Work Unit\SE\Player_Discovery	
+	1282282006	Player_Landing			\Default Work Unit\SE\Player_Landing	
+	1305133589	Player_Jump			\Default Work Unit\SE\Player_Jump	
+	1397260774	GameClear			\Default Work Unit\SE\Jingle\GameClear	
+	1781417190	Enemy_Attack			\Default Work Unit\SE\Enemy_Attack	
+	2162141673	BGM_Help			\Default Work Unit\BGM\Music\BGM_Help	
+	2329625548	Totem_Laser			\Default Work Unit\SE\Totem_Laser	
+	2333034960	BGM_Select			\Default Work Unit\BGM\Music\BGM_Select	
+	2364382980	Totem_Move			\Default Work Unit\SE\Totem_Move	
 	2385628198	Footsteps			\Default Work Unit\SE\Footsteps	
+	2455001044	Totem_Shot_impact			\Default Work Unit\SE\Totem_Shot_impact	
+	2592508863	Totem_Shot			\Default Work Unit\SE\Totem_Shot	
+	2876602209	Enemy_Move			\Default Work Unit\SE\Enemy_Move	
+	2934549620	Open_Door			\Default Work Unit\SE\Open_Door	
+	3042685367	Totem_Activation			\Default Work Unit\SE\Totem_Activation	
+	3180909377	Menu_Cancel			\Default Work Unit\SE\Menu_Cancel	
+	3343999249	Totem_Laser_impact			\Default Work Unit\SE\Totem_Laser_impact	
+	3549554524	Player_Climb			\Default Work Unit\SE\Player_Climb	
+	3607114015	Totem_Laser_charge			\Default Work Unit\SE\Totem_Laser_charge	
+	3608707068	BGM_Titlle			\Default Work Unit\BGM\Music\BGM_Titlle	
+	3889015721	Player_Search			\Default Work Unit\SE\Player_Search	
+	3960233822	Get_Switch			\Default Work Unit\SE\Get_Switch	
+	4051581707	Babble			\Default Work Unit\BGM\ME\Babble	
+	4058101365	GameStart			\Default Work Unit\SE\Jingle\GameStart	
+	4158285989	GameOver			\Default Work Unit\SE\Jingle\GameOver	
+	4203375351	Menu_Select			\Default Work Unit\SE\Menu_Select	
+	4239768699	BGM_Result			\Default Work Unit\BGM\Music\BGM_Result	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	112961538	Climb_2	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Landing\Landing_2_219DC175.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Climb\Climb_2		157564
 	124329984	Fs_3	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Footsteps\Fs_3_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Footsteps\Fs_3		63064
+	144374456	Page_2	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Page\Page_2_4306A202.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Page\Page_2		315064
+	178554552	Babble	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Babble_3F5F6E3C.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ambience\Babble		346564
 	266972089	Fs_4	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Footsteps\Fs_4_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Footsteps\Fs_4		63064
+	340152810	Jump	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Jump_F102BEF4.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Jump		157564
+	514799383	Climb_3	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Landing\Landing_3_C333200D.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Climb_3		157564
 	603158089	Fs_1	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Footsteps\Fs_1_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Footsteps\Fs_1		63064
 	753971549	Fs_2	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Footsteps\Fs_2_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Footsteps\Fs_2		63064
+	821184564	Totem_move	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\ToteMove_683C6BAC.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Totem_move		126064
+	828167579	Page_1	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Page\Page_1_DCE810BA.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Page\Page_1		315064
+	864391788	Search	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Search_23497503.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Search		504064
+	868156345	Climb_1	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Landing\Landing_1_CACF8A59.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Climb\Climb_1		157564
+	1027748973	Discovery	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Discovery_4412753F.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Discovery		315064
+
+Streamed Audio	ID	Name	Audio source file	Generated audio file	Wwise Object Path	Notes
+	362030528	1_Normal	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\BGM_Main1\Normal\1_Normal_4B8CC0C5.wem	362030528.wem	\Interactive Music Hierarchy\Default Work Unit\BGM_Main1\Normal\1_Normal\1_Normal	
+	668828887	1_Stealth	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\BGM_Main1\Stealth\1_Stealth_4B8CC0C5.wem	668828887.wem	\Interactive Music Hierarchy\Default Work Unit\BGM_Main1\Stealth\1_Stealth\1_Stealth	
+	1041712009	1_Emergency	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\BGM_Main1\Emergency\1_Emergency_4B8CC0C5.wem	1041712009.wem	\Interactive Music Hierarchy\Default Work Unit\BGM_Main1\Emergency\1_Emergency\1_Emergency	
 
