@@ -9,16 +9,17 @@ public enum FloorState
 
 public class FloorTransition : MonoBehaviour
 {
-
     private float MaxHeight = 2.0f;
     private float MaxLow = -2.0f;
     private float BaseHeight = 0.0f;
     public bool isTransition = false;
+    bool oldIsTransition = false;
     private float m_Timer;
     private FloorState m_FloorState;
     private IEnumerator e_FloorMove;
 
-
+    Coroutine coroutine;
+    
     // Use this for initialization
     void Start()
     {
@@ -27,41 +28,31 @@ public class FloorTransition : MonoBehaviour
         MaxLow = BaseHeight - 2.0f;
 
         m_Timer = 0;
-        m_FloorState = (FloorState)Random.Range(1, 4);
-
+        
         if (GameManager.I.IsFlat) return;
 
-        if (m_FloorState == FloorState.NORMAL)
-        {
-            transform.position = new Vector3(transform.position.x, BaseHeight, transform.position.z);
-        }
-        else if (m_FloorState == FloorState.HEGHT)
-        {
-            transform.position = new Vector3(transform.position.x, MaxHeight, transform.position.z);
-        }
-        else if (m_FloorState == FloorState.VHEGHT)
-        {
-            transform.position = new Vector3(transform.position.x, MaxHeight + 2.0f, transform.position.z);
-        }
-        else if (m_FloorState == FloorState.LOW)
-        {
-            transform.position = new Vector3(transform.position.x, MaxLow, transform.position.z);
-        }
-        else if (m_FloorState == FloorState.VLOW)
-        {
-            transform.position = new Vector3(transform.position.x, MaxLow - 2.0f, transform.position.z);
-        }
+        m_FloorState = (FloorState)Random.Range(1, 4);
+        transform.position = GetTargetPosition(m_FloorState, transform.position);
     }
 
     void Update()
     {
-        if (!isTransition) return;
-
-        m_Timer += Time.deltaTime;
-        if (m_Timer > 2.0f)
+        //コルーチンが終わったタイミング
+        if (isTransition == false && oldIsTransition == true)
         {
-            e_FloorMove.MoveNext();
+            StopCoroutine(coroutine);
+            //参照を外す
+            coroutine = null;
         }
+
+
+        oldIsTransition = isTransition;
+
+        //m_Timer += Time.deltaTime;
+        //if (m_Timer > 2.0f)
+        //{
+        //    e_FloorMove.MoveNext();
+        //}
 
     }
 
@@ -87,11 +78,15 @@ public class FloorTransition : MonoBehaviour
     public void FloorTrans()
     {
         if (isTransition) return;
-        transform.DOShakePosition(2.0f, 0.025f, 25, 90.0f, false, false);
+        //transform.DOShakePosition(2.0f, 0.025f, 25, 90.0f, false, false);
         isTransition = true;
         m_Timer = 0.0f;
-        e_FloorMove = FloorMove();
+
+
+        //e_FloorMove = FloorMove();
         SetFloorState();
+        coroutine = StartCoroutine("FloorMove");
+
         //Renderer r = GetComponent<Renderer>();
         //r.material.EnableKeyword("_EMISSION");
         //r.material.SetColor("_EmissionColor", Color.red);
@@ -102,29 +97,11 @@ public class FloorTransition : MonoBehaviour
     {
         float t = 0.0f;
         Vector3 startPos = transform.position;
-        Vector3 targetPos = Vector3.zero;
+        Vector3 targetPos = GetTargetPosition(m_FloorState, startPos);
 
-        if (m_FloorState == FloorState.NORMAL)
-        {
-            targetPos = new Vector3(startPos.x, BaseHeight, startPos.z);
-        }
-        else if (m_FloorState == FloorState.HEGHT)
-        {
-            targetPos = new Vector3(startPos.x, MaxHeight, startPos.z);
-        }
-        else if (m_FloorState == FloorState.LOW)
-        {
-            targetPos = new Vector3(startPos.x, MaxLow, startPos.z);
-        }
-        else if (m_FloorState == FloorState.VHEGHT)
-        {
-            targetPos = new Vector3(startPos.x, MaxHeight + 2.0f, startPos.z);
-        }
-        else if (m_FloorState == FloorState.VLOW)
-        {
-            targetPos = new Vector3(startPos.x, MaxLow - 2.0f, startPos.z);
-        }
-
+        transform.DOShakePosition(2.0f, 0.025f, 25, 90.0f, false, false);
+        yield return new WaitForSeconds(2.0f);
+        
         while (true)
         {
             t += Time.deltaTime;
@@ -138,12 +115,37 @@ public class FloorTransition : MonoBehaviour
         isTransition = false;
     }
 
+    Vector3 GetTargetPosition(FloorState state,Vector3 startPos)
+    {
+        if (state == FloorState.NORMAL)
+        {
+            return new Vector3(startPos.x, BaseHeight, startPos.z);
+        }
+        else if (state == FloorState.HEGHT)
+        {
+            return new Vector3(startPos.x, MaxHeight, startPos.z);
+        }
+        else if (state == FloorState.LOW)
+        {
+            return new Vector3(startPos.x, MaxLow, startPos.z);
+        }
+        else if (state == FloorState.VHEGHT)
+        {
+            return new Vector3(startPos.x, MaxHeight + 2.0f, startPos.z);
+        }
+        else if (state == FloorState.VLOW)
+        {
+            return new Vector3(startPos.x, MaxLow - 2.0f, startPos.z);
+        }
+
+        return Vector3.zero;
+    }
+
     //上げる
     public void Raise()
     {
         if (isTransition) return;
-
-        Debug.Log("old state = " + m_FloorState);
+        
         int temp = (int)m_FloorState;
         temp++;
 
@@ -153,8 +155,7 @@ public class FloorTransition : MonoBehaviour
         {
             isTransition = true;
             m_FloorState = (FloorState)temp;
-            Debug.Log("floor state = " + m_FloorState);
-            //coroutine = StartCoroutine("FloorMove");
+            coroutine = StartCoroutine("FloorMove");
         }
     }
 }

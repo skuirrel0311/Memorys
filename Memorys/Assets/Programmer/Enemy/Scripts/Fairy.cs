@@ -19,11 +19,17 @@ public class Fairy : MonoBehaviour
 
     BehaviorTree m_tree;
     PlayerController player;
+
+    [SerializeField]
+    GameObject magicEffect = null;
+
+    SoundWaveFinder playerFinder;
     
     void Start()
     {
         m_tree = GetComponent<BehaviorTree>();
         player = PlayerController.I;
+        playerFinder = player.GetComponent<SoundWaveFinder>();
 
         IsWarning = false;
         Alertness = 0.0f;
@@ -46,6 +52,14 @@ public class Fairy : MonoBehaviour
             IsWarning = Alertness > 0.1f;
         else
             IsWarning = Alertness > 1.5f;
+
+        if(playerFinder != null)
+        {
+            if(playerFinder.workingTimer.IsWorking)
+            {
+                IsWarning = true;
+            }
+        }
 
         //見失ったか？
         if (IsWarning == false && oldIsWarning == true)
@@ -74,11 +88,15 @@ public class Fairy : MonoBehaviour
         FloorTransition floor = GetPlayerUnderFloor();
         if(floor == null)
         {
-            Debug.Log("floor is null");
             return;
         }
 
-        if (floor.isTransition) return;
+        if (floor.isTransition)
+        {
+            return;
+        }
+
+        Destroy(Instantiate(magicEffect, floor.transform.position, Quaternion.identity),1.5f);
         floor.Raise();
     }
 
