@@ -5,6 +5,7 @@
 			<ChildrenList>
 				<MusicSwitchContainer Name="BGM_Main1" ID="{CA2561FC-8AD6-4B96-A643-C8542322688A}" ShortID="166936242">
 					<PropertyList>
+						<Property Name="GridFrequencyPreset" Type="int16" Value="52"/>
 						<Property Name="Tempo" Type="Real64" Value="130"/>
 						<Property Name="TimeSignatureLower" Type="int16" Value="8"/>
 						<Property Name="TimeSignatureUpper" Type="int16" Value="6"/>
@@ -39,6 +40,13 @@
 									</ReferenceList>
 									<ChildrenList>
 										<MusicTrack Name="1_Emergency" ID="{B3C2BADE-5347-4029-A38C-4848A3082478}" ShortID="780732169">
+											<PropertyList>
+												<Property Name="IsStreamingEnabled" Type="bool">
+													<ValueList>
+														<Value>True</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="OutputBus">
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
@@ -77,6 +85,10 @@
 													</ClipList>
 												</MusicTrackSequence>
 											</SequenceList>
+											<TrackSwitch>
+												<SwitchGroupRef Name="BGM_change" ID="{9E98ED34-39A5-4574-8256-53A8987AA820}"/>
+												<DefaultSwitchRef Name="None" ID="{82532A0F-58CB-4E8C-82CC-C9BF29FC2354}"/>
+											</TrackSwitch>
 										</MusicTrack>
 									</ChildrenList>
 									<CueList>
@@ -104,7 +116,25 @@
 								</MusicTransition>
 							</TransitionList>
 							<Playlist>
-								<MusicPlaylistItem Name="" ID="{B81F8437-AD4F-4706-902A-E67CBF27C8A3}" ShortID="891784460"/>
+								<MusicPlaylistItem Name="" ID="{B81F8437-AD4F-4706-902A-E67CBF27C8A3}" ShortID="891784460">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0">
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{F6E342AB-9367-4088-92D8-C7B22FEDD887}"/>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{0F85F230-0957-4B52-AB1D-82065019F5A4}" ShortID="111229949">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="1_Emergency" ID="{CAA506A0-AFFD-4DE4-8E01-E778860C4C22}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
 							</Playlist>
 						</MusicPlaylistContainer>
 						<MusicPlaylistContainer Name="Normal" ID="{76C63B1A-902B-49C2-AA54-69A49B088182}" ShortID="107393791">
@@ -128,6 +158,13 @@
 									</ReferenceList>
 									<ChildrenList>
 										<MusicTrack Name="1_Normal" ID="{770528F7-0E5C-4222-A1CF-546256E54481}" ShortID="307301705">
+											<PropertyList>
+												<Property Name="IsStreamingEnabled" Type="bool">
+													<ValueList>
+														<Value>True</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="OutputBus">
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
@@ -188,10 +225,29 @@
 								</MusicTransition>
 							</TransitionList>
 							<Playlist>
-								<MusicPlaylistItem Name="" ID="{0E8FDF21-804A-4195-BBC5-77B2F5E641A3}" ShortID="494482819"/>
+								<MusicPlaylistItem Name="" ID="{0E8FDF21-804A-4195-BBC5-77B2F5E641A3}" ShortID="494482819">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{710A1077-58C1-4D70-9D82-800417293E36}" ShortID="921374564">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="1_Normal" ID="{9D036E24-4BCA-492C-AEFC-52B0C77F5752}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
 							</Playlist>
 						</MusicPlaylistContainer>
 						<MusicPlaylistContainer Name="Stealth" ID="{7E584391-BFCB-4DA3-A6F2-30B2B30033A4}" ShortID="39181377">
+							<PropertyList>
+								<Property Name="Lowpass" Type="int16">
+									<ValueList>
+										<Value>40</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
@@ -212,6 +268,13 @@
 									</ReferenceList>
 									<ChildrenList>
 										<MusicTrack Name="1_Stealth" ID="{786D37C6-4A37-46E2-A8F3-A9335D0F50FB}" ShortID="479510440">
+											<PropertyList>
+												<Property Name="IsStreamingEnabled" Type="bool">
+													<ValueList>
+														<Value>True</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="OutputBus">
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
@@ -272,17 +335,22 @@
 								</MusicTransition>
 							</TransitionList>
 							<Playlist>
-								<MusicPlaylistItem Name="" ID="{82EDDEB5-04C8-4D83-BE3A-F3D35C6D02BB}" ShortID="415777718"/>
+								<MusicPlaylistItem Name="" ID="{82EDDEB5-04C8-4D83-BE3A-F3D35C6D02BB}" ShortID="415777718">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{A12E0B12-5EDE-4B4E-8FD8-BA9423283662}" ShortID="761489479">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<SegmentRef Name="1_Stealth" ID="{B410E54A-C484-488B-873B-84D37D4D1CBE}"/>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
 							</Playlist>
 						</MusicPlaylistContainer>
 					</ChildrenList>
-					<StateInfo>
-						<StateGroupList>
-							<StateGroupInfo MusicSyncType="1">
-								<StateGroupRef Name="BGM_change" ID="{9E98ED34-39A5-4574-8256-53A8987AA820}"/>
-							</StateGroupInfo>
-						</StateGroupList>
-					</StateInfo>
 					<TransitionList>
 						<MusicTransition Name="Root" ID="{61A29084-4A91-48A9-8812-3EB7DF81A545}">
 							<PropertyList>
@@ -290,7 +358,33 @@
 							</PropertyList>
 							<ChildrenList>
 								<MusicTransition Name="Transition" ID="{BD320045-245E-45DB-BA65-DC19865AC414}">
-									<TransitionInfo/>
+									<PropertyList>
+										<Property Name="DestinationJumpPositionPreset" Type="int16" Value="1"/>
+										<Property Name="EnableDestinationFadeIn" Type="bool" Value="True"/>
+										<Property Name="EnableSourceFadeOut" Type="bool" Value="True"/>
+										<Property Name="ExitSourceAt" Type="int16" Value="2"/>
+									</PropertyList>
+									<TransitionInfo>
+										<SourceFadeOut>
+											<MusicFade Name="Source Fade-out" ID="{CFB88CD1-D83D-46BE-8B18-6B6F58542EC7}">
+												<PropertyList>
+													<Property Name="FadeCurve" Type="int16" Value="0"/>
+													<Property Name="FadeOffset" Type="Real64" Value="0.5"/>
+													<Property Name="FadeTime" Type="Real64" Value="3"/>
+													<Property Name="FadeType" Type="int16" Value="1"/>
+												</PropertyList>
+											</MusicFade>
+										</SourceFadeOut>
+										<DestinationFadeIn>
+											<MusicFade Name="Destination Fade-in" ID="{A3384D63-49AB-4819-916A-0BB632356A7D}">
+												<PropertyList>
+													<Property Name="FadeCurve" Type="int16" Value="7"/>
+													<Property Name="FadeOffset" Type="Real64" Value="-2"/>
+													<Property Name="FadeTime" Type="Real64" Value="4"/>
+												</PropertyList>
+											</MusicFade>
+										</DestinationFadeIn>
+									</TransitionInfo>
 								</MusicTransition>
 							</ChildrenList>
 							<TransitionInfo/>
@@ -322,6 +416,14 @@
 							</Path>
 							<AudioNodeInfo>
 								<AudioNodeRef Name="Stealth" ID="{7E584391-BFCB-4DA3-A6F2-30B2B30033A4}" WorkUnitID="{19DED1A5-A4AB-44BE-94AF-12AAF1D35F96}" Platform="Linked"/>
+							</AudioNodeInfo>
+						</Entry>
+						<Entry>
+							<Path>
+								<PathElementRef Name="BGM_change" ID="{9E98ED34-39A5-4574-8256-53A8987AA820}"/>
+							</Path>
+							<AudioNodeInfo>
+								<AudioNodeRef Name="Normal" ID="{76C63B1A-902B-49C2-AA54-69A49B088182}" WorkUnitID="{19DED1A5-A4AB-44BE-94AF-12AAF1D35F96}" Platform="Linked"/>
 							</AudioNodeInfo>
 						</Entry>
 					</EntryList>

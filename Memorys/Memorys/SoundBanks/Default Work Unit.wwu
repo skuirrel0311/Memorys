@@ -5,8 +5,37 @@
 			<ChildrenList>
 				<SoundBank Name="Main" ID="{7142CB87-4284-4DD7-9B3C-86A46A60A847}">
 					<ObjectInclusionList>
+						<ObjectRef Name="BGM_Result" ID="{5A0FC5E5-703D-40E8-8D0C-A10F8B0D0A3A}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Enemy_Attack" ID="{AA72C250-FAF2-413A-A03F-1CA5D6F6D878}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="GameStart" ID="{B1D66924-2FCB-41A1-9FA1-F0230156DB37}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Player_Climb" ID="{41BB2E29-0373-41AC-A69E-156A2ACB3765}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Enemy_Move" ID="{14283FB4-F5CF-4284-944F-F70C72471915}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Menu_Page" ID="{DE820879-6B8A-4307-B0FD-A0CBBA12DF49}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="BGM_Help" ID="{76DD920A-2939-437D-B209-B2632F842A3B}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Totem_Laser" ID="{E474A20D-615E-43D9-90B6-68FA4FFEF80B}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="BGM_Select" ID="{AD0FC5AC-954B-440B-B390-DE9805791087}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="GameOver" ID="{58DDFACA-32B0-4429-9F49-C3BD95A10D8D}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Player_Discovery" ID="{E110A56D-924D-44AA-B1EC-C3D4585FDAD7}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Menu_Cancel" ID="{3AFD2B1D-AA29-454E-8CAB-4E4B179191A5}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Open_Door" ID="{976B8ED5-B302-4675-A11B-E1A7D0EA34DD}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Babble" ID="{2913F8BB-8432-467C-BC3A-4E2615AFFCE1}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Menu_Decision" ID="{671B5CBD-6E1A-46D6-A79D-6B7AF842EE3D}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Player_Landing" ID="{A57761AE-8010-4738-B987-33D8867A70D0}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="GameClear" ID="{A490411E-5868-4753-AEFF-63C04C6AB45C}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Totem_Shot" ID="{977E7C84-7167-4819-848A-5B4D7F0BAA91}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Menu_Select" ID="{557EAAB7-E41F-48AF-A44E-5A23FB5726B2}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="BGM_Titlle" ID="{95D68DEC-5DB7-49BE-AEEF-C473F3D545A4}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Totem_Shot_impact" ID="{355DA83A-3E2B-4A64-A4FD-7A312270DD1D}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Get_Switch" ID="{6078F87A-10A0-4AD4-A245-7D17FC2C6880}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Totem_Move" ID="{281F5EBE-079A-4B39-9C69-626DDBE8CFAD}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Player_Jump" ID="{2EE7D6DE-778A-4B56-AB3C-FBA9823F6386}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Totem_Laser_charge" ID="{14C44A52-0F3B-4BB7-82E3-860BB39E33F7}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Footsteps" ID="{1B1B2438-4301-4BF1-9EF9-2AA80479FA50}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="BGM_Main2" ID="{58D71BAE-C750-4C12-8208-8554205E392E}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Totem_Activation" ID="{49E4B72B-65CD-4C73-BE85-DECD3A712EAF}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="BGM_Main1" ID="{B2D0307B-5F9B-4C79-A9C5-F85B2DA78A50}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Player_Search" ID="{54FDDB75-9658-4F1C-9434-185E85D198C7}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Totem_Laser_impact" ID="{76F7DAAC-8161-4F8D-A788-41EB26EF2C1E}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
 					<GameSyncExclusionList/>

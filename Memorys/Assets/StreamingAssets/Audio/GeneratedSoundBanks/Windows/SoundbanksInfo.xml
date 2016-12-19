@@ -8,7 +8,20 @@
 		<ExternalSourcesOutputRoot>C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\GeneratedSoundBanks\Windows\</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
-	<StreamedFiles/>
+	<StreamedFiles>
+		<File Id="362030528" Language="SFX">
+			<ShortName>BGM_Main1\Normal\1_Normal.wav</ShortName>
+			<Path>SFX\BGM_Main1\Normal\1_Normal_4B8CC0C5.wem</Path>
+		</File>
+		<File Id="668828887" Language="SFX">
+			<ShortName>BGM_Main1\Stealth\1_Stealth.wav</ShortName>
+			<Path>SFX\BGM_Main1\Stealth\1_Stealth_4B8CC0C5.wem</Path>
+		</File>
+		<File Id="1041712009" Language="SFX">
+			<ShortName>BGM_Main1\Emergency\1_Emergency.wav</ShortName>
+			<Path>SFX\BGM_Main1\Emergency\1_Emergency_4B8CC0C5.wem</Path>
+		</File>
+	</StreamedFiles>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
 		<SoundBank Id="1355168291" Language="SFX">
@@ -21,13 +34,13 @@
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<IncludedEvents>
-				<Event Id="4051581707" Name="Babble" ObjectPath="\Events\Default Work Unit\BGM\ME\Babble" MaxAttenuation="4.000000"/>
-				<Event Id="2162141673" Name="BGM_Help" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Help" MaxAttenuation="4.000000"/>
+				<Event Id="4051581707" Name="Babble" ObjectPath="\Events\Default Work Unit\BGM\ME\Babble" MaxAttenuation="100.000000"/>
+				<Event Id="2162141673" Name="BGM_Help" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Help" MaxAttenuation="100.000000"/>
 				<Event Id="652491268" Name="BGM_Main1" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Main1"/>
-				<Event Id="652491271" Name="BGM_Main2" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Main2" MaxAttenuation="4.000000"/>
+				<Event Id="652491271" Name="BGM_Main2" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Main2" MaxAttenuation="100.000000"/>
 				<Event Id="4239768699" Name="BGM_Result" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Result" MaxAttenuation="0.000000"/>
-				<Event Id="2333034960" Name="BGM_Select" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Select" MaxAttenuation="4.000000"/>
-				<Event Id="3608707068" Name="BGM_Titlle" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Titlle" MaxAttenuation="4.000000"/>
+				<Event Id="2333034960" Name="BGM_Select" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Select" MaxAttenuation="100.000000"/>
+				<Event Id="3608707068" Name="BGM_Titlle" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Titlle" MaxAttenuation="100.000000"/>
 				<Event Id="1781417190" Name="Enemy_Attack" ObjectPath="\Events\Default Work Unit\SE\Enemy_Attack"/>
 				<Event Id="2876602209" Name="Enemy_Move" ObjectPath="\Events\Default Work Unit\SE\Enemy_Move"/>
 				<Event Id="2385628198" Name="Footsteps" ObjectPath="\Events\Default Work Unit\SE\Footsteps"/>
@@ -53,6 +66,11 @@
 				<Event Id="2592508863" Name="Totem_Shot" ObjectPath="\Events\Default Work Unit\SE\Totem_Shot"/>
 				<Event Id="2455001044" Name="Totem_Shot_impact" ObjectPath="\Events\Default Work Unit\SE\Totem_Shot_impact"/>
 			</IncludedEvents>
+			<ReferencedStreamedFiles>
+				<File Id="362030528"/>
+				<File Id="668828887"/>
+				<File Id="1041712009"/>
+			</ReferencedStreamedFiles>
 			<IncludedMemoryFiles>
 				<File Id="112961538" Language="SFX">
 					<ShortName>Landing\Landing_2.wav</ShortName>
@@ -78,10 +96,6 @@
 					<ShortName>Jump.wav</ShortName>
 					<Path>SFX\Jump_F102BEF4.wem</Path>
 				</File>
-				<File Id="362030528" Language="SFX">
-					<ShortName>BGM_Main1\Normal\1_Normal.wav</ShortName>
-					<Path>SFX\BGM_Main1\Normal\1_Normal_4B8CC0C5.wem</Path>
-				</File>
 				<File Id="514799383" Language="SFX">
 					<ShortName>Landing\Landing_3.wav</ShortName>
 					<Path>SFX\Landing\Landing_3_C333200D.wem</Path>
@@ -89,10 +103,6 @@
 				<File Id="603158089" Language="SFX">
 					<ShortName>Footsteps\Fs_1.wav</ShortName>
 					<Path>SFX\Footsteps\Fs_1_9E69E797.wem</Path>
-				</File>
-				<File Id="668828887" Language="SFX">
-					<ShortName>BGM_Main1\Stealth\1_Stealth.wav</ShortName>
-					<Path>SFX\BGM_Main1\Stealth\1_Stealth_4B8CC0C5.wem</Path>
 				</File>
 				<File Id="753971549" Language="SFX">
 					<ShortName>Footsteps\Fs_2.wav</ShortName>
@@ -117,10 +127,6 @@
 				<File Id="1027748973" Language="SFX">
 					<ShortName>Discovery.wav</ShortName>
 					<Path>SFX\Discovery_4412753F.wem</Path>
-				</File>
-				<File Id="1041712009" Language="SFX">
-					<ShortName>BGM_Main1\Emergency\1_Emergency.wav</ShortName>
-					<Path>SFX\BGM_Main1\Emergency\1_Emergency_4B8CC0C5.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>
