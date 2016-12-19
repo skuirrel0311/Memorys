@@ -17,7 +17,6 @@ public class SelectManager : MonoBehaviour
     private Material[] m_Materials;
     //ページのマテリアルはアサインの順番が逆
     private Material[] m_PageMaterials;
-    private FusenSpawner m_FusenSpawner;
     private SelectManager m_selectManager;
     public int m_SelectNumber = 1;
     bool isInputAxis;
@@ -26,7 +25,6 @@ public class SelectManager : MonoBehaviour
     {
         m_SelectNumber = 1;
         isInputAxis = false;
-        m_FusenSpawner = GetComponent<FusenSpawner>();
         m_Materials = m_BookModel.materials;
         m_PageMaterials = m_PageModel.materials;
         UpdateTexture();
@@ -65,7 +63,6 @@ public class SelectManager : MonoBehaviour
             return;
         }
         if (isInputAxis) return;
-        if (m_FusenSpawner.isSetRoot) return;
         isInputAxis = true;
 
         if (v > 0)
@@ -73,7 +70,6 @@ public class SelectManager : MonoBehaviour
             if (m_SelectNumber == 1) return;
             m_BookAnim.Play("L_R", 0);
             m_SelectNumber = (int)Mathf.Max(1, (float)m_SelectNumber - 1);
-            m_FusenSpawner.SetAnimationRoot(m_SelectNumber - 1,false);
             UpdateTexture();
         }
         else
@@ -81,8 +77,6 @@ public class SelectManager : MonoBehaviour
             if (m_SelectNumber == MaxStage) return;
             m_BookAnim.Play("R_L", 0);
             m_SelectNumber = (int)Mathf.Min((float)MaxStage, (float)m_SelectNumber + 1);
-            m_FusenSpawner.SetAnimationRoot(m_SelectNumber - 2,true);
-
         }
     }
 
