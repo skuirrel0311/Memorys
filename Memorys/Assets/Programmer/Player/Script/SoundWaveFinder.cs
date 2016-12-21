@@ -27,7 +27,8 @@ public class SoundWaveFinder : MonoBehaviour
     Coroutine[] coroutines;
     
     [SerializeField]
-    float power = 0.0f;
+    public float power = 0.0f;
+
     [SerializeField]
     float maxPower = 5.0f;
     PlayerSixthSense sense;
@@ -123,7 +124,6 @@ public class SoundWaveFinder : MonoBehaviour
         if (distance < maxDistance)
         {
             IsFound = true;
-            AkSoundEngine.PostEvent("Player_Discovery",target.gameObject);
             //音波が届くまでの時間を求める
             float waitTime = (distance / maxDistance) * 1.5f;
 
@@ -159,7 +159,7 @@ public class SoundWaveFinder : MonoBehaviour
     IEnumerator DrawReturnWave(float waitTime, Transform target)
     {
         yield return new WaitForSeconds(waitTime);
-
+        AkSoundEngine.PostEvent("Player_Discovery", target.gameObject);
         Destroy(Instantiate(waveParticle, target.position + Vector3.up, Quaternion.identity), 1.5f);
     }
 

@@ -14,12 +14,13 @@ public class GameEnd
     private const int c_MaxDestroy = 5;
 
     //ゲームクリアコールバック
-    public delegate void GameClearCallBack();
-    public GameClearCallBack OnGameClearCallBack;
+    public delegate void VoidCallBack();
+    public VoidCallBack OnGameClearCallBack;
 
     //ゲームオーバーコールバック
-    public delegate void GameOverCallBack();
-    public GameOverCallBack OnGameOverCallBack;
+    public VoidCallBack OnGameOverCallBack;
+
+    public VoidCallBack OnDestroyCancelCallBack;
 
     /// <summary>
     /// ステージの崩壊を何回キャンセルしたか
@@ -56,7 +57,7 @@ public class GameEnd
         //ゲームがクリアされた
         if (m_destoryCancelCount >= c_MaxDestroyCalcel)
         {
-           // GameClear();
+            // GameClear();
         }
     }
 
@@ -66,6 +67,8 @@ public class GameEnd
         if (!(m_destoryCancelCount >= c_MaxDestroyCalcel))
             NotificationSystem.I.Indication("脱出まで　あと" + (c_MaxDestroyCalcel - m_destoryCancelCount) + "回!\nターゲットが別の場所に出現！");
         Update();
+        if (OnDestroyCancelCallBack != null)
+            OnDestroyCancelCallBack();
     }
 
     public void StageDestroy()

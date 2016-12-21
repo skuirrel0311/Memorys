@@ -9,7 +9,7 @@ using BehaviorDesigner.Runtime.Tactical;
 //プレイヤーの接触判定用クラス
 public class PlayerOverlap : MonoBehaviour, IDamageable
 {
-    const int maxHP = 3;
+    const int maxHP = 5;
 
     //[SerializeField]
     //Slider m_slider;
@@ -28,8 +28,6 @@ public class PlayerOverlap : MonoBehaviour, IDamageable
     void Start()
     {
         HP = maxHP;
-        //m_slider.value = HP;
-        pointGauge.Initialize(maxHP);
         invincibleTimer = new Timer();
         enemies = GameObject.FindGameObjectsWithTag("Enemy").Select(n => n.GetComponent<BehaviorTree>()).ToArray();
     }
