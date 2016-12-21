@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public GameEnd m_GameEnd;
 
+    public bool IsPlayStop { get; private set; }
+
     [SerializeField]
     private GameObject GameClearLogo = null;
 
@@ -89,7 +91,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // I = this;
-
+        IsPlayStop = false;
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
         goalEffect = Resources.Load("Particle/GoalEffect") as GameObject;
