@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public bool IsFlat = false;
 
+    public delegate void VoidEvent();
+    public VoidEvent OnPossibleEscape;
+
     private void Awake()
     {
 
@@ -288,6 +291,9 @@ public class GameManager : MonoBehaviour
         if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
         {
             NotificationSystem.I.Indication("脱出可能になった！");
+            if (OnPossibleEscape != null)
+                OnPossibleEscape();
+
             if(OneByOne) Destroy(m_Target);
             return;
         }

@@ -47,8 +47,7 @@ public class PlayerOverlap : MonoBehaviour, IDamageable
             //1匹でも見ていたらtrueにする。
             isFound = true;
         }
-        
-        Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>().profile.vignette.enabled = isFound;
+       
     }
 
     void OnCollisionEnter(Collision col)

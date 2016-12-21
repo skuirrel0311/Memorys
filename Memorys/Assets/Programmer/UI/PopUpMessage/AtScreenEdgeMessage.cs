@@ -73,6 +73,7 @@ public class AtScreenEdgeMessage : PopUpMessage
 
     Vector2 ToEdgeVector(Vector3 targetPosition)
     {
+        if (Camera.main==null) return Vector2.zero;
         Quaternion cameraQuate = Quaternion.Euler(0, -Camera.main.transform.eulerAngles.y, 0);
         //カメラに写すのだからカメラ(カメラの所持者)からターゲットへのベクトルを用いる
         Vector3 temp = cameraQuate * (targetPosition - transform.position);

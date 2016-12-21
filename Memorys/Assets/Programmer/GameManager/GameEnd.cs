@@ -63,10 +63,12 @@ public class GameEnd
 
     public void DestroyCancel()
     {
+
         m_destoryCancelCount++;
         if (!(m_destoryCancelCount >= c_MaxDestroyCalcel))
             NotificationSystem.I.Indication("脱出まで　あと" + (c_MaxDestroyCalcel - m_destoryCancelCount) + "回!\nターゲットが別の場所に出現！");
         Update();
+        if (m_destoryCancelCount > c_MaxDestroyCalcel) return;
         if (OnDestroyCancelCallBack != null)
             OnDestroyCancelCallBack();
     }
