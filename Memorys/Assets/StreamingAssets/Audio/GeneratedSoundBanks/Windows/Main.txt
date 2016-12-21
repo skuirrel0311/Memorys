@@ -37,7 +37,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	144374456	Page_2	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Page\Page_2_4306A202.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Page\Page_2		315064
 	178554552	Babble	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Babble_3F5F6E3C.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ambience\Babble		346564
 	266972089	Fs_4	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Footsteps\Fs_4_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Footsteps\Fs_4		63064
-	340152810	Jump	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Jump_F102BEF4.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Jump		157564
+	341995375	Jump	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Jump(2)_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Jump		157564
 	514799383	Climb_3	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Landing\Landing_3_C333200D.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Climb_3		157564
 	603158089	Fs_1	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Footsteps\Fs_1_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Footsteps\Fs_1		63064
 	753971549	Fs_2	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Footsteps\Fs_2_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Footsteps\Fs_2		63064

@@ -10,16 +10,16 @@ public class GameManager : MonoBehaviour
     public static GameManager I;
 
     public GameEnd m_GameEnd;
-    //ステージの崩壊間隔
-    private const float c_IntervalSec = 30.0f;
-    //一度に破壊されるオブジェクトの数
-    private const int c_DestroyObjectNumber = 80;
 
     [SerializeField]
-    private GameObject GameClearLogo;
+    private GameObject GameClearLogo = null;
+
+    //地形の変化が起きる時間の間隔
+    [SerializeField]
+    private float transitionInterval = 0.1f;
 
     //プレイヤーの破壊目標
-    public GameObject m_Target;
+    private GameObject m_Target;
     private GameObject m_TargetPoint;
     //破壊目標の出現位置
     [SerializeField]
@@ -28,15 +28,16 @@ public class GameManager : MonoBehaviour
     public List<GameObject> m_FieldObjects;
     //ターゲットが破壊を宣言しているオブジェクト
     private List<GameObject> m_WillDestroyObjects;
-    private float m_Interval = 0.0f;
-
-    private ParticleSystem m_SelectParticle;
 
     public BehaviorTree[] enemies;
     private AtScreenEdgeMessage[] directionMessages;
+    
+    private GameObject floorObj = null;
 
+    //指定されたTransformの座標を起点にしてゴール扉に向けて床を置いていく
     [SerializeField]
-    GameObject floorObj = null;
+    private Transform goalOrigin = null;
+    private GameObject goalEffect = null;
 
     [SerializeField]
     public bool OneByOne = true;
@@ -91,14 +92,15 @@ public class GameManager : MonoBehaviour
 
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
-        m_SelectParticle = go.GetComponent<ParticleSystem>();
+        goalEffect = Resources.Load("Particle/GoalEffect") as GameObject;
+        floorObj = Resources.Load("Prefabs/FloorObject") as GameObject;
+
 
         //破壊可能オブジェクトの取得
         m_FieldObjects = new List<GameObject>();
         m_FieldObjects.AddRange(GameObject.FindGameObjectsWithTag("FieldObject"));
 
         m_WillDestroyObjects = new List<GameObject>();
-        m_Interval = 0.0f;
         // SetWillDestroy();
         NotificationSystem.I.Indication("スイッチを" + GameEnd.c_MaxDestroyCalcel.ToString() + "回押し、脱出せよ！");
         if (!IsFlat) StartCoroutine("SetObjTransition");
@@ -274,7 +276,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SetObjTransition()
     {
-        var wait = new WaitForSeconds(0.1f);
+        var wait = new WaitForSeconds(transitionInterval);
         while (true)
         {
             m_FieldObjects[Random.Range(0, m_FieldObjects.Count)].GetComponent<FloorTransition>().FloorTrans();
@@ -317,9 +319,18 @@ public class GameManager : MonoBehaviour
     {
         if (floorObj == null) return;
         //床を置く座標を計算で求める
-        Vector3 goalPosition = new Vector3(-1, 0, -27.5f);
-        Vector3 floorPosition = goalPosition + (Vector3.back * ((m_GameEnd.m_destoryCancelCount) * 3.4f));
+        Vector3 floorPosition = goalOrigin.position + (Vector3.back * ((m_GameEnd.m_destoryCancelCount) * 3.4f));
 
         Instantiate(floorObj, floorPosition, Quaternion.identity);
+
+        if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
+        {
+            //最後の床と同時にゴールを生成する。
+            Vector3 offset = new Vector3(1.0f, 1.0f, -2.0f);
+
+            Vector3 effectPosition = floorPosition + offset;
+
+            Instantiate(goalEffect, effectPosition, Quaternion.identity);
+        }
     }
 }

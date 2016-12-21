@@ -5,10 +5,14 @@
 			<ChildrenList>
 				<MusicSwitchContainer Name="BGM_Main1" ID="{CA2561FC-8AD6-4B96-A643-C8542322688A}" ShortID="166936242">
 					<PropertyList>
-						<Property Name="GridFrequencyPreset" Type="int16" Value="52"/>
 						<Property Name="Tempo" Type="Real64" Value="130"/>
 						<Property Name="TimeSignatureLower" Type="int16" Value="8"/>
 						<Property Name="TimeSignatureUpper" Type="int16" Value="6"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-2</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
@@ -362,7 +366,7 @@
 										<Property Name="DestinationJumpPositionPreset" Type="int16" Value="1"/>
 										<Property Name="EnableDestinationFadeIn" Type="bool" Value="True"/>
 										<Property Name="EnableSourceFadeOut" Type="bool" Value="True"/>
-										<Property Name="ExitSourceAt" Type="int16" Value="2"/>
+										<Property Name="ExitSourceAt" Type="int16" Value="1"/>
 									</PropertyList>
 									<TransitionInfo>
 										<SourceFadeOut>
