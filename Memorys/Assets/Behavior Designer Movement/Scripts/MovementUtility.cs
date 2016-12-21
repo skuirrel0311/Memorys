@@ -82,7 +82,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                 angle = Vector3.Angle(direction, Quaternion.Euler(eulerAngles) * Vector3.up);
                 direction.z = 0;
             } else {
-                angle = Vector3.Angle(direction, transform.forward);
+                angle = Vector2.Angle(new Vector2(direction.x, direction.z), new Vector2(transform.forward.x, transform.forward.z));
+                //angle = Vector3.Angle(direction, transform.forward);
                 direction.y = 0;
             }
             if (direction.magnitude < viewDistance && angle < fieldOfViewAngle * 0.5f) {
