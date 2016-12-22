@@ -4,10 +4,9 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
-using BehaviorDesigner.Runtime.Tactical;
 
 //プレイヤーの接触判定用クラス
-public class PlayerOverlap : MonoBehaviour, IDamageable
+public class PlayerOverlap : MonoBehaviour
 {
     const int maxHP = 5;
 
