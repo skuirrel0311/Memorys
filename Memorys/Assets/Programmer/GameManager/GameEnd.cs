@@ -49,7 +49,7 @@ public class GameEnd
         {
             if (MyInputManager.GetButtonDown(MyInputManager.Button.A))
             {
-                Time.timeScale = 1.0f;
+                //Time.timeScale = 1.0f;
                 SceneManager.LoadSceneAsync("StageSelect");
             }
             return;
@@ -82,7 +82,7 @@ public class GameEnd
     public void GameClear()
     {
         isGameEnd = true;
-        Time.timeScale = 0.1f;
+        //Time.timeScale = 0.1f;
         if (OnGameClearCallBack != null)
             OnGameClearCallBack();
     }
@@ -90,7 +90,7 @@ public class GameEnd
     public void GameOver()
     {
         isGameEnd = true;
-        Time.timeScale = 0.1f;
+        //Time.timeScale = 0.1f;
         Debug.Log("GameOver");
         if (OnGameOverCallBack != null)
             OnGameOverCallBack();

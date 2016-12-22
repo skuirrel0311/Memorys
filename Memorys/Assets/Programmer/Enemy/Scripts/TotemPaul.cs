@@ -121,16 +121,21 @@ public class TotemPaul : MonoBehaviour
     //起動
     public void StartUp()
     {
-
         if (IsAwakeActive) return;
         QuickStartUp();
-
     }
 
     public void QuickStartUp()
     {
         GetComponent<BehaviorTree>().enabled = true;
         transform.GetChild(1).gameObject.SetActive(true);
-        GetComponent<Renderer>().material = activeMat;
+
+        Material[] mats = GetComponent<Renderer>().materials;
+        for (int i = 0; i < mats.Length; i++)
+        {
+            mats[i] = activeMat;
+        }
+
+        GetComponent<Renderer>().materials = mats;
     }
 }

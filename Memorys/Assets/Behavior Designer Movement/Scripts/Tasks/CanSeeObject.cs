@@ -30,6 +30,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public SharedFloat angleOffset2D;
         [Tooltip("The object that is within sight")]
         public SharedGameObject returnedObject;
+        public SharedGameObject eye;
 
         public bool IsViewSight = false;
         public bool IsViewLine = false;
@@ -38,6 +39,11 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         {
             if (!string.IsNullOrEmpty(targetTag.Value))
                 targetObject.SetValue(GameObject.FindGameObjectWithTag(targetTag.Value));
+
+            if(eye.Value == null)
+            {
+                eye.SetValue(gameObject);
+            }
         }
 
         // Returns success if an object was found otherwise failure
@@ -47,30 +53,30 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             {
                 if (!string.IsNullOrEmpty(targetTag.Value))
                 { // If the target tag is not null then determine if there are any objects within sight based on the tag
-                    returnedObject.Value = MovementUtility.WithinSight2D(transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, GameObject.FindGameObjectWithTag(targetTag.Value), targetOffset.Value, angleOffset2D.Value, ignoreLayerMask);
+                    returnedObject.Value = MovementUtility.WithinSight2D(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, GameObject.FindGameObjectWithTag(targetTag.Value), targetOffset.Value, angleOffset2D.Value, ignoreLayerMask);
                 }
                 else if (targetObject.Value == null)
                 { // If the target object is null then determine if there are any objects within sight based on the layer mask
-                    returnedObject.Value = MovementUtility.WithinSight2D(transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, objectLayerMask, targetOffset.Value, angleOffset2D.Value, ignoreLayerMask);
+                    returnedObject.Value = MovementUtility.WithinSight2D(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, objectLayerMask, targetOffset.Value, angleOffset2D.Value, ignoreLayerMask);
                 }
                 else
                 { // If the target is not null then determine if that object is within sight
-                    returnedObject.Value = MovementUtility.WithinSight2D(transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, targetObject.Value, targetOffset.Value, angleOffset2D.Value, ignoreLayerMask);
+                    returnedObject.Value = MovementUtility.WithinSight2D(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, targetObject.Value, targetOffset.Value, angleOffset2D.Value, ignoreLayerMask);
                 }
             }
             else
             {
                 if (!string.IsNullOrEmpty(targetTag.Value))
                 { // If the target tag is not null then determine if there are any objects within sight based on the tag
-                    returnedObject.Value = MovementUtility.WithinSight(transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, GameObject.FindGameObjectWithTag(targetTag.Value), targetOffset.Value, ignoreLayerMask);
+                    returnedObject.Value = MovementUtility.WithinSight(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, GameObject.FindGameObjectWithTag(targetTag.Value), targetOffset.Value, ignoreLayerMask);
                 }
                 else if (targetObject.Value == null)
                 { // If the target object is null then determine if there are any objects within sight based on the layer mask
-                    returnedObject.Value = MovementUtility.WithinSight(transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, objectLayerMask, targetOffset.Value, ignoreLayerMask);
+                    returnedObject.Value = MovementUtility.WithinSight(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, objectLayerMask, targetOffset.Value, ignoreLayerMask);
                 }
                 else
                 { // If the target is not null then determine if that object is within sight
-                    returnedObject.Value = MovementUtility.WithinSight(transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, targetObject.Value, targetOffset.Value, ignoreLayerMask);
+                    returnedObject.Value = MovementUtility.WithinSight(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, targetObject.Value, targetOffset.Value, ignoreLayerMask);
                 }
             }
             if (returnedObject.Value != null)
@@ -96,15 +102,15 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         // Draw the line of sight representation within the scene window
         public override void OnDrawGizmos()
         {
+            if (eye.Value == null) return;
             if (IsViewSight)
-                MovementUtility.DrawLineOfSight(Owner.transform, offset.Value, fieldOfViewAngle.Value, angleOffset2D.Value, viewDistance.Value, usePhysics2D);
+                MovementUtility.DrawLineOfSight(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, angleOffset2D.Value, viewDistance.Value, usePhysics2D);
 
             if (IsViewLine)
             {
                 if (targetObject.Value == null) return;
-                if (targetOffset.Value == null) return;
                 
-                Gizmos.DrawLine(transform.position + offset.Value, targetObject.Value.transform.position + targetOffset.Value);
+                Gizmos.DrawLine(eye.Value.transform.position + offset.Value, targetObject.Value.transform.position + targetOffset.Value);
             }
 
         }
