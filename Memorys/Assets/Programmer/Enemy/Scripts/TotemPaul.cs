@@ -59,10 +59,12 @@ public class TotemPaul : MonoBehaviour
 
         if (IsWarning)
         {
+            //一度警戒すると解けにくくなる
             IsWarning = Alertness > 0.5f;
         }
         else
         {
+            //初回は警戒するまでに時間がかかる
             IsWarning = Alertness > 2.5f;
         }
 
@@ -78,11 +80,10 @@ public class TotemPaul : MonoBehaviour
         if (IsWarning)
         {
             //警戒している時はターゲットの位置を更新する
-            Vector3 movement = playerNeck.position - playerController.oldPosition;
-            movement.y = 0.0f;
-
-            //なんフレーム先の座標を読むか
-            float futureRate = 0.9f * (transform.position - playerNeck.position).magnitude;
+            Vector3 movement = playerController.movement;
+            movement.y = Random.Range(-0.15f, 0.0f);
+            //何フレーム先の座標を読むか *（どのくらいの時間で弾が到着するのか）
+            float futureRate = Random.Range(0.85f,0.95f) * (transform.position - playerNeck.position).magnitude;
             targetPosition = playerNeck.position + (movement * futureRate);
         }
         return targetPosition;
