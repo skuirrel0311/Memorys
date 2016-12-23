@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     GameObject cameraObject;
     Rigidbody body = null;
     PlayerAnimationContoller animationContoller = null;
+    public Vector3 movement { get; private set; }
     public Vector3 oldPosition { get; private set; }
 
     bool isSquat;
@@ -93,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
         transform.Translate(movement, Space.World);
         //body.AddForce(movement*50.0f,ForceMode.VelocityChange);
-
+        this.movement = movement;
         oldPosition = transform.position;
     }
 
