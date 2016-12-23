@@ -65,7 +65,7 @@ public class TotemPaul : MonoBehaviour
         else
         {
             //初回は警戒するまでに時間がかかる
-            IsWarning = Alertness > 2.5f;
+            IsWarning = Alertness > 1.5f;
         }
 
         if (Alertness > 0.5f)
