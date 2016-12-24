@@ -48,13 +48,13 @@ public class CameraManager : MonoBehaviour
     IEnumerator EnableCutCamera(Camera camera, float wait)
     {
         TransitionManager.I.FadeOut(TransitionTime);
-        yield return new WaitForSeconds(TransitionTime);
+        yield return new WaitForSeconds(TransitionTime+0.1f);
         MainCamera.enabled = false;
         camera.enabled = true;
         TransitionManager.I.FadeIn(TransitionTime);
         yield return new WaitForSeconds(wait);
         TransitionManager.I.FadeOut(TransitionTime);
-        yield return new WaitForSeconds(TransitionTime);
+        yield return new WaitForSeconds(TransitionTime + 0.1f);
         camera.enabled = false;
         MainCamera.enabled = true;
         TransitionManager.I.FadeIn(TransitionTime);
