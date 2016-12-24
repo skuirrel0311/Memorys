@@ -12,6 +12,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     Camera[] m_Cameras;
 
+    [SerializeField]
+    float TransitionTime = 0.5f;
+
     private Camera MainCamera;
 
     // Use this for initialization
@@ -44,11 +47,17 @@ public class CameraManager : MonoBehaviour
 
     IEnumerator EnableCutCamera(Camera camera, float wait)
     {
+        TransitionManager.I.FadeOut(TransitionTime);
+        yield return new WaitForSeconds(TransitionTime);
         MainCamera.enabled = false;
         camera.enabled = true;
+        TransitionManager.I.FadeIn(TransitionTime);
         yield return new WaitForSeconds(wait);
+        TransitionManager.I.FadeOut(TransitionTime);
+        yield return new WaitForSeconds(TransitionTime);
         camera.enabled = false;
         MainCamera.enabled = true;
+        TransitionManager.I.FadeIn(TransitionTime);
     }
 
     void OnDestroy()

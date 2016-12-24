@@ -36,11 +36,11 @@ public class NotificationSystem : MonoBehaviour {
             time += Time.deltaTime;
             if (time <= 0.7f)
             {
-                img.color += Color.black * Time.deltaTime;
+                img.color += Color.white * Time.deltaTime;
             }
             else if (time > 2.3f)
             {
-                img.color -= Color.black * Time.deltaTime;
+                img.color -= Color.white * Time.deltaTime;
                 m_text.color -= Color.white * Time.deltaTime;
             }
 

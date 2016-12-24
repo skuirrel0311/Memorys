@@ -92,6 +92,7 @@ public class GameEnd
         isGameEnd = true;
         //Time.timeScale = 0.1f;
         Debug.Log("GameOver");
+        TransitionManager.I.FadeOut();
         if (OnGameOverCallBack != null)
             OnGameOverCallBack();
     }

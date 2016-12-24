@@ -52,7 +52,7 @@ public class PlayerSixthSense : MonoBehaviour
         hasSense = (timer == startSenseTime);
 
 
-        UpdateLight();
+        //UpdateLight();
 
         oldHasSense = hasSense;
 
@@ -77,13 +77,13 @@ public class PlayerSixthSense : MonoBehaviour
         if (hasSense == true && oldHasSense == false)
         {
             IsWorkingCoroutine = true;
-            coroutine = StartCoroutine(SetLightSettings(Color.white, 5.0f, 0.3f, 0.0f));
+            //coroutine = StartCoroutine(SetLightSettings(Color.white, 5.0f, 0.3f, 0.0f));
         }
 
         if (hasSense == false && oldHasSense == true)
         {
             IsWorkingCoroutine = true;
-            coroutine = StartCoroutine(SetLightSettings(Color.white, 1.0f, 1.0f, 1.0f));
+            //coroutine = StartCoroutine(SetLightSettings(Color.white, 1.0f, 1.0f, 1.0f));
         }
     }
 
