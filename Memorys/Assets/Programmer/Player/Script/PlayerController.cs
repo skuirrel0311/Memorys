@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (GameManager.I.IsPlayStop) return;
+        if (isJump) return;
         Vector3 movement = GetInputVector();
         if (isSquat) movement *= 0.5f;
 
@@ -106,11 +107,11 @@ public class PlayerController : MonoBehaviour
         jumpTime += Time.deltaTime;
         //Debug.Log("currentState:"+currentState);
         bool isButtonDown = (MyInputManager.GetButtonDown(MyInputManager.Button.A) || Input.GetKeyDown(KeyCode.Space));
-        if (currentState == PlayerState.Move)
+        if (m_accel>0.9f)
         {
             if ( isButtonDown) Jumpping();
         }
-        if ((isSquat || m_accel < 0.5f) && isButtonDown && currentState != PlayerState.Clamber) ChangeSquat(!isSquat);
+        if ((isSquat || m_accel < 0.5f) && isButtonDown && currentState != PlayerState.Clamber&&currentState!= PlayerState.Jump) ChangeSquat(!isSquat);
         CheckFall();
     }
 
@@ -134,6 +135,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
         currentState = PlayerState.Fall;
+
+        //自動よじ登り
         if (isJump)
         {
             Clamb(GetForwardObject());
@@ -155,7 +158,7 @@ public class PlayerController : MonoBehaviour
         if (currentState == PlayerState.Jump) return Vector3.zero;
         if (currentState == PlayerState.Clamber) return Vector3.zero;
         int hash = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).shortNameHash;
-        if (hash == Animator.StringToHash("Damage")|| hash == Animator.StringToHash("LongJump"))
+        if (hash == Animator.StringToHash("Damage")|| hash == Animator.StringToHash("LongJump")||hash== Animator.StringToHash("Clamber"))
         {
             return Vector3.zero;
         }
@@ -218,7 +221,6 @@ public class PlayerController : MonoBehaviour
                 AkSoundEngine.PostEvent("Player_Jump", gameObject);
                 GetComponent<Rigidbody>().velocity = Vector3.up * 3.0f;
                 jumpTime = 0.0f;
-
             }
 
             isJump = true;

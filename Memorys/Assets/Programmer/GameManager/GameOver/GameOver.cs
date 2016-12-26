@@ -33,11 +33,11 @@ public class GameOver : MonoBehaviour
         if(isLeft)
         {
             Retry.color = Color.white;
-            StageSelect.color = Color.black;
+            StageSelect.color = Color.white*0.5f;
         }
         else
         {
-            Retry.color = Color.black;
+            Retry.color = Color.white * 0.5f;
             StageSelect.color = Color.white;
         }
 
