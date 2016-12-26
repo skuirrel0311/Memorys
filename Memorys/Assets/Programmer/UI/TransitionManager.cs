@@ -54,8 +54,6 @@ public class TransitionManager : MonoBehaviour
             }
             yield return null;
         }
-
-        yield return null;
     }
 
     public void FadeOut(float duration = 1.0f)
@@ -80,8 +78,6 @@ public class TransitionManager : MonoBehaviour
             }
             yield return null;
         }
-
-        yield return null;
     }
 
     void OnDestroy()

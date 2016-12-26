@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.I.IsPlayStop) return;
         Vector3 movement = GetInputVector();
         if (isSquat) movement *= 0.5f;
 
@@ -100,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
+        if (GameManager.I.IsPlayStop) return;
         Vector3 movement = transform.position - oldPosition;
         jumpTime += Time.deltaTime;
         //Debug.Log("currentState:"+currentState);
