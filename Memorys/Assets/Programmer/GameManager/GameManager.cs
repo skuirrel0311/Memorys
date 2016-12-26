@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
     public delegate void VoidEvent();
     public VoidEvent OnPossibleEscape;
 
+    public VoidEvent OnPushSwitch;
+
     private void Awake()
     {
 
@@ -100,7 +102,30 @@ public class GameManager : MonoBehaviour
         NotificationSystem.I.Indication("スイッチを" + GameEnd.c_MaxDestroyCalcel.ToString() + "回押し、脱出せよ！");
         if (!IsFlat) StartCoroutine("SetObjTransition");
 
+        SetEventPushSwitch();
         InitializeEnemy();
+    }
+
+    private void SetEventPushSwitch()
+    {
+        OnPushSwitch += () =>
+        {
+            m_GameEnd.DestroyCancel();
+            PutFloor();
+            GenerateEnemy();
+            //クリア条件を満たしている
+            if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
+            {
+                NotificationSystem.I.Indication("脱出可能になった！");
+                if (OnPossibleEscape != null)
+                    OnPossibleEscape();
+
+                if (OneByOne) Destroy(m_Target);
+                return;
+            }
+
+            if (OneByOne) SetTargetRandom();
+        };
     }
 
     private void InitializeEnemy()
@@ -281,21 +306,10 @@ public class GameManager : MonoBehaviour
 
     public void PushSwitch()
     {
-        m_GameEnd.DestroyCancel();
-        PutFloor();
-        GenerateEnemy();
-        //クリア条件を満たしている
-        if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
+        if(OnPushSwitch != null)
         {
-            NotificationSystem.I.Indication("脱出可能になった！");
-            if (OnPossibleEscape != null)
-                OnPossibleEscape();
-
-            if(OneByOne) Destroy(m_Target);
-            return;
+            OnPushSwitch();
         }
-
-        if(OneByOne)SetTargetRandom();
     }
 
     private void GenerateEnemy()

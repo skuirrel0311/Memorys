@@ -231,5 +231,13 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             transformAudioSourceMap.Add(target, audioSources);
             return audioSources;
         }
+
+        public static float FloatLerp(float a, float b, float t)
+        {
+            if (t > 1.0f) t = 1.0f;
+            if (t < 0.0f) t = 0.0f;
+
+            return a + ((b - a) * t);
+        }
     }
 }

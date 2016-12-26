@@ -1,0 +1,60 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using BehaviorDesigner.Runtime.Tasks.Movement;
+
+//スイッチを押すたびに島が回転します
+public class RotateIsland : MonoBehaviour
+{
+    [SerializeField]
+    float plusValue = 90.0f;
+    [SerializeField]
+    float rotateTime = 7.0f;
+
+    float currentRotateY = 0.0f;
+    float targetRotateY = 0.0f;
+
+    Coroutine coroutine;
+    bool isWorkCoroutine = false;
+
+    void Start()
+    {
+        GameManager.I.OnPushSwitch += () =>
+        {
+            if (isWorkCoroutine)
+            {
+                StopCoroutine(coroutine);
+                currentRotateY = transform.localEulerAngles.y;
+                targetRotateY = targetRotateY + plusValue;
+            }
+            else
+            {
+                currentRotateY = transform.localEulerAngles.y;
+                targetRotateY = currentRotateY + plusValue;
+            }
+            isWorkCoroutine = true;
+            coroutine = StartCoroutine("Rotate");
+        };
+    }
+
+    void Update()
+    {
+
+    }
+
+    IEnumerator Rotate()
+    {
+        Debug.Log("on rotate");
+        float t = 0.0f;
+        while (true)
+        {
+            t += Time.deltaTime;
+
+            Quaternion temp = Quaternion.Euler(0, MovementUtility.FloatLerp(currentRotateY, targetRotateY, t), 0);
+            transform.rotation = temp;
+            if (t > rotateTime) break;
+            yield return null;
+        }
+        isWorkCoroutine = false;
+    }
+}
