@@ -24,17 +24,28 @@ public class MyInputManager : BaseManager<MyInputManager>
         DontDestroyOnLoad(this.gameObject);
         for (int i = 0; i < currentState.Length; i++)
         {
-            currentState[i] = GamePad.GetState((GamePad.Index)i);
+            currentState[i] = GamePad.GetState((GamePad.Index)(i + 1));
         }
-        oldState = currentState;
-    }
 
-    public void Update()
-    {
-        oldState = currentState;
         for (int i = 0; i < currentState.Length; i++)
         {
-            currentState[i] = GamePad.GetState((GamePad.Index)i);
+            oldState[i] = currentState[i];
+        }
+    }
+    
+    public void Update()
+    {
+        for (int i = 0; i < currentState.Length; i++)
+        {
+            currentState[i] = GamePad.GetState((GamePad.Index)(i + 1));
+        }
+    }
+
+    void LateUpdate()
+    {
+        for (int i = 0; i < currentState.Length; i++)
+        {
+            oldState[i] = currentState[i];
         }
     }
 
@@ -94,18 +105,19 @@ public class MyInputManager : BaseManager<MyInputManager>
     {
         Vector2 stick,oldStick;
         float dead = 0.3f;
+        int i = (int)index - 1;
 
         if (direction >= StickDirection.RightStickRight)
         {
-            stick = currentState[(int)index].rightStickAxis;
-            oldStick = oldState[(int)index].rightStickAxis;
+            stick = currentState[i].rightStickAxis;
+            oldStick = oldState[i].rightStickAxis;
         }
         else
         {
-            stick = currentState[(int)index].LeftStickAxis;
-            oldStick = oldState[(int)index].LeftStickAxis;
+            stick = currentState[i].LeftStickAxis;
+            oldStick = oldState[i].LeftStickAxis;
         }
-        
+
         switch (direction)
         {
             case StickDirection.LeftStickRight:

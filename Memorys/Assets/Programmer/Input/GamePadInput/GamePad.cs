@@ -236,29 +236,29 @@ namespace GamepadInput
 
     }
 
-    public class GamepadState
+    public struct GamepadState
     {
-        public bool A = false;
-        public bool B = false;
-        public bool X = false;
-        public bool Y = false;
-        public bool Start = false;
-        public bool Back = false;
-        public bool Left = false;
-        public bool Right = false;
-        public bool Up = false;
-        public bool Down = false;
-        public bool LeftStick = false;
-        public bool RightStick = false;
-        public bool RightShoulder = false;
-        public bool LeftShoulder = false;
+        public bool A;
+        public bool B;
+        public bool X;
+        public bool Y;
+        public bool Start;
+        public bool Back;
+        public bool Left;
+        public bool Right;
+        public bool Up;
+        public bool Down;
+        public bool LeftStick;
+        public bool RightStick;
+        public bool RightShoulder;
+        public bool LeftShoulder;
 
-        public Vector2 LeftStickAxis = Vector2.zero;
-        public Vector2 rightStickAxis = Vector2.zero;
-        public Vector2 dPadAxis = Vector2.zero;
+        public Vector2 LeftStickAxis;
+        public Vector2 rightStickAxis;
+        public Vector2 dPadAxis;
 
-        public float LeftTrigger = 0;
-        public float RightTrigger = 0;
+        public float LeftTrigger;
+        public float RightTrigger;
 
     }
 
