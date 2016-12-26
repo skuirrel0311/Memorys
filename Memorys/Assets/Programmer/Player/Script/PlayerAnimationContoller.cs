@@ -16,6 +16,11 @@ public class PlayerAnimationContoller : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         controller = GetComponent<PlayerController>();
+
+        GameManager.I.m_GameEnd.OnGameOverCallBack += () =>
+        {
+            animator.SetTrigger("GameOver");
+        };
     }
 
     void Update()

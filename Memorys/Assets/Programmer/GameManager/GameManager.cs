@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public GameEnd m_GameEnd;
 
-    public bool IsPlayStop { get; private set; }
+    public bool IsPlayStop { get; set; }
 
     [SerializeField]
     private GameObject GameClearLogo = null;
@@ -60,13 +60,6 @@ public class GameManager : MonoBehaviour
         {
             GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
 
-        };
-
-        m_GameEnd.OnGameOverCallBack = () =>
-        {
-            GameClearLogo.GetComponent<UnityEngine.UI.Image>().color = Color.black;
-            GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
-            Debug.Log("GameeOverCallBack", this);
         };
 
         //ターゲットのオブジェクトを取得してポジションをセットする

@@ -19,6 +19,8 @@ public class SoundManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        AkSoundEngine.ExecuteActionOnEvent("BGM_Main1",AkActionOnEventType.AkActionOnEventType_Stop);
+        AkSoundEngine.ExecuteActionOnEvent("Babble",AkActionOnEventType.AkActionOnEventType_Stop);
         I = null;
     }
 }

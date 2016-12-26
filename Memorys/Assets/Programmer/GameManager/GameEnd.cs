@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.PostProcessing;
 
 public class GameEnd
 {
@@ -47,11 +48,7 @@ public class GameEnd
     {
         if (isGameEnd)
         {
-            if (MyInputManager.GetButtonDown(MyInputManager.Button.A))
-            {
-                //Time.timeScale = 1.0f;
-                SceneManager.LoadSceneAsync("StageSelect");
-            }
+            GameManager.I.IsPlayStop = true;
             return;
         }
         //ゲームがクリアされた
@@ -81,6 +78,7 @@ public class GameEnd
 
     public void GameClear()
     {
+        if (isGameEnd) return;
         isGameEnd = true;
         //Time.timeScale = 0.1f;
         if (OnGameClearCallBack != null)
@@ -89,10 +87,8 @@ public class GameEnd
 
     public void GameOver()
     {
+        if (isGameEnd) return;
         isGameEnd = true;
-        //Time.timeScale = 0.1f;
-        Debug.Log("GameOver");
-        TransitionManager.I.FadeOut();
         if (OnGameOverCallBack != null)
             OnGameOverCallBack();
     }
