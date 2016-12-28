@@ -26,20 +26,26 @@ public class InGameCanvasManager : MonoBehaviour
     {
 		if(MyInputManager.GetButtonDown(MyInputManager.Button.Start))
         {
-            if(!isPause)
-            {
-                isPause = true;
-                PauseObject.SetActive(true);
-                Time.timeScale = 0.0f;
-                GameManager.I.IsPlayStop = true;
-            }
-            else
-            {
-                isPause = false;
-                PauseObject.SetActive(false);
-                Time.timeScale = 1.0f;
-                GameManager.I.IsPlayStop = false;
-            }
+            Pause(!isPause);
         }
 	}
+
+    public void Pause(bool ispause)
+    {
+        isPause = ispause;
+        if (isPause)
+        {
+            isPause = true;
+            PauseObject.SetActive(true);
+            Time.timeScale = 0.0f;
+            GameManager.I.IsPlayStop = true;
+        }
+        else
+        {
+            isPause = false;
+            PauseObject.SetActive(false);
+            Time.timeScale = 1.0f;
+            GameManager.I.IsPlayStop = false;
+        }
+    }
 }
