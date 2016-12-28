@@ -20,31 +20,42 @@ public class SelectManager : MonoBehaviour
     private SelectManager m_selectManager;
     public int m_SelectNumber = 1;
     bool isInputAxis;
+
+    [SerializeField]
+    bool isR_L;
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         m_SelectNumber = 1;
         isInputAxis = false;
         m_Materials = m_BookModel.materials;
         m_PageMaterials = m_PageModel.materials;
+        isR_L = false;
         UpdateTexture();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void FixedUpdate()
     {
+        int hash = m_BookAnim.GetCurrentAnimatorStateInfo(0).shortNameHash;
+        if (!(hash == Animator.StringToHash("R_L") || hash == Animator.StringToHash("R_L")))
+        {
+            UpdateTexture();
+        }
+
         InputAxis();
         InputButtonA();
     }
 
     public void UpdateTexture()
     {
+        int hash = m_BookAnim.GetCurrentAnimatorStateInfo(0).shortNameHash;
         ChangeTexture(0, pages[m_SelectNumber - 1]);
         if (m_SelectNumber >= MaxStage) return;
         ChangeTexture(1, pages[m_SelectNumber]);
     }
 
-    void ChangeTexture(int index,Texture2D tex)
+    void ChangeTexture(int index, Texture2D tex)
     {
         m_Materials[index].mainTexture = tex;
 
@@ -65,7 +76,10 @@ public class SelectManager : MonoBehaviour
         if (isInputAxis) return;
         isInputAxis = true;
 
-        if (v > 0)
+        int hash = m_BookAnim.GetCurrentAnimatorStateInfo(0).shortNameHash;
+        if (hash != Animator.StringToHash("Idele")) return;
+
+            if (v > 0)
         {
             if (m_SelectNumber == 1) return;
             m_BookAnim.Play("L_R", 0);
@@ -75,14 +89,16 @@ public class SelectManager : MonoBehaviour
         else
         {
             if (m_SelectNumber == MaxStage) return;
-            m_BookAnim.Play("R_L", 0);
+            m_BookAnim.Play("R_L", 0, 0.0f);
             m_SelectNumber = (int)Mathf.Min((float)MaxStage, (float)m_SelectNumber + 1);
         }
+
+
     }
 
     private void InputButtonA()
     {
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
-        SceneManager.LoadSceneAsync("Stage"+(m_SelectNumber));
+        SceneManager.LoadSceneAsync("Stage" + (m_SelectNumber));
     }
 }
