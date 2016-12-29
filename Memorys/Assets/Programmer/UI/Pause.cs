@@ -16,6 +16,8 @@ public class Pause : MonoBehaviour
     RectTransform[] Pages;
     [SerializeField]
     InGameCanvasManager m_InGameManager;
+    [SerializeField]
+    GameObject HelpCanvas;
 
     Vector3[] Rotations= new Vector3[3];
 
@@ -37,6 +39,7 @@ public class Pause : MonoBehaviour
        
     }
     bool isCalc;
+    bool isHelp;
 
     //ButtonSelectの順にアサイン
     [SerializeField]
@@ -57,6 +60,7 @@ public class Pause : MonoBehaviour
              Pages[i].eulerAngles = Rotations[i];
         }
         isRota = true;
+        isHelp = false;
         Timer = 0.0f;
         m_ButtonSelect = ButtonSelect.CONTINUE;
     }
@@ -70,6 +74,15 @@ public class Pause : MonoBehaviour
 	void Update ()
     {
         PageRotation();
+        if (isHelp)
+        {
+            if (MyInputManager.GetButtonDown(MyInputManager.Button.B))
+            {
+                HelpCanvas.SetActive(false);
+                isHelp = false;
+            }
+            return;
+        }
         ButtonUpdate();
         PushButton();
 	}
@@ -136,23 +149,35 @@ public class Pause : MonoBehaviour
 
     void PushButton()
     {
+
+
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
 
         switch (m_ButtonSelect)
         {
             case ButtonSelect.CONTINUE:
-                m_InGameManager.Pause(false);
-                break;
+                {
+                    m_InGameManager.Pause(false);
+                    break;
+                }
             case ButtonSelect.HELP:
-                break;
+                {
+                    isHelp = true;
+                    HelpCanvas.SetActive(true);
+                    break;
+                }
             case ButtonSelect.TITLE:
-                m_InGameManager.Pause(false);
-                SceneManager.LoadSceneAsync("Title");
-                break;
+                {
+                    m_InGameManager.Pause(false);
+                    SceneManager.LoadSceneAsync("Title");
+                    break;
+                }
             case ButtonSelect.RETRY:
-                m_InGameManager.Pause(false);
-                SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
-                break;
+                {
+                    m_InGameManager.Pause(false);
+                    SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+                    break;
+                }
         }
     }
 }
