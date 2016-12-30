@@ -96,8 +96,9 @@ public class FloorTransition : MonoBehaviour
     private IEnumerator FloorMove()
     {
         float t = 0.0f;
-        Vector3 startPos = transform.position;
-        Vector3 targetPos = GetTargetPosition(m_FloorState, startPos);
+        float startY = transform.position.y;
+        float targetY = GetTargetPosition(m_FloorState, transform.position).y;
+        float currentY = startY;
 
         transform.DOShakePosition(2.0f, 0.025f, 25, 90.0f, false, false);
         yield return new WaitForSeconds(2.0f);
@@ -105,7 +106,8 @@ public class FloorTransition : MonoBehaviour
         while (true)
         {
             t += Time.deltaTime;
-            transform.position = Vector3.Lerp(startPos, targetPos, t);
+            currentY = BehaviorDesigner.Runtime.Tasks.Movement.MovementUtility.FloatLerp(startY, targetY, t);
+            transform.position = new Vector3(transform.position.x, currentY, transform.position.z);
             if (t > 1.0f) break;
             yield return null;
         }
