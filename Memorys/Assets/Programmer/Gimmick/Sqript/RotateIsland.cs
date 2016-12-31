@@ -51,9 +51,8 @@ public class RotateIsland : MonoBehaviour
         while (true)
         {
             t += Time.deltaTime;
-
-            Quaternion temp = Quaternion.Euler(0, MovementUtility.FloatLerp(currentRotateY, targetRotateY, t / rotateTime), 0);
-            transform.rotation = temp;
+            
+            transform.rotation = Quaternion.Euler(0, MovementUtility.FloatLerp(currentRotateY, targetRotateY, t / rotateTime), 0);
             if (t > rotateTime) break;
             yield return null;
         }
