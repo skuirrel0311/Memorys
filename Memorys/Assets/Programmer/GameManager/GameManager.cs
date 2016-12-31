@@ -33,13 +33,12 @@ public class GameManager : MonoBehaviour
 
     public BehaviorTree[] enemies;
     private AtScreenEdgeMessage[] directionMessages;
-    
+
     private GameObject floorObj = null;
 
     //指定されたTransformの座標を起点にしてゴール扉に向けて床を置いていく
     [SerializeField]
-    private Transform goalOrigin = null;
-    private GameObject goalEffect = null;
+    private GameObject toGoalFloor = null;
 
     [SerializeField]
     public bool OneByOne = true;
@@ -72,7 +71,7 @@ public class GameManager : MonoBehaviour
 
         if (m_TargetPoints != null)
         {
-            if(OneByOne)
+            if (OneByOne)
                 SetTargetRandom();
             else
                 SetTarget();
@@ -89,7 +88,6 @@ public class GameManager : MonoBehaviour
         IsPlayStop = false;
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
-        goalEffect = Resources.Load("Particle/GoalEffect") as GameObject;
         floorObj = Resources.Load("Prefabs/FloorObject") as GameObject;
 
 
@@ -111,11 +109,11 @@ public class GameManager : MonoBehaviour
         OnPushSwitch += () =>
         {
             m_GameEnd.DestroyCancel();
-            PutFloor();
             GenerateEnemy();
             //クリア条件を満たしている
             if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
             {
+                toGoalFloor.SetActive(true);
                 NotificationSystem.I.Indication("脱出可能になった！");
                 if (OnPossibleEscape != null)
                     OnPossibleEscape();
@@ -306,7 +304,7 @@ public class GameManager : MonoBehaviour
 
     public void PushSwitch()
     {
-        if(OnPushSwitch != null)
+        if (OnPushSwitch != null)
         {
             OnPushSwitch();
         }
@@ -321,25 +319,6 @@ public class GameManager : MonoBehaviour
             {
                 enemies[i].GetComponent<TotemPaul>().StartUp();
             }
-        }
-    }
-
-    private void PutFloor()
-    {
-        if (floorObj == null) return;
-        //床を置く座標を計算で求める
-        Vector3 floorPosition = goalOrigin.position + (Vector3.back * ((m_GameEnd.m_destoryCancelCount) * 3.4f));
-
-        Instantiate(floorObj, floorPosition, Quaternion.identity);
-
-        if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
-        {
-            //最後の床と同時にゴールを生成する。
-            Vector3 offset = new Vector3(1.0f, 1.0f, -2.0f);
-
-            Vector3 effectPosition = floorPosition + offset;
-
-            Instantiate(goalEffect, effectPosition, Quaternion.identity);
         }
     }
 }
