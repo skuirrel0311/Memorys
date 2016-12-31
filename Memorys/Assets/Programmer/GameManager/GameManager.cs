@@ -4,6 +4,7 @@ using System.Collections;
 using DG.Tweening;
 using BehaviorDesigner.Runtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -60,8 +61,8 @@ public class GameManager : MonoBehaviour
 
         m_GameEnd.OnGameClearCallBack = () =>
         {
-            GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
-
+            //GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
+            SceneManager.LoadSceneAsync("Result");
         };
 
         //ターゲットのオブジェクトを取得してポジションをセットする
@@ -332,14 +333,14 @@ public class GameManager : MonoBehaviour
 
         Instantiate(floorObj, floorPosition, Quaternion.identity);
 
-        if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
-        {
-            //最後の床と同時にゴールを生成する。
-            Vector3 offset = new Vector3(1.0f, 1.0f, -2.0f);
+        //if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
+        //{
+        //    //最後の床と同時にゴールを生成する。
+        //    Vector3 offset = new Vector3(1.0f, 1.0f, -2.0f);
 
-            Vector3 effectPosition = floorPosition + offset;
+        //    Vector3 effectPosition = floorPosition + offset;
 
-            Instantiate(goalEffect, effectPosition, Quaternion.identity);
-        }
+        //    Instantiate(goalEffect, effectPosition, Quaternion.identity);
+        //}
     }
 }
