@@ -54,7 +54,6 @@ public class GameEnd
         //ゲームがクリアされた
         if (m_destoryCancelCount >= c_MaxDestroyCalcel)
         {
-            // GameClear();
         }
     }
 

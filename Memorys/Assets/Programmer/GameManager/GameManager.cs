@@ -4,6 +4,7 @@ using System.Collections;
 using DG.Tweening;
 using BehaviorDesigner.Runtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,10 +34,10 @@ public class GameManager : MonoBehaviour
 
     public BehaviorTree[] enemies;
     private AtScreenEdgeMessage[] directionMessages;
-
+    
     private GameObject floorObj = null;
 
-    //指定されたTransformの座標を起点にしてゴール扉に向けて床を置いていく
+    //ゴールまでの床
     [SerializeField]
     private GameObject toGoalFloor = null;
 
@@ -59,8 +60,8 @@ public class GameManager : MonoBehaviour
 
         m_GameEnd.OnGameClearCallBack = () =>
         {
-            GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
-
+            //GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
+            SceneManager.LoadSceneAsync("Result");
         };
 
         //ターゲットのオブジェクトを取得してポジションをセットする
@@ -71,7 +72,7 @@ public class GameManager : MonoBehaviour
 
         if (m_TargetPoints != null)
         {
-            if (OneByOne)
+            if(OneByOne)
                 SetTargetRandom();
             else
                 SetTarget();
@@ -85,7 +86,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // I = this;
-        IsPlayStop = false;
+        IsPlayStop = true;
+        StartCoroutine(GameStartWait(2));
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
         floorObj = Resources.Load("Prefabs/FloorObject") as GameObject;
@@ -104,6 +106,12 @@ public class GameManager : MonoBehaviour
         InitializeEnemy();
     }
 
+
+    IEnumerator GameStartWait(float wait)
+    {
+       yield  return new WaitForSeconds(wait);
+        IsPlayStop = false;
+    }
     private void SetEventPushSwitch()
     {
         OnPushSwitch += () =>
@@ -304,7 +312,7 @@ public class GameManager : MonoBehaviour
 
     public void PushSwitch()
     {
-        if (OnPushSwitch != null)
+        if(OnPushSwitch != null)
         {
             OnPushSwitch();
         }
