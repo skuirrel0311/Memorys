@@ -15,13 +15,21 @@ public class TopSceneController : MonoBehaviour
     float m_Timer;
 
 
-    
+    static bool isAwake=false;
 
     // Use this for initialization
     void Start()
     {
         m_sceneManager = GetComponent<MySceneManager>();
-        m_MovieOnUI.Play();
+        if (!isAwake)
+        {
+            m_MovieOnUI.Play();
+            isAwake = true;
+        }
+        else
+        {
+            m_MovieOnUI.gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame

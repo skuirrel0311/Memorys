@@ -45,9 +45,13 @@ public class menuSceneController : MonoBehaviour
         {
             m_sceneManager.NextScene();
         }
-        else
+        else if (m_SelectState == SelectState.HELP)
         {
-
+            m_sceneManager.SceneLoad("Help");
+        }
+        else if (m_SelectState== SelectState.EXIT)
+        {
+            Application.Quit();
         }
 
     }
@@ -55,6 +59,7 @@ public class menuSceneController : MonoBehaviour
     private void Push_B_Button()
     {
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.B)) return;
+        m_sceneManager.SceneLoad("Title");
     }
 
     private void InputAxis()

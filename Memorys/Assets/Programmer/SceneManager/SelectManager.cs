@@ -24,6 +24,8 @@ public class SelectManager : MonoBehaviour
 
     [SerializeField]
     bool isR_L;
+
+    MySceneManager m_mySceneManager;
     // Use this for initialization
     void Start()
     {
@@ -36,6 +38,7 @@ public class SelectManager : MonoBehaviour
         isR_L = false;
         UpdateTexture();
         c_MaxStage = MaxStage;
+        m_mySceneManager = GetComponent<MySceneManager>();
     }
 
     // Update is called once per frame
@@ -49,6 +52,15 @@ public class SelectManager : MonoBehaviour
 
         InputAxis();
         InputButtonA();
+        
+    }
+
+    private void Update()
+    {
+        if(MyInputManager.GetButtonDown(MyInputManager.Button.B))
+        {
+            m_mySceneManager.SceneLoad("menu");
+        }
     }
 
     public void UpdateTexture()

@@ -29,4 +29,9 @@ public class MySceneManager : MonoBehaviour {
     {
         SceneManager.LoadScene(NextSceneName);
     }
+
+    public void SceneLoad(string sceneName)
+    {
+        SceneManager.LoadSceneAsync(sceneName);
+    }
 }
