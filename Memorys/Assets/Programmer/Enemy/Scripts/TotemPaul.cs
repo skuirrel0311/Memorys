@@ -128,8 +128,13 @@ public class TotemPaul : MonoBehaviour
 
     public void QuickStartUp()
     {
-        GetComponent<BehaviorTree>().enabled = true;
-        transform.GetChild(1).gameObject.SetActive(true);
+        BehaviorTree tree = GetComponent<BehaviorTree>();
+        tree.enabled = true;
+        
+        Light light = transform.GetChild(1).GetComponent<Light>();
+        light.gameObject.SetActive(true);
+        light.spotAngle = (float)tree.GetVariable("ViewAngle").GetValue();
+        light.range = (float)tree.GetVariable("ViewDistance").GetValue();
 
         Material[] mats = GetComponent<Renderer>().materials;
         for (int i = 0; i < mats.Length; i++)
