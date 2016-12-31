@@ -87,7 +87,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // I = this;
-        IsPlayStop = false;
+        IsPlayStop = true;
+        StartCoroutine(GameStartWait(2));
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
         goalEffect = Resources.Load("Particle/GoalEffect") as GameObject;
@@ -107,6 +108,12 @@ public class GameManager : MonoBehaviour
         InitializeEnemy();
     }
 
+
+    IEnumerator GameStartWait(float wait)
+    {
+       yield  return new WaitForSeconds(wait);
+        IsPlayStop = false;
+    }
     private void SetEventPushSwitch()
     {
         OnPushSwitch += () =>

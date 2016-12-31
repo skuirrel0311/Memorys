@@ -7,8 +7,8 @@ public class CameraContoller : MonoBehaviour
 {
     [SerializeField]
     public Transform targetObject = null;
-    [SerializeField]
-    float distance = 7.0f;    //カメラとターゲットの距離
+
+    float distance = 19.0f;    //カメラとターゲットの距離
     [SerializeField]
     float rotationSpeedX = 150.0f;
     [SerializeField]
@@ -63,9 +63,15 @@ public class CameraContoller : MonoBehaviour
     {
         if (targetObject == null) return;
         
+        if(distance>=5)
+        {
+            distance -= Time.deltaTime*7.0f;
+        }
+
         if (!IsWork) return;
         //右スティックで回転
         Vector2 rightStick = GetInputVector();
+        if (GameManager.I.IsPlayStop) rightStick = Vector2.zero;
         longitude += rightStick.x * rotationSpeedX * Time.deltaTime;
         // - はお好み
         latitude -= rightStick.y * rotationSpeedY * Time.deltaTime;
