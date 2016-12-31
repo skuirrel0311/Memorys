@@ -1,17 +1,17 @@
-﻿using UnityEngine;
-using DG.Tweening;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
-public class menuSceneController : MonoBehaviour
-{
+public class ResultManager : MonoBehaviour {
 
     MySceneManager m_sceneManager;
     [SerializeField]
     GameObject select;
     enum SelectState
     {
-        STAGE, HELP,EXIT,INDEX
+        SELECT, NEXT, INDEX
     }
 
     SelectState m_SelectState;
@@ -25,7 +25,7 @@ public class menuSceneController : MonoBehaviour
     void Start()
     {
         m_sceneManager = GetComponent<MySceneManager>();
-        m_SelectState = SelectState.STAGE;
+        m_SelectState = SelectState.SELECT;
         m_SelectChild = select.GetComponentsInChildren<Image>();
         SelectImageChange();
     }
@@ -34,51 +34,49 @@ public class menuSceneController : MonoBehaviour
     void Update()
     {
         Push_A_Button();
-        Push_B_Button();
         InputAxis();
 
     }
     private void Push_A_Button()
     {
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
-        if (m_SelectState == SelectState.STAGE)
+        if (m_SelectState == SelectState.SELECT)
         {
             m_sceneManager.NextScene();
         }
         else
         {
-
+            int num = PlayerPrefs.GetInt("StageNum");
+            num++;
+            PlayerPrefs.SetInt("StageNum",num);
+            PlayerPrefs.Save();
+            SceneManager.LoadSceneAsync("stage"+num);
         }
 
-    }
-
-    private void Push_B_Button()
-    {
-        if (!MyInputManager.GetButtonDown(MyInputManager.Button.B)) return;
     }
 
     private void InputAxis()
     {
-        if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickUp))
+        if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickLeft))
         {
             m_SelectState = (SelectState)Mathf.Max(0, (float)m_SelectState - 1);
             SelectImageChange();
         }
-        else if(MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickDown))
+        else if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickRight))
         {
-            m_SelectState = (SelectState)Mathf.Min((float)SelectState.INDEX-1, (float)m_SelectState + 1);
+            m_SelectState = (SelectState)Mathf.Min((float)SelectState.INDEX - 1, (float)m_SelectState + 1);
             SelectImageChange();
         }
     }
 
     private void SelectImageChange()
     {
-        for(int i= 0;i< m_SelectChild.Length;i++)
+        for (int i = 0; i < m_SelectChild.Length; i++)
         {
-            if(i==(int)m_SelectState)
+            if (i == (int)m_SelectState)
             {
                 m_SelectChild[i].color = Color.white;
-                m_CousorImage.anchoredPosition = m_SelectChild[i].GetComponent<RectTransform>().anchoredPosition+Vector2.right*-50.0f;
+                m_CousorImage.anchoredPosition = m_SelectChild[i].GetComponent<RectTransform>().anchoredPosition + Vector2.right * -50.0f;
             }
             else
             {

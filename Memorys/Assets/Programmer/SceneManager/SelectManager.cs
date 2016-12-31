@@ -4,6 +4,7 @@ using System.Collections;
 
 public class SelectManager : MonoBehaviour
 {
+    public static int c_MaxStage =10;
     public Animator m_BookAnim;
     [SerializeField]
     int MaxStage = 1;
@@ -26,12 +27,15 @@ public class SelectManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        PlayerPrefs.SetInt("StageNum",1);
+        PlayerPrefs.Save();
         m_SelectNumber = 1;
         isInputAxis = false;
         m_Materials = m_BookModel.materials;
         m_PageMaterials = m_PageModel.materials;
         isR_L = false;
         UpdateTexture();
+        c_MaxStage = MaxStage;
     }
 
     // Update is called once per frame
@@ -99,6 +103,8 @@ public class SelectManager : MonoBehaviour
     private void InputButtonA()
     {
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
+        PlayerPrefs.SetInt("StageNum",m_SelectNumber);
+        PlayerPrefs.Save();
         SceneManager.LoadSceneAsync("Stage" + (m_SelectNumber));
     }
 }
