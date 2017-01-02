@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,15 +7,16 @@ public class CameraManager : MonoBehaviour
 {
     public enum CutMode
     {
-        Transition,Cut
+        Transition, Cut
     }
 
     public static CameraManager I;
+
     /// <summary>
     /// メインカメラは含まれない
     /// </summary>
     [SerializeField]
-    Camera[] m_Cameras;
+    public Camera[] m_Cameras;
 
     [SerializeField]
     float TransitionTime = 0.5f;
@@ -33,56 +35,57 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    public void CameraChange(int index, float duration = 1.0f,CutMode cutMode = CutMode.Transition)
+    public void CameraChange(int index, float duration = 1.0f, bool FadeIn = true, bool FadeOut = true, Action CallBack = null)
     {
+
         if (index >= m_Cameras.Length) return;
-        if (cutMode == CutMode.Transition)
-        {
-            StartCoroutine(EnableTransitionCamera(m_Cameras[index], duration));
-        }
-        else if(cutMode==CutMode.Cut)
-        {
-            StartCoroutine(EnableCutCamera(m_Cameras[index], duration));
-        }
+        StartCoroutine(EnableTransitionCamera(m_Cameras[index], duration, FadeIn, FadeOut, CallBack));
     }
 
-    public void CameraChange(string name, float duration = 1.0f, CutMode cutMode = CutMode.Transition)
+    public void CameraChange(string name, float duration = 1.0f, bool FadeIn = true, bool FadeOut = true, Action CallBack = null)
     {
         for (int i = 0; i < m_Cameras.Length; i++)
         {
             if (!m_Cameras[i].gameObject.name.Equals(name)) continue;
-            if (cutMode == CutMode.Transition)
-            {
-                StartCoroutine(EnableTransitionCamera(m_Cameras[i], duration));
-            }
-            else if (cutMode == CutMode.Cut)
-            {
-                StartCoroutine(EnableCutCamera(m_Cameras[i], duration));
-            }
+
+            StartCoroutine(EnableTransitionCamera(m_Cameras[i], duration, FadeIn, FadeOut, CallBack));
+
             break;
         }
     }
 
-    IEnumerator EnableTransitionCamera(Camera camera, float wait)
+    IEnumerator EnableTransitionCamera(Camera camera, float wait, bool FadeIn, bool FadeOut, Action action)
     {
         Debug.Log("Callcut");
-        TransitionManager.I.FadeOut(TransitionTime);
-        yield return new WaitForSeconds(TransitionTime+0.1f);
-        camera.enabled = true;
-        TransitionManager.I.FadeIn(TransitionTime);
+        //GameManager.I.IsPlayStop = true;
+        if (FadeIn)
+        {
+            TransitionManager.I.FadeOut(TransitionTime);
+            yield return new WaitForSeconds(TransitionTime + 0.1f);
+            camera.enabled = true;
+            TransitionManager.I.FadeIn(TransitionTime);
+        }
+        else
+        {
+            camera.enabled = true;
+        }
         yield return new WaitForSeconds(wait);
-        TransitionManager.I.FadeOut(TransitionTime);
-        yield return new WaitForSeconds(TransitionTime + 0.1f);
-        camera.enabled = false;
-        TransitionManager.I.FadeIn(TransitionTime);
+        if (FadeOut)
+        {
+            TransitionManager.I.FadeOut(TransitionTime);
+            yield return new WaitForSeconds(TransitionTime + 0.1f);
+            camera.enabled = false;
+            TransitionManager.I.FadeIn(TransitionTime);
+        }
+        else
+        {
+            camera.enabled = false;
+        }
+        if (action != null)
+            action();
+        //GameManager.I.IsPlayStop = true;
     }
 
-    IEnumerator EnableCutCamera(Camera camera, float wait)
-    {
-        camera.enabled = true;
-        yield return new WaitForSeconds(wait);
-        camera.enabled = false;
-    }
 
     void OnDestroy()
     {

@@ -8,7 +8,7 @@ public class CameraContoller : MonoBehaviour
     [SerializeField]
     public Transform targetObject = null;
 
-    float distance = 19.0f;    //カメラとターゲットの距離
+    float distance = 33.0f;    //カメラとターゲットの距離
     [SerializeField]
     float rotationSpeedX = 150.0f;
     [SerializeField]
