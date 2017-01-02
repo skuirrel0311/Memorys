@@ -14,6 +14,7 @@ public class RotateIsland : MonoBehaviour
     float currentRotateY = 0.0f;
     float targetRotateY = 0.0f;
 
+    Rigidbody body;
     Coroutine coroutine;
     bool isWorkCoroutine = false;
 
@@ -36,6 +37,9 @@ public class RotateIsland : MonoBehaviour
                 targetRotateY = currentRotateY + plusValue;
             }
             isWorkCoroutine = true;
+            gameObject.AddComponent<Rigidbody>();
+            body = GetComponent<Rigidbody>();
+            body.isKinematic = true;
             coroutine = StartCoroutine("Rotate");
         };
     }
@@ -57,6 +61,7 @@ public class RotateIsland : MonoBehaviour
             yield return null;
         }
         isWorkCoroutine = false;
+        Destroy(body);
         if (onPlayer)
         {
             player.parent = null;
