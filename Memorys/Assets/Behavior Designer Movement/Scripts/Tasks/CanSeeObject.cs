@@ -31,6 +31,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         [Tooltip("The object that is within sight")]
         public SharedGameObject returnedObject;
         public SharedGameObject eye;
+        public SharedFloat fieldOfViewAngleY = 60.0f;
 
         public bool IsViewSight = false;
         public bool IsViewLine = false;
@@ -40,7 +41,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             if (!string.IsNullOrEmpty(targetTag.Value))
                 targetObject.SetValue(GameObject.FindGameObjectWithTag(targetTag.Value));
 
-            if(eye.Value == null)
+            if (eye.Value == null)
             {
                 eye.SetValue(gameObject);
             }
@@ -76,7 +77,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                 }
                 else
                 { // If the target is not null then determine if that object is within sight
-                    returnedObject.Value = MovementUtility.WithinSight(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, targetObject.Value, targetOffset.Value, ignoreLayerMask);
+                    returnedObject.Value = MovementUtility.WithinSight(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, targetObject.Value, targetOffset.Value, ignoreLayerMask, fieldOfViewAngleY.Value);
                 }
             }
             if (returnedObject.Value != null)
@@ -102,17 +103,16 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         // Draw the line of sight representation within the scene window
         public override void OnDrawGizmos()
         {
-            if (eye.Value == null) return;
-            if (IsViewSight)
-                MovementUtility.DrawLineOfSight(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, angleOffset2D.Value, viewDistance.Value, usePhysics2D);
+            //if (eye.Value == null) return;
+            //if (IsViewSight)
+            //    MovementUtility.DrawLineOfSight(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, angleOffset2D.Value, viewDistance.Value, usePhysics2D);
 
-            if (IsViewLine)
-            {
-                if (targetObject.Value == null) return;
-                
-                Gizmos.DrawLine(eye.Value.transform.position + offset.Value, targetObject.Value.transform.position + targetOffset.Value);
-            }
+            //if (IsViewLine)
+            //{
+            //    if (targetObject.Value == null) return;
 
+            //    Gizmos.DrawLine(eye.Value.transform.position + offset.Value, targetObject.Value.transform.position + targetOffset.Value);
+            //}
         }
     }
 }

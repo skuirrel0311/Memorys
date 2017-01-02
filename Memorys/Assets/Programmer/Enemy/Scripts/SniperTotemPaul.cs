@@ -75,11 +75,7 @@ public class SniperTotemPaul : TotemPaul
 
     void Charge(Vector3 target)
     {
-        Ray shotRay;
-        if (IsWarning)
-            shotRay = GetToPlayerRay(target);
-        else
-            shotRay = GetFrontRay(target);
+        Ray shotRay = GetToPlayerRay(target);
 
         RaycastHit hit;
         lineRenderer.SetPosition(0, shotRay.origin);

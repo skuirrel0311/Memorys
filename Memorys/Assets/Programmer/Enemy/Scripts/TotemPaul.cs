@@ -24,6 +24,8 @@ public class TotemPaul : MonoBehaviour
     [SerializeField]
     bool IsAwakeActive = false;
 
+    public bool IsStop = false;
+
     public virtual void Start()
     {
         chargeEffect = transform.FindChild("Charge/ball").GetComponent<ParticleSystem>();
@@ -50,6 +52,23 @@ public class TotemPaul : MonoBehaviour
         //起動していなかったら
         if (!GetComponent<BehaviorTree>().enabled) return;
 
+        if(IsStop)
+        {
+            if(!GameManager.I.IsPlayStop)
+            {
+                Debug.Log("enable");
+                GetComponent<BehaviorTree>().EnableBehavior();
+                IsStop = false;
+            }
+        }
+        else if(GameManager.I.IsPlayStop)
+        {
+            Debug.Log("disable");
+            GetComponent<BehaviorTree>().DisableBehavior(true);
+            IsStop = true;
+            return;
+        }
+
         if ((bool)GetComponent<BehaviorTree>().GetVariable("IsSeePlayer").GetValue())
             Alertness += Time.deltaTime * 3;
         else
@@ -72,7 +91,6 @@ public class TotemPaul : MonoBehaviour
         {
             RotateTowards(playerNeck.position);
         }
-
     }
 
     protected virtual Vector3 GetTargetPosition()
@@ -135,6 +153,9 @@ public class TotemPaul : MonoBehaviour
         light.gameObject.SetActive(true);
         light.spotAngle = (float)tree.GetVariable("ViewAngle").GetValue();
         light.range = (float)tree.GetVariable("ViewDistance").GetValue();
+        float angleY = (float)tree.GetVariable("ViewAngleY").GetValue() - light.spotAngle;
+        angleY = (angleY * 0.5f) - (30.0f * (1 - (angleY / 90.0f)));
+        light.transform.localRotation = Quaternion.Euler(new Vector3(angleY, 0, 0));
 
         Material[] mats = GetComponent<Renderer>().materials;
         for (int i = 0; i < mats.Length; i++)

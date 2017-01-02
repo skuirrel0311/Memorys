@@ -9,29 +9,29 @@ public class LookAround : Action
     public SharedFloat maxRotateY;
 
     public SharedFloat rotateSpeed;
-
-    bool isReturn = false;
+    
     float currentRotateY;
+
+    private enum ComparisonOperation { Greater, Less}
+    ComparisonOperation operation;
 
     public override void OnStart()
     {
         currentRotateY = transform.localEulerAngles.y;
+        if (currentRotateY > maxRotateY.Value) operation = ComparisonOperation.Greater;
+        if (currentRotateY < minRotateY.Value) operation = ComparisonOperation.Less;
     }
 
     public override TaskStatus OnUpdate()
     {
         //行きは増える帰りは減る
-        if (isReturn)
+        if (operation == ComparisonOperation.Greater)
             currentRotateY -= Time.deltaTime * rotateSpeed.Value;
         else
             currentRotateY += Time.deltaTime * rotateSpeed.Value;
 
-        if (currentRotateY > maxRotateY.Value || currentRotateY < minRotateY.Value)
-        {
-            isReturn = !isReturn;
-        }
-
-        currentRotateY = Mathf.Clamp(currentRotateY, minRotateY.Value, maxRotateY.Value);
+        if (currentRotateY > maxRotateY.Value) operation = ComparisonOperation.Greater;
+        if (currentRotateY < minRotateY.Value) operation = ComparisonOperation.Less;
 
         transform.localRotation = Quaternion.Euler(0,currentRotateY,0);
         return TaskStatus.Running;
