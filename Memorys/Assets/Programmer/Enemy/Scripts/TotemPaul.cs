@@ -56,14 +56,12 @@ public class TotemPaul : MonoBehaviour
         {
             if(!GameManager.I.IsPlayStop)
             {
-                Debug.Log("enable");
                 GetComponent<BehaviorTree>().EnableBehavior();
                 IsStop = false;
             }
         }
         else if(GameManager.I.IsPlayStop)
         {
-            Debug.Log("disable");
             GetComponent<BehaviorTree>().DisableBehavior(true);
             IsStop = true;
             return;
