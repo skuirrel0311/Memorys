@@ -2,39 +2,52 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviorDesigner.Runtime;
+using BehaviorDesigner.Runtime.Tasks.Movement;
 
 public class SniperTotemPaul : TotemPaul
 {
     [SerializeField]
-    GameObject hitEffect = null;
+    GameObject playerHitEffect = null;
+    [SerializeField]
+    GameObject objectHitEffect = null;
 
     GameObject chargeEndEffect;
 
     LineRenderer lineRenderer;
     public float range = 50.0f;
-    
+
 
     public override void Start()
     {
         base.Start();
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.enabled = false;
+
+        ParticleSystem thunderEffect = chargeEffect.transform.GetChild(0).GetComponent<ParticleSystem>();
+        float chargeTime = (float)GetComponent<BehaviorTree>().GetVariable("chargeTime").GetValue();
+
+        chargeTime = 3.5f / chargeTime;
+
+        var module = chargeEffect.main;
+        module.simulationSpeed = chargeTime;
+        module = thunderEffect.main;
+        module.simulationSpeed = chargeTime;
     }
 
     //攻撃
     public void Attack(float intervalTime, float chargeTime)
     {
         targetPosition = playerNeck.position;
-        StartCoroutine(Attacking(intervalTime,chargeTime));
+        StartCoroutine(Attacking(intervalTime, chargeTime));
     }
 
     IEnumerator Attacking(float intervalTime, float chargeTime)
     {
         chargeEffect.gameObject.SetActive(true);
-        chargeEffect.Play(true);
 
+        chargeEffect.Play(true);
         lineRenderer.enabled = true;
-        
+
         //チャージ開始
         float time = 0.0f;
         while (true)
@@ -47,13 +60,14 @@ public class SniperTotemPaul : TotemPaul
             yield return null;
         }
 
+        Debug.Log("end charge");
         //チャージ終了
         lineRenderer.enabled = false;
 
         //発射
         Vector3 velocity;
         GameObject bullet = Instantiate(shotEffect, chargeEffect.transform.position, chargeEffect.transform.rotation);
-        Shot(GetTargetPosition(),out velocity);
+        Shot(GetTargetPosition(), out velocity);
 
         int t = 2;
         velocity = velocity / t;
@@ -94,7 +108,7 @@ public class SniperTotemPaul : TotemPaul
     {
         Ray shotRay = new Ray();
         shotRay.origin = chargeEffect.transform.position;
-        shotRay.direction = target  - shotRay.origin;
+        shotRay.direction = target - shotRay.origin;
 
         float y = shotRay.direction.y;
         shotRay.direction = transform.forward * shotRay.direction.magnitude;
@@ -108,21 +122,29 @@ public class SniperTotemPaul : TotemPaul
         return new Ray(chargeEffect.transform.position, target - chargeEffect.transform.position);
     }
 
-    protected void Shot(Vector3 target,out Vector3 velocity)
+    protected void Shot(Vector3 target, out Vector3 velocity)
     {
         Ray ray = new Ray(chargeEffect.transform.position, (target - chargeEffect.transform.position));
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit,range))
+        if (Physics.Raycast(ray, out hit, range))
         {
             //当たった場所にエフェクトを出す
             velocity = hit.point - ray.origin;
+            float rotateY = Mathf.Atan2(hit.normal.x, hit.normal.z) * Mathf.Rad2Deg + 180.0f;
 
-            Quaternion temp = Quaternion.Euler(new Vector3(90.0f, Mathf.Atan2(velocity.normalized.y, velocity.normalized.x) * Mathf.Rad2Deg, 0.0f));
-            Instantiate(hitEffect, hit.point, temp);
-
-            if(hit.transform.tag == "Player")
+            if (hit.transform.tag == "Player")
+            {
+                Quaternion temp = Quaternion.Euler(new Vector3(0.0f, rotateY, 0.0f));
+                Instantiate(playerHitEffect, hit.point, temp);
                 hit.transform.GetComponent<PlayerOverlap>().Damage(1);
+            }
+            else
+            {
+                float rotateX = MovementUtility.GetAngleY(Vector3.zero, hit.normal);
+                Quaternion temp = Quaternion.Euler(new Vector3(-rotateX, rotateY, 0.0f));
+                Instantiate(objectHitEffect, hit.point + (ray.direction * -0.1f), temp);
+            }
         }
         else
         {
