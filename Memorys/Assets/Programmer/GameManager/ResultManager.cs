@@ -21,6 +21,12 @@ public class ResultManager : MonoBehaviour {
     [SerializeField]
     RectTransform m_CousorImage;
 
+    [SerializeField]
+    Text m_ClearTime;
+
+    [SerializeField]
+    Text m_BestTime;
+
     // Use this for initialization
     void Start()
     {
@@ -28,6 +34,13 @@ public class ResultManager : MonoBehaviour {
         m_SelectState = SelectState.SELECT;
         m_SelectChild = select.GetComponentsInChildren<Image>();
         SelectImageChange();
+
+        float currntTime = PlayerPrefsManager.I.GetCurrentClearTime();
+        float bestTime = PlayerPrefsManager.I.GetClearTime(PlayerPrefsManager.I.GetStageNum());
+        bestTime = Mathf.Min(currntTime,bestTime);
+
+        m_ClearTime.text = currntTime.ToString();
+        m_BestTime.text = bestTime.ToString();
     }
 
     // Update is called once per frame
