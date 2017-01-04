@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.PostProcessing;
 
 public class PlayerSixthSense : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class PlayerSixthSense : MonoBehaviour
         hasSense = (timer == startSenseTime);
 
 
-        //UpdateLight();
+        UpdateLight();
 
         oldHasSense = hasSense;
 
@@ -77,47 +78,41 @@ public class PlayerSixthSense : MonoBehaviour
         if (hasSense == true && oldHasSense == false)
         {
             IsWorkingCoroutine = true;
-            //coroutine = StartCoroutine(SetLightSettings(Color.white, 5.0f, 0.3f, 0.0f));
+            coroutine = StartCoroutine(SetLightSettings(5.0f,Color.white, 5.0f, 0.5f, 0.5f));
         }
 
         if (hasSense == false && oldHasSense == true)
         {
             IsWorkingCoroutine = true;
-            //coroutine = StartCoroutine(SetLightSettings(Color.white, 1.0f, 1.0f, 1.0f));
+            coroutine = StartCoroutine(SetLightSettings(1.0f,Color.white, 1.0f, 1.0f, 1.0f));
         }
     }
 
-    IEnumerator SetLightSettings(Color targetColor, float targetIntensity, float targetAmbientIntensity, float targetDirectionalIntensity)
+    IEnumerator SetLightSettings(float time,Color targetColor, float targetIntensity, float targetAmbientIntensity, float targetDirectionalIntensity)
     {
         float t = 0.0f;
-        const float maxTime = 2.0f;
+        //const float maxTime = 2.0f;
 
         float startIntensity = enemiesLight[0].intensity;
         Color startColor = enemiesLight[0].color;
         float startAmbientIntensity = RenderSettings.ambientIntensity;
         float startDirectionalIntensity = directionalLight.intensity;
-
+        ChromaticAberrationModel ca = Camera.main.GetComponent<PostProcessingBehaviour>().profile.chromaticAberration;
+        ChromaticAberrationModel.Settings cas = ca.settings;
         while (true)
         {
             t += Time.deltaTime;
-            float progress = t / maxTime;
-
-            //ライトの設定を敵に送る
-            SetLight(
-                FloatLerp(startIntensity, targetIntensity, progress)
-                , Color.Lerp(startColor, targetColor, progress)
-                );
-
-            //アンビエントライトは強くする(0 -> 1)
-            RenderSettings.ambientIntensity = FloatLerp(startAmbientIntensity, targetAmbientIntensity, progress);
-
+            float progress = t / time;
+            RenderSettings.ambientIntensity = FloatLerp(startDirectionalIntensity, targetDirectionalIntensity, progress);
             directionalLight.intensity = FloatLerp(startDirectionalIntensity, targetDirectionalIntensity, progress);
-            if (t > maxTime) break;
+            cas.intensity = (1 - FloatLerp(startDirectionalIntensity, targetDirectionalIntensity, progress)) * 0.5f;
+            ca.settings = cas;
+            if (t > time) break;
             yield return null;
         }
 
         //誤差を修正する
-        SetLight(targetIntensity, targetColor);
+        //SetLight(targetIntensity, targetColor);
         RenderSettings.ambientIntensity = targetAmbientIntensity;
         directionalLight.intensity = targetDirectionalIntensity;
         IsWorkingCoroutine = false;

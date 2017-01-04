@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     private float m_accel;
     private bool isJump;
 
-  
+
     void Awake()
     {
         I = this;
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         {
             m_accel = movement.magnitude * 6.666f;
         }
-        GetComponent<Animator>().SetFloat("RunSpeed",m_accel);
+        GetComponent<Animator>().SetFloat("RunSpeed", m_accel);
         //スタミナ
         stamina = Mathf.Min(MaxStamina, stamina + Time.deltaTime);
         if (stamina == MaxStamina)
@@ -107,11 +107,11 @@ public class PlayerController : MonoBehaviour
         jumpTime += Time.deltaTime;
         //Debug.Log("currentState:"+currentState);
         bool isButtonDown = (MyInputManager.GetButtonDown(MyInputManager.Button.A) || Input.GetKeyDown(KeyCode.Space));
-        if (m_accel>0.9f)
+        if (m_accel > 0.9f)
         {
-            if ( isButtonDown) Jumpping();
+            if (isButtonDown) Jumpping();
         }
-        if ((isSquat || m_accel < 0.5f) && isButtonDown && currentState != PlayerState.Clamber&&currentState!= PlayerState.Jump) ChangeSquat(!isSquat);
+        if ((isSquat || m_accel < 0.5f) && isButtonDown && currentState != PlayerState.Clamber && currentState != PlayerState.Jump) ChangeSquat(!isSquat);
         CheckFall();
     }
 
@@ -126,10 +126,12 @@ public class PlayerController : MonoBehaviour
             if (currentState == PlayerState.Fall)
             {
                 currentState = PlayerState.Idle;
-                AkSoundEngine.PostEvent("Player_Landing",gameObject);
+                AkSoundEngine.PostEvent("Player_Landing", gameObject);
             }
             if (isonGround)
             {
+                if (isJump)
+                    Debug.Log("landing");
                 isJump = false;
             }
             return;
@@ -147,7 +149,7 @@ public class PlayerController : MonoBehaviour
     {
         if (IsOnGround(1.0f))
         {
-                currentState = PlayerState.Idle;
+            currentState = PlayerState.Idle;
             return;
         }
         currentState = PlayerState.Fall;
@@ -158,7 +160,7 @@ public class PlayerController : MonoBehaviour
         if (currentState == PlayerState.Jump) return Vector3.zero;
         if (currentState == PlayerState.Clamber) return Vector3.zero;
         int hash = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).shortNameHash;
-        if (hash == Animator.StringToHash("Damage")|| hash == Animator.StringToHash("LongJump")||hash== Animator.StringToHash("Clamber"))
+        if (hash == Animator.StringToHash("Damage") || hash == Animator.StringToHash("LongJump") || hash == Animator.StringToHash("Clamber"))
         {
             return Vector3.zero;
         }
@@ -214,7 +216,7 @@ public class PlayerController : MonoBehaviour
             if (isSquat) return;
             ChangeSquat(false);
             if (currentState == PlayerState.Fall)
-                GetComponent<Animator>().CrossFadeInFixedTime("LongJump",0.1f);
+                GetComponent<Animator>().CrossFadeInFixedTime("LongJump", 0.1f);
             currentState = PlayerState.Jump;
             if (!isJump)
             {
@@ -237,7 +239,11 @@ public class PlayerController : MonoBehaviour
         if (currentState == PlayerState.Clamber) return;
         if (go == null) return;
         //当たったオブジェクトの高さの差が小さければよじ登り
-        if (Mathf.Abs(transform.position.y - go.transform.position.y) <= 2.1f)
+        //Debug.Log("P:" + transform.position.y);
+        //Debug.Log("G:" + go.transform.position.y);
+        float dis = Mathf.Abs(transform.position.y - go.transform.position.y);
+        Debug.Log("D:"+dis);
+        if (dis<= 3.1f)
         {
             currentState = PlayerState.Clamber;
             transform.Translate(0.0f, 0.2f, 0.0f);
@@ -271,7 +277,7 @@ public class PlayerController : MonoBehaviour
 
         GetComponent<Animator>().SetBool("isSquat", isSquat);
     }
-    
+
 
     bool IsOnGround(float distance = 0.3f)
     {
@@ -303,17 +309,18 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
 
-        Ray underRay = new Ray(transform.position + Vector3.up*1.5f, transform.forward);
+        Ray underRay = new Ray(transform.position + Vector3.up * 1.5f, transform.forward);
 
         if (!Physics.Raycast(underRay, out hit, 1.0f))
         {
             return null;
         }
 
-        if(hit.transform.tag == "Player")
+        if (hit.transform.tag == "Player")
         {
             return null;
         }
-        return hit.transform.gameObject;
+
+        return hit.collider.gameObject;
     }
 }

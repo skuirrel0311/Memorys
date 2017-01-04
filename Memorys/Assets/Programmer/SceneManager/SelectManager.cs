@@ -115,8 +115,9 @@ public class SelectManager : MonoBehaviour
     private void InputButtonA()
     {
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
+        PlayData.StageNum = m_SelectNumber;
         PlayerPrefs.SetInt("StageNum",m_SelectNumber);
         PlayerPrefs.Save();
-        SceneManager.LoadSceneAsync("Stage" + (m_SelectNumber));
+        SceneManager.LoadSceneAsync("Loading");
     }
 }

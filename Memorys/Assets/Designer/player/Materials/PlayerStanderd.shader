@@ -64,7 +64,7 @@ SubShader{
 			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 			o.Albedo = c.rgb;
 			o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
-			o.Metallic = _Metallic;
+			o.Metallic = _Metallic*(c.a*0.2);
 			o.Smoothness = _Glossiness;
 			o.Alpha = c.a;
 		}	
