@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using DG.Tweening;
 
 public class SelectManager : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class SelectManager : MonoBehaviour
     [SerializeField]
     Renderer m_PageModel;
 
+    [SerializeField]
+    GameObject CameraObject;
+
     private Material[] m_Materials;
     //ページのマテリアルはアサインの順番が逆
     private Material[] m_PageMaterials;
@@ -26,6 +30,8 @@ public class SelectManager : MonoBehaviour
     bool isR_L;
 
     MySceneManager m_mySceneManager;
+
+    bool isNext;
     // Use this for initialization
     void Start()
     {
@@ -39,6 +45,7 @@ public class SelectManager : MonoBehaviour
         UpdateTexture();
         c_MaxStage = MaxStage;
         m_mySceneManager = GetComponent<MySceneManager>();
+        isNext = false;
     }
 
     // Update is called once per frame
@@ -115,9 +122,30 @@ public class SelectManager : MonoBehaviour
     private void InputButtonA()
     {
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
+        if (isNext) return;
+        isNext = true;
         PlayData.StageNum = m_SelectNumber;
         PlayerPrefs.SetInt("StageNum",m_SelectNumber);
         PlayerPrefs.Save();
+        CameraObject.transform.DOMove(new Vector3(-0.1f,0.22f,-0.03f),1.0f);
+        StartCoroutine(Transition());
+        //SceneManager.LoadSceneAsync("Loading");       
+    }
+
+    IEnumerator Transition()
+    {
+        float t = 0.0f;
+        UnityStandardAssets.ImageEffects.DepthOfField dof = CameraObject.GetComponent<UnityStandardAssets.ImageEffects.DepthOfField>();
+        TransitionManager.I.FadeOut();
+        while (true)
+        {
+            t += Time.deltaTime;
+            float p = Mathf.Pow(t, 10);
+            dof.focalSize = 2 - (p*2);
+            if (t > 1.0f)
+                break;
+            yield return null;
+        }
         SceneManager.LoadSceneAsync("Loading");
     }
 }
