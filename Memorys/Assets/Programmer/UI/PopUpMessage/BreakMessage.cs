@@ -36,11 +36,15 @@ public class BreakMessage : PopUpMessage
         if (pushCount > maxPushCount)
         {
             //エフェクト
-            GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
+           // GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
             GameManager.I.PushSwitch();
 
-            if (!GameManager.I.OneByOne) Destroy(gameObject);
-            else finder.StopSetMaterial();
+            Renderer r = GetComponent<Renderer>();
+            r.material.EnableKeyword("_EMISSION");
+            r.material.SetColor("_EmissionColor", new Color(0.5857794f, 0.6801531f, 1.306f));
+
+            // if (!GameManager.I.OneByOne) Destroy(gameObject);
+            //else finder.StopSetMaterial();
 
             IsViewMessage = false;
             pushCount = 0;

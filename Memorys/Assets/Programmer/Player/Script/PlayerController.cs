@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
         if (currentState == PlayerState.Jump) return Vector3.zero;
         if (currentState == PlayerState.Clamber) return Vector3.zero;
         int hash = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).shortNameHash;
-        if (hash == Animator.StringToHash("Damage") || hash == Animator.StringToHash("LongJump") || hash == Animator.StringToHash("Clamber"))
+        if (hash == Animator.StringToHash("Damage") || hash == Animator.StringToHash("LongJump") || hash == Animator.StringToHash("Clamber")|| hash == Animator.StringToHash("ClamberFailed"))
         {
             return Vector3.zero;
         }
@@ -254,7 +254,7 @@ public class PlayerController : MonoBehaviour
         //よじ登り失敗
         else
         {
-
+            GetComponent<Animator>().CrossFadeInFixedTime("ClamberFailed", 0.1f);
         }
     }
 
