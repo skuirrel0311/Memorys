@@ -32,12 +32,13 @@ public class Bullet : MonoBehaviour
         {
             if (objectHitEffect != null)
             {
-                float rotateY = Mathf.Atan2(hit.normal.x, hit.normal.z) * Mathf.Rad2Deg + 180.0f;
-                float rotateX = MovementUtility.GetAngleY(Vector3.zero, hit.normal);
-                Quaternion temp = Quaternion.Euler(new Vector3(-rotateX, rotateY, 0.0f));
-                Instantiate(objectHitEffect, hit.point + (ray.direction * -0.1f), temp);
+                //float rotateY = Mathf.Atan2(hit.normal.x, hit.normal.z) * Mathf.Rad2Deg + 180.0f;
+                //float rotateX = MovementUtility.GetAngleY(Vector3.zero, hit.normal);
+                //Quaternion temp = Quaternion.Euler(new Vector3(-rotateX, rotateY, 0.0f));
+                //Instantiate(objectHitEffect, hit.point + (ray.direction * -0.1f), temp);
+                Instantiate(objectHitEffect, hit.point + (ray.direction * -0.1f), Quaternion.identity);
             }
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
@@ -49,10 +50,11 @@ public class Bullet : MonoBehaviour
 
     void PlayerHit(GameObject playerObj)
     {
-        float rotateY = Mathf.Atan2(velocity.x, velocity.z) * Mathf.Rad2Deg + 180.0f;
-        Quaternion temp = Quaternion.Euler(new Vector3(0.0f, rotateY, 0.0f));
-        Destroy(Instantiate(playerHitEffect, transform.position, temp),1.5f);
+        //float rotateY = Mathf.Atan2(velocity.x, velocity.z) * Mathf.Rad2Deg + 180.0f;
+        //Quaternion temp = Quaternion.Euler(new Vector3(0.0f, rotateY, 0.0f));
+        //Destroy(Instantiate(playerHitEffect, transform.position, temp),1.5f);
+        Destroy(Instantiate(playerHitEffect, transform.position, Quaternion.identity), 1.5f);
         playerObj.GetComponent<PlayerOverlap>().Damage(1);
-        Destroy(this);
+        Destroy(gameObject);
     }
 }
