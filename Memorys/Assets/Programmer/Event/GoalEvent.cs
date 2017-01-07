@@ -16,6 +16,7 @@ public class GoalEvent : MonoBehaviour {
     {
         RightDoor.transform.DOMoveX(0.0f, 2.0f);
         LeftDoor.transform.DOMoveX(0.0f, 2.0f);
+        if (GameManager.I == null) return;
         GameManager.I.OnPossibleEscape += () =>
         {
             Debug.Log("OpenDoor");
