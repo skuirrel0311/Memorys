@@ -26,10 +26,4 @@ public class GoalEvent : MonoBehaviour {
             LeftDoor.transform.DOMoveX(8.5f,3.0f);
         };
 	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
 }
