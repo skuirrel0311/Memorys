@@ -6,6 +6,14 @@ public class AggloTotemPaul : TotemPaul
     [SerializeField]
     GameObject firingEffect = null;
 
+    public override void Start()
+    {
+        base.Start();
+
+        playerHitEffect = ShotManager.Instance.GetParticle("shot_hit(Clone)");
+        objectHitEffect = ShotManager.Instance.GetParticle("shot_landing(Clone)");
+    }
+
     //攻撃
     public void Attack(float intervalTime)
     {
