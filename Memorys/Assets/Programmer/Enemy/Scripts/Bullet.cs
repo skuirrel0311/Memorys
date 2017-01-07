@@ -3,22 +3,20 @@ using BehaviorDesigner.Runtime.Tasks.Movement;
 
 public class Bullet : MonoBehaviour
 {
+    //弾を撃ったやつ
+    protected GameObject owner;
     protected Vector3 velocity;
     protected ParticleSystem playerHitEffect = null;
     protected ParticleSystem objectHitEffect = null;
     [SerializeField]
     protected float speed = 50.0f;
 
-    Ray ray;
-    RaycastHit hit;
-
-    public void SetUp(Vector3 velocity,ParticleSystem playerHitEffect, ParticleSystem objectHitEffect)
+    public void SetUp(Vector3 velocity,ParticleSystem playerHitEffect, ParticleSystem objectHitEffect,GameObject owner)
     {
         this.playerHitEffect = playerHitEffect;
         this.objectHitEffect = objectHitEffect;
         this.velocity = velocity * speed;
-        ray = new Ray();
-        ray.direction = velocity;
+        this.owner = owner;
     }
 
     protected virtual void Update()
@@ -28,12 +26,12 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
+        Debug.Log("hitObject = " + col.gameObject.name);
+
         if (col.gameObject.tag == "Player")
             PlayerHit(col.gameObject);
         else
             ObjectHit(col.gameObject);
-
-        Destroy(gameObject);
     }
 
     void PlayerHit(GameObject playerObj)
@@ -42,12 +40,20 @@ public class Bullet : MonoBehaviour
         playerHitEffect.Play(true);
 
         playerObj.GetComponent<PlayerOverlap>().Damage(1);
+        Destroy(gameObject);
     }
 
     void ObjectHit(GameObject otherObj)
     {
-        if(otherObj.tag != "Enemy" && otherObj.tag != "FieldObject")
+        if (otherObj.tag != "Enemy" && otherObj.tag != "FieldObject") return;
+        Debug.Log("hitobject is enemy or fieldobject");
+        if (otherObj.Equals(owner))
+        {
+            Debug.Log("hitobject is owner");
+            return;
+        }
         objectHitEffect.transform.parent.position = transform.position;
         objectHitEffect.Play(true);
+        Destroy(gameObject);
     }
 }

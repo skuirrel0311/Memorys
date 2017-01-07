@@ -8,7 +8,7 @@ public class SniperTotemPaul : TotemPaul
 {
     LineRenderer lineRenderer;
     public float range = 50.0f;
-    
+
     public override void Start()
     {
         base.Start();
@@ -115,7 +115,7 @@ public class SniperTotemPaul : TotemPaul
     protected void Shot(Transform target)
     {
         GameObject bullet = Instantiate(shotEffect, chargeEffect.transform.position, chargeEffect.transform.rotation);
-        bullet.GetComponent<HomingBullet>().SetUp(target,playerHitEffect, objectHitEffect);
+        bullet.GetComponent<HomingBullet>().SetUp(target, playerHitEffect, objectHitEffect, gameObject);
         bullet.transform.LookAt(target.position);
         Destroy(bullet, 10.0f);
     }

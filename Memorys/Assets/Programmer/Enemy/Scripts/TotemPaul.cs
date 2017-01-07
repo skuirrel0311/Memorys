@@ -131,7 +131,7 @@ public class TotemPaul : MonoBehaviour
     {
         GameObject g = Instantiate(shotEffect, chargeEffect.transform.position, chargeEffect.transform.rotation);
         Vector3 velocity = target - chargeEffect.transform.position;
-        g.GetComponent<Bullet>().SetUp(velocity.normalized,playerHitEffect, objectHitEffect);
+        g.GetComponent<Bullet>().SetUp(velocity.normalized,playerHitEffect, objectHitEffect, gameObject);
         g.transform.LookAt(target);
 
         Destroy(g, 10.0f);

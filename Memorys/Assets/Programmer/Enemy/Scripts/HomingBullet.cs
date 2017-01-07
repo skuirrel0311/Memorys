@@ -18,11 +18,12 @@ public class HomingBullet : Bullet
         player = PlayerController.I;
     }
 
-    public void SetUp(Transform target,ParticleSystem playerHitEffect, ParticleSystem objectHitEffect)
+    public void SetUp(Transform target,ParticleSystem playerHitEffect, ParticleSystem objectHitEffect,GameObject owner)
     {
         this.playerHitEffect = playerHitEffect;
         this.objectHitEffect = objectHitEffect;
         this.target = target;
+        this.owner = owner;
         startPosition = transform.position;
         isHoming = true;
     }
