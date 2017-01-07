@@ -10,6 +10,8 @@ public class BreakMessage : PopUpMessage
     int maxPushCount = 5;
     int pushCount = 0;
 
+    bool isPush = false;
+
     SoundWaveFinder finder;
 
     void Awake()
@@ -20,11 +22,13 @@ public class BreakMessage : PopUpMessage
     public override void Start()
     {
         finder = GameObject.FindGameObjectWithTag("Player").GetComponent<SoundWaveFinder>();
+        isPush = false;
         base.Start();
     }
 
     public override void DrawMessage()
     {
+        if (isPush) return;
         //todo:押したらどうのこうの
         messagePrefab.fillAmount = (float)pushCount / maxPushCount;
         if(IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
@@ -38,13 +42,10 @@ public class BreakMessage : PopUpMessage
             //エフェクト
            // GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
             GameManager.I.PushSwitch();
-
+            isPush = true;
             Renderer r = GetComponent<Renderer>();
             r.material.EnableKeyword("_EMISSION");
             r.material.SetColor("_EmissionColor", new Color(0.5857794f, 0.6801531f, 1.306f));
-
-            // if (!GameManager.I.OneByOne) Destroy(gameObject);
-            //else finder.StopSetMaterial();
 
             IsViewMessage = false;
             pushCount = 0;

@@ -1,12 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Collections;
-using UnityEngine.PostProcessing;
-
-public class GameEnd
+﻿public class GameEnd
 {
     //ゲームが終了している
     public static bool isGameEnd;
+    public static bool isGameClear { get; private set; }
 
     //何回キャンセルすればゲームクリアになるか
     public static int c_MaxDestroyCalcel = 5;
@@ -42,6 +38,7 @@ public class GameEnd
     {
         m_destoryCancelCount = 0;
         isGameEnd = false;
+        isGameClear = false;
     }
 
     public void Update()
@@ -79,6 +76,7 @@ public class GameEnd
     {
         if (isGameEnd) return;
         isGameEnd = true;
+        isGameClear = true;
         //Time.timeScale = 0.1f;
         if (OnGameClearCallBack != null)
             OnGameClearCallBack();

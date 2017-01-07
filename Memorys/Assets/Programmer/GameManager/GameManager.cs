@@ -60,8 +60,8 @@ public class GameManager : MonoBehaviour
 
         m_GameEnd.OnGameClearCallBack = () =>
         {
-            //GameClearLogo.GetComponent<RectTransform>().DOMoveY(200.0f, 0.1f, true).SetLoops(0, LoopType.Yoyo);
-            SceneManager.LoadSceneAsync("Result");
+            Camera.main.GetComponent<CameraContoller>().IsWork = false;
+            StartCoroutine( TkUtils.Deray(2.0f,() => { SceneManager.LoadSceneAsync("Result"); }));
         };
 
         //ターゲットのオブジェクトを取得してポジションをセットする

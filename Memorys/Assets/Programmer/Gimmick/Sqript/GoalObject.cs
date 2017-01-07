@@ -41,24 +41,18 @@ public class GoalObject : PopUpMessage
         get{ return GameManager.I.m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel; }
     }
 
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.tag != "Player") return;
-
-        GameManager.I.m_GameEnd.GameClear();
-    }
 
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag != "Player") return;
-        origin = transform.position;
-        IsViewMessage = true;
+        GameManager.I.m_GameEnd.GameClear();
+        //IsViewMessage = true;
     }
 
     void OnTriggerExit(Collider col)
     {
         if (col.gameObject.tag != "Player") return;
 
-        IsViewMessage = false;
+
     }
 }

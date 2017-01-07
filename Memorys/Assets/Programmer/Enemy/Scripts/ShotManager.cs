@@ -2,23 +2,45 @@
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
 
-
-public class ShotManager : MonoBehaviour
+public class ShotManager : BaseManager<ShotManager>
 {
-    List<Bullet> bulletList;
-
-    [SerializeField]
-    GameObject bulletPrefab = null;
-    [SerializeField]
-    float bulletSpeed = 5.0f;
-    [SerializeField]
-    GameObject shotPosition = null;
-
-
-    public void Shot()
+    private struct EffectInstance
     {
-        GameObject g = (GameObject)Instantiate(bulletPrefab,shotPosition.transform.position, shotPosition.transform.rotation);
-        //g.GetComponent<Bullet>().Shot(bulletSpeed);
-        Destroy(g, 3.0f);
+        public GameObject particle;
+        public string name;
+    }
+
+    public GameObject[] effects;
+    List<EffectInstance> effectList = new List<EffectInstance>();
+    
+    void Awake()
+    {
+        if (this != Instance)
+        {
+            Destroy(this);
+            return;
+        }
+
+        //エフェクトのインスタンスを作成
+        for(int i = 0;i< effects.Length;i++)
+        {
+            EffectInstance e;
+            e.particle = Instantiate(effects[i],transform).gameObject;
+            e.name = e.particle.name;
+            effectList.Add(e);
+        }
+    }
+
+    public ParticleSystem GetParticle(string name)
+    {
+        for(int i = 0;i< effectList.Count;i++)
+        {
+            if (effectList[i].name == name)
+            {
+                return effectList[i].particle.transform.GetChild(0).GetComponent<ParticleSystem>();
+            }
+        }
+
+        return null;
     }
 }

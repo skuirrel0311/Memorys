@@ -21,6 +21,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     float TransitionTime = 0.5f;
 
+    [SerializeField]
+    GameObject CinemaScopeCanvas;
+
     private Camera MainCamera;
 
     // Use this for initialization
@@ -33,6 +36,8 @@ public class CameraManager : MonoBehaviour
         {
             m_Cameras[i].enabled = false;
         }
+
+        CinemaScopeCanvas.SetActive(false);
     }
 
     public void CameraChange(int index, float duration = 1.0f, bool FadeIn = true, bool FadeOut = true, Action CallBack = null)
@@ -57,6 +62,7 @@ public class CameraManager : MonoBehaviour
     IEnumerator EnableTransitionCamera(Camera camera, float wait, bool FadeIn, bool FadeOut, Action action)
     {
         Debug.Log("Callcut");
+        CinemaScopeCanvas.SetActive(true);
         //GameManager.I.IsPlayStop = true;
         if (FadeIn)
         {
@@ -81,6 +87,7 @@ public class CameraManager : MonoBehaviour
         {
             camera.enabled = false;
         }
+        CinemaScopeCanvas.SetActive(false);
         if (action != null)
             action();
         //GameManager.I.IsPlayStop = true;

@@ -6,17 +6,9 @@ using BehaviorDesigner.Runtime.Tasks.Movement;
 
 public class SniperTotemPaul : TotemPaul
 {
-    [SerializeField]
-    GameObject playerHitEffect = null;
-    [SerializeField]
-    GameObject objectHitEffect = null;
-
-    GameObject chargeEndEffect;
-
     LineRenderer lineRenderer;
     public float range = 50.0f;
-
-
+    
     public override void Start()
     {
         base.Start();
@@ -32,6 +24,9 @@ public class SniperTotemPaul : TotemPaul
         module.simulationSpeed = chargeTime;
         module = thunderEffect.main;
         module.simulationSpeed = chargeTime;
+
+        playerHitEffect = ShotManager.Instance.GetParticle("sniper_hit(Clone)");
+        objectHitEffect = ShotManager.Instance.GetParticle("sniper_landing(Clone)");
     }
 
     //攻撃
@@ -65,25 +60,20 @@ public class SniperTotemPaul : TotemPaul
         lineRenderer.enabled = false;
 
         //発射
-        Vector3 velocity;
-        GameObject bullet = Instantiate(shotEffect, chargeEffect.transform.position, chargeEffect.transform.rotation);
-        Shot(GetTargetPosition(), out velocity);
-
-        int t = 2;
-        velocity = velocity / t;
-        for (int i = 0; i < t; i++)
+        if (IsWarning)
         {
-            yield return null;
-
-            //tフレーム後に到達する。
-            bullet.transform.position += velocity;
-
+            //警戒してたらホーミング弾を
+            Shot(playerNeck);
         }
-        Destroy(bullet, 1.5f);
+        else
+        {
+            Shot(GetTargetPosition());
+        }
         yield return new WaitForSeconds(intervalTime);
 
         //終了処理
-
+        //todo:チャージエフェクトをもう一度使えるように
+        chargeEffect.Stop(true);
         chargeEffect.gameObject.SetActive(false);
     }
 
@@ -122,35 +112,12 @@ public class SniperTotemPaul : TotemPaul
         return new Ray(chargeEffect.transform.position, target - chargeEffect.transform.position);
     }
 
-    protected void Shot(Vector3 target, out Vector3 velocity)
+    protected void Shot(Transform target)
     {
-        Ray ray = new Ray(chargeEffect.transform.position, (target - chargeEffect.transform.position));
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, range))
-        {
-            //当たった場所にエフェクトを出す
-            velocity = hit.point - ray.origin;
-            float rotateY = Mathf.Atan2(hit.normal.x, hit.normal.z) * Mathf.Rad2Deg + 180.0f;
-
-            if (hit.transform.tag == "Player")
-            {
-                Quaternion temp = Quaternion.Euler(new Vector3(0.0f, rotateY, 0.0f));
-                Instantiate(playerHitEffect, hit.point, temp);
-                hit.transform.GetComponent<PlayerOverlap>().Damage(1);
-            }
-            else
-            {
-                float rotateX = MovementUtility.GetAngleY(Vector3.zero, hit.normal);
-                Quaternion temp = Quaternion.Euler(new Vector3(-rotateX, rotateY, 0.0f));
-                Instantiate(objectHitEffect, hit.point + (ray.direction * -0.1f), temp);
-            }
-        }
-        else
-        {
-            velocity = ray.origin + (ray.direction * range);
-            velocity = velocity - ray.origin;
-        }
+        GameObject bullet = Instantiate(shotEffect, chargeEffect.transform.position, chargeEffect.transform.rotation);
+        bullet.GetComponent<HomingBullet>().SetUp(target,playerHitEffect, objectHitEffect);
+        bullet.transform.LookAt(target.position);
+        Destroy(bullet, 10.0f);
     }
 
     protected override Vector3 GetTargetPosition()

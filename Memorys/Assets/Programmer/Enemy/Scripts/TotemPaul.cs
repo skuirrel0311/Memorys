@@ -7,6 +7,8 @@ public class TotemPaul : MonoBehaviour
     [SerializeField]
     protected GameObject shotEffect = null;
     protected ParticleSystem chargeEffect;
+    protected ParticleSystem playerHitEffect;
+    protected ParticleSystem objectHitEffect;
 
     protected Transform playerNeck;
     PlayerController playerController;
@@ -33,8 +35,7 @@ public class TotemPaul : MonoBehaviour
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         IsAttacking = false;
         IsWarning = false;
-
-
+        
         if (!IsAwakeActive)
         {
             GetComponent<BehaviorTree>().enabled = false;
@@ -130,7 +131,7 @@ public class TotemPaul : MonoBehaviour
     {
         GameObject g = Instantiate(shotEffect, chargeEffect.transform.position, chargeEffect.transform.rotation);
         Vector3 velocity = target - chargeEffect.transform.position;
-        g.GetComponent<Bullet>().SetUp(velocity.normalized);
+        g.GetComponent<Bullet>().SetUp(velocity.normalized,playerHitEffect, objectHitEffect);
         g.transform.LookAt(target);
 
         Destroy(g, 10.0f);
