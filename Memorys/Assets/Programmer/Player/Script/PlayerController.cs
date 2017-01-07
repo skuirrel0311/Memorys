@@ -67,10 +67,16 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (GameManager.I.IsPlayStop) return;
+        if (GameManager.I.IsPlayStop&&!GameEnd.isGameClear) return;
         if (isJump) return;
         Vector3 movement = GetInputVector();
         if (isSquat) movement *= 0.5f;
+        if (GameEnd.isGameClear)
+        {
+            movement = -Vector3.forward * 0.15f;
+            currentState = PlayerState.Move;
+            isSquat = false;
+        }
 
         if (movement == Vector3.zero)
         {
@@ -107,17 +113,15 @@ public class PlayerController : MonoBehaviour
         jumpTime += Time.deltaTime;
         //Debug.Log("currentState:"+currentState);
         bool isButtonDown = (MyInputManager.GetButtonDown(MyInputManager.Button.A) || Input.GetKeyDown(KeyCode.Space));
-        if (m_accel > 0.9f)
-        {
-            if (isButtonDown) Jumpping();
-        }
+
+        if (isButtonDown) Jumpping();
+
         if ((isSquat || m_accel < 0.5f) && isButtonDown && currentState != PlayerState.Clamber && currentState != PlayerState.Jump) ChangeSquat(!isSquat);
         CheckFall();
     }
 
     void CheckFall()
     {
-
         if (currentState == PlayerState.Jump) return;
         if (currentState == PlayerState.Clamber) return;
         bool isonGround = IsOnGround();
@@ -160,7 +164,7 @@ public class PlayerController : MonoBehaviour
         if (currentState == PlayerState.Jump) return Vector3.zero;
         if (currentState == PlayerState.Clamber) return Vector3.zero;
         int hash = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).shortNameHash;
-        if (hash == Animator.StringToHash("Damage") || hash == Animator.StringToHash("LongJump") || hash == Animator.StringToHash("Clamber")|| hash == Animator.StringToHash("ClamberFailed"))
+        if (hash == Animator.StringToHash("Damage") || hash == Animator.StringToHash("LongJump") || hash == Animator.StringToHash("Clamber") || hash == Animator.StringToHash("ClamberFailed"))
         {
             return Vector3.zero;
         }
@@ -209,9 +213,9 @@ public class PlayerController : MonoBehaviour
     {
         if (currentState != PlayerState.Move) return;
 
-        GameObject go = GetForwardObject();
+            GameObject go = GetForwardObject();
 
-        if (go == null)
+        if (go == null &&m_accel > 0.9f)
         {
             if (isSquat) return;
             ChangeSquat(false);
@@ -227,7 +231,7 @@ public class PlayerController : MonoBehaviour
 
             isJump = true;
         }
-        else
+        else if(go != null)
         {
             Clamb(go);
             Debug.Log("TransitionClamber");
@@ -239,11 +243,9 @@ public class PlayerController : MonoBehaviour
         if (currentState == PlayerState.Clamber) return;
         if (go == null) return;
         //当たったオブジェクトの高さの差が小さければよじ登り
-        //Debug.Log("P:" + transform.position.y);
-        //Debug.Log("G:" + go.transform.position.y);
         float dis = Mathf.Abs(transform.position.y - go.transform.position.y);
-        Debug.Log("D:"+dis);
-        if (dis<= 3.1f)
+
+        if (dis <= 3.1f)
         {
             currentState = PlayerState.Clamber;
             transform.Translate(0.0f, 0.2f, 0.0f);
@@ -254,6 +256,7 @@ public class PlayerController : MonoBehaviour
         //よじ登り失敗
         else
         {
+            currentState = PlayerState.Clamber;
             GetComponent<Animator>().CrossFadeInFixedTime("ClamberFailed", 0.1f);
         }
     }
@@ -278,7 +281,6 @@ public class PlayerController : MonoBehaviour
         GetComponent<Animator>().SetBool("isSquat", isSquat);
     }
 
-
     bool IsOnGround(float distance = 0.3f)
     {
         RaycastHit hit;
@@ -291,7 +293,6 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
-
 
     void OnCollisionEnter(Collision col)
     {

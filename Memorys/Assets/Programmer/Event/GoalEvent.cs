@@ -20,6 +20,7 @@ public class GoalEvent : MonoBehaviour {
         {
             Debug.Log("OpenDoor");
             GameManager.I.IsPlayStop = true;
+            PlayerController.I.currentState = PlayerState.Idle;
             CameraManager.I.CameraChange(0,3.0f,true,true,() => { GameManager.I.IsPlayStop = false; });
             RightDoor.transform.DOMoveX(-8.5f,3.0f);
             LeftDoor.transform.DOMoveX(8.5f,3.0f);
@@ -27,7 +28,8 @@ public class GoalEvent : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 }
