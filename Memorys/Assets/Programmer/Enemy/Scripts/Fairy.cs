@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviorDesigner.Runtime;
+using BehaviorDesigner.Runtime.Tasks.Movement;
 
 public class Fairy : MonoBehaviour
 {
     //警戒しているか？
     public bool IsWarning { get; private set; }
-    bool oldIsWarning;
+    bool oldIsSeePlayer;
 
     //見失ったか？
     bool IsLostTarget;
@@ -22,9 +23,15 @@ public class Fairy : MonoBehaviour
 
     [SerializeField]
     GameObject magicEffect = null;
+    Coroutine coroutine = null;
 
     SoundWaveFinder playerFinder;
-    
+
+    Transform modelTransform;
+    Timer shakeTimer;
+    float startY = 0.0f;
+    float targetY = 0.0f;
+
     void Start()
     {
         m_tree = GetComponent<BehaviorTree>();
@@ -35,43 +42,66 @@ public class Fairy : MonoBehaviour
         Alertness = 0.0f;
         IsLostTarget = false;
         lostPosition = Vector3.zero;
+        shakeTimer = new Timer();
+        shakeTimer.TimerStart(2.0f,true);
+        modelTransform = transform.GetChild(1);
     }
 
     void Update()
     {
+        ShakePosition();
         //警戒度がたまりやすくする
-        if ((bool)m_tree.GetVariable("IsSeePlayer").GetValue())
-            Alertness += Time.deltaTime * 3.0f;
-        else
-            Alertness -= Time.deltaTime;
-
-        Alertness = Mathf.Clamp(Alertness, 0.0f, 3.0f);
-
-        //一度警戒すると警戒が解けるまでに時間がかかる
-        if (IsWarning)
-            IsWarning = Alertness > 0.1f;
-        else
-            IsWarning = Alertness > 1.5f;
-
-        if(playerFinder != null)
+        bool isSeePlayer = (bool)m_tree.GetVariable("IsSeePlayer").GetValue();
+        if (isSeePlayer)
         {
-            if(playerFinder.workingTimer.IsWorking)
+            Alertness += Time.deltaTime * 3.0f;
+            IsLostTarget = false;
+        }
+
+        Alertness = Mathf.Min(Alertness, 3.0f);
+
+        IsWarning = Alertness > 1.5f;
+
+        if (playerFinder != null)
+        {
+            if (playerFinder.workingTimer.IsWorking)
             {
+                //todo:距離も考慮
                 IsWarning = true;
             }
         }
 
         //見失ったか？
-        if (IsWarning == false && oldIsWarning == true)
+        if (IsWarning)
         {
-            IsLostTarget = true;
-            lostPosition = player.transform.position;
+            if (isSeePlayer == false && oldIsSeePlayer == true)
+            {
+                IsLostTarget = true;
+                lostPosition = player.transform.position;
+                Alertness = 0.0f;
+            }
         }
 
-        if (IsWarning == true)
-            IsLostTarget = false;
+        oldIsSeePlayer = isSeePlayer;
+    }
 
-        oldIsWarning = IsWarning;
+    void ShakePosition()
+    {
+        shakeTimer.Update();
+
+        if(shakeTimer.IsLimitTime)
+        {
+            shakeTimer.Reset();
+
+            startY = modelTransform.localPosition.y;
+            float range = 3.0f;
+            if (targetY > 0)
+                targetY = Random.Range(range * 0.3f, range);
+            else
+                targetY = Random.Range(-range * 0.3f, 0);
+        }
+        
+        modelTransform.localPosition = new Vector3(0, MovementUtility.FloatLerp(startY, targetY, shakeTimer.Progress * shakeTimer.Progress), 0);
     }
 
     public void GetTragetPosition()
@@ -82,29 +112,33 @@ public class Fairy : MonoBehaviour
             m_tree.GetVariable("TargetPosition").SetValue(lostPosition);
     }
 
-    //プレイヤーの乗っている床を１段上げる
-    public void Magic()
+    //地形変化を激しくする
+    public void Magic(float changeTime)
     {
-        FloorTransition floor = GetPlayerUnderFloor();
-        if(floor == null)
+        if(coroutine != null)
         {
-            return;
+            StopCoroutine(coroutine);
         }
+        coroutine = StartCoroutine(ViolentlyTransition(changeTime));
+        //todo:エフェクト
+    }
 
-        if (floor.isTransition)
-        {
-            return;
-        }
+    IEnumerator ViolentlyTransition(float changeTime)
+    {
+        float intervalTime = GameManager.I.transitionInterval;
+        GameManager.I.SetIntervalTime(intervalTime * 0.05f);
 
-        Destroy(Instantiate(magicEffect, floor.transform.position, Quaternion.identity),1.5f);
-        floor.Raise();
+        yield return new WaitForSeconds(changeTime);
+
+        GameManager.I.SetIntervalTime(intervalTime);
+        coroutine = null;
     }
 
     FloorTransition GetPlayerUnderFloor()
     {
         Collider[] cols = Physics.OverlapSphere(player.transform.position + Vector3.down, 1.0f);
 
-        for(int i = 0;i<cols.Length;i++)
+        for (int i = 0; i < cols.Length; i++)
         {
             FloorTransition temp = cols[i].GetComponent<FloorTransition>();
 

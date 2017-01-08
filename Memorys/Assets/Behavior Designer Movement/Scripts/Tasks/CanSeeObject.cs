@@ -33,6 +33,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public SharedGameObject eye;
         public SharedFloat fieldOfViewAngleY = 60.0f;
 
+        public bool IsReversal = false;
         public bool IsViewSight = false;
         public bool IsViewLine = false;
 
@@ -74,6 +75,10 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                 else if (targetObject.Value == null)
                 { // If the target object is null then determine if there are any objects within sight based on the layer mask
                     returnedObject.Value = MovementUtility.WithinSight(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, viewDistance.Value, objectLayerMask, targetOffset.Value, ignoreLayerMask);
+                }
+                else if(IsReversal)
+                {
+                    returnedObject = MovementUtility.WithinSight(eye.Value.transform, offset.Value, targetObject.Value, targetOffset.Value, ignoreLayerMask, fieldOfViewAngleY.Value);
                 }
                 else
                 { // If the target is not null then determine if that object is within sight

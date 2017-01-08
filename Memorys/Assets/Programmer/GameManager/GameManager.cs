@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour
     private GameObject GameClearLogo = null;
 
     //地形の変化が起きる時間の間隔
-    [SerializeField]
-    private float transitionInterval = 0.1f;
+    public float transitionInterval = 0.1f;
+    WaitForSeconds wait;
 
     //プレイヤーの破壊目標
     private GameObject m_Target;
@@ -100,12 +100,19 @@ public class GameManager : MonoBehaviour
         m_WillDestroyObjects = new List<GameObject>();
         // SetWillDestroy();
         NotificationSystem.I.Indication("スイッチを" + GameEnd.c_MaxDestroyCalcel.ToString() + "回押し、脱出せよ！");
-        if (!IsFlat) StartCoroutine("SetObjTransition");
-
+        if (!IsFlat)
+        {
+            SetIntervalTime(transitionInterval);
+            StartCoroutine("SetObjTransition");
+        }
         SetEventPushSwitch();
         InitializeEnemy();
     }
 
+    public void SetIntervalTime(float intervalTime)
+    {
+        wait = new WaitForSeconds(intervalTime);
+    }
 
     IEnumerator GameStartWait(float wait)
     {
@@ -302,7 +309,6 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SetObjTransition()
     {
-        var wait = new WaitForSeconds(transitionInterval);
         while (true)
         {
             m_FieldObjects[Random.Range(0, m_FieldObjects.Count)].GetComponent<FloorTransition>().FloorTrans();

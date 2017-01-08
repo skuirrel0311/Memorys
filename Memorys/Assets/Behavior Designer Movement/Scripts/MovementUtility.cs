@@ -117,7 +117,31 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             return null;
         }
 
+        //‰º‚ðŒ©‚Ä‚¢‚é“G—p
+        public static GameObject WithinSight(Transform transform, Vector3 positionOffset, GameObject targetObject, Vector3 targetOffset, int ignoreLayerMask, float viewAngleY)
+        {
+            //angleY‚Ì‚Ý‚ðŒ©‚é
+            float angleY = GetAngleY(transform.position + positionOffset, targetObject.transform.position + targetOffset);
 
+            //Debug.Log("angleY = " + angleY);
+            //^‰º‚Í90‚É‚È‚é(90ˆÈã‚Í‚È‚¢)
+            if (angleY > viewAngleY)
+            {
+                // The hit agent needs to be within view of the current agent
+                if (LineOfSight(transform, positionOffset, targetObject, targetOffset, false, ignoreLayerMask) != null)
+                {
+                    return targetObject; // return the target object meaning it is within sight
+                }
+                else if (targetObject.GetComponent<Collider>() == null)
+                {
+                    // If the linecast doesn't hit anything then that the target object doesn't have a collider and there is nothing in the way
+                    if (targetObject.gameObject.activeSelf)
+                        return targetObject;
+                }
+            }
+            // return null if the target object is not within sight
+            return null;
+        }
 
         public static GameObject LineOfSight(Transform transform, Vector3 positionOffset, GameObject targetObject, Vector3 targetOffset, bool usePhysics2D, int ignoreLayerMask)
         {
