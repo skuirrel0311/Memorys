@@ -35,8 +35,8 @@ public class ResultManager : MonoBehaviour {
         m_SelectChild = select.GetComponentsInChildren<Image>();
         SelectImageChange();
 
-        float currntTime = PlayerPrefsManager.I.GetCurrentClearTime();
-        float bestTime = PlayerPrefsManager.I.GetClearTime(PlayerPrefsManager.I.GetStageNum());
+        int currntTime = (int)PlayerPrefsManager.I.GetCurrentClearTime();
+        int bestTime = (int)PlayerPrefsManager.I.GetClearTime(PlayerPrefsManager.I.GetStageNum());
         bestTime = Mathf.Min(currntTime,bestTime);
 
         m_ClearTime.text = currntTime.ToString();
@@ -63,7 +63,7 @@ public class ResultManager : MonoBehaviour {
             num++;
             PlayerPrefs.SetInt("StageNum",num);
             PlayerPrefs.Save();
-            SceneManager.LoadSceneAsync("stage"+num);
+            SceneManager.LoadSceneAsync("Loading");
         }
 
     }

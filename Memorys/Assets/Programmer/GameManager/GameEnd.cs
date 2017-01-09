@@ -85,6 +85,7 @@
     public void GameOver()
     {
         if (isGameEnd) return;
+        TransitionManager.I.FadeOut(1.0f);
         isGameEnd = true;
         if (OnGameOverCallBack != null)
             OnGameOverCallBack();

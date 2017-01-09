@@ -159,7 +159,10 @@ public class CameraContoller : MonoBehaviour
     {
         IsWork = false;
         float time = 0;
-        while(time < 1.0f)
+        PlayerOverlap overlap = targetObject.GetComponent<PlayerOverlap>();
+        //Hp分のダメージを与える=即死
+        overlap.Damage(overlap.HP);
+        while (time < 3.0f)
         {
             transform.LookAt(targetObject.transform);
             time += Time.deltaTime;
@@ -167,9 +170,6 @@ public class CameraContoller : MonoBehaviour
         }
         IsWork = true;
         if (targetObject == null) yield return null;
-        PlayerOverlap overlap = targetObject.GetComponent<PlayerOverlap>();
 
-        //Hp分のダメージを与える=即死
-        overlap.Damage(overlap.HP);
     }
 }

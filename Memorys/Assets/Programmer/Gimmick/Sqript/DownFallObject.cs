@@ -29,7 +29,7 @@ public class DownFallObject : MonoBehaviour
         StartCoroutine(Camera.main.GetComponent<CameraContoller>().SeeFellPlayer());
 
         //viewTimer.TimerStart(2.0f);
-        Debug.Log("Playerは紐なしバンジーを試みた!!");
+        //Debug.Log("Playerは紐なしバンジーを試みた!!");
     }
 
     //void OnGUI()
