@@ -10,29 +10,28 @@ public class GoalObject : PopUpMessage
     public override void Start()
     {
         arrow = GameObject.FindGameObjectWithTag("Player").transform.GetChild(2);
-        lineRenderer = arrow.GetComponentInChildren<LineRenderer>();
+        //lineRenderer = arrow.GetComponentInChildren<LineRenderer>();
 
-        if (lineRenderer == null)
+        if (arrow == null)
         {
             Debug.Log("lineRenderer is null");
             return;
         }
-        lineRenderer.gameObject.SetActive(false);
+        arrow.gameObject.SetActive(false);
         base.Start();
     }
 
     public override void Update()
     {
-        if (lineRenderer == null) return;
+        if (arrow == null) return;
         if(CanGameEnd)
         {
             //arrowの向きを決める。
             Vector3 vec = Vector3.Normalize(transform.position - arrow.position);
 
             //lineを描画する。
-            lineRenderer.gameObject.SetActive(true);
-            lineRenderer.SetPosition(0, arrow.position + (vec * 0.3f));
-            lineRenderer.SetPosition(1, arrow.position + (vec * 3.0f));
+            arrow.gameObject.SetActive(true);
+            arrow.rotation =Quaternion.Euler(0, Mathf.Atan2(vec.x,vec.z)*Mathf.Rad2Deg,0);
         }
     }
 
@@ -46,13 +45,10 @@ public class GoalObject : PopUpMessage
     {
         if (col.gameObject.tag != "Player") return;
         GameManager.I.m_GameEnd.GameClear();
-        //IsViewMessage = true;
     }
 
     void OnTriggerExit(Collider col)
     {
         if (col.gameObject.tag != "Player") return;
-
-
     }
 }
