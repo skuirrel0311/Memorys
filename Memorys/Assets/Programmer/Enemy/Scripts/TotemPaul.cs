@@ -27,6 +27,7 @@ public class TotemPaul : MonoBehaviour
     bool IsAwakeActive = false;
 
     public bool IsStop = false;
+    public bool IsDead = false;
 
     public virtual void Start()
     {
@@ -52,6 +53,8 @@ public class TotemPaul : MonoBehaviour
     {
         //起動していなかったら
         if (!GetComponent<BehaviorTree>().enabled) return;
+
+        if (IsDead) return;
 
         if(IsStop)
         {
@@ -164,5 +167,20 @@ public class TotemPaul : MonoBehaviour
         }
 
         GetComponent<Renderer>().materials = mats;
+    }
+
+    public void Dead()
+    {
+        IsDead = true;
+        IsWarning = false;
+        Alertness = 0.0f;
+        transform.GetChild(1).gameObject.SetActive(false);
+
+        //todo:緩やかにor演出
+        Material[] mats = GetComponent<Renderer>().materials;
+        for(int i = 0;i < mats.Length;i++)
+        {
+            mats[i].DisableKeyword("_EMISSION");
+        }
     }
 }

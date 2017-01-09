@@ -45,11 +45,11 @@ public class Bullet : MonoBehaviour
 
     void ObjectHit(GameObject otherObj)
     {
-        if (otherObj.tag != "Enemy" && otherObj.tag != "FieldObject") return;
-        Debug.Log("hitobject is enemy or fieldobject");
+        string layerName = LayerMask.LayerToName(otherObj.layer);
+        if (layerName != "Enemy" && layerName != "Floor") return;
+
         if (otherObj.Equals(owner))
         {
-            Debug.Log("hitobject is owner");
             return;
         }
         objectHitEffect.transform.parent.position = transform.position;

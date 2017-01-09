@@ -19,7 +19,7 @@ public class PopUpMessage : MonoBehaviour
 
     public virtual void Start()
     {
-        canvasRect = GameObject.Find("Canvas").GetComponent<RectTransform>();
+        canvasRect = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<RectTransform>();
         origin = transform.position;
         messagePrefab = (Image)Instantiate(messagePrefab, canvasRect.transform);
     }
