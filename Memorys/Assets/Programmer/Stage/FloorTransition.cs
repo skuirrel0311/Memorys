@@ -19,8 +19,18 @@ public class FloorTransition : MonoBehaviour
     private IEnumerator e_FloorMove;
 
     Coroutine coroutine;
-    
+
+    Renderer[] m_renderers;
+
+    MaterialPropertyBlock block;
+
     // Use this for initialization
+    private void Awake()
+    {
+        m_renderers = GetComponentsInChildren<Renderer>();
+        block = new MaterialPropertyBlock();
+    }
+
     void Start()
     {
         BaseHeight = transform.position.y;
@@ -28,7 +38,7 @@ public class FloorTransition : MonoBehaviour
         MaxLow = BaseHeight - 2.0f;
 
         m_Timer = 0;
-        
+
         if (GameManager.I.IsFlat) return;
 
         m_FloorState = (FloorState)Random.Range(1, 4);
@@ -87,9 +97,16 @@ public class FloorTransition : MonoBehaviour
         SetFloorState();
         coroutine = StartCoroutine("FloorMove");
 
-        //Renderer r = GetComponent<Renderer>();
-        //r.material.EnableKeyword("_EMISSION");
-        //r.material.SetColor("_EmissionColor", Color.red);
+
+    }
+
+    void ChangeColor(Color color)
+    {
+        for (int i =0; i < m_renderers.Length;i++)
+        {
+            block.SetColor("_EmitColor", color);
+            m_renderers[i].SetPropertyBlock(block);
+        }
     }
 
     //座標を変化させる
@@ -100,9 +117,27 @@ public class FloorTransition : MonoBehaviour
         float targetY = GetTargetPosition(m_FloorState, transform.position).y;
         float currentY = startY;
 
+        Color targetColor = Color.black;
+        if (startY < targetY)
+        {
+            targetColor = Color.red;
+        }
+        else
+        {
+            targetColor = Color.blue;
+        }
+
         transform.DOShakePosition(2.0f, 0.025f, 25, 90.0f, false, false);
-        yield return new WaitForSeconds(2.0f);
-        
+        // yield return new WaitForSeconds(2.0f);
+
+        while (true)
+        {
+            t += Time.deltaTime;
+            ChangeColor(targetColor * t * 0.5f);
+            if (t > 2.0f) break;
+            yield return null;
+        }
+        t = 0.0f;
         while (true)
         {
             t += Time.deltaTime;
@@ -111,13 +146,25 @@ public class FloorTransition : MonoBehaviour
             if (t > 1.0f) break;
             yield return null;
         }
-        //Renderer r = GetComponent<Renderer>();
-        //r.material.EnableKeyword("_EMISSION");
-        //r.material.SetColor("_EmissionColor", Color.black);
+        StartCoroutine(ColorReset(targetColor,0.3f));
         isTransition = false;
     }
 
-    Vector3 GetTargetPosition(FloorState state,Vector3 startPos)
+    IEnumerator ColorReset(Color baseColor, float duration)
+    {
+        float t = 0.0f;
+        while(true)
+        {
+            t += Time.deltaTime;
+            ChangeColor(baseColor*(1-t/duration));
+            if (t>=duration) break;
+            yield return null;
+        }
+        ChangeColor(Color.black);
+    }
+
+
+    Vector3 GetTargetPosition(FloorState state, Vector3 startPos)
     {
         if (state == FloorState.NORMAL)
         {
@@ -147,7 +194,7 @@ public class FloorTransition : MonoBehaviour
     public void Raise()
     {
         if (isTransition) return;
-        
+
         int temp = (int)m_FloorState;
         temp++;
 
