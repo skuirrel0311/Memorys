@@ -52,6 +52,10 @@ public class GameManager : MonoBehaviour
 
     public VoidEvent OnPushSwitch;
 
+    GameObject enemyStopItem;
+    [SerializeField]
+    Transform[] itemPoints = null;
+
     private void Awake()
     {
 
@@ -91,7 +95,7 @@ public class GameManager : MonoBehaviour
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
         floorObj = Resources.Load("Prefabs/FloorObject") as GameObject;
-
+        enemyStopItem = Resources.Load("Prefabs/EnemyStopSwitch") as GameObject;
 
         //破壊可能オブジェクトの取得
         m_FieldObjects = new List<GameObject>();
@@ -159,7 +163,9 @@ public class GameManager : MonoBehaviour
             //中心のトーテムポール
             if (enemies[i].gameObject.name == "TotemPaul")
             {
-                enemies[i].GetComponent<TotemPaul>().QuickStartUp();
+                TotemPaul enemy = enemies[i].GetComponent<TotemPaul>();
+                enemy.QuickStartUp();
+                GenerateStopItem(enemy);
             }
         }
     }
@@ -331,7 +337,24 @@ public class GameManager : MonoBehaviour
             //中心のトーテムポール
             if (enemies[i].gameObject.name == "TotemPaul (" + m_GameEnd.m_destoryCancelCount.ToString() + ")")
             {
-                enemies[i].GetComponent<TotemPaul>().StartUp();
+                TotemPaul enemy = enemies[i].GetComponent<TotemPaul>();
+                enemy.StartUp();
+                GenerateStopItem(enemy);
+            }
+        }
+    }
+
+    private void GenerateStopItem(TotemPaul enemy)
+    {
+        if (itemPoints == null) return;
+
+        for(int i = 0;i< itemPoints.Length;i++)
+        {
+            if(itemPoints[i].name == "itemPoint" + m_GameEnd.m_destoryCancelCount.ToString())
+            {
+                EnemyStopItem item = Instantiate(enemyStopItem, itemPoints[i]).GetComponent<EnemyStopItem>();
+                item.transform.localPosition = Vector3.zero;
+                item.SetPairEnemy(enemy);
             }
         }
     }

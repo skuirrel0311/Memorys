@@ -8,6 +8,15 @@ public class EnemyStopItem : PopUpMessage
     bool isPush = false;
     TotemPaul enemy;
 
+    public override void Start()
+    {
+        Renderer r = GetComponent<Renderer>();
+        r.material.EnableKeyword("_EMISSION");
+        r.material.SetColor("_EmissionColor", new Color(0.3265f, 1.306f, 0.4548484f));
+
+        base.Start();
+    }
+
     //アイテムを使った時に停止する敵をセットする
     public void SetPairEnemy(TotemPaul enemy)
     {
@@ -23,6 +32,9 @@ public class EnemyStopItem : PopUpMessage
             enemy.GetComponent<BehaviorTree>().DisableBehavior(true);
             isPush = true;
             IsViewMessage = false;
+
+            Renderer r = GetComponent<Renderer>();
+            r.material.DisableKeyword("_EMISSION");
         }
 
         base.DrawMessage();
