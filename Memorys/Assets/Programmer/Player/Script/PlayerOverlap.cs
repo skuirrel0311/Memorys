@@ -8,7 +8,7 @@ using BehaviorDesigner.Runtime;
 //プレイヤーの接触判定用クラス
 public class PlayerOverlap : MonoBehaviour
 {
-    const int maxHP = 5;
+    const int maxHP = 6;
 
     //[SerializeField]
     //Slider m_slider;

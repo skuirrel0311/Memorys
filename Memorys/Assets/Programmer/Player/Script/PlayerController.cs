@@ -115,8 +115,8 @@ public class PlayerController : MonoBehaviour
         bool isButtonDown = (MyInputManager.GetButtonDown(MyInputManager.Button.A) || Input.GetKeyDown(KeyCode.Space));
 
         if (isButtonDown) Jumpping();
-
-        if ((isSquat || m_accel < 0.5f) && isButtonDown && currentState != PlayerState.Clamber && currentState != PlayerState.Jump) ChangeSquat(!isSquat);
+        //(isSquat || m_accel < 0.5f) &&
+        if (MyInputManager.GetButtonDown(MyInputManager.Button.B) && currentState != PlayerState.Clamber && currentState != PlayerState.Jump) ChangeSquat(!isSquat);
         CheckFall();
     }
 
