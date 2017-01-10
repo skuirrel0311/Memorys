@@ -121,7 +121,7 @@ public class SoundWaveFinder : MonoBehaviour
         float distance = (target.transform.position - transform.position).magnitude;
 
         //範囲内にあったら光らせる
-        if (distance < maxDistance)
+        if (distance < maxDistance&&!target.gameObject.GetComponent<BreakMessage>().isPush)
         {
             IsFound = true;
             //音波が届くまでの時間を求める

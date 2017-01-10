@@ -10,7 +10,7 @@ public class BreakMessage : PopUpMessage
     int maxPushCount = 5;
     int pushCount = 0;
 
-    bool isPush = false;
+    public bool isPush = false;
 
     SoundWaveFinder finder;
 
@@ -45,7 +45,9 @@ public class BreakMessage : PopUpMessage
             isPush = true;
             Renderer r = GetComponent<Renderer>();
             r.material.EnableKeyword("_EMISSION");
-            r.material.SetColor("_EmissionColor", new Color(0.5857794f, 0.6801531f, 1.306f));
+            MaterialPropertyBlock block = new MaterialPropertyBlock();
+            block.SetColor("_EmissionColor", new Color(0.5857794f, 0.6801531f, 1.306f));
+            r.SetPropertyBlock(block);
 
             IsViewMessage = false;
             pushCount = 0;
