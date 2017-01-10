@@ -14,6 +14,9 @@ public class SwitchManage : MonoBehaviour {
     [SerializeField]
     ParticleSystem particle;
 
+    [SerializeField]
+    Camera m_prticleCamera;
+
     int PushCount;
 
 	// Use this for initialization
@@ -25,12 +28,21 @@ public class SwitchManage : MonoBehaviour {
             SwitchUpdate();
         };
 	}
-	
+	void PositionUpdate()
+    {
+        //Vector3 w = RectTransformUtility.WorldToScreenPoint(m_prticleCamera, SwitchImages[PushCount].);
+        float width = Screen.width;
+        float height = Screen.height;
+        Vector3 w = SwitchImages[PushCount].rectTransform.parent.GetComponent<RectTransform>().anchoredPosition3D+ SwitchImages[PushCount].rectTransform.anchoredPosition3D + new Vector3(-30.0f,-40.0f,0.0f);
+        w.x = (w.x+ (0.5f*1920.0f)) / 1920.0f* width;
+        w.y = w.y / 1080.0f * height+ (height * 0.5f);
+        particle.gameObject.transform.position = m_prticleCamera.ScreenToWorldPoint(w)+Vector3.forward;
+    }
 	// Update is called once per frame
 	void SwitchUpdate ()
     {
-        particle.gameObject.transform.parent  = SwitchImages[PushCount].transform;
-        particle.gameObject.transform.localPosition = new Vector3(-39.0f, -50.0f, 0.0f);
+
+        PositionUpdate();
         particle.Play();
         SwitchImages[PushCount].sprite = m_enabledImage;
         PushCount++;
