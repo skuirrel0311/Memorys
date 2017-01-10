@@ -14,9 +14,6 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlayStop { get; set; }
 
-    [SerializeField]
-    private GameObject GameClearLogo = null;
-
     //地形の変化が起きる時間の間隔
     public float transitionInterval = 0.1f;
     WaitForSeconds wait;
@@ -103,7 +100,7 @@ public class GameManager : MonoBehaviour
 
         m_WillDestroyObjects = new List<GameObject>();
         // SetWillDestroy();
-        NotificationSystem.I.Indication("スイッチを" + GameEnd.c_MaxDestroyCalcel.ToString() + "回押し、脱出せよ！");
+        StartCoroutine(TkUtils.Deray(3.0f, () => { NotificationSystem.I.Indication("スイッチを『 " + GameEnd.c_MaxDestroyCalcel.ToString() + " 』個起動し、脱出せよ！"); }));
         if (!IsFlat)
         {
             SetIntervalTime(transitionInterval);
