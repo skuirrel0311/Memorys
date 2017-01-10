@@ -77,7 +77,6 @@
         if (isGameEnd) return;
         isGameEnd = true;
         isGameClear = true;
-        //Time.timeScale = 0.1f;
         if (OnGameClearCallBack != null)
             OnGameClearCallBack();
     }

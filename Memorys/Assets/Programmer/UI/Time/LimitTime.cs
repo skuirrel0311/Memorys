@@ -29,7 +29,9 @@ public class LimitTime : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.I.IsPlayStop)return;
         m_timer += Time.deltaTime;
+       
         DrawTime(((int)m_timer/60*100)+((int)m_timer%60),4);
     }
 

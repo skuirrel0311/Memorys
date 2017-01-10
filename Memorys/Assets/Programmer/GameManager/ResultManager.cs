@@ -38,7 +38,8 @@ public class ResultManager : MonoBehaviour {
         int currntTime = (int)PlayerPrefsManager.I.GetCurrentClearTime();
         int bestTime = (int)PlayerPrefsManager.I.GetClearTime(PlayerPrefsManager.I.GetStageNum());
         bestTime = Mathf.Min(currntTime,bestTime);
-
+          PlayerPrefsManager.I.SetClearTime((float)bestTime);
+        PlayerPrefsManager.I.Save();
         m_ClearTime.text = currntTime.ToString();
         m_BestTime.text = bestTime.ToString();
     }
@@ -61,6 +62,7 @@ public class ResultManager : MonoBehaviour {
         {
             int num = PlayerPrefs.GetInt("StageNum");
             num++;
+            PlayData.StageNum++;
             PlayerPrefs.SetInt("StageNum",num);
             PlayerPrefs.Save();
             SceneManager.LoadSceneAsync("Loading");
