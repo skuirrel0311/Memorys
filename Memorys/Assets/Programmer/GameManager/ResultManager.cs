@@ -60,11 +60,7 @@ public class ResultManager : MonoBehaviour {
         }
         else
         {
-            int num = PlayerPrefs.GetInt("StageNum");
-            num++;
             PlayData.StageNum++;
-            PlayerPrefs.SetInt("StageNum",num);
-            PlayerPrefs.Save();
             SceneManager.LoadSceneAsync("Loading");
         }
 

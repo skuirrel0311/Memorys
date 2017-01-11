@@ -20,23 +20,17 @@ public class PlayerOverlap : MonoBehaviour
 
     bool isFound = false;
 
-    //無敵時間
-    Timer invincibleTimer;
-
     // Use this for initialization
     void Start()
     {
         HP = maxHP;
-        invincibleTimer = new Timer();
         enemies = GameObject.FindGameObjectsWithTag("Enemy").Select(n => n.GetComponent<BehaviorTree>()).ToArray();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //m_slider.value = HP;
-        invincibleTimer.Update();
-        if (invincibleTimer.IsLimitTime) invincibleTimer.Stop(true);
+
 
         isFound = false;
 
@@ -69,9 +63,7 @@ public class PlayerOverlap : MonoBehaviour
 
     public void Damage(int point)
     {
-        if (invincibleTimer.IsWorking) return;
-        invincibleTimer.TimerStart(0.5f);
-
+        if (GameManager.I.IsPlayStop) return;
         HP -= point;
         pointGauge.Value = HP;
         PlayerController.I.currentState = PlayerState.Damage;

@@ -43,12 +43,12 @@ public class PlayerPrefsManager : MonoBehaviour {
 
     public int GetStageNum()
     {
-        return PlayerPrefs.GetInt("StageNum");
+        return PlayData.StageNum;
     }
 
     public float GetClearTime(int stagenum)
     {
-        float n = PlayerPrefs.GetFloat("Stage" + stagenum);
+        float n = PlayData.StageNum;
         if(n<=0)
         {
             n = 6039;
