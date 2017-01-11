@@ -334,4 +334,22 @@ public class PlayerController : MonoBehaviour
 
         return hit.collider.gameObject;
     }
+
+    public void FowardForce()
+    {
+        StartCoroutine(FowardForceCourtine());
+    }
+
+    IEnumerator FowardForceCourtine()
+    {
+        float t = 0;
+        while(true)
+        {
+            t += Time.deltaTime;
+            transform.GetComponent<Rigidbody>().AddForce(transform.forward * 6000.0f*Time.deltaTime, ForceMode.Acceleration);
+            if (t > 0.2f) break;
+            yield return null;
+        }
+    }
+
 }
