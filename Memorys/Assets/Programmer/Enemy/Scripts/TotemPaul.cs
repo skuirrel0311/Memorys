@@ -109,7 +109,7 @@ public class TotemPaul : MonoBehaviour
 
             //警戒している時はターゲットの位置を更新する
             Vector3 movement = playerController.movement;
-            movement.y = Random.Range(-0.10f, 0.0f);
+            movement.y = Random.Range(-0.15f, 0.0f);
             //何フレーム先の座標を読むか *（どのくらいの時間で弾が到着するのか）
             float futureRate = Random.Range(0.85f,0.95f) * (transform.position - playerNeck.position).magnitude;
             targetPosition = playerNeck.position + (movement * futureRate);
