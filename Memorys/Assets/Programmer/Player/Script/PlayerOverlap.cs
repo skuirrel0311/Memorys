@@ -95,4 +95,9 @@ public class PlayerOverlap : MonoBehaviour
         HP += point;
         HP = Mathf.Clamp(HP, 0, maxHP);
     }
+
+    void OnCoillisionEnter(Collision col)
+    {
+
+    }
 }

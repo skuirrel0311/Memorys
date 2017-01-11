@@ -36,7 +36,7 @@ public class ResultManager : MonoBehaviour {
         SelectImageChange();
 
         int currntTime = (int)PlayerPrefsManager.I.GetCurrentClearTime();
-        int bestTime = (int)PlayerPrefsManager.I.GetClearTime(PlayerPrefsManager.I.GetStageNum());
+        int bestTime = (int)PlayerPrefsManager.I.GetClearTime(PlayData.StageNum);
         bestTime = Mathf.Min(currntTime,bestTime);
           PlayerPrefsManager.I.SetClearTime((float)bestTime);
         PlayerPrefsManager.I.Save();

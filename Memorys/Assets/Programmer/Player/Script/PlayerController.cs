@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     private float jumpTime = 0;
     private float m_accel;
     private bool isJump;
+    private bool isClumbHint;
 
 
     void Awake()
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
         isSquat = false;
         m_accel = 0;
         isJump = false;
+        isClumbHint = false;
     }
 
     void FixedUpdate()
@@ -125,7 +127,7 @@ public class PlayerController : MonoBehaviour
         if (currentState == PlayerState.Jump) return;
         if (currentState == PlayerState.Clamber) return;
         bool isonGround = IsOnGround();
-        if (isonGround || body.velocity.y > -0.5f)
+        if (isonGround || body.velocity.y > -1.5f)
         {
             if (currentState == PlayerState.Fall)
             {
@@ -289,13 +291,21 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(underRay, out hit, distance))
         {
+            gameObject.transform.SetParent(hit.collider.transform);
             return true;
         }
+        gameObject.transform.parent = null;
         return false;
     }
 
     void OnCollisionEnter(Collision col)
     {
+        if (!isClumbHint && m_accel>0.5f&&GetForwardObject() != null)
+        {
+            isClumbHint = true;
+            GetComponent<Animator>().CrossFadeInFixedTime("ClamberFailed", 0.1f);
+        }
+
         if (currentState == PlayerState.Jump)
         {
             if (IsOnGround())
