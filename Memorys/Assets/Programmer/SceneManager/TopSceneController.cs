@@ -12,15 +12,29 @@ public class TopSceneController : MonoBehaviour
 
     [SerializeField]
     MovieOnUI m_MovieOnUI;
+
+    [SerializeField]
+    Image TitleRogo;
+
+    [SerializeField]
+    GameObject MenuCanvas;
+
+    [SerializeField]
+    GameObject TitleMenu;
+
     float m_Timer;
 
 
     static bool isAwake=false;
 
+    bool isNext;
+    bool isMenu;
     // Use this for initialization
     void Start()
     {
         m_sceneManager = GetComponent<MySceneManager>();
+        isNext = false;
+        isMenu = false;
         if (!isAwake)
         {
             m_MovieOnUI.Play();
@@ -41,8 +55,7 @@ public class TopSceneController : MonoBehaviour
         {
             m_MovieOnUI.gameObject.SetActive(true);
             m_MovieOnUI.Play();
-        }
-        
+        }  
     }
     private void Push_A_Button()
     {
@@ -58,7 +71,22 @@ public class TopSceneController : MonoBehaviour
         }
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
 
+        if(!isMenu)
+        {
+            isMenu = true;
+            MenuCanvas.SetActive(true);
+            TitleMenu.SetActive(false);
+            return;
+        }
+    }
 
-        m_sceneManager.NextScene();
+    public void NextStageSelect()
+    {
+        if (isNext) return;
+        isNext = true;
+        Camera.main.gameObject.transform.DOMoveZ(-65.0f, 2.0f);
+        GetComponent<DoorAnimation>().OpenDoor();
+        StartCoroutine(TkUtils.DoColor(1.0f, TitleRogo, Color.clear));
+        StartCoroutine(TkUtils.Deray(2.0f, () => { m_sceneManager.SceneLoad("StageSelect"); }));
     }
 }

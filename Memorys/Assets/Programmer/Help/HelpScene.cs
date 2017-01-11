@@ -13,7 +13,7 @@ public class HelpScene : MonoBehaviour {
 	void Update () {
 		if(MyInputManager.GetButtonDown(MyInputManager.Button.B))
         {
-            GetComponent<MySceneManager>().SceneLoad("menu");
+            GetComponent<MySceneManager>().SceneLoad("Title");
         }
 	}
 }

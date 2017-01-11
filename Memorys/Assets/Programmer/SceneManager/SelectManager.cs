@@ -66,7 +66,7 @@ public class SelectManager : MonoBehaviour
     {
         if(MyInputManager.GetButtonDown(MyInputManager.Button.B))
         {
-            m_mySceneManager.SceneLoad("menu");
+            m_mySceneManager.SceneLoad("Title");
         }
     }
 

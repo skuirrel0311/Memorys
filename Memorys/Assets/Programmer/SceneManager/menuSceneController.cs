@@ -21,6 +21,11 @@ public class menuSceneController : MonoBehaviour
     [SerializeField]
     RectTransform m_CousorImage;
 
+    [SerializeField]
+    TopSceneController m_topSceneController;
+
+    Image[] MenuImages;
+
     // Use this for initialization
     void Start()
     {
@@ -28,13 +33,14 @@ public class menuSceneController : MonoBehaviour
         m_SelectState = SelectState.STAGE;
         m_SelectChild = select.GetComponentsInChildren<Image>();
         SelectImageChange();
+        MenuImages = gameObject.transform.GetComponentsInChildren<Image>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Push_A_Button();
-        Push_B_Button();
+        //Push_B_Button();
         InputAxis();
 
     }
@@ -43,7 +49,11 @@ public class menuSceneController : MonoBehaviour
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
         if (m_SelectState == SelectState.STAGE)
         {
-            m_sceneManager.NextScene();
+            for (int i = 0; i < MenuImages.Length; i++)
+            {
+                StartCoroutine(TkUtils.DoColor(1.0f, MenuImages[i],Color.clear));
+            }
+            m_topSceneController.NextStageSelect();
         }
         else if (m_SelectState == SelectState.HELP)
         {
