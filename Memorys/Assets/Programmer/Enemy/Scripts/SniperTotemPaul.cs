@@ -6,8 +6,18 @@ using BehaviorDesigner.Runtime.Tasks.Movement;
 
 public class SniperTotemPaul : TotemPaul
 {
+    [SerializeField]
+    float intervalTime = 1.0f;
+    [SerializeField]
+    float chargeTime = 4.0f;
+
     LineRenderer lineRenderer;
     public float range = 50.0f;
+    GameObject bullet;
+    WaitForSeconds intervalWait;
+    [SerializeField]
+    LayerMask layerMask;
+    Transform playerHips;
 
     public override void Start()
     {
@@ -16,27 +26,31 @@ public class SniperTotemPaul : TotemPaul
         lineRenderer.enabled = false;
 
         ParticleSystem thunderEffect = chargeEffect.transform.GetChild(0).GetComponent<ParticleSystem>();
-        float chargeTime = (float)GetComponent<BehaviorTree>().GetVariable("chargeTime").GetValue();
 
-        chargeTime = 3.5f / chargeTime;
+        float effectTime = chargeTime;
+        effectTime = 3.5f / effectTime;
 
         var module = chargeEffect.main;
-        module.simulationSpeed = chargeTime;
+        module.simulationSpeed = effectTime;
         module = thunderEffect.main;
-        module.simulationSpeed = chargeTime;
+        module.simulationSpeed = effectTime;
 
         playerHitEffect = ShotManager.Instance.GetParticle("sniper_hit(Clone)");
         objectHitEffect = ShotManager.Instance.GetParticle("sniper_landing(Clone)");
+        bullet = Instantiate(shotEffect);
+        bullet.SetActive(false);
+        intervalWait = new WaitForSeconds(intervalTime);
+        playerHips = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0);
     }
 
     //攻撃
-    public void Attack(float intervalTime, float chargeTime)
+    public void Attack()
     {
         targetPosition = playerNeck.position;
-        StartCoroutine(Attacking(intervalTime, chargeTime));
+        StartCoroutine(Attacking());
     }
 
-    IEnumerator Attacking(float intervalTime, float chargeTime)
+    IEnumerator Attacking()
     {
         chargeEffect.gameObject.SetActive(true);
 
@@ -55,24 +69,15 @@ public class SniperTotemPaul : TotemPaul
             yield return null;
         }
 
-        Debug.Log("end charge");
         //チャージ終了
         lineRenderer.enabled = false;
 
         //発射
-        if (IsWarning)
-        {
-            //警戒してたらホーミング弾を
-            Shot(playerNeck);
-        }
-        else
-        {
-            Shot(GetTargetPosition());
-        }
-        yield return new WaitForSeconds(intervalTime);
+        StartCoroutine(Shot(GetTargetPosition(), 1));
+        yield return intervalWait;
 
         //終了処理
-        //todo:チャージエフェクトをもう一度使えるように
+        bullet.SetActive(false);
         chargeEffect.Stop(true);
         chargeEffect.gameObject.SetActive(false);
     }
@@ -86,7 +91,7 @@ public class SniperTotemPaul : TotemPaul
 
         if (Physics.Raycast(shotRay, out hit, range))
         {
-            lineRenderer.SetPosition(1, hit.point);
+            lineRenderer.SetPosition(1, hit.point + shotRay.direction * 0.2f);
         }
         else
         {
@@ -112,65 +117,57 @@ public class SniperTotemPaul : TotemPaul
         return new Ray(chargeEffect.transform.position, target - chargeEffect.transform.position);
     }
 
-    protected void Shot(Transform target)
+    protected IEnumerator Shot(Vector3 targetPosition, int arrivalFlame)
     {
-        GameObject bullet = Instantiate(shotEffect, chargeEffect.transform.position, chargeEffect.transform.rotation);
-        bullet.GetComponent<HomingBullet>().SetUp(target, playerHitEffect, objectHitEffect, gameObject);
-        bullet.transform.LookAt(target.position);
-        Destroy(bullet, 10.0f);
+        bullet.transform.position = chargeEffect.transform.position;
+        bullet.transform.LookAt(targetPosition);
+        bullet.SetActive(true);
+
+        Vector3 velocity = targetPosition - bullet.transform.position;
+        Vector3 nextPosition;
+        RaycastHit hit;
+
+        //tフレーム後に到着する
+        velocity = velocity / arrivalFlame;
+        //１フレーム多く計算する
+        arrivalFlame += 1;
+
+        for (int i = 0; i < arrivalFlame; i++)
+        {
+            yield return null;
+            nextPosition = bullet.transform.position + velocity;
+
+            if (Physics.Linecast(bullet.transform.position, nextPosition, out hit, layerMask))
+            {
+                bullet.transform.position = hit.point + velocity.normalized * 0.2f;
+                if (hit.transform.tag == "Player")
+                {
+                    hit.transform.GetComponent<PlayerOverlap>().Damage(2);
+                    playerHitEffect.transform.parent.position = hit.point;
+                    playerHitEffect.Play(true);
+                    break;
+                }
+                else
+                {
+                    objectHitEffect.transform.parent.position = hit.point;
+                    objectHitEffect.Play(true);
+                    break;
+                }
+            }
+
+            //LineCastで当たらなかった
+            bullet.transform.position = nextPosition;
+        }
     }
 
     protected override Vector3 GetTargetPosition()
     {
         if (IsWarning)
         {
-            targetPosition = playerNeck.position;
+            targetPosition = Vector3.Lerp(playerNeck.position, playerHips.position, 0.5f);
         }
         return targetPosition;
     }
-
-    ////警報
-    //public void Alarm()
-    //{
-    //    int count = 0;
-    //    BehaviorTree[] enemies = GameManager.I.enemies;
-    //    for (int i = 0; i < enemies.Length; i++)
-    //    {
-    //        if (name == enemies[i].name) continue;
-    //        if (!enemies[i].enabled) continue;
-    //        if ((bool)enemies[i].GetVariable("IsCalled").GetValue()) continue;
-
-    //        enemies[i].SetVariable("IsCalled", (SharedBool)true);
-    //        count++;
-    //    }
-
-    //    //友達はいない。
-    //    if (count == 0)
-    //    {
-    //        GetComponent<BehaviorTree>().SetVariable("IsCalled", (SharedBool)true);
-    //        return;
-    //    }
-    //    GetComponent<BehaviorTree>().SetVariable("IsCalled", (SharedBool)false);
-    //    //めっちゃ回る
-    //    StartCoroutine("CallFriends");
-    //}
-
-    ////仲間を呼ぶ
-    //IEnumerator CallFriends()
-    //{
-    //    float time = 0.0f;
-    //    float rotationY = transform.eulerAngles.y;
-    //    while (true)
-    //    {
-    //        time += Time.deltaTime;
-
-    //        if (time > 3.0f) break;
-
-    //        rotationY += 4.0f;
-    //        transform.rotation = Quaternion.Euler(0, rotationY, 0);
-    //        yield return null;
-    //    }
-    //}
 
     Vector3 SetY(Vector3 vec, float y)
     {

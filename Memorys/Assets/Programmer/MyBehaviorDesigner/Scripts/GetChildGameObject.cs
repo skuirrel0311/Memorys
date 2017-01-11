@@ -36,6 +36,7 @@ public class GetChildGameObject : Action
         if (objectName != "")
         {
             returnObject.SetValue(targetTransform.FindChild(objectName).gameObject);
+            return returnObject == null ? TaskStatus.Failure : TaskStatus.Success;
         }
 
         returnObject.SetValue(targetGameObject.Value.transform.GetChild(index.Value).gameObject);

@@ -109,8 +109,9 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                 else if (targetObject.GetComponent<Collider>() == null && targetObject.GetComponent<Collider2D>() == null)
                 {
                     // If the linecast doesn't hit anything then that the target object doesn't have a collider and there is nothing in the way
-                    if (targetObject.gameObject.activeSelf)
-                        return targetObject;
+                    //if (targetObject.gameObject.activeSelf)
+                    //    return targetObject;
+                    return null;
                 }
             }
             // return null if the target object is not within sight

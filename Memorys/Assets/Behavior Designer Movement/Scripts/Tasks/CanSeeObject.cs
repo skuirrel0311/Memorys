@@ -108,16 +108,16 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         // Draw the line of sight representation within the scene window
         public override void OnDrawGizmos()
         {
-            //if (eye.Value == null) return;
-            //if (IsViewSight)
-            //    MovementUtility.DrawLineOfSight(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, angleOffset2D.Value, viewDistance.Value, usePhysics2D);
+            if (eye.Value == null) return;
+            if (IsViewSight)
+                MovementUtility.DrawLineOfSight(eye.Value.transform, offset.Value, fieldOfViewAngle.Value, angleOffset2D.Value, viewDistance.Value, usePhysics2D);
 
-            //if (IsViewLine)
-            //{
-            //    if (targetObject.Value == null) return;
+            if (IsViewLine)
+            {
+                if (targetObject.Value == null) return;
 
-            //    Gizmos.DrawLine(eye.Value.transform.position + offset.Value, targetObject.Value.transform.position + targetOffset.Value);
-            //}
+                Gizmos.DrawLine(eye.Value.transform.position + offset.Value, targetObject.Value.transform.position + targetOffset.Value);
+            }
         }
     }
 }

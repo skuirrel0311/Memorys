@@ -10,6 +10,7 @@ public class TotemPaul : MonoBehaviour
     protected ParticleSystem playerHitEffect;
     protected ParticleSystem objectHitEffect;
 
+    protected BehaviorTree m_tree;
     protected Transform playerNeck;
     PlayerController playerController;
     protected Vector3 targetPosition;
@@ -34,12 +35,13 @@ public class TotemPaul : MonoBehaviour
         chargeEffect = transform.FindChild("Charge/ball").GetComponent<ParticleSystem>();
         playerNeck = GameObject.FindGameObjectWithTag("Player").transform.FindChild("Hips/Spine/Spine1/Spine2/Neck");
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        m_tree = GetComponent<BehaviorTree>();
         IsAttacking = false;
         IsWarning = false;
         
         if (!IsAwakeActive)
         {
-            GetComponent<BehaviorTree>().enabled = false;
+            m_tree.enabled = false;
             //ライトをoffにする
             transform.GetChild(1).gameObject.SetActive(false);
         }
@@ -52,7 +54,7 @@ public class TotemPaul : MonoBehaviour
     public virtual void Update()
     {
         //起動していなかったら
-        if (!GetComponent<BehaviorTree>().enabled) return;
+        if (!m_tree.enabled) return;
 
         if (IsDead) return;
 
@@ -60,18 +62,18 @@ public class TotemPaul : MonoBehaviour
         {
             if(!GameManager.I.IsPlayStop)
             {
-                GetComponent<BehaviorTree>().EnableBehavior();
+                m_tree.EnableBehavior();
                 IsStop = false;
             }
         }
         else if(GameManager.I.IsPlayStop)
         {
-            GetComponent<BehaviorTree>().DisableBehavior(true);
+            m_tree.DisableBehavior(true);
             IsStop = true;
             return;
         }
 
-        if ((bool)GetComponent<BehaviorTree>().GetVariable("IsSeePlayer").GetValue())
+        if ((bool)m_tree.GetVariable("IsSeePlayer").GetValue())
             Alertness += Time.deltaTime * 3;
         else
             Alertness -= Time.deltaTime;
@@ -99,9 +101,15 @@ public class TotemPaul : MonoBehaviour
     {
         if (IsWarning)
         {
+            GameObject temp = (GameObject)m_tree.GetVariable("Player").GetValue();
+            if (Random.Range(1, 100) < 33 && temp != null)
+            {
+                return temp.transform.position;
+            }
+
             //警戒している時はターゲットの位置を更新する
             Vector3 movement = playerController.movement;
-            movement.y = Random.Range(-0.15f, 0.0f);
+            movement.y = Random.Range(-0.10f, 0.0f);
             //何フレーム先の座標を読むか *（どのくらいの時間で弾が到着するのか）
             float futureRate = Random.Range(0.85f,0.95f) * (transform.position - playerNeck.position).magnitude;
             targetPosition = playerNeck.position + (movement * futureRate);
@@ -149,14 +157,13 @@ public class TotemPaul : MonoBehaviour
 
     public void QuickStartUp()
     {
-        BehaviorTree tree = GetComponent<BehaviorTree>();
-        tree.enabled = true;
+        m_tree.enabled = true;
         
         Light light = transform.GetChild(1).GetComponent<Light>();
         light.gameObject.SetActive(true);
-        light.spotAngle = (float)tree.GetVariable("ViewAngle").GetValue();
-        light.range = (float)tree.GetVariable("ViewDistance").GetValue();
-        float angleY = (float)tree.GetVariable("ViewAngleY").GetValue() - light.spotAngle;
+        light.spotAngle = (float)m_tree.GetVariable("ViewAngle").GetValue();
+        light.range = (float)m_tree.GetVariable("ViewDistance").GetValue();
+        float angleY = (float)m_tree.GetVariable("ViewAngleY").GetValue() - light.spotAngle;
         angleY = (angleY * 0.5f) - (30.0f * (1 - (angleY / 90.0f)));
         light.transform.localRotation = Quaternion.Euler(new Vector3(angleY, 0, 0));
 
