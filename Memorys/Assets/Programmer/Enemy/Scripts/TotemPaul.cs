@@ -83,7 +83,7 @@ public class TotemPaul : MonoBehaviour
         if (IsWarning)
         {
             //一度警戒すると解けにくくなる
-            IsWarning = Alertness > 0.5f;
+            IsWarning = Alertness > 1.0f;
         }
         else
         {
@@ -157,6 +157,15 @@ public class TotemPaul : MonoBehaviour
 
     public void QuickStartUp()
     {
+        //todo:起動時の演出用に目を光らせる
+        Material[] mats = GetComponent<Renderer>().materials;
+        for (int i = 0; i < mats.Length; i++)
+        {
+            mats[i] = activeMat;
+        }
+        GetComponent<Renderer>().materials = mats;
+
+        //BehaviorTreeを起動する
         m_tree.enabled = true;
         
         Light light = transform.GetChild(1).GetComponent<Light>();
@@ -166,14 +175,6 @@ public class TotemPaul : MonoBehaviour
         float angleY = (float)m_tree.GetVariable("ViewAngleY").GetValue() - light.spotAngle;
         angleY = (angleY * 0.5f) - (30.0f * (1 - (angleY / 90.0f)));
         light.transform.localRotation = Quaternion.Euler(new Vector3(angleY, 0, 0));
-
-        Material[] mats = GetComponent<Renderer>().materials;
-        for (int i = 0; i < mats.Length; i++)
-        {
-            mats[i] = activeMat;
-        }
-
-        GetComponent<Renderer>().materials = mats;
     }
 
     public void Dead()
