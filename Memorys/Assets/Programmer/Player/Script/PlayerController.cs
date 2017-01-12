@@ -346,7 +346,7 @@ public class PlayerController : MonoBehaviour
         while(true)
         {
             t += Time.deltaTime;
-            transform.GetComponent<Rigidbody>().AddForce(transform.forward * 6000.0f*Time.deltaTime, ForceMode.Acceleration);
+            transform.GetComponent<Rigidbody>().AddForce(transform.forward * 3000.0f*Time.deltaTime, ForceMode.Acceleration);
             if (t > 0.2f) break;
             yield return null;
         }

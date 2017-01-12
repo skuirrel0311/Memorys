@@ -11,7 +11,7 @@ public class ResultManager : MonoBehaviour {
     GameObject select;
     enum SelectState
     {
-        SELECT, NEXT, INDEX
+        SELECT,RETRY,NEXT, INDEX
     }
 
     SelectState m_SelectState;
@@ -27,6 +27,15 @@ public class ResultManager : MonoBehaviour {
     [SerializeField]
     Text m_BestTime;
 
+    [SerializeField]
+    Image m_NewRecord;
+
+    [SerializeField]
+    Image[] m_RankSters=new Image[3];
+
+    [SerializeField]
+    Image[] m_BestSters = new Image[3];
+
     // Use this for initialization
     void Start()
     {
@@ -37,8 +46,13 @@ public class ResultManager : MonoBehaviour {
 
         int currntTime = (int)PlayerPrefsManager.I.GetCurrentClearTime();
         int bestTime = (int)PlayerPrefsManager.I.GetClearTime(PlayData.StageNum);
-        bestTime = Mathf.Min(currntTime,bestTime);
-          PlayerPrefsManager.I.SetClearTime((float)bestTime);
+        if(bestTime>currntTime)
+        {
+            //new record
+            bestTime = currntTime;
+            m_NewRecord.gameObject.SetActive(true);
+        }
+        PlayerPrefsManager.I.SetClearTime((float)bestTime);
         PlayerPrefsManager.I.Save();
         m_ClearTime.text = currntTime.ToString();
         m_BestTime.text = bestTime.ToString();
@@ -51,12 +65,17 @@ public class ResultManager : MonoBehaviour {
         InputAxis();
 
     }
+
     private void Push_A_Button()
     {
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
         if (m_SelectState == SelectState.SELECT)
         {
             m_sceneManager.NextScene();
+        }
+        if(m_SelectState == SelectState.RETRY)
+        {
+            SceneManager.LoadSceneAsync("Loading");
         }
         else
         {
