@@ -46,7 +46,7 @@ public class BreakMessage : PopUpMessage
             Renderer r = GetComponent<Renderer>();
             r.material.EnableKeyword("_EMISSION");
             MaterialPropertyBlock block = new MaterialPropertyBlock();
-            block.SetColor("_EmissionColor", new Color(0.5857794f, 0.6801531f, 1.306f));
+            block.SetColor("_EmissionColor", new Color(0.0f, 0.0f, 0.0f));
             r.SetPropertyBlock(block);
 
             IsViewMessage = false;

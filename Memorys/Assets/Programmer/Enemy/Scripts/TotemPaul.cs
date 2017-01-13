@@ -171,10 +171,15 @@ public class TotemPaul : MonoBehaviour
         Light light = transform.GetChild(1).GetComponent<Light>();
         light.gameObject.SetActive(true);
         light.spotAngle = (float)m_tree.GetVariable("ViewAngle").GetValue();
-        light.range = (float)m_tree.GetVariable("ViewDistance").GetValue();
-        float angleY = (float)m_tree.GetVariable("ViewAngleY").GetValue() - light.spotAngle;
-        angleY = (angleY * 0.5f) - (30.0f * (1 - (angleY / 90.0f)));
+        
+        float scale = (light.spotAngle / 30.0f) * 60.0f * 1.125f;
+        float angleY = (2.0f + (light.spotAngle / 30.0f)) * 15.0f;
+        angleY = 90.0f - angleY;
+        float range = (light.spotAngle / 30.0f) * 15;
+        
+        light.transform.GetChild(0).localScale = new Vector3(scale, 75.0f, scale);
         light.transform.localRotation = Quaternion.Euler(new Vector3(angleY, 0, 0));
+        m_tree.GetVariable("ViewDistance").SetValue(range);
     }
 
     public void Dead()

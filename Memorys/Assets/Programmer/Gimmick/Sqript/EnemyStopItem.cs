@@ -28,6 +28,7 @@ public class EnemyStopItem : PopUpMessage
         if (isPush) return;
         if (IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
         {
+            NotificationSystem.I.Indication("石像が１体停止した……");
             enemy.Dead();
             enemy.GetComponent<BehaviorTree>().DisableBehavior(true);
             isPush = true;
