@@ -4,5 +4,5 @@ using UnityEngine;
 
 public static class PlayData
 {
-    public static int StageNum;
+    public static int StageNum=1;
 }

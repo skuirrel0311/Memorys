@@ -11,16 +11,46 @@ public class TkUtils
         action.Invoke();
     }
 
-    public static IEnumerator DoColor(float duration,Image target,Color targetColor)
+    public static IEnumerator DoColor(float duration,Image target,Color targetColor,bool isDouble=false)
     {
         float t = 0;
         Color startColor = target.color;
         while(true)
         {
             t += Time.deltaTime;
-            target.color = Color.Lerp(startColor,targetColor,t/duration);
+            if (isDouble)
+            {
+                float n = t / duration;
+                target.color = Color.Lerp(startColor, targetColor, n*n);
+            }
+            else
+            {
+                target.color = Color.Lerp(startColor, targetColor, t / duration);
+            }
             if (t >= duration) break;
             yield return null;
         }
+    }
+    public  static string PlasticTime(int time)
+    {
+        string s = string.Empty;
+        int h = (int)((float)time / 60.0f);
+        int m = (int)((float)time % 60.0f);
+
+        if (h < 10)
+        {
+            s += "0";
+        }
+
+        s += h.ToString();
+
+        s += ":";
+        if (m < 10)
+        {
+            s += "0";
+        }
+        s += m.ToString();
+
+        return s;
     }
 }
