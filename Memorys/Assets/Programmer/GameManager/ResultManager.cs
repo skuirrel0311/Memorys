@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
-public class ResultManager : MonoBehaviour {
+public class ResultManager : MonoBehaviour
+{
 
     MySceneManager m_sceneManager;
     [SerializeField]
     GameObject select;
+
+    [SerializeField]
+    ClearRankData rankData;
+
     enum SelectState
     {
-        SELECT,RETRY,NEXT, INDEX
+        SELECT, RETRY, NEXT, INDEX
     }
 
     SelectState m_SelectState;
@@ -31,7 +37,7 @@ public class ResultManager : MonoBehaviour {
     Image m_NewRecord;
 
     [SerializeField]
-    Image[] m_RankSters=new Image[3];
+    Image[] m_RankSters = new Image[3];
 
     [SerializeField]
     Image[] m_BestSters = new Image[3];
@@ -46,12 +52,44 @@ public class ResultManager : MonoBehaviour {
 
         int currntTime = (int)PlayerPrefsManager.I.GetCurrentClearTime();
         int bestTime = (int)PlayerPrefsManager.I.GetClearTime(PlayData.StageNum);
-        if(bestTime>currntTime)
+
+        if (bestTime > currntTime)
         {
             //new record
             bestTime = currntTime;
             m_NewRecord.gameObject.SetActive(true);
         }
+
+        //ベストタイムのランク表示
+        if (bestTime < rankData.Elements[PlayData.StageNum - 1].BestTime)
+            m_BestSters[2].gameObject.SetActive(true);
+        if (bestTime < rankData.Elements[PlayData.StageNum - 1].BetterTime)
+            m_BestSters[1].gameObject.SetActive(true);
+
+        //クリアタイムのランク表示
+        if (currntTime < rankData.Elements[PlayData.StageNum - 1].BestTime)
+        {
+            StartCoroutine(TkUtils.Deray(1.0f, () =>
+            {
+                StartCoroutine(TkUtils.DoColor(1.0f, m_RankSters[2], Color.white));
+                m_RankSters[2].rectTransform.localScale = Vector3.one * 5;
+                m_RankSters[2].rectTransform.DOScale(Vector3.one, 1.0f);
+            }));
+        }
+        if (currntTime < rankData.Elements[PlayData.StageNum - 1].BetterTime)
+        {
+
+            StartCoroutine(TkUtils.Deray(1.0f, () =>
+             {
+                 StartCoroutine(TkUtils.DoColor(1.0f, m_RankSters[1], Color.white));
+                 m_RankSters[1].rectTransform.localScale = Vector3.one * 5;
+                 m_RankSters[1].rectTransform.DOScale(Vector3.one, 1.0f);
+             }));
+        }
+        StartCoroutine(TkUtils.DoColor(0.1f, m_RankSters[0], Color.white));
+        m_RankSters[0].rectTransform.localScale = Vector3.one * 5;
+        m_RankSters[0].rectTransform.DOScale(Vector3.one, 0.1f);
+
         PlayerPrefsManager.I.SetClearTime((float)bestTime);
         PlayerPrefsManager.I.Save();
         m_ClearTime.text = currntTime.ToString();
@@ -73,7 +111,7 @@ public class ResultManager : MonoBehaviour {
         {
             m_sceneManager.NextScene();
         }
-        if(m_SelectState == SelectState.RETRY)
+        if (m_SelectState == SelectState.RETRY)
         {
             SceneManager.LoadSceneAsync("Loading");
         }
