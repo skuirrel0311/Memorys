@@ -56,8 +56,8 @@ public class ResultManager : MonoBehaviour
     bool isNext;
 
     float m_time;
-    int currntTime = 10;
-    int bestTime = 10;
+    int currntTime;
+    int bestTime;
     bool isClearTime;
     // Use this for initialization
     void Start()
@@ -71,8 +71,8 @@ public class ResultManager : MonoBehaviour
         SelectImageChange();
 
         LevelText.text = "ステージ " + PlayData.StageNum.ToString();
-        int currntTime = (int)PlayerPrefsManager.I.GetCurrentClearTime();
-        int bestTime = (int)PlayerPrefsManager.I.GetClearTime(PlayData.StageNum);
+        currntTime = (int)PlayerPrefsManager.I.GetCurrentClearTime();
+        bestTime = (int)PlayerPrefsManager.I.GetClearTime(PlayData.StageNum);
 
         if (bestTime > currntTime)
         {
@@ -80,7 +80,7 @@ public class ResultManager : MonoBehaviour
             bestTime = currntTime;
             m_NewRecord.gameObject.SetActive(true);
         }
-
+        Debug.Log(currntTime.ToString());
         PlayerPrefsManager.I.SetClearTime((float)bestTime);
         PlayerPrefsManager.I.Save();
         m_ClearTime.text = currntTime.ToString();
@@ -155,14 +155,15 @@ public class ResultManager : MonoBehaviour
     IEnumerator CurrentTimeUpdate()
     {
         float t = 0.0f;
-
-        while(true)
+        Debug.Log(currntTime);
+        while (true)
         {
             t += Time.deltaTime;
             m_ClearTime.text = TkUtils.PlasticTime((int)Mathf.Lerp(0,currntTime,t*2.0f));
             if (t > 0.5f) break;
             yield return null;
         }
+        Debug.Log(currntTime);
         m_ClearTime.text = TkUtils.PlasticTime(currntTime);
     }
 

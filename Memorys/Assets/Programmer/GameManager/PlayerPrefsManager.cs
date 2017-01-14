@@ -8,7 +8,7 @@ public class PlayerPrefsManager : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
     {
         I = this;
         DontDestroyOnLoad(gameObject);
@@ -51,7 +51,7 @@ public class PlayerPrefsManager : MonoBehaviour {
         float n = PlayerPrefs.GetFloat("Stage" + stagenum);      
         if (n<=0)
         {
-            n = 6039;
+            n = 5999;
         }
         return n;
     }

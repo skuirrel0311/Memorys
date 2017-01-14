@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using DG.Tweening;
 
+using UnityEngine.UI;
+
 public class SelectManager : MonoBehaviour
 {
     public static int c_MaxStage =10;
@@ -29,14 +31,22 @@ public class SelectManager : MonoBehaviour
     [SerializeField]
     bool isR_L;
 
+    [SerializeField]
+    Text m_BestTimeText;
+
+    [SerializeField]
+    ClearRankData rankData;
+
+    [SerializeField]
+    GameObject[] m_Stars = new GameObject[3];
+
     MySceneManager m_mySceneManager;
 
     bool isNext;
     // Use this for initialization
     void Start()
     {
-        PlayerPrefs.SetInt("StageNum",1);
-        PlayerPrefs.Save();
+        PlayData.StageNum = 1;
         m_SelectNumber = 1;
         isInputAxis = false;
         m_Materials = m_BookModel.materials;
@@ -46,6 +56,39 @@ public class SelectManager : MonoBehaviour
         c_MaxStage = MaxStage;
         m_mySceneManager = GetComponent<MySceneManager>();
         isNext = false;
+        BestTimeUpdate();
+    }
+
+    void BestTimeUpdate()
+    {
+        float time =  PlayerPrefsManager.I.GetClearTime(m_SelectNumber);
+        m_BestTimeText.text = TkUtils.PlasticTime((int)time);
+
+        if(time<rankData.Elements[m_SelectNumber-1].BestTime)
+        {
+            m_Stars[2].SetActive(true);
+        }
+        else
+        {
+            m_Stars[2].SetActive(false);
+        }
+        if(time<rankData.Elements[m_SelectNumber-1].BetterTime)
+        {
+            m_Stars[1].SetActive(true);
+        }
+        else
+        {
+            m_Stars[1].SetActive(false);
+        }
+        if(time < 5999)
+        {
+            m_Stars[0].SetActive(true);
+        }
+        else
+        {
+            m_Stars[0].SetActive(false);
+        }
+
     }
 
     // Update is called once per frame
@@ -101,12 +144,12 @@ public class SelectManager : MonoBehaviour
 
         int hash = m_BookAnim.GetCurrentAnimatorStateInfo(0).shortNameHash;
         if (hash != Animator.StringToHash("Idele")) return;
-
             if (v > 0)
         {
             if (m_SelectNumber == 1) return;
             m_BookAnim.Play("L_R", 0);
             m_SelectNumber = (int)Mathf.Max(1, (float)m_SelectNumber - 1);
+            BestTimeUpdate();
             UpdateTexture();
         }
         else
@@ -114,6 +157,7 @@ public class SelectManager : MonoBehaviour
             if (m_SelectNumber == MaxStage) return;
             m_BookAnim.Play("R_L", 0, 0.0f);
             m_SelectNumber = (int)Mathf.Min((float)MaxStage, (float)m_SelectNumber + 1);
+            BestTimeUpdate();
         }
 
 
