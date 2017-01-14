@@ -27,11 +27,11 @@ public class PlayerAnimationContoller : MonoBehaviour
     {
         animator.SetInteger("State", (int)controller.currentState);
 
-        if (controller.currentState == PlayerState.Fall && IsNearGround())
-        {
-            //ChangeAnimation("TopToGround", 0.1f);
-            controller.currentState = PlayerState.Land;
-        }
+        //if (controller.currentState == PlayerState.Fall && IsNearGround())
+        //{
+        //    //ChangeAnimation("TopToGround", 0.1f);
+        //    controller.currentState = PlayerState.Land;
+        //}
 
         //なぜか回転するのでなおす
         unitychan.eulerAngles = transform.eulerAngles;

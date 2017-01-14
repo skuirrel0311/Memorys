@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
 
     public void JumpCheckFall()
     {
+        JumpClamb(GetForwardObject());
         if (IsOnGround(1.0f))
         {
             currentState = PlayerState.Idle;
@@ -247,7 +248,7 @@ public class PlayerController : MonoBehaviour
         //当たったオブジェクトの高さの差が小さければよじ登り
         float dis = Mathf.Abs(transform.position.y - go.transform.position.y);
 
-        if (dis <= 3.1f)
+        if (dis <= 2.1f && dis >= 1.8f)
         {
             currentState = PlayerState.Clamber;
             transform.Translate(0.0f, 0.2f, 0.0f);
@@ -260,6 +261,23 @@ public class PlayerController : MonoBehaviour
         {
             currentState = PlayerState.Clamber;
             GetComponent<Animator>().CrossFadeInFixedTime("ClamberFailed", 0.1f);
+        }
+    }
+
+    void JumpClamb(GameObject go)
+    {
+        if (currentState == PlayerState.Clamber) return;
+        if (go == null) return;
+        //当たったオブジェクトの高さの差が小さければよじ登り
+        float dis = Mathf.Abs(transform.position.y - go.transform.position.y);
+
+        if (dis <= 2.1f&&dis>=1.8f)
+        {
+            currentState = PlayerState.Clamber;
+            transform.Translate(0.0f, 0.2f, 0.0f);
+            GetComponent<Animator>().CrossFadeInFixedTime("Clamber", 0.1f);
+            AkSoundEngine.PostEvent("Player_Climb", gameObject);
+            isJump = false;
         }
     }
 
