@@ -69,14 +69,17 @@ public class TopSceneController : MonoBehaviour
             m_Timer = 0.0f;
             return;
         }
-        if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
-
-        if(!isMenu)
+        if (MyInputManager.GetButtonDown(MyInputManager.Button.A)||
+            MyInputManager.GetButtonDown(MyInputManager.Button.Start)||
+            MyInputManager.GetButtonDown(MyInputManager.Button.B))
         {
-            isMenu = true;
-            MenuCanvas.SetActive(true);
-            TitleMenu.SetActive(false);
-            return;
+            if (!isMenu)
+            {
+                isMenu = true;
+                MenuCanvas.SetActive(true);
+                TitleMenu.SetActive(false);
+                return;
+            }
         }
     }
 

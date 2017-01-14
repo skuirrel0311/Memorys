@@ -19,6 +19,9 @@ public class menuSceneController : MonoBehaviour
     Image[] m_SelectChild;
 
     [SerializeField]
+    Image SelectBack;
+
+    [SerializeField]
     RectTransform m_CousorImage;
 
     [SerializeField]
@@ -94,10 +97,12 @@ public class menuSceneController : MonoBehaviour
             {
                 m_SelectChild[i].color = Color.white;
                 m_CousorImage.anchoredPosition = m_SelectChild[i].GetComponent<RectTransform>().anchoredPosition+Vector2.right*-50.0f;
+                SelectBack.rectTransform.sizeDelta = new Vector2(m_CousorImage.sizeDelta.x+m_SelectChild[i].rectTransform.sizeDelta.x+50.0f ,SelectBack.rectTransform.sizeDelta.y);
+                SelectBack.rectTransform.anchoredPosition = m_CousorImage.anchoredPosition - ((Vector2.right * m_CousorImage.sizeDelta.x)+(Vector2.right * -50));
             }
             else
             {
-                m_SelectChild[i].color = Color.white * 0.5f;
+                m_SelectChild[i].color = Color.white * 0.8f;
             }
         }
     }

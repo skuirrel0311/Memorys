@@ -5,10 +5,19 @@ using UnityEngine.UI;
 
 public class TkUtils
 {
+    public delegate void AbsChangeColor(Image image,Color color);
+    
+
     public static IEnumerator Deray(float duration ,Action action)
     {
         yield return new WaitForSeconds(duration);
         action.Invoke();
+    }
+
+    public static IEnumerator Deray(float duration, AbsChangeColor action,Image image,Color color)
+    {
+        yield return new WaitForSeconds(duration);
+        action(image, color);
     }
 
     public static IEnumerator DoColor(float duration,Image target,Color targetColor,bool isDouble=false)

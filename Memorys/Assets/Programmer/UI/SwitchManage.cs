@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class SwitchManage : MonoBehaviour {
 
@@ -44,7 +45,11 @@ public class SwitchManage : MonoBehaviour {
 
         PositionUpdate();
         particle.Play();
-        SwitchImages[PushCount].sprite = m_enabledImage;
+        Image switchImage = SwitchImages[PushCount];
+        switchImage.sprite = m_enabledImage;
+        switchImage.color = Color.white*0.8f;
+        switchImage.rectTransform.localScale = Vector3.one * 2.0f;
+        switchImage.rectTransform.DOScale(Vector3.one,0.7f);
         PushCount++;
 	}
 }
