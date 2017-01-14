@@ -29,6 +29,7 @@ public class BreakMessage : PopUpMessage
     public override void DrawMessage()
     {
         if (isPush) return;
+        if (Time.timeScale == 0.0f) return;
         //todo:押したらどうのこうの
         messagePrefab.fillAmount = (float)pushCount / maxPushCount;
         if(IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))

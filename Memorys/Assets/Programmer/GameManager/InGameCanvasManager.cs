@@ -24,7 +24,7 @@ public class InGameCanvasManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if(MyInputManager.GetButtonDown(MyInputManager.Button.Start))
+		if(MyInputManager.GetButtonDown(MyInputManager.Button.Start)|| MyInputManager.GetButtonDown(MyInputManager.Button.B))
         {
             Pause(!isPause);
         }
@@ -43,6 +43,7 @@ public class InGameCanvasManager : MonoBehaviour
         else
         {
             isPause = false;
+            PauseObject.GetComponent<Pause>().HelpDiasable();
             PauseObject.SetActive(false);
             Time.timeScale = 1.0f;
             GameManager.I.IsPlayStop = false;

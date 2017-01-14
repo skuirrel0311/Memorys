@@ -26,6 +26,7 @@ public class EnemyStopItem : PopUpMessage
     public override void DrawMessage()
     {
         if (isPush) return;
+        if (Time.timeScale == 0.0f) return;
         if (IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
         {
             NotificationSystem.I.Indication("石像が１体停止した……");

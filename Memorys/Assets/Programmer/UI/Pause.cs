@@ -78,14 +78,19 @@ public class Pause : MonoBehaviour
         {
             if (MyInputManager.GetButtonDown(MyInputManager.Button.B))
             {
-                HelpCanvas.SetActive(false);
-                isHelp = false;
+                HelpDiasable();
             }
             return;
         }
         ButtonUpdate();
         PushButton();
 	}
+
+    public void HelpDiasable()
+    {
+        HelpCanvas.SetActive(false);
+        isHelp = false;
+    }
 
     void PageRotation()
     {

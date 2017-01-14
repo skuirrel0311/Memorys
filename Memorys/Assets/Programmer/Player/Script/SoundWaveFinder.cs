@@ -92,6 +92,7 @@ public class SoundWaveFinder : MonoBehaviour
 
         if (MyInputManager.GetButtonDown(MyInputManager.Button.Y) || Input.GetKeyDown(KeyCode.Y))
         {
+            if (Time.timeScale == 0.0f) return;
             if (power <= 0) return;
             AkSoundEngine.PostEvent("Player_Search",gameObject);
             IsFound = false;

@@ -28,6 +28,7 @@ public class menuSceneController : MonoBehaviour
     TopSceneController m_topSceneController;
 
     Image[] MenuImages;
+    bool isNext;
 
     // Use this for initialization
     void Start()
@@ -37,6 +38,7 @@ public class menuSceneController : MonoBehaviour
         m_SelectChild = select.GetComponentsInChildren<Image>();
         SelectImageChange();
         MenuImages = gameObject.transform.GetComponentsInChildren<Image>();
+        isNext = false;
     }
 
     // Update is called once per frame
@@ -50,6 +52,8 @@ public class menuSceneController : MonoBehaviour
     private void Push_A_Button()
     {
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
+        if (isNext) return;
+        isNext = true;
         if (m_SelectState == SelectState.STAGE)
         {
             for (int i = 0; i < MenuImages.Length; i++)
