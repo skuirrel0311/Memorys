@@ -19,7 +19,7 @@ public class TotemPaul : MonoBehaviour
     PlayerController playerController;
     protected Vector3 targetPosition;
 
-    protected bool IsAttacking;
+    public bool IsAttacking;
     Coroutine attackCoroutine;
     public bool IsWarning { get; private set; }
     //警戒度

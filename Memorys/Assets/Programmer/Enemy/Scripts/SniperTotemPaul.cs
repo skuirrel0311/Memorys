@@ -58,18 +58,21 @@ public class SniperTotemPaul : TotemPaul
         while (true)
         {
             isSeePlayer = (bool)m_tree.GetVariable("IsSeePlayer").GetValue();
-            if (isSeePlayer)
-                time += Time.deltaTime;
-            else
-                time -= Time.deltaTime * 0.5f;
+            time += Time.deltaTime;
 
-            if(time < 0)
+            //一度見失って再度発見した
+            if (isSeePlayer == true && oldIsSeePlayer == false)
             {
-                lineRenderer.enabled = false;
-                chargeEffect.Stop(true);
-                chargeEffect.gameObject.SetActive(false);
-                IsAttacking = false;
-                yield break;
+                //ほとんどチャージし終わっていた
+                if (time > chargeTime * 0.8f)
+                {
+                    break;
+                }
+                else
+                {
+                    //再チャージ
+                    time -= 1.0f;
+                }
             }
 
             if (time > chargeTime) break;
