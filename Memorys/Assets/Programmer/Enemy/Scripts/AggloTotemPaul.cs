@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class AggloTotemPaul : TotemPaul
 {
-    [SerializeField]
-    GameObject firingEffect = null;
+    ParticleSystem firingEffect;
 
     public override void Start()
     {
@@ -12,31 +11,19 @@ public class AggloTotemPaul : TotemPaul
 
         playerHitEffect = ShotManager.Instance.GetParticle("shot_hit(Clone)");
         objectHitEffect = ShotManager.Instance.GetParticle("shot_landing(Clone)");
+        firingEffect = ShotManager.Instance.GetParticle("shot_charge(Clone)");
     }
 
-    //攻撃
-    public void Attack(float intervalTime)
-    {
-        if (IsAttacking) return;
-        targetPosition = playerNeck.position;
-        StartCoroutine("Attacking",intervalTime);
-    }
-
-    IEnumerator Attacking(float intervalTime)
+    protected override IEnumerator Attacking()
     {
         IsAttacking = true;
-        Destroy(Instantiate(firingEffect, chargeEffect.transform.position, Quaternion.identity),2.0f);
+        //発射エフェクト
+        firingEffect.transform.parent.position = chargeEffect.transform.position;
+        firingEffect.Play(true);
+
         //発射
         Shot(GetTargetPosition());
-        float time = 0.0f;
-        while(true)
-        {
-            time += Time.deltaTime;
-            if (time > intervalTime) break;
-
-            yield return null;
-        }
-        yield return new WaitForSeconds(intervalTime);
+        yield return intervalWait;
 
         //終了処理
         IsAttacking = false;

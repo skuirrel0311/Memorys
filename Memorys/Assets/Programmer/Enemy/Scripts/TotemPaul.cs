@@ -10,12 +10,17 @@ public class TotemPaul : MonoBehaviour
     protected ParticleSystem playerHitEffect;
     protected ParticleSystem objectHitEffect;
 
+    protected WaitForSeconds intervalWait;
+    [SerializeField]
+    protected float intervalTime = 1.0f;
+
     protected BehaviorTree m_tree;
     protected Transform playerNeck;
     PlayerController playerController;
     protected Vector3 targetPosition;
 
     protected bool IsAttacking;
+    Coroutine attackCoroutine;
     public bool IsWarning { get; private set; }
     //警戒度
     public float Alertness = 0.0f;
@@ -36,6 +41,7 @@ public class TotemPaul : MonoBehaviour
         playerNeck = GameObject.FindGameObjectWithTag("Player").transform.FindChild("Hips/Spine/Spine1/Spine2/Neck");
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         m_tree = GetComponent<BehaviorTree>();
+        intervalWait = new WaitForSeconds(intervalTime);
         IsAttacking = false;
         IsWarning = false;
         
@@ -123,7 +129,7 @@ public class TotemPaul : MonoBehaviour
         Vector3 vec = targetPosition - transform.position;
         vec.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(vec);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 0.5f);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 30.0f * Time.deltaTime);
 
         if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
             return true;
@@ -135,7 +141,19 @@ public class TotemPaul : MonoBehaviour
         Vector3 vec = targetPosition - transform.position;
         vec.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(vec);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 0.5f);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 30.0f * Time.deltaTime);
+    }
+
+    public void Attack()
+    {
+        if (IsAttacking) return;
+
+        targetPosition = playerNeck.position;
+        attackCoroutine =  StartCoroutine(Attacking());
+    }
+    protected virtual IEnumerator Attacking()
+    {
+        yield return null;
     }
 
     protected virtual void Shot(Vector3 target)
@@ -182,18 +200,42 @@ public class TotemPaul : MonoBehaviour
         m_tree.GetVariable("ViewDistance").SetValue(range);
     }
 
-    public void Dead()
+    public virtual void Dead()
     {
+        if(IsAttacking)
+        {
+            if(attackCoroutine != null) StopCoroutine(attackCoroutine);
+            IsAttacking = false;
+        }
+
         IsDead = true;
         IsWarning = false;
         Alertness = 0.0f;
         transform.GetChild(1).gameObject.SetActive(false);
 
         //todo:緩やかにor演出
+        StartCoroutine("StopEnemy");
+    }
+
+    private IEnumerator StopEnemy()
+    {
+        //todo:緩やかにor演出
         Material[] mats = GetComponent<Renderer>().materials;
-        for(int i = 0;i < mats.Length;i++)
+        Color startColor = mats[0].GetColor("_EmissionColor");
+        Color currentColor;
+        float t = 0.0f;
+        while (true)
         {
-            mats[i].DisableKeyword("_EMISSION");
+            currentColor = Color.Lerp(startColor, Color.black, t);
+            for (int i = 0; i < mats.Length; i++)
+            {
+                mats[i].SetColor("_EmissionColor", currentColor);
+            }
+
+            t += Time.deltaTime;
+
+            if (t > 1.0f) break;
+            yield return null;
         }
     }
 }

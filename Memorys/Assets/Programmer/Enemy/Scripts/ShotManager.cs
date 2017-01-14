@@ -26,6 +26,7 @@ public class ShotManager : BaseManager<ShotManager>
         {
             EffectInstance e;
             e.particle = Instantiate(effects[i],transform).gameObject;
+            e.particle.transform.position = transform.position;
             e.name = e.particle.name;
             effectList.Add(e);
         }

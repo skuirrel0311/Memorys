@@ -7,17 +7,18 @@ using BehaviorDesigner.Runtime.Tasks.Movement;
 public class SniperTotemPaul : TotemPaul
 {
     [SerializeField]
-    float intervalTime = 1.0f;
-    [SerializeField]
     float chargeTime = 4.0f;
 
     LineRenderer lineRenderer;
     public float range = 50.0f;
     GameObject bullet;
-    WaitForSeconds intervalWait;
+
     [SerializeField]
     LayerMask layerMask;
     Transform playerHips;
+
+    bool oldIsSeePlayer;
+    bool isSeePlayer;
 
     public override void Start()
     {
@@ -39,19 +40,14 @@ public class SniperTotemPaul : TotemPaul
         objectHitEffect = ShotManager.Instance.GetParticle("sniper_landing(Clone)");
         bullet = Instantiate(shotEffect);
         bullet.SetActive(false);
-        intervalWait = new WaitForSeconds(intervalTime);
+
         playerHips = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0);
     }
 
     //攻撃
-    public void Attack()
+    protected override IEnumerator Attacking()
     {
-        targetPosition = playerNeck.position;
-        StartCoroutine(Attacking());
-    }
-
-    IEnumerator Attacking()
-    {
+        IsAttacking = true;
         chargeEffect.gameObject.SetActive(true);
 
         chargeEffect.Play(true);
@@ -61,17 +57,18 @@ public class SniperTotemPaul : TotemPaul
         float time = 0.0f;
         while (true)
         {
-            bool isSee = (bool)m_tree.GetVariable("IsSeePlayer").GetValue();
-
-            if (isSee)
+            isSeePlayer = (bool)m_tree.GetVariable("IsSeePlayer").GetValue();
+            if (isSeePlayer)
                 time += Time.deltaTime;
             else
-                time -= Time.deltaTime;
+                time -= Time.deltaTime * 0.5f;
+
             if(time < 0)
             {
                 lineRenderer.enabled = false;
                 chargeEffect.Stop(true);
                 chargeEffect.gameObject.SetActive(false);
+                IsAttacking = false;
                 yield break;
             }
 
@@ -79,6 +76,8 @@ public class SniperTotemPaul : TotemPaul
 
             //チャージしつつプレイヤーの方に向く
             Charge(GetTargetPosition());
+
+            oldIsSeePlayer = isSeePlayer;
             yield return null;
         }
 
@@ -86,13 +85,14 @@ public class SniperTotemPaul : TotemPaul
         lineRenderer.enabled = false;
 
         //発射
-        StartCoroutine(Shot(GetTargetPosition(), 1));
+        StartCoroutine(Shot(targetPosition, 1));
         yield return intervalWait;
 
         //終了処理
         bullet.SetActive(false);
         chargeEffect.Stop(true);
         chargeEffect.gameObject.SetActive(false);
+        IsAttacking = false;
     }
 
     void Charge(Vector3 target)

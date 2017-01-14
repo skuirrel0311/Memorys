@@ -7,7 +7,6 @@ public class TkUtils
 {
     public delegate void AbsChangeColor(Image image,Color color);
     
-
     public static IEnumerator Deray(float duration ,Action action)
     {
         yield return new WaitForSeconds(duration);
@@ -40,6 +39,7 @@ public class TkUtils
             yield return null;
         }
     }
+
     public  static string PlasticTime(int time)
     {
         string s = string.Empty;
@@ -61,5 +61,32 @@ public class TkUtils
         s += m.ToString();
 
         return s;
+    }
+
+    public static float FloatLerp(float a, float b, float t)
+    {
+        t=Mathf.Clamp(t,0,1);
+
+        return a + ((b - a) * t);
+    }
+
+    private static Vector2 GetAngle(Vector3 position, Vector3 target)
+    {
+        Vector2 angle = Vector2.zero;
+
+        angle.x = Vector2.Angle(new Vector2(position.x, position.z), new Vector2(target.x, target.z));
+        
+        return angle;
+    }
+
+    public static float GetAngleY(Vector3 vec1, Vector3 vec2)
+    {
+        Vector3 temp = vec2 - vec1;
+        float vecY = temp.y;
+        //X方向だけのベクトルに変換
+        temp = Vector3.right * temp.magnitude;
+        temp.y = vecY;
+
+        return Vector3.Angle(Vector3.right, temp) * 2.0f;
     }
 }
