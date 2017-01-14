@@ -61,7 +61,20 @@ public class SniperTotemPaul : TotemPaul
         float time = 0.0f;
         while (true)
         {
-            time += Time.deltaTime;
+            bool isSee = (bool)m_tree.GetVariable("IsSeePlayer").GetValue();
+
+            if (isSee)
+                time += Time.deltaTime;
+            else
+                time -= Time.deltaTime;
+            if(time < 0)
+            {
+                lineRenderer.enabled = false;
+                chargeEffect.Stop(true);
+                chargeEffect.gameObject.SetActive(false);
+                yield break;
+            }
+
             if (time > chargeTime) break;
 
             //チャージしつつプレイヤーの方に向く
