@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using BehaviorDesigner.Runtime.Tasks.Movement;
 
 public class Bullet : MonoBehaviour
 {
@@ -26,8 +25,6 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        Debug.Log("hitObject = " + col.gameObject.name);
-
         if (col.gameObject.tag == "Player")
             PlayerHit(col.gameObject);
         else
