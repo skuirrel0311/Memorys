@@ -24,7 +24,11 @@ public class InGameCanvasManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if(MyInputManager.GetButtonDown(MyInputManager.Button.Start)|| MyInputManager.GetButtonDown(MyInputManager.Button.B))
+		if(MyInputManager.GetButtonDown(MyInputManager.Button.Start))
+        {
+            Pause(!isPause);
+        }
+        else if(isPause&&MyInputManager.GetButtonDown(MyInputManager.Button.B))
         {
             Pause(!isPause);
         }
