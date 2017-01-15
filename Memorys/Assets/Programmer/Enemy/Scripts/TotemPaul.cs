@@ -40,6 +40,7 @@ public class TotemPaul : MonoBehaviour
 
     public bool IsStop = false;
     public bool IsDead = false;
+    public bool IsCameraEffect = false;
 
     public virtual void Start()
     {
@@ -183,6 +184,10 @@ public class TotemPaul : MonoBehaviour
     public void StartUp()
     {
         if (IsAwakeActive) return;
+        if(IsCameraEffect)
+        {
+            CameraManager.I.CameraChange(2,1.5f);
+        }
         activateCoroutineList.Add(StartCoroutine("QuickStartUp"));
     }
 
