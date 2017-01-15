@@ -23,7 +23,7 @@ public class Fairy : MonoBehaviour
 
     [SerializeField]
     GameObject magicEffect = null;
-    Coroutine coroutine = null;
+    List<Coroutine> coroutineList = new List<Coroutine>();
 
     SoundWaveFinder playerFinder;
 
@@ -115,11 +115,11 @@ public class Fairy : MonoBehaviour
     //地形変化を激しくする
     public void Magic(float changeTime)
     {
-        if(coroutine != null)
+        if(coroutineList.Count != 0)
         {
-            StopCoroutine(coroutine);
+            for(int i = 0;i< coroutineList.Count;i++) StopCoroutine(coroutineList[i]);
         }
-        coroutine = StartCoroutine(ViolentlyTransition(changeTime));
+        coroutineList.Add(StartCoroutine(ViolentlyTransition(changeTime)));
         //todo:エフェクト
     }
 
@@ -127,11 +127,44 @@ public class Fairy : MonoBehaviour
     {
         float intervalTime = GameManager.I.transitionInterval;
         GameManager.I.SetIntervalTime(intervalTime * 0.05f);
+        coroutineList.Add(StartCoroutine(SetLight(Color.red, 1.0f)));
 
         yield return new WaitForSeconds(changeTime);
 
         GameManager.I.SetIntervalTime(intervalTime);
-        coroutine = null;
+        coroutineList.Add(StartCoroutine(SetLight(Color.white, 1.0f)));
+
+        for (int i = coroutineList.Count-1; i >= 0; i--)
+        {
+            coroutineList[i] = null;
+            coroutineList.Remove(coroutineList[i]);
+        }
+    }
+
+    IEnumerator SetLight(Color targetLightColor,float time)
+    {
+        float t = 0.0f;
+        Light spotLight = transform.GetChild(0).GetComponent<Light>();
+        Color currentColor;
+        Color startColor = spotLight.color;
+
+        Renderer r = spotLight.transform.GetChild(0).GetComponent<Renderer>();
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+
+        while (true)
+        {
+            currentColor = Color.Lerp(startColor, targetLightColor, t / time);
+            spotLight.color = currentColor;
+
+            currentColor.a = 0.1f;
+
+            block.SetColor("_TintColor", currentColor);
+            r.SetPropertyBlock(block);
+            t += Time.deltaTime;
+
+            if (t > time) break;
+            yield return null;
+        }
     }
 
     FloorTransition GetPlayerUnderFloor()
