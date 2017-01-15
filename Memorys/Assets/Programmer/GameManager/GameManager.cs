@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
             if (enemies[i].gameObject.name == "TotemPaul")
             {
                 TotemPaul enemy = enemies[i].GetComponent<TotemPaul>();
-                enemy.QuickStartUp();
+                StartCoroutine(enemy.QuickStartUp());
                 GenerateStopItem(enemy);
             }
         }

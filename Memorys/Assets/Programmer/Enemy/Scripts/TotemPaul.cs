@@ -27,7 +27,11 @@ public class TotemPaul : MonoBehaviour
 
     //動いている時のマテリアル
     [SerializeField]
-    private Material activeMat = null;
+    private Texture activeTex = null;
+    [SerializeField]
+    private Texture emissionMap = null;
+    [SerializeField]
+    private Texture normalMap = null;
 
     [SerializeField]
     bool IsAwakeActive = false;
@@ -170,18 +174,16 @@ public class TotemPaul : MonoBehaviour
     public void StartUp()
     {
         if (IsAwakeActive) return;
-        QuickStartUp();
+        StartCoroutine("QuickStartUp");
     }
 
-    public void QuickStartUp()
+    public IEnumerator QuickStartUp()
     {
-        //todo:起動時の演出用に目を光らせる
-        Material[] mats = GetComponent<Renderer>().materials;
-        for (int i = 0; i < mats.Length; i++)
-        {
-            mats[i] = activeMat;
-        }
-        GetComponent<Renderer>().materials = mats;
+        GetComponent<Renderer>().materials = GetActiveMaterial();
+        Coroutine coroutine = StartCoroutine(SetColor());
+
+        //カラーの適用を待つ
+        yield return coroutine;
 
         //BehaviorTreeを起動する
         m_tree.enabled = true;
@@ -198,6 +200,58 @@ public class TotemPaul : MonoBehaviour
         light.transform.GetChild(0).localScale = new Vector3(scale, 75.0f, scale);
         light.transform.localRotation = Quaternion.Euler(new Vector3(angleY, 0, 0));
         m_tree.GetVariable("ViewDistance").SetValue(range);
+
+        yield return null;
+    }
+
+    protected Material[] GetActiveMaterial()
+    {
+        Material[] mats = GetComponent<Renderer>().materials;
+
+        for (int i = 0; i < mats.Length; i++)
+        {
+            mats[i].SetTexture("_MainTex", activeTex);
+            mats[i].SetTexture("_EmissionMap", emissionMap);
+            mats[i].SetTexture("_BumpMap", normalMap);
+            mats[i].SetTexture("_DetailAlbedoMap", null);
+            mats[i].SetTexture("_DetailNormalMap", null);
+        }
+        return mats;
+    }
+
+    protected virtual IEnumerator SetColor()
+    {
+        Color startColor = Color.black;
+        Color endColor = new Color(1.0f, 0.4411765f, 0.4411765f);
+        Color overColor = new Color(3.0f, 1.32353f, 1.32353f);
+
+        Coroutine coroutine = StartCoroutine(SetEmissionColor(startColor, overColor, 1.0f));
+
+        yield return coroutine;
+
+        coroutine = StartCoroutine(SetEmissionColor(overColor, endColor, 1.5f));
+
+        yield return coroutine;
+    }
+
+    protected IEnumerator SetEmissionColor(Color startColor, Color endColor, float time)
+    {
+        Material[] mats = GetComponent<Renderer>().materials;
+        Color currentColor;
+        float t = 0.0f;
+
+        while (true)
+        {
+            currentColor = Color.Lerp(startColor, endColor, t);
+            for (int i = 0; i < mats.Length; i++)
+            {
+                mats[i].SetColor("_EmissionColor", currentColor);
+            }
+
+            t += Time.deltaTime;
+            if (t > time) break;
+            yield return null;
+        }
     }
 
     public virtual void Dead()
@@ -214,28 +268,6 @@ public class TotemPaul : MonoBehaviour
         transform.GetChild(1).gameObject.SetActive(false);
 
         //todo:緩やかにor演出
-        StartCoroutine("StopEnemy");
-    }
-
-    private IEnumerator StopEnemy()
-    {
-        //todo:緩やかにor演出
-        Material[] mats = GetComponent<Renderer>().materials;
-        Color startColor = mats[0].GetColor("_EmissionColor");
-        Color currentColor;
-        float t = 0.0f;
-        while (true)
-        {
-            currentColor = Color.Lerp(startColor, Color.black, t);
-            for (int i = 0; i < mats.Length; i++)
-            {
-                mats[i].SetColor("_EmissionColor", currentColor);
-            }
-
-            t += Time.deltaTime;
-
-            if (t > 1.0f) break;
-            yield return null;
-        }
+        StartCoroutine(SetEmissionColor(GetComponent<Renderer>().materials[0].GetColor("_EmissionColor"), Color.black, 2.0f));
     }
 }
