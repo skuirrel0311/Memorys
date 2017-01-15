@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
 
 public class TotemPaul : MonoBehaviour
@@ -32,6 +33,7 @@ public class TotemPaul : MonoBehaviour
     private Texture emissionMap = null;
     [SerializeField]
     private Texture normalMap = null;
+    protected List<Coroutine> activateCoroutineList = new List<Coroutine>();
 
     [SerializeField]
     bool IsAwakeActive = false;
@@ -48,7 +50,7 @@ public class TotemPaul : MonoBehaviour
         intervalWait = new WaitForSeconds(intervalTime);
         IsAttacking = false;
         IsWarning = false;
-        
+
         if (!IsAwakeActive)
         {
             m_tree.enabled = false;
@@ -68,15 +70,15 @@ public class TotemPaul : MonoBehaviour
 
         if (IsDead) return;
 
-        if(IsStop)
+        if (IsStop)
         {
-            if(!GameManager.I.IsPlayStop)
+            if (!GameManager.I.IsPlayStop)
             {
                 m_tree.EnableBehavior();
                 IsStop = false;
             }
         }
-        else if(GameManager.I.IsPlayStop)
+        else if (GameManager.I.IsPlayStop)
         {
             m_tree.DisableBehavior(true);
             IsStop = true;
@@ -84,9 +86,16 @@ public class TotemPaul : MonoBehaviour
         }
 
         if ((bool)m_tree.GetVariable("IsSeePlayer").GetValue())
-            Alertness += Time.deltaTime * 3;
+        {
+            Alertness += Time.deltaTime * 3.0f;
+        }
         else
+        {
+            float angleY = TkUtils.GetAngleY(chargeEffect.transform.position, targetPosition);
+            if (angleY > 70.0f)
+                Alertness -= Time.deltaTime * 3.0f;
             Alertness -= Time.deltaTime;
+        }
 
         Alertness = Mathf.Clamp(Alertness, 0.0f, 3.0f);
 
@@ -112,16 +121,16 @@ public class TotemPaul : MonoBehaviour
         if (IsWarning)
         {
             GameObject temp = (GameObject)m_tree.GetVariable("Player").GetValue();
-            if (Random.Range(1, 100) < 33 && temp != null)
+            if (Random.Range(1, 100) < 5 && temp != null)
             {
                 return temp.transform.position;
             }
 
             //警戒している時はターゲットの位置を更新する
             Vector3 movement = playerController.movement;
-            movement.y = Random.Range(-0.15f, 0.0f);
+            movement.y = Random.Range(-0.3f, 0.2f);
             //何フレーム先の座標を読むか *（どのくらいの時間で弾が到着するのか）
-            float futureRate = Random.Range(0.85f,0.95f) * (transform.position - playerNeck.position).magnitude;
+            float futureRate = Random.Range(0.70f, 1.30f) * (transform.position - playerNeck.position).magnitude;
             targetPosition = playerNeck.position + (movement * futureRate);
         }
         return targetPosition;
@@ -153,7 +162,7 @@ public class TotemPaul : MonoBehaviour
         if (IsAttacking) return;
 
         targetPosition = playerNeck.position;
-        attackCoroutine =  StartCoroutine(Attacking());
+        attackCoroutine = StartCoroutine(Attacking());
     }
     protected virtual IEnumerator Attacking()
     {
@@ -164,7 +173,7 @@ public class TotemPaul : MonoBehaviour
     {
         GameObject g = Instantiate(shotEffect, chargeEffect.transform.position, chargeEffect.transform.rotation);
         Vector3 velocity = target - chargeEffect.transform.position;
-        g.GetComponent<Bullet>().SetUp(velocity.normalized,playerHitEffect, objectHitEffect, gameObject);
+        g.GetComponent<Bullet>().SetUp(velocity.normalized, playerHitEffect, objectHitEffect, gameObject);
         g.transform.LookAt(target);
 
         Destroy(g, 10.0f);
@@ -174,34 +183,33 @@ public class TotemPaul : MonoBehaviour
     public void StartUp()
     {
         if (IsAwakeActive) return;
-        StartCoroutine("QuickStartUp");
+        activateCoroutineList.Add(StartCoroutine("QuickStartUp"));
     }
 
     public IEnumerator QuickStartUp()
     {
         GetComponent<Renderer>().materials = GetActiveMaterial();
-        Coroutine coroutine = StartCoroutine(SetColor());
-
+        Coroutine coroutine = StartCoroutine(SetColor(true));
+        activateCoroutineList.Add(coroutine);
         //カラーの適用を待つ
         yield return coroutine;
 
+        if (IsDead) yield break;
         //BehaviorTreeを起動する
         m_tree.enabled = true;
-        
+
         Light light = transform.GetChild(1).GetComponent<Light>();
         light.gameObject.SetActive(true);
         light.spotAngle = (float)m_tree.GetVariable("ViewAngle").GetValue();
-        
+
         float scale = (light.spotAngle / 30.0f) * 60.0f * 1.125f;
         float angleY = (2.0f + (light.spotAngle / 30.0f)) * 15.0f;
         angleY = 90.0f - angleY;
         float range = (light.spotAngle / 30.0f) * 15;
-        
+
         light.transform.GetChild(0).localScale = new Vector3(scale, 75.0f, scale);
         light.transform.localRotation = Quaternion.Euler(new Vector3(angleY, 0, 0));
         m_tree.GetVariable("ViewDistance").SetValue(range);
-
-        yield return null;
     }
 
     protected Material[] GetActiveMaterial()
@@ -219,18 +227,18 @@ public class TotemPaul : MonoBehaviour
         return mats;
     }
 
-    protected virtual IEnumerator SetColor()
+    protected virtual IEnumerator SetColor(bool atStart = false)
     {
         Color startColor = Color.black;
         Color endColor = new Color(1.0f, 0.4411765f, 0.4411765f);
         Color overColor = new Color(3.0f, 1.32353f, 1.32353f);
 
         Coroutine coroutine = StartCoroutine(SetEmissionColor(startColor, overColor, 1.0f));
-
+        if (atStart) activateCoroutineList.Add(coroutine);
         yield return coroutine;
 
         coroutine = StartCoroutine(SetEmissionColor(overColor, endColor, 1.5f));
-
+        if (atStart) activateCoroutineList.Add(coroutine);
         yield return coroutine;
     }
 
@@ -256,10 +264,15 @@ public class TotemPaul : MonoBehaviour
 
     public virtual void Dead()
     {
-        if(IsAttacking)
+        if (IsAttacking)
         {
-            if(attackCoroutine != null) StopCoroutine(attackCoroutine);
+            if (attackCoroutine != null) StopCoroutine(attackCoroutine);
             IsAttacking = false;
+        }
+
+        foreach (Coroutine coroutine in activateCoroutineList)
+        {
+            StopCoroutine(coroutine);
         }
 
         IsDead = true;
