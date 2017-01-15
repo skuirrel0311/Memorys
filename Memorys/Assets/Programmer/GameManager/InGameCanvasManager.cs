@@ -8,6 +8,9 @@ public class InGameCanvasManager : MonoBehaviour
     GameObject GameOver;
 
     [SerializeField]
+    ParticleSystem GameClearParticles;
+
+    [SerializeField]
     GameObject PauseObject;
     bool isPause;
 
@@ -17,6 +20,11 @@ public class InGameCanvasManager : MonoBehaviour
         GameManager.I.m_GameEnd.OnGameOverCallBack += () => 
         {
             GameOver.SetActive(true);
+        };
+
+        GameManager.I.m_GameEnd.OnGameClearCallBack+= () =>
+        {
+            GameClearParticles.Play();
         };
         isPause = false;
 	}
