@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     public BehaviorTree[] enemies;
     private AtScreenEdgeMessage[] directionMessages;
-    
+
     private GameObject floorObj = null;
 
     //ゴールまでの床
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         m_GameEnd.OnGameClearCallBack = () =>
         {
             Camera.main.GetComponent<CameraContoller>().IsWork = false;
-            StartCoroutine( TkUtils.Deray(2.0f,() => { SceneManager.LoadSceneAsync("Result"); }));
+            StartCoroutine(TkUtils.Deray(2.0f, () => { SceneManager.LoadSceneAsync("Result"); }));
         };
 
         //ターゲットのオブジェクトを取得してポジションをセットする
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         if (m_TargetPoints != null)
         {
-            if(OneByOne)
+            if (OneByOne)
                 SetTargetRandom();
             else
                 SetTarget();
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator GameStartWait(float wait)
     {
-       yield  return new WaitForSeconds(wait);
+        yield return new WaitForSeconds(wait);
         IsPlayStop = false;
     }
     private void SetEventPushSwitch()
@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
             {
                 TotemPaul enemy = enemies[i].GetComponent<TotemPaul>();
                 StartCoroutine(enemy.QuickStartUp());
-                GenerateStopItem(enemy);
+                GenerateStopItem(enemy, 0);
             }
         }
     }
@@ -314,7 +314,7 @@ public class GameManager : MonoBehaviour
 
     public void PushSwitch()
     {
-        if(OnPushSwitch != null)
+        if (OnPushSwitch != null)
         {
             OnPushSwitch();
         }
@@ -323,14 +323,15 @@ public class GameManager : MonoBehaviour
     private int GenerateEnemy()
     {
         int enemyNum = 0;
+        int enemyIndex = m_GameEnd.m_destoryCancelCount + 1;
         for (int i = 0; i < enemies.Length; i++)
         {
             //中心のトーテムポール
-            if (enemies[i].gameObject.name == "TotemPaul (" + m_GameEnd.m_destoryCancelCount.ToString() + ")")
+            if (enemies[i].gameObject.name == "TotemPaul (" + enemyIndex.ToString() + ")")
             {
                 TotemPaul enemy = enemies[i].GetComponent<TotemPaul>();
                 enemy.StartUp();
-                GenerateStopItem(enemy);
+                GenerateStopItem(enemy, enemyIndex);
                 enemyNum++;
             }
         }
@@ -338,13 +339,12 @@ public class GameManager : MonoBehaviour
         return enemyNum;
     }
 
-    private void GenerateStopItem(TotemPaul enemy)
+    private void GenerateStopItem(TotemPaul enemy, int index)
     {
         if (itemPoints == null) return;
-
-        for(int i = 0;i< itemPoints.Length;i++)
+        for (int i = 0; i < itemPoints.Length; i++)
         {
-            if(itemPoints[i].name == "itemPoint" + m_GameEnd.m_destoryCancelCount.ToString())
+            if (itemPoints[i].name == "itemPoint" + index.ToString())
             {
                 EnemyStopItem item = Instantiate(enemyStopItem, itemPoints[i]).GetComponent<EnemyStopItem>();
                 item.transform.localPosition = Vector3.zero;

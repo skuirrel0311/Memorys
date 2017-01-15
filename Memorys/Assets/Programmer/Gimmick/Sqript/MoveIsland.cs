@@ -16,7 +16,10 @@ public class MoveIsland : MonoBehaviour
     int index;
     //行きか帰りか
     bool isReturn;
-    
+
+    [SerializeField]
+    float waitTime = 4.0f;
+    Timer waitTimer;
 
     void Start()
     {
@@ -24,10 +27,20 @@ public class MoveIsland : MonoBehaviour
         nextPosition = wayPoints[index].position;
 
         velocity = Vector3.Normalize(nextPosition - transform.position) * speed;
+        waitTimer = new Timer();
     }
 
     void Update()
     {
+        waitTimer.Update();
+
+        if(waitTimer.IsLimitTime)
+        {
+            waitTimer.Stop(true);
+        }
+
+        if (waitTimer.IsWorking) return;
+
         if (Vector3.Distance(nextPosition, transform.position) < 0.1f)
         {
             index = isReturn ? index - 1 : index + 1;
@@ -41,6 +54,7 @@ public class MoveIsland : MonoBehaviour
             }
             else
             {
+                waitTimer.TimerStart(waitTime);
                 nextPosition = wayPoints[index].position;
                 velocity = Vector3.Normalize(nextPosition - transform.position) * speed;
             }
