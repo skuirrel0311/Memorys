@@ -14,6 +14,9 @@ public class GoalEvent : MonoBehaviour {
     [SerializeField]
     GameObject UpperFloor;
 
+    [SerializeField]
+    float TargetPositionY = -0.64f;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -28,7 +31,7 @@ public class GoalEvent : MonoBehaviour {
             CameraManager.I.CameraChange(0,3.0f,true,true,() => { GameManager.I.IsPlayStop = false; });
             RightDoor.transform.DOMoveX(-8.5f,3.0f);
             LeftDoor.transform.DOMoveX(8.5f,3.0f);
-            UpperFloor.transform.DOLocalMoveY(4.8f,3.0f);
+            UpperFloor.transform.DOMoveY(TargetPositionY, 3.0f);
         };
 	}
 }
