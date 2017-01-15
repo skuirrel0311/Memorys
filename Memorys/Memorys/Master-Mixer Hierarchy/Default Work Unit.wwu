@@ -3,7 +3,24 @@
 	<Busses>
 		<WorkUnit Name="Default Work Unit" ID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}" PersistMode="Standalone">
 			<ChildrenList>
-				<Bus Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"/>
+				<Bus Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}">
+					<ChildrenList>
+						<Bus Name="Music" ID="{1ED28C90-21F1-44AC-9528-1696211B3BDC}"/>
+						<Bus Name="SFX" ID="{529E8067-04AE-442C-A06A-410650E5C054}">
+							<DuckingList>
+								<DuckItem>
+									<BusRef Name="Music" ID="{1ED28C90-21F1-44AC-9528-1696211B3BDC}"/>
+									<DuckingParam>
+										<Volume>-4</Volume>
+										<FadeInTime>1</FadeInTime>
+										<FadeOutTime>1</FadeOutTime>
+										<FadeCurve>FadeLinear</FadeCurve>
+									</DuckingParam>
+								</DuckItem>
+							</DuckingList>
+						</Bus>
+					</ChildrenList>
+				</Bus>
 				<Bus Name="Master Secondary Bus" ID="{D2E0BC7E-7B3F-4FFE-A670-FAE02761B631}"/>
 				<MotionBus Name="Master Motion Bus" ID="{20A630BA-3398-4676-B927-1004DFE41FD8}"/>
 			</ChildrenList>

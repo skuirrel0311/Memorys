@@ -5,6 +5,96 @@
 			<ChildrenList>
 				<Folder Name="SE" ID="{2218928F-9693-45E2-8221-E6D9492AC0D9}" ShortID="595101026">
 					<ChildrenList>
+						<Sound Name="Climb_3" ID="{40946851-5263-4EE0-BC73-5F12A09933F4}" ShortID="576005749" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Landing_3" ID="{D5126C19-49EB-40FD-9E99-0D5EB8570F19}" ShortID="514799383">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="9.76562500000001E-02"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.317881058673469"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Landing\Landing_3.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Landing_3" ID="{D5126C19-49EB-40FD-9E99-0D5EB8570F19}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="BGM" ID="{67D0D0C0-565F-4DA9-9AF9-B209AE1D437F}" ShortID="26531388"/>
+				<Folder Name="Ambience" ID="{A49CF3A7-B364-4E4C-BFA9-9C90DE4ADD47}" ShortID="524253980">
+					<ChildrenList>
+						<Sound Name="Babble" ID="{C43F348C-A008-4462-8698-3810F53C714E}" ShortID="39616417" Type="SoundFX">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{5EA12068-D271-48C5-95F8-8F5CAF9C07F5}">
+												<PropertyList>
+													<Property Name="Max" Type="Real64" Value="50"/>
+													<Property Name="Min" Type="Real64" Value="-50"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="PositioningType" Type="int16" Value="1"/>
+								<Property Name="Spatialization" Type="bool" Value="False"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="Object_Attenuation" ID="{05033A8B-67C1-4F1E-82C7-2A73B7372E7C}" WorkUnitID="{D5D8F5B2-FE2E-419E-8FC4-508634E556AB}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Babble" ID="{346EDF6F-2711-4923-B732-9CDE8307467D}" ShortID="178554552">
+									<PropertyList>
+										<Property Name="FadeOutDuration" Type="Real64" Value="1.09614158163267E-02"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Babble.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Babble" ID="{346EDF6F-2711-4923-B732-9CDE8307467D}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</Folder>
+				<ActorMixer Name="player" ID="{8D52B0FB-2283-4BAB-ABAC-DE7A47D1833A}" ShortID="508838155">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>8</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="SFX" ID="{529E8067-04AE-442C-A06A-410650E5C054}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
 						<RandomSequenceContainer Name="Footsteps" ID="{A395309A-3BF0-4A36-BE4F-9DA0B47B9201}" ShortID="5114">
 							<PropertyList>
 								<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
@@ -115,45 +205,6 @@
 								</Sound>
 							</ChildrenList>
 						</RandomSequenceContainer>
-						<Sound Name="Totem_move" ID="{93DF39B4-6C2E-4993-B4C1-B9DC15F88B95}" ShortID="892851723" Type="SoundFX">
-							<PropertyList>
-								<Property Name="IsLoopingInfinite" Type="bool" Value="False"/>
-								<Property Name="Pitch" Type="int32">
-									<ModifierList>
-										<ModifierInfo>
-											<Modifier Name="" ID="{EBF5CAB8-02C3-4828-8C98-D16C75D33D71}">
-												<PropertyList>
-													<Property Name="Enabled" Type="bool" Value="True"/>
-													<Property Name="Max" Type="Real64" Value="150"/>
-													<Property Name="Min" Type="Real64" Value="-150"/>
-												</PropertyList>
-											</Modifier>
-										</ModifierInfo>
-									</ModifierList>
-								</Property>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="ToteMove" ID="{615F0222-41BE-4E23-800B-85D640D8F568}" ShortID="821184564">
-									<PropertyList>
-										<Property Name="FadeInDuration" Type="Real64" Value="0.035076530612245"/>
-										<Property Name="FadeOutDuration" Type="Real64" Value="7.17474489795917E-02"/>
-									</PropertyList>
-									<Language>SFX</Language>
-									<AudioFile>ToteMove.wav</AudioFile>
-								</AudioFileSource>
-							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="ToteMove" ID="{615F0222-41BE-4E23-800B-85D640D8F568}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
 						<RandomSequenceContainer Name="Climb" ID="{6E6C4EFF-2F51-4605-AD83-9AD2A225E642}" ShortID="854960167">
 							<PropertyList>
 								<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
@@ -173,7 +224,7 @@
 								<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="2"/>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>-5</Value>
+										<Value>-3</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -241,111 +292,20 @@
 								</Sound>
 							</ChildrenList>
 						</RandomSequenceContainer>
-						<Sound Name="Discovery" ID="{E3D96CC0-E8FA-4CDA-85A3-195AEC01494F}" ShortID="1066153496" Type="SoundFX">
+						<Sound Name="Jump" ID="{7C8011E0-C145-4704-83B4-B6887B39BC5E}" ShortID="457248927" Type="SoundFX">
 							<PropertyList>
 								<Property Name="Pitch" Type="int32">
-									<ValueList>
-										<Value>-800</Value>
-									</ValueList>
-								</Property>
-								<Property Name="PositioningType" Type="int16" Value="1"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Attenuation">
-									<ObjectRef Name="SE" ID="{06551A6B-829B-43B9-9905-89F62B6C767F}" WorkUnitID="{7F9DC3F7-3499-4AB5-88CC-0738E331008A}"/>
-								</Reference>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="Discovery" ID="{0D073B75-1AB4-4403-B154-4078AE70C1F3}" ShortID="1027748973">
-									<PropertyList>
-										<Property Name="FadeInDuration" Type="Real64" Value="3.18877551020408E-02"/>
-										<Property Name="FadeOutDuration" Type="Real64" Value="0.155452806122449"/>
-									</PropertyList>
-									<Language>SFX</Language>
-									<AudioFile>Discovery.wav</AudioFile>
-								</AudioFileSource>
-							</ChildrenList>
-							<PositioningInfo>
-								<Panner Name="" ID="{1F1FE739-FE31-413F-862B-19F50B8F801D}">
-									<PropertyList>
-										<Property Name="PanX" Type="Real64" Value="-100"/>
-										<Property Name="PanY" Type="Real64" Value="100"/>
-									</PropertyList>
-								</Panner>
-							</PositioningInfo>
-							<ActiveSourceList>
-								<ActiveSource Name="Discovery" ID="{0D073B75-1AB4-4403-B154-4078AE70C1F3}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-						<Sound Name="Search" ID="{B95A609A-3EA1-42A7-812E-5D13088B74EF}" ShortID="452899899" Type="SoundFX">
-							<PropertyList>
-								<Property Name="PositioningType" Type="int16" Value="1"/>
-								<Property Name="Spatialization" Type="bool" Value="False"/>
-								<Property Name="Volume" Type="Real64">
-									<ValueList>
-										<Value>-4</Value>
-									</ValueList>
-								</Property>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Attenuation">
-									<ObjectRef Name="SE" ID="{06551A6B-829B-43B9-9905-89F62B6C767F}" WorkUnitID="{7F9DC3F7-3499-4AB5-88CC-0738E331008A}"/>
-								</Reference>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="Search" ID="{E9F2B97E-9ED3-4EB1-81F4-B7AACE23985B}" ShortID="864391788">
-									<PropertyList>
-										<Property Name="FadeOutDuration" Type="Real64" Value="0.618622448979592"/>
-									</PropertyList>
-									<Language>SFX</Language>
-									<AudioFile>Search.wav</AudioFile>
-								</AudioFileSource>
-							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="Search" ID="{E9F2B97E-9ED3-4EB1-81F4-B7AACE23985B}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-						<Sound Name="Climb_3" ID="{40946851-5263-4EE0-BC73-5F12A09933F4}" ShortID="576005749" Type="SoundFX">
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="Landing_3" ID="{D5126C19-49EB-40FD-9E99-0D5EB8570F19}" ShortID="514799383">
-									<PropertyList>
-										<Property Name="FadeInDuration" Type="Real64" Value="9.76562500000001E-02"/>
-										<Property Name="FadeOutDuration" Type="Real64" Value="0.317881058673469"/>
-									</PropertyList>
-									<Language>SFX</Language>
-									<AudioFile>Landing\Landing_3.wav</AudioFile>
-								</AudioFileSource>
-							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="Landing_3" ID="{D5126C19-49EB-40FD-9E99-0D5EB8570F19}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-						<Sound Name="Search_01" ID="{77B577E7-F3FA-4254-A115-AF93F254FD01}" ShortID="949804437" Type="SoundFX">
-							<PropertyList>
-								<Property Name="Pitch" Type="int32">
-									<ValueList>
-										<Value>-800</Value>
-									</ValueList>
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{19D33F3D-3BA6-44EA-8E8E-A9007AF9D117}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Max" Type="Real64" Value="250"/>
+													<Property Name="Min" Type="Real64" Value="-250"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
 								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
@@ -362,21 +322,34 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="Search" ID="{1BD329F2-CCB3-4611-B34D-7985E9014066}" ShortID="272443156">
-									<PropertyList>
-										<Property Name="FadeOutDuration" Type="Real64" Value="0.618622448979592"/>
-									</PropertyList>
+								<AudioFileSource Name="Jump(2)" ID="{A821DFF8-280B-4D11-8F06-22AABAD17589}" ShortID="341995375">
 									<Language>SFX</Language>
-									<AudioFile>Search.wav</AudioFile>
-									<ConvertedFileIDList>
-										<File ID="864391788"/>
-									</ConvertedFileIDList>
+									<AudioFile>Jump(2).wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="Search" ID="{1BD329F2-CCB3-4611-B34D-7985E9014066}" Platform="Linked"/>
+								<ActiveSource Name="Jump(2)" ID="{A821DFF8-280B-4D11-8F06-22AABAD17589}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
+					</ChildrenList>
+				</ActorMixer>
+				<ActorMixer Name="menu" ID="{CBE6AEB6-3AE1-4C78-A001-C18CEA03B931}" ShortID="119820567">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>4</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="SFX" ID="{529E8067-04AE-442C-A06A-410650E5C054}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
 						<RandomSequenceContainer Name="Page" ID="{9A5AEAC7-CA3F-4944-BA8A-74B04A853AB3}" ShortID="602713554">
 							<PropertyList>
 								<Property Name="Pitch" Type="int32">
@@ -444,20 +417,117 @@
 								</Sound>
 							</ChildrenList>
 						</RandomSequenceContainer>
-						<Sound Name="Jump" ID="{7C8011E0-C145-4704-83B4-B6887B39BC5E}" ShortID="457248927" Type="SoundFX">
+					</ChildrenList>
+				</ActorMixer>
+				<ActorMixer Name="enemy" ID="{E8AE238E-3549-4875-B55E-8C4767E42C44}" ShortID="370483415">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="SFX" ID="{529E8067-04AE-442C-A06A-410650E5C054}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="Totem_move" ID="{93DF39B4-6C2E-4993-B4C1-B9DC15F88B95}" ShortID="892851723" Type="SoundFX">
 							<PropertyList>
+								<Property Name="IsLoopingInfinite" Type="bool" Value="False"/>
 								<Property Name="Pitch" Type="int32">
 									<ModifierList>
 										<ModifierInfo>
-											<Modifier Name="" ID="{19D33F3D-3BA6-44EA-8E8E-A9007AF9D117}">
+											<Modifier Name="" ID="{EBF5CAB8-02C3-4828-8C98-D16C75D33D71}">
 												<PropertyList>
 													<Property Name="Enabled" Type="bool" Value="True"/>
-													<Property Name="Max" Type="Real64" Value="250"/>
-													<Property Name="Min" Type="Real64" Value="-250"/>
+													<Property Name="Max" Type="Real64" Value="150"/>
+													<Property Name="Min" Type="Real64" Value="-150"/>
 												</PropertyList>
 											</Modifier>
 										</ModifierInfo>
 									</ModifierList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="ToteMove" ID="{615F0222-41BE-4E23-800B-85D640D8F568}" ShortID="821184564">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.035076530612245"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="7.17474489795917E-02"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>ToteMove.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="ToteMove" ID="{615F0222-41BE-4E23-800B-85D640D8F568}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</ActorMixer>
+				<ActorMixer Name="switch" ID="{4D6E84F1-006F-4248-A22B-53E9440BCE4A}" ShortID="825074347">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="SFX" ID="{529E8067-04AE-442C-A06A-410650E5C054}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="Discovery" ID="{E3D96CC0-E8FA-4CDA-85A3-195AEC01494F}" ShortID="1066153496" Type="SoundFX">
+							<PropertyList>
+								<Property Name="Pitch" Type="int32">
+									<ValueList>
+										<Value>-800</Value>
+									</ValueList>
+								</Property>
+								<Property Name="PositioningType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="SE" ID="{06551A6B-829B-43B9-9905-89F62B6C767F}" WorkUnitID="{7F9DC3F7-3499-4AB5-88CC-0738E331008A}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Discovery" ID="{0D073B75-1AB4-4403-B154-4078AE70C1F3}" ShortID="1027748973">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="3.18877551020408E-02"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.155452806122449"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Discovery.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<PositioningInfo>
+								<Panner Name="" ID="{1F1FE739-FE31-413F-862B-19F50B8F801D}">
+									<PropertyList>
+										<Property Name="PanX" Type="Real64" Value="-100"/>
+										<Property Name="PanY" Type="Real64" Value="100"/>
+									</PropertyList>
+								</Panner>
+							</PositioningInfo>
+							<ActiveSourceList>
+								<ActiveSource Name="Discovery" ID="{0D073B75-1AB4-4403-B154-4078AE70C1F3}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Search_01" ID="{77B577E7-F3FA-4254-A115-AF93F254FD01}" ShortID="949804437" Type="SoundFX">
+							<PropertyList>
+								<Property Name="Pitch" Type="int32">
+									<ValueList>
+										<Value>-800</Value>
+									</ValueList>
 								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
@@ -474,41 +544,34 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="Jump(2)" ID="{A821DFF8-280B-4D11-8F06-22AABAD17589}" ShortID="341995375">
+								<AudioFileSource Name="Search" ID="{1BD329F2-CCB3-4611-B34D-7985E9014066}" ShortID="272443156">
+									<PropertyList>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.618622448979592"/>
+									</PropertyList>
 									<Language>SFX</Language>
-									<AudioFile>Jump(2).wav</AudioFile>
+									<AudioFile>Search.wav</AudioFile>
+									<ConvertedFileIDList>
+										<File ID="864391788"/>
+									</ConvertedFileIDList>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="Jump(2)" ID="{A821DFF8-280B-4D11-8F06-22AABAD17589}" Platform="Linked"/>
+								<ActiveSource Name="Search" ID="{1BD329F2-CCB3-4611-B34D-7985E9014066}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-					</ChildrenList>
-				</Folder>
-				<Folder Name="BGM" ID="{67D0D0C0-565F-4DA9-9AF9-B209AE1D437F}" ShortID="26531388"/>
-				<Folder Name="Ambience" ID="{A49CF3A7-B364-4E4C-BFA9-9C90DE4ADD47}" ShortID="524253980">
-					<ChildrenList>
-						<Sound Name="Babble" ID="{C43F348C-A008-4462-8698-3810F53C714E}" ShortID="39616417" Type="SoundFX">
+						<Sound Name="Search" ID="{B95A609A-3EA1-42A7-812E-5D13088B74EF}" ShortID="452899899" Type="SoundFX">
 							<PropertyList>
-								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-								<Property Name="Pitch" Type="int32">
-									<ModifierList>
-										<ModifierInfo>
-											<Modifier Name="" ID="{5EA12068-D271-48C5-95F8-8F5CAF9C07F5}">
-												<PropertyList>
-													<Property Name="Max" Type="Real64" Value="50"/>
-													<Property Name="Min" Type="Real64" Value="-50"/>
-												</PropertyList>
-											</Modifier>
-										</ModifierInfo>
-									</ModifierList>
-								</Property>
 								<Property Name="PositioningType" Type="int16" Value="1"/>
 								<Property Name="Spatialization" Type="bool" Value="False"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-4</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Attenuation">
-									<ObjectRef Name="Object_Attenuation" ID="{05033A8B-67C1-4F1E-82C7-2A73B7372E7C}" WorkUnitID="{D5D8F5B2-FE2E-419E-8FC4-508634E556AB}"/>
+									<ObjectRef Name="SE" ID="{06551A6B-829B-43B9-9905-89F62B6C767F}" WorkUnitID="{7F9DC3F7-3499-4AB5-88CC-0738E331008A}"/>
 								</Reference>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
@@ -518,21 +581,20 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="Babble" ID="{346EDF6F-2711-4923-B732-9CDE8307467D}" ShortID="178554552">
+								<AudioFileSource Name="Search" ID="{E9F2B97E-9ED3-4EB1-81F4-B7AACE23985B}" ShortID="864391788">
 									<PropertyList>
-										<Property Name="FadeOutDuration" Type="Real64" Value="1.09614158163267E-02"/>
-										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.618622448979592"/>
 									</PropertyList>
 									<Language>SFX</Language>
-									<AudioFile>Babble.wav</AudioFile>
+									<AudioFile>Search.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="Babble" ID="{346EDF6F-2711-4923-B732-9CDE8307467D}" Platform="Linked"/>
+								<ActiveSource Name="Search" ID="{E9F2B97E-9ED3-4EB1-81F4-B7AACE23985B}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
-				</Folder>
+				</ActorMixer>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

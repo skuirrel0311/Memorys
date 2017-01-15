@@ -60,6 +60,17 @@ namespace AK
             } // namespace STATE
         } // namespace BGM_CHANGE
 
+        namespace MENU
+        {
+            static const AkUniqueID GROUP = 2607556080U;
+
+            namespace STATE
+            {
+                static const AkUniqueID INGAME = 984691642U;
+                static const AkUniqueID MENU = 2607556080U;
+            } // namespace STATE
+        } // namespace MENU
+
     } // namespace STATES
 
     namespace GAME_PARAMETERS
@@ -77,6 +88,8 @@ namespace AK
     {
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
         static const AkUniqueID MASTER_SECONDARY_BUS = 805203703U;
+        static const AkUniqueID MUSIC = 3991942870U;
+        static const AkUniqueID SFX = 393239870U;
     } // namespace BUSSES
 
 }// namespace AK

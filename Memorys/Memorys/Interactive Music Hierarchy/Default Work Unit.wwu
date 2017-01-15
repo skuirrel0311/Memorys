@@ -13,7 +13,7 @@
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
 						</Reference>
 						<Reference Name="OutputBus">
-							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+							<ObjectRef Name="Music" ID="{1ED28C90-21F1-44AC-9528-1696211B3BDC}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
@@ -279,6 +279,27 @@
 							</CueList>
 						</MusicSegment>
 					</ChildrenList>
+					<StateInfo>
+						<StateGroupList>
+							<StateGroupInfo>
+								<StateGroupRef Name="BGM_change" ID="{9E98ED34-39A5-4574-8256-53A8987AA820}"/>
+							</StateGroupInfo>
+							<StateGroupInfo>
+								<StateGroupRef Name="Menu" ID="{E6B17BE9-E79B-44BB-963C-4B3D538A3400}"/>
+							</StateGroupInfo>
+						</StateGroupList>
+						<CustomStateList>
+							<CustomState>
+								<StateRef Name="Menu" ID="{DEC08FA2-189C-41E5-A235-82C43D2E4046}"/>
+								<State Name="Custom State" ID="{A6ED74CF-2071-492A-8309-756D85AA8673}" ShortID="629612108">
+									<PropertyList>
+										<Property Name="Lowpass" Type="int16" Value="40"/>
+										<Property Name="Volume" Type="Real64" Value="-8"/>
+									</PropertyList>
+								</State>
+							</CustomState>
+						</CustomStateList>
+					</StateInfo>
 					<TransitionList>
 						<MusicTransition Name="Root" ID="{61A29084-4A91-48A9-8812-3EB7DF81A545}">
 							<PropertyList>
@@ -318,11 +339,15 @@
 										<Property Name="DestinationContextType" Type="int16" Value="2"/>
 										<Property Name="EnableSourceFadeOut" Type="bool" Value="True"/>
 										<Property Name="ExitSourceAt" Type="int16" Value="1"/>
+										<Property Name="SourceContextType" Type="int16" Value="2"/>
 										<Property Name="UseTransitionObject" Type="bool" Value="True"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="DestinationContextObject">
 											<ObjectRef Name="Emergency" ID="{C2CB4D6D-51EC-40CF-8F5A-0B3107F48892}" WorkUnitID="{19DED1A5-A4AB-44BE-94AF-12AAF1D35F96}"/>
+										</Reference>
+										<Reference Name="SourceContextObject">
+											<ObjectRef Name="Normal" ID="{20BA4BD5-5C2B-4C83-AF00-29EC4611CC4A}" WorkUnitID="{19DED1A5-A4AB-44BE-94AF-12AAF1D35F96}"/>
 										</Reference>
 									</ReferenceList>
 									<TransitionInfo>

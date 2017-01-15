@@ -29,6 +29,7 @@
 						<ObjectRef Name="Get_Switch" ID="{6078F87A-10A0-4AD4-A245-7D17FC2C6880}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Totem_Move" ID="{281F5EBE-079A-4B39-9C69-626DDBE8CFAD}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Player_Jump" ID="{2EE7D6DE-778A-4B56-AB3C-FBA9823F6386}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="BGM_Main1" ID="{CA2561FC-8AD6-4B96-A643-C8542322688A}" WorkUnitID="{19DED1A5-A4AB-44BE-94AF-12AAF1D35F96}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Totem_Laser_charge" ID="{14C44A52-0F3B-4BB7-82E3-860BB39E33F7}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Footsteps" ID="{1B1B2438-4301-4BF1-9EF9-2AA80479FA50}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="BGM_Main2" ID="{58D71BAE-C750-4C12-8208-8554205E392E}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>

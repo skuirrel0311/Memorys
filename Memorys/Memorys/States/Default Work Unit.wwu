@@ -11,6 +11,13 @@
 						<State Name="Stealth" ID="{15F12046-7A07-4213-B5B6-FCFD05DF3854}"/>
 					</ChildrenList>
 				</StateGroup>
+				<StateGroup Name="Menu" ID="{E6B17BE9-E79B-44BB-963C-4B3D538A3400}">
+					<ChildrenList>
+						<State Name="None" ID="{AE385656-CF68-4B73-9219-D3EA1112C43A}"/>
+						<State Name="inGame" ID="{8CCAD1A3-D26A-494F-BA12-A0CD04257542}"/>
+						<State Name="Menu" ID="{DEC08FA2-189C-41E5-A235-82C43D2E4046}"/>
+					</ChildrenList>
+				</StateGroup>
 			</ChildrenList>
 		</WorkUnit>
 	</States>

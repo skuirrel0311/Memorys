@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{2D4FF5B0-A364-473B-943F-CA0B649EF1C9}" SchemaVersion="72">
 	<SoundcasterSessions>
-		<WorkUnit Name="Default Work Unit" ID="{2D4FF5B0-A364-473B-943F-CA0B649EF1C9}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{2D4FF5B0-A364-473B-943F-CA0B649EF1C9}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundcasterSession Name="Player" ID="{078C6529-8B84-4997-850F-2107FF9545C4}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="Player_Climb" ID="{41BB2E29-0373-41AC-A69E-156A2ACB3765}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Player_Search" ID="{54FDDB75-9658-4F1C-9434-185E85D198C7}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="0" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Player_Discovery" ID="{E110A56D-924D-44AA-B1EC-C3D4585FDAD7}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Footsteps" ID="{1B1B2438-4301-4BF1-9EF9-2AA80479FA50}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="1" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Player_Jump" ID="{2EE7D6DE-778A-4B56-AB3C-FBA9823F6386}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="2" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="BGM_Main1" ID="{B2D0307B-5F9B-4C79-A9C5-F85B2DA78A50}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="2" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Player_Landing" ID="{A57761AE-8010-4738-B987-33D8867A70D0}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="3" Y="0"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true">
+						<RTPCValue>
+							<GameParameterRef Name="BGM_transition" ID="{7609EDAB-1F25-4387-823D-009AA919D0B6}"/>
+							<Value>100</Value>
+						</RTPCValue>
+					</RTPCValueList>
+					<CurrentStateList ShowAll="true">
+						<CurrentStateRef Name="Normal" ID="{5017403C-79BB-436C-8F21-E5C956F6E241}"/>
+					</CurrentStateList>
+					<CurrentSwitchList ShowAll="true"/>
+				</SoundcasterSession>
+				<SoundcasterSession Name="Menu" ID="{11231CF2-23C1-4EC6-87A0-66817B79B70C}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="Menu_Cancel" ID="{3AFD2B1D-AA29-454E-8CAB-4E4B179191A5}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Menu_Decision" ID="{671B5CBD-6E1A-46D6-A79D-6B7AF842EE3D}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Menu_Page" ID="{DE820879-6B8A-4307-B0FD-A0CBBA12DF49}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="2" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="BGM_Main1" ID="{B2D0307B-5F9B-4C79-A9C5-F85B2DA78A50}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="2" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Menu_Select" ID="{557EAAB7-E41F-48AF-A44E-5A23FB5726B2}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="3" Y="0"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true">
+						<RTPCValue>
+							<GameParameterRef Name="BGM_transition" ID="{7609EDAB-1F25-4387-823D-009AA919D0B6}"/>
+							<Value>100</Value>
+						</RTPCValue>
+					</RTPCValueList>
+					<CurrentStateList ShowAll="true">
+						<CurrentStateRef Name="inGame" ID="{8CCAD1A3-D26A-494F-BA12-A0CD04257542}"/>
+						<CurrentStateRef Name="Normal" ID="{5017403C-79BB-436C-8F21-E5C956F6E241}"/>
+					</CurrentStateList>
+					<CurrentSwitchList ShowAll="true"/>
+				</SoundcasterSession>
+			</ChildrenList>
+		</WorkUnit>
 	</SoundcasterSessions>
 </WwiseDocument>

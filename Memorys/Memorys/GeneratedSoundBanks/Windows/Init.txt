@@ -1,13 +1,19 @@
 State Group	ID	Name			Wwise Object Path	Notes
 	1211814768	BGM_change			\Default Work Unit\BGM_change	
+	2607556080	Menu			\Default Work Unit\Menu	
 
 State	ID	Name	State Group			Notes
 	748895195	None	BGM_change			
 	867808496	Emergency	BGM_change			
 	1160234136	Normal	BGM_change			
 	2909291642	Stealth	BGM_change			
+	748895195	None	Menu			
+	984691642	inGame	Menu			
+	2607556080	Menu	Menu			
 
 Audio Bus	ID	Name			Wwise Object Path	Notes
+	393239870	SFX			\Default Work Unit\Master Audio Bus\SFX	
 	805203703	Master Secondary Bus			\Default Work Unit\Master Secondary Bus	
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+	3991942870	Music			\Default Work Unit\Master Audio Bus\Music	
 

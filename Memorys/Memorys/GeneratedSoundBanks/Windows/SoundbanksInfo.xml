@@ -35,13 +35,13 @@
 				<Event Id="4158285989" Name="GameOver" ObjectPath="\Events\Default Work Unit\SE\Jingle\GameOver"/>
 				<Event Id="4058101365" Name="GameStart" ObjectPath="\Events\Default Work Unit\SE\Jingle\GameStart"/>
 				<Event Id="3960233822" Name="Get_Switch" ObjectPath="\Events\Default Work Unit\SE\Get_Switch"/>
-				<Event Id="3180909377" Name="Menu_Cancel" ObjectPath="\Events\Default Work Unit\SE\Menu_Cancel" MaxAttenuation="100.000000"/>
-				<Event Id="191248761" Name="Menu_Decision" ObjectPath="\Events\Default Work Unit\SE\Menu_Decision" MaxAttenuation="100.000000"/>
+				<Event Id="3180909377" Name="Menu_Cancel" ObjectPath="\Events\Default Work Unit\SE\Menu_Cancel"/>
+				<Event Id="191248761" Name="Menu_Decision" ObjectPath="\Events\Default Work Unit\SE\Menu_Decision"/>
 				<Event Id="205371738" Name="Menu_Page" ObjectPath="\Events\Default Work Unit\SE\Menu_Page"/>
 				<Event Id="4203375351" Name="Menu_Select" ObjectPath="\Events\Default Work Unit\SE\Menu_Select"/>
-				<Event Id="2934549620" Name="Open_Door" ObjectPath="\Events\Default Work Unit\SE\Open_Door" MaxAttenuation="100.000000"/>
+				<Event Id="2934549620" Name="Open_Door" ObjectPath="\Events\Default Work Unit\SE\Open_Door"/>
 				<Event Id="3549554524" Name="Player_Climb" ObjectPath="\Events\Default Work Unit\SE\Player_Climb"/>
-				<Event Id="1063083385" Name="Player_Discovery" ObjectPath="\Events\Default Work Unit\SE\Player_Discovery" MaxAttenuation="100.000000"/>
+				<Event Id="1063083385" Name="Player_Discovery" ObjectPath="\Events\Default Work Unit\SE\Player_Discovery"/>
 				<Event Id="1305133589" Name="Player_Jump" ObjectPath="\Events\Default Work Unit\SE\Player_Jump"/>
 				<Event Id="1282282006" Name="Player_Landing" ObjectPath="\Events\Default Work Unit\SE\Player_Landing"/>
 				<Event Id="3889015721" Name="Player_Search" ObjectPath="\Events\Default Work Unit\SE\Player_Search"/>
