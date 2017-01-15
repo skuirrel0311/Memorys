@@ -109,6 +109,7 @@ public class SelectManager : MonoBehaviour
     {
         if(MyInputManager.GetButtonDown(MyInputManager.Button.B))
         {
+            UtilsSound.SE_Cancel();
             m_mySceneManager.SceneLoad("Title");
         }
     }
@@ -148,7 +149,11 @@ public class SelectManager : MonoBehaviour
         {
             if (m_SelectNumber == 1) return;
             m_BookAnim.Play("L_R", 0);
+
+            if(m_SelectNumber!=1) UtilsSound.SE_MenuPage();
+
             m_SelectNumber = (int)Mathf.Max(1, (float)m_SelectNumber - 1);
+            UtilsSound.SE_MenuPage();
             BestTimeUpdate();
             UpdateTexture();
         }
@@ -156,6 +161,9 @@ public class SelectManager : MonoBehaviour
         {
             if (m_SelectNumber == MaxStage) return;
             m_BookAnim.Play("R_L", 0, 0.0f);
+
+            if (m_SelectNumber != MaxStage) UtilsSound.SE_MenuPage();
+
             m_SelectNumber = (int)Mathf.Min((float)MaxStage, (float)m_SelectNumber + 1);
             BestTimeUpdate();
         }
@@ -168,6 +176,7 @@ public class SelectManager : MonoBehaviour
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
         if (isNext) return;
         isNext = true;
+        UtilsSound.SE_Decision();
         PlayData.StageNum = m_SelectNumber;
         PlayerPrefs.SetInt("StageNum",m_SelectNumber);
         PlayerPrefs.Save();
