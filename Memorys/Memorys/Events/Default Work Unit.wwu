@@ -9,9 +9,9 @@
 							<ChildrenList>
 								<Event Name="BGM_Main1" ID="{B2D0307B-5F9B-4C79-A9C5-F85B2DA78A50}">
 									<ChildrenList>
-										<Action Name="Play" ID="{D68F63F2-BED3-4F5D-9BB1-60F81048093F}" ShortID="471371993" Type="Play" Scope="One" Global="false">
+										<Action Name="Play" ID="{C7AF8B2D-6556-4622-B8E0-35CD5E239035}" ShortID="119209016" Type="Play" Scope="One" Global="false">
 											<ElementList>
-												<Element ID="{533D3EC7-7755-4931-A4CA-D0A466EAEC32}" Global="false">
+												<Element ID="{46616E55-8500-4DD3-AFBB-D3E1136B469C}" Global="false">
 													<ObjectRef Name="BGM_Main1" ID="{CA2561FC-8AD6-4B96-A643-C8542322688A}" WorkUnitID="{19DED1A5-A4AB-44BE-94AF-12AAF1D35F96}"/>
 												</Element>
 											</ElementList>
@@ -344,7 +344,7 @@
 								<Action Name="Play" ID="{0869CDED-B612-4082-AB4C-42BA4FAE5471}" ShortID="895385814" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{E3048EBC-A895-4A43-9BFE-3CD3956E1353}" Global="false">
-											<ObjectRef Name="Jump" ID="{4A3B24F0-C34C-4257-B03F-16E6350874F9}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+											<ObjectRef Name="Jump" ID="{7C8011E0-C145-4704-83B4-B6887B39BC5E}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -595,6 +595,7 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="Player_Squat" ID="{E9B5775C-1606-4342-997F-E106BA155958}"/>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>

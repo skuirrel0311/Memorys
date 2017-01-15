@@ -8,20 +8,7 @@
 		<ExternalSourcesOutputRoot>C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\GeneratedSoundBanks\Windows\</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
-	<StreamedFiles>
-		<File Id="362030528" Language="SFX">
-			<ShortName>BGM_Main1\Normal\1_Normal.wav</ShortName>
-			<Path>SFX\BGM_Main1\Normal\1_Normal_4B8CC0C5.wem</Path>
-		</File>
-		<File Id="668828887" Language="SFX">
-			<ShortName>BGM_Main1\Stealth\1_Stealth.wav</ShortName>
-			<Path>SFX\BGM_Main1\Stealth\1_Stealth_4B8CC0C5.wem</Path>
-		</File>
-		<File Id="1041712009" Language="SFX">
-			<ShortName>BGM_Main1\Emergency\1_Emergency.wav</ShortName>
-			<Path>SFX\BGM_Main1\Emergency\1_Emergency_4B8CC0C5.wem</Path>
-		</File>
-	</StreamedFiles>
+	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
 		<SoundBank Id="1355168291" Language="SFX">
@@ -66,11 +53,6 @@
 				<Event Id="2592508863" Name="Totem_Shot" ObjectPath="\Events\Default Work Unit\SE\Totem_Shot"/>
 				<Event Id="2455001044" Name="Totem_Shot_impact" ObjectPath="\Events\Default Work Unit\SE\Totem_Shot_impact"/>
 			</IncludedEvents>
-			<ReferencedStreamedFiles>
-				<File Id="362030528"/>
-				<File Id="668828887"/>
-				<File Id="1041712009"/>
-			</ReferencedStreamedFiles>
 			<IncludedMemoryFiles>
 				<File Id="112961538" Language="SFX">
 					<ShortName>Landing\Landing_2.wav</ShortName>
@@ -80,9 +62,9 @@
 					<ShortName>Footsteps\Fs_3.wav</ShortName>
 					<Path>SFX\Footsteps\Fs_3_9E69E797.wem</Path>
 				</File>
-				<File Id="144374456" Language="SFX">
-					<ShortName>Page\Page_2.wav</ShortName>
-					<Path>SFX\Page\Page_2_4306A202.wem</Path>
+				<File Id="175632178" Language="SFX">
+					<ShortName>Page_2.wav</ShortName>
+					<Path>SFX\Page_2_9E69E797.wem</Path>
 				</File>
 				<File Id="178554552" Language="SFX">
 					<ShortName>Babble.wav</ShortName>
@@ -104,6 +86,14 @@
 					<ShortName>Footsteps\Fs_1.wav</ShortName>
 					<Path>SFX\Footsteps\Fs_1_9E69E797.wem</Path>
 				</File>
+				<File Id="643066868" Language="SFX">
+					<ShortName>Emergency\1_Emergency\1_Emergency.wav</ShortName>
+					<Path>SFX\Emergency\1_Emergency\1_Emergency_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="665329611" Language="SFX">
+					<ShortName>Normal_to_Emergency.wav</ShortName>
+					<Path>SFX\Normal_to_Emergency_4B8CC0C5.wem</Path>
+				</File>
 				<File Id="753971549" Language="SFX">
 					<ShortName>Footsteps\Fs_2.wav</ShortName>
 					<Path>SFX\Footsteps\Fs_2_9E69E797.wem</Path>
@@ -112,10 +102,6 @@
 					<ShortName>ToteMove.wav</ShortName>
 					<Path>SFX\ToteMove_683C6BAC.wem</Path>
 				</File>
-				<File Id="828167579" Language="SFX">
-					<ShortName>Page\Page_1.wav</ShortName>
-					<Path>SFX\Page\Page_1_DCE810BA.wem</Path>
-				</File>
 				<File Id="864391788" Language="SFX">
 					<ShortName>Search.wav</ShortName>
 					<Path>SFX\Search_23497503.wem</Path>
@@ -123,6 +109,14 @@
 				<File Id="868156345" Language="SFX">
 					<ShortName>Landing\Landing_1.wav</ShortName>
 					<Path>SFX\Landing\Landing_1_CACF8A59.wem</Path>
+				</File>
+				<File Id="895000316" Language="SFX">
+					<ShortName>Normal\1_Normal\1_Normal.wav</ShortName>
+					<Path>SFX\Normal\1_Normal\1_Normal_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="969642365" Language="SFX">
+					<ShortName>Page_1.wav</ShortName>
+					<Path>SFX\Page_1_9E69E797.wem</Path>
 				</File>
 				<File Id="1027748973" Language="SFX">
 					<ShortName>Discovery.wav</ShortName>

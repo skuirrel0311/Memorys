@@ -22,6 +22,11 @@
 									</ModifierList>
 								</Property>
 								<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="2"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-8</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -166,6 +171,11 @@
 									</ModifierList>
 								</Property>
 								<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="2"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-5</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -274,7 +284,19 @@
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="Search" ID="{B95A609A-3EA1-42A7-812E-5D13088B74EF}" ShortID="452899899" Type="SoundFX">
+							<PropertyList>
+								<Property Name="PositioningType" Type="int16" Value="1"/>
+								<Property Name="Spatialization" Type="bool" Value="False"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-4</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="SE" ID="{06551A6B-829B-43B9-9905-89F62B6C767F}" WorkUnitID="{7F9DC3F7-3499-4AB5-88CC-0738E331008A}"/>
+								</Reference>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
 								</Reference>
@@ -323,6 +345,11 @@
 								<Property Name="Pitch" Type="int32">
 									<ValueList>
 										<Value>-800</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-3</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -387,17 +414,13 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="Page_1" ID="{C2B5F2EC-6C15-4A73-85C0-F7F087D31600}" ShortID="828167579">
-											<PropertyList>
-												<Property Name="FadeInDuration" Type="Real64" Value="1.59438775510204E-02"/>
-												<Property Name="FadeOutDuration" Type="Real64" Value="0.173389668367347"/>
-											</PropertyList>
+										<AudioFileSource Name="Page_01" ID="{4D03885D-F418-45B9-93F5-F4A50C8FCFB9}" ShortID="969642365">
 											<Language>SFX</Language>
-											<AudioFile>Page\Page_1.wav</AudioFile>
+											<AudioFile>Page_1.wav</AudioFile>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="Page_1" ID="{C2B5F2EC-6C15-4A73-85C0-F7F087D31600}" Platform="Linked"/>
+										<ActiveSource Name="Page_01" ID="{4D03885D-F418-45B9-93F5-F4A50C8FCFB9}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 								<Sound Name="Page_2" ID="{28CB28EA-30EA-4F94-8F13-6001BB7392A6}" ShortID="514960932" Type="SoundFX">
@@ -410,34 +433,36 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="Page_2" ID="{70C1A73E-FB17-4F54-A2EA-88FF7B430643}" ShortID="144374456">
-											<PropertyList>
-												<Property Name="FadeInDuration" Type="Real64" Value="2.79017857142857E-02"/>
-												<Property Name="FadeOutDuration" Type="Real64" Value="0.135522959183674"/>
-											</PropertyList>
+										<AudioFileSource Name="Page_01" ID="{F16368C9-71A2-44A1-9EA1-C59CEF3083C3}" ShortID="175632178">
 											<Language>SFX</Language>
-											<AudioFile>Page\Page_2.wav</AudioFile>
+											<AudioFile>Page_2.wav</AudioFile>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="Page_2" ID="{70C1A73E-FB17-4F54-A2EA-88FF7B430643}" Platform="Linked"/>
+										<ActiveSource Name="Page_01" ID="{F16368C9-71A2-44A1-9EA1-C59CEF3083C3}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>
 						</RandomSequenceContainer>
-						<Sound Name="Jump" ID="{4A3B24F0-C34C-4257-B03F-16E6350874F9}" ShortID="709250480" Type="SoundFX">
+						<Sound Name="Jump" ID="{7C8011E0-C145-4704-83B4-B6887B39BC5E}" ShortID="457248927" Type="SoundFX">
 							<PropertyList>
 								<Property Name="Pitch" Type="int32">
 									<ModifierList>
 										<ModifierInfo>
-											<Modifier Name="" ID="{0D011178-0547-414B-9ECB-1E246CD0803C}">
+											<Modifier Name="" ID="{19D33F3D-3BA6-44EA-8E8E-A9007AF9D117}">
 												<PropertyList>
 													<Property Name="Enabled" Type="bool" Value="True"/>
-													<Property Name="Max" Type="Real64" Value="300"/>
+													<Property Name="Max" Type="Real64" Value="250"/>
+													<Property Name="Min" Type="Real64" Value="-250"/>
 												</PropertyList>
 											</Modifier>
 										</ModifierInfo>
 									</ModifierList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-3</Value>
+									</ValueList>
 								</Property>
 							</PropertyList>
 							<ReferenceList>
@@ -449,17 +474,13 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="Jump" ID="{D47FD9F7-E6F0-4B72-A5F6-6CD10042A345}" ShortID="340152810">
-									<PropertyList>
-										<Property Name="FadeInDuration" Type="Real64" Value="1.89333545918367E-02"/>
-										<Property Name="FadeOutDuration" Type="Real64" Value="6.07860331632653E-02"/>
-									</PropertyList>
+								<AudioFileSource Name="Jump(2)" ID="{A821DFF8-280B-4D11-8F06-22AABAD17589}" ShortID="341995375">
 									<Language>SFX</Language>
-									<AudioFile>Jump.wav</AudioFile>
+									<AudioFile>Jump(2).wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="Jump" ID="{D47FD9F7-E6F0-4B72-A5F6-6CD10042A345}" Platform="Linked"/>
+								<ActiveSource Name="Jump(2)" ID="{A821DFF8-280B-4D11-8F06-22AABAD17589}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
@@ -483,6 +504,7 @@
 									</ModifierList>
 								</Property>
 								<Property Name="PositioningType" Type="int16" Value="1"/>
+								<Property Name="Spatialization" Type="bool" Value="False"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Attenuation">
