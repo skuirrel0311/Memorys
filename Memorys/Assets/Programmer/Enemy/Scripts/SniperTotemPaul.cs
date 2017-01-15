@@ -189,4 +189,11 @@ public class SniperTotemPaul : TotemPaul
     {
         return new Vector3(vec.x, y, vec.z);
     }
+
+    public override void Dead()
+    {
+        base.Dead();
+        lineRenderer.enabled = false;
+        chargeEffect.Stop(true);
+    }
 }

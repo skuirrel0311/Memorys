@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
     private float jumpTime = 0;
     private float m_accel;
-    private bool isJump;
+    public bool isJump;
     private bool isClumbHint;
 
 
@@ -183,18 +183,6 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 movement = new Vector3(leftStick.x, 0, leftStick.y);
-        if (!isStaminaDepletion && MyInputManager.GetButton(MyInputManager.Button.LeftShoulder))
-        {
-            movement *= 1.3f;
-            stamina = Mathf.Max(0.0f, stamina - (Time.deltaTime * 2.0f));
-            if (stamina == 0.0f)
-                isStaminaDepletion = true;
-        }
-
-        if (isStaminaDepletion)
-        {
-            movement *= 0.0f;
-        }
 
         Quaternion cameraRotation = cameraObject.transform.rotation;
         cameraRotation = Quaternion.Euler(0, cameraRotation.eulerAngles.y, 0);

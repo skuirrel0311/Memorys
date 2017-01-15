@@ -136,6 +136,7 @@ public class Pause : MonoBehaviour
             else
             {
                 //todo:音
+                UtilsSound.SE_Select();
                 m_ButtonSelect++;
             }
         }
@@ -147,6 +148,7 @@ public class Pause : MonoBehaviour
             }
             else
             {
+                UtilsSound.SE_Select();
                 m_ButtonSelect--;
             }
         }
@@ -157,7 +159,7 @@ public class Pause : MonoBehaviour
 
 
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
-
+        UtilsSound.SE_Decision();
         switch (m_ButtonSelect)
         {
             case ButtonSelect.CONTINUE:
@@ -180,7 +182,7 @@ public class Pause : MonoBehaviour
             case ButtonSelect.RETRY:
                 {
                     m_InGameManager.Pause(false);
-                    SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+                    SceneManager.LoadSceneAsync("Loading");
                     break;
                 }
         }

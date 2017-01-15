@@ -37,11 +37,13 @@ public class HelpManager : MonoBehaviour
     {
 		if(MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickDown))
         {
+            UtilsSound.SE_Select();
             PageCount = Mathf.Min(m_Pages.Length-1,PageCount+1);
 
         }
         else if(MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickUp))
         {
+            UtilsSound.SE_Select();
             PageCount = Mathf.Max(0, PageCount - 1);
 
         }

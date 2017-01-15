@@ -13,6 +13,7 @@ public class HelpScene : MonoBehaviour {
 	void Update () {
 		if(MyInputManager.GetButtonDown(MyInputManager.Button.B))
         {
+            UtilsSound.SE_Cancel();
             GetComponent<MySceneManager>().SceneLoad("Title");
         }
 	}

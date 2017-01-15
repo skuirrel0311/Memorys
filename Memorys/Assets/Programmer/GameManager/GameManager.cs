@@ -124,8 +124,8 @@ public class GameManager : MonoBehaviour
     {
         OnPushSwitch += () =>
         {
-            m_GameEnd.DestroyCancel();
-            GenerateEnemy();
+            m_GameEnd.DestroyCancel(GenerateEnemy());
+
             //クリア条件を満たしている
             if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
             {
@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
             if (enemies[i].gameObject.name == "TotemPaul")
             {
                 TotemPaul enemy = enemies[i].GetComponent<TotemPaul>();
-                enemy.QuickStartUp();
+                StartCoroutine(enemy.QuickStartUp());
                 GenerateStopItem(enemy);
             }
         }
@@ -259,13 +259,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DestroyCancel()
-    {
-        //SetTargetRandom();
-        //SetWillDestroy();
-        m_GameEnd.DestroyCancel();
-    }
-
     public void FieldObjectDestoy()
     {
         for (int i = 0; i < m_WillDestroyObjects.Count; i++)
@@ -327,8 +320,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void GenerateEnemy()
+    private int GenerateEnemy()
     {
+        int enemyNum = 0;
         for (int i = 0; i < enemies.Length; i++)
         {
             //中心のトーテムポール
@@ -337,8 +331,11 @@ public class GameManager : MonoBehaviour
                 TotemPaul enemy = enemies[i].GetComponent<TotemPaul>();
                 enemy.StartUp();
                 GenerateStopItem(enemy);
+                enemyNum++;
             }
         }
+
+        return enemyNum;
     }
 
     private void GenerateStopItem(TotemPaul enemy)

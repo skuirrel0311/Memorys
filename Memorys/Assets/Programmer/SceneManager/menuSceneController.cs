@@ -54,6 +54,7 @@ public class menuSceneController : MonoBehaviour
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
         if (isNext) return;
         isNext = true;
+        UtilsSound.SE_Decision();
         if (m_SelectState == SelectState.STAGE)
         {
             for (int i = 0; i < MenuImages.Length; i++)
@@ -84,11 +85,13 @@ public class menuSceneController : MonoBehaviour
         if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickUp))
         {
             m_SelectState = (SelectState)Mathf.Max(0, (float)m_SelectState - 1);
+            UtilsSound.SE_Select();
             SelectImageChange();
         }
         else if(MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickDown))
         {
             m_SelectState = (SelectState)Mathf.Min((float)SelectState.INDEX-1, (float)m_SelectState + 1);
+            UtilsSound.SE_Select();
             SelectImageChange();
         }
     }

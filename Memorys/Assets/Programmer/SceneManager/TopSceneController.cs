@@ -42,6 +42,7 @@ public class TopSceneController : MonoBehaviour
         }
         else
         {
+            m_MovieOnUI.Stop();
             m_MovieOnUI.gameObject.SetActive(false);
         }
     }
@@ -64,6 +65,10 @@ public class TopSceneController : MonoBehaviour
             //入力に使いたいボタンが押されていなければ戻る
             if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)
                 &&!MyInputManager.GetButtonDown(MyInputManager.Button.Start))return;
+
+            //todo
+            //UtilsSound.SE_Decision();
+
             m_MovieOnUI.Stop();
             m_MovieOnUI.gameObject.SetActive(false);
             m_Timer = 0.0f;
@@ -75,6 +80,7 @@ public class TopSceneController : MonoBehaviour
         {
             if (!isMenu)
             {
+                UtilsSound.SE_Decision();
                 isMenu = true;
                 MenuCanvas.SetActive(true);
                 TitleMenu.SetActive(false);

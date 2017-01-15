@@ -83,7 +83,6 @@ public class ResultManager : MonoBehaviour
         Debug.Log(currntTime.ToString());
         PlayerPrefsManager.I.SetClearTime((float)bestTime);
         PlayerPrefsManager.I.Save();
-        m_ClearTime.text = currntTime.ToString();
         m_BestTime.text = TkUtils.PlasticTime(bestTime);
     }
 
@@ -172,6 +171,7 @@ public class ResultManager : MonoBehaviour
         if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)) return;
         if (isNext) return;
         isNext = true;
+        UtilsSound.SE_Decision();
         if (m_SelectState == SelectState.SELECT)
         {
             SceneManager.LoadSceneAsync("StageSelect");
@@ -192,11 +192,13 @@ public class ResultManager : MonoBehaviour
     {
         if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickLeft))
         {
+            UtilsSound.SE_Select();
             m_SelectState = (SelectState)Mathf.Max(0, (float)m_SelectState - 1);
             SelectImageChange();
         }
         else if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickRight))
         {
+            UtilsSound.SE_Select();
             m_SelectState = (SelectState)Mathf.Min((float)SelectState.INDEX - 1, (float)m_SelectState + 1);
             SelectImageChange();
         }

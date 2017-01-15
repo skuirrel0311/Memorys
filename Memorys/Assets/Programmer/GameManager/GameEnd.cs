@@ -54,12 +54,16 @@
         }
     }
 
-    public void DestroyCancel()
+    public void DestroyCancel(int enemyNum)
     {
-
         m_destoryCancelCount++;
         if (!(m_destoryCancelCount >= c_MaxDestroyCalcel))
-            NotificationSystem.I.Indication("脱出まで　あと『 " + (c_MaxDestroyCalcel - m_destoryCancelCount) + " 』個！\n新たに石像が起動した……");
+        {
+            if(enemyNum != 0)
+                NotificationSystem.I.Indication("脱出まで　あと『 " + (c_MaxDestroyCalcel - m_destoryCancelCount) + " 』個！\n新たに石像が"+ enemyNum + "体起動した……");
+            else
+                NotificationSystem.I.Indication("脱出まで　あと『 " + (c_MaxDestroyCalcel - m_destoryCancelCount) + " 』個！");
+        }
         Update();
         if (m_destoryCancelCount > c_MaxDestroyCalcel) return;
         if (OnDestroyCancelCallBack != null)

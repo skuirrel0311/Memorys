@@ -64,6 +64,7 @@ public class PlayerOverlap : MonoBehaviour
     public void Damage(int point)
     {
         if (GameManager.I.IsPlayStop) return;
+        SoundManager.PlaySound("Totem_Shot_impact");
         HP -= point;
         pointGauge.Value = HP;
         PlayerController.I.currentState = PlayerState.Damage;

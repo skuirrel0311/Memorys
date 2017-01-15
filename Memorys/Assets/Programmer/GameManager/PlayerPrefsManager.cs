@@ -26,7 +26,7 @@ public class PlayerPrefsManager : MonoBehaviour {
 
     public void SetClearTime(float time)
     {
-        int num = PlayerPrefs.GetInt("StageNum");
+        int num = PlayData.StageNum;
         PlayerPrefs.SetFloat("Stage"+num,time);
     }
 

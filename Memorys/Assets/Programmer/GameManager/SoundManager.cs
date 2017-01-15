@@ -17,6 +17,11 @@ public class SoundManager : MonoBehaviour
         AkSoundEngine.PostEvent(str,I.gameObject);
     }
 
+    public static void SetState(string stateName)
+    {
+        AkSoundEngine.SetState("BGM_change",stateName);
+    }
+
     private void OnDestroy()
     {
         AkSoundEngine.ExecuteActionOnEvent("BGM_Main1",AkActionOnEventType.AkActionOnEventType_Stop);
