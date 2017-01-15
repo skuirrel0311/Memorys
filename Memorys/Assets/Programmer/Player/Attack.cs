@@ -14,7 +14,7 @@ public class Attack : MonoBehaviour {
         if (!isAttack) return;
         if(col.gameObject.tag=="Target")
         {
-            GameManager.I.DestroyCancel();
+            //GameManager.I.DestroyCancel();
             //エフェクト
             GameObject.Instantiate(m_Exposion, transform.position, Quaternion.identity);
         }
