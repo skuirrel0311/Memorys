@@ -186,6 +186,7 @@ public class TotemPaul : MonoBehaviour
         if (IsAwakeActive) return;
         if(IsCameraEffect)
         {
+            playerController.currentState = PlayerState.Idle;
             CameraManager.I.CameraChange(2,1.5f);
         }
         activateCoroutineList.Add(StartCoroutine("QuickStartUp"));
