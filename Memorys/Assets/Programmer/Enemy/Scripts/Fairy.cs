@@ -126,7 +126,7 @@ public class Fairy : MonoBehaviour
     IEnumerator ViolentlyTransition(float changeTime)
     {
         float intervalTime = GameManager.I.transitionInterval;
-        GameManager.I.SetIntervalTime(intervalTime * 0.05f);
+        GameManager.I.SetIntervalTime(intervalTime * 0.02f);
         coroutineList.Add(StartCoroutine(SetLight(Color.red, 1.0f)));
 
         yield return new WaitForSeconds(changeTime);
@@ -156,7 +156,7 @@ public class Fairy : MonoBehaviour
             currentColor = Color.Lerp(startColor, targetLightColor, t / time);
             spotLight.color = currentColor;
 
-            currentColor.a = 0.1f;
+            currentColor.a = 0.025f;
 
             block.SetColor("_TintColor", currentColor);
             r.SetPropertyBlock(block);
