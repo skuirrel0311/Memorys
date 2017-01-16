@@ -12,7 +12,7 @@ public class EnemyStopItem : PopUpMessage
     {
         Renderer r = GetComponent<Renderer>();
         r.material.EnableKeyword("_EMISSION");
-        r.material.SetColor("_EmissionColor", new Color(0.3265f, 1.306f, 0.4548484f));
+        //r.material.SetColor("_EmissionColor", new Color(0.3265f, 1.306f, 0.4548484f));
 
         base.Start();
     }
