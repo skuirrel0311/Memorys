@@ -319,19 +319,38 @@ public class GameManager : MonoBehaviour
     {
         int enemyNum = 0;
         int enemyIndex = m_GameEnd.m_destoryCancelCount + 1;
+        List<TotemPaul> generateList = new List<TotemPaul>(); 
+
         for (int i = 0; i < enemies.Length; i++)
         {
             //中心のトーテムポール
             if (enemies[i].gameObject.name == "TotemPaul (" + enemyIndex.ToString() + ")")
             {
                 TotemPaul enemy = enemies[i].GetComponent<TotemPaul>();
+                generateList.Add(enemy);
                 enemy.StartUp();
-                GenerateStopItem(enemy, enemyIndex);
                 enemyNum++;
             }
         }
 
+        if (enemyNum != 0) GenerateStopItem(generateList, enemyIndex);
+
         return enemyNum;
+    }
+
+    private void GenerateStopItem(List<TotemPaul> enemyList, int index)
+    {
+        if (itemPoints == null) return;
+        for (int i = 0; i < itemPoints.Length; i++)
+        {
+            if (itemPoints[i].name == "itemPoint" + index.ToString())
+            {
+                EnemyStopItem item = Instantiate(enemyStopItem, itemPoints[i]).GetComponent<EnemyStopItem>();
+                item.transform.localPosition = Vector3.zero;
+                item.SetPairEnemy(enemyList.ToArray());
+                return;
+            }
+        }
     }
 
     private void GenerateStopItem(TotemPaul enemy, int index)
@@ -344,6 +363,7 @@ public class GameManager : MonoBehaviour
                 EnemyStopItem item = Instantiate(enemyStopItem, itemPoints[i]).GetComponent<EnemyStopItem>();
                 item.transform.localPosition = Vector3.zero;
                 item.SetPairEnemy(enemy);
+                return;
             }
         }
     }

@@ -6,7 +6,7 @@ using BehaviorDesigner.Runtime;
 public class EnemyStopItem : PopUpMessage
 {
     bool isPush = false;
-    TotemPaul enemy;
+    TotemPaul[] enemies;
 
     public override void Start()
     {
@@ -18,9 +18,15 @@ public class EnemyStopItem : PopUpMessage
     }
 
     //アイテムを使った時に停止する敵をセットする
+    public void SetPairEnemy(TotemPaul[] enemies)
+    {
+        this.enemies = enemies;
+    }
+
     public void SetPairEnemy(TotemPaul enemy)
     {
-        this.enemy = enemy;
+        enemies = new TotemPaul[1];
+        enemies[0] = enemy;
     }
 
     public override void DrawMessage()
@@ -29,9 +35,12 @@ public class EnemyStopItem : PopUpMessage
         if (Time.timeScale == 0.0f) return;
         if (IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
         {
-            NotificationSystem.I.Indication("石像が１体停止した……");
-            enemy.Dead();
-            enemy.GetComponent<BehaviorTree>().DisableBehavior(true);
+            NotificationSystem.I.Indication("石像が" + (enemies.Length).ToString() + "体停止した……");
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                enemies[i].Dead();
+                enemies[i].GetComponent<BehaviorTree>().DisableBehavior(true);
+            }
             isPush = true;
             IsViewMessage = false;
 
