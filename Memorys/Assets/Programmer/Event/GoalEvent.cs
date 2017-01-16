@@ -31,6 +31,7 @@ public class GoalEvent : MonoBehaviour {
             CameraManager.I.CameraChange(0,3.0f,true,true,() => { GameManager.I.IsPlayStop = false; });
             RightDoor.transform.DOMoveX(-8.5f,3.0f);
             LeftDoor.transform.DOMoveX(8.5f,3.0f);
+            UpperFloor.SetActive(true);
             UpperFloor.transform.DOMoveY(TargetPositionY, 3.0f);
         };
 	}

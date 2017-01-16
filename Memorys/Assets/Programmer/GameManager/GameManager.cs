@@ -34,10 +34,6 @@ public class GameManager : MonoBehaviour
 
     private GameObject floorObj = null;
 
-    //ゴールまでの床
-    [SerializeField]
-    private GameObject toGoalFloor = null;
-
     [SerializeField]
     public bool OneByOne = true;
 
@@ -129,7 +125,6 @@ public class GameManager : MonoBehaviour
             //クリア条件を満たしている
             if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
             {
-                toGoalFloor.SetActive(true);
                 NotificationSystem.I.Indication("脱出可能になった！");
                 if (OnPossibleEscape != null)
                     OnPossibleEscape();
