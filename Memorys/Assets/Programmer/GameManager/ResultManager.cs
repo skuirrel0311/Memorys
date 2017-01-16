@@ -54,6 +54,7 @@ public class ResultManager : MonoBehaviour
     bool[] isResultEvent = new bool[3];
 
     bool isNext;
+    bool IsLast;
 
     float m_time;
     int currntTime;
@@ -64,11 +65,20 @@ public class ResultManager : MonoBehaviour
     {
         isNext = false;
         isClearTime = false;
+        IsLast = false;
+
         m_time = 0.0f;
         m_sceneManager = GetComponent<MySceneManager>();
         m_SelectState = SelectState.SELECT;
         m_SelectChild = select.GetComponentsInChildren<Image>();
+        if (PlayData.StageNum >= SelectManager.c_MaxStage)
+        {
+            IsLast = true;
+            m_SelectChild[1].rectTransform.anchoredPosition =new Vector2(m_SelectChild[2].rectTransform.anchoredPosition.x, m_SelectChild[1].rectTransform.anchoredPosition.y);
+            m_SelectChild[2].gameObject.SetActive(false);
+        }
         SelectImageChange();
+
 
         LevelText.text = "ステージ " + PlayData.StageNum.ToString();
         currntTime = (int)PlayerPrefsManager.I.GetCurrentClearTime();
@@ -120,7 +130,7 @@ public class ResultManager : MonoBehaviour
         m_time += Time.deltaTime;
         RankStar(currntTime);
 
-        if(m_time >0.5f)
+        if (m_time > 0.5f)
         {
             m_bestTimeObject.SetActive(true);
             //ベストタイムのランク表示
@@ -130,7 +140,7 @@ public class ResultManager : MonoBehaviour
                 m_BestSters[1].gameObject.SetActive(true);
         }
 
-        if(m_time>1.0f&&!isClearTime)
+        if (m_time > 1.0f && !isClearTime)
         {
             isClearTime = true;
             m_ClearTimeObject.SetActive(true);
@@ -158,7 +168,7 @@ public class ResultManager : MonoBehaviour
         while (true)
         {
             t += Time.deltaTime;
-            m_ClearTime.text = TkUtils.PlasticTime((int)Mathf.Lerp(0,currntTime,t*2.0f));
+            m_ClearTime.text = TkUtils.PlasticTime((int)Mathf.Lerp(0, currntTime, t * 2.0f));
             if (t > 0.5f) break;
             yield return null;
         }
@@ -193,13 +203,22 @@ public class ResultManager : MonoBehaviour
         if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickLeft))
         {
             UtilsSound.SE_Select();
+
             m_SelectState = (SelectState)Mathf.Max(0, (float)m_SelectState - 1);
+
             SelectImageChange();
         }
         else if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickRight))
         {
             UtilsSound.SE_Select();
-            m_SelectState = (SelectState)Mathf.Min((float)SelectState.INDEX - 1, (float)m_SelectState + 1);
+            if (IsLast)
+            {
+                m_SelectState = (SelectState)Mathf.Min((float)SelectState.INDEX - 2, (float)m_SelectState + 1);
+            }
+            else
+            {
+                m_SelectState = (SelectState)Mathf.Min((float)SelectState.INDEX - 1, (float)m_SelectState + 1);
+            }
             SelectImageChange();
         }
     }
