@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using BehaviorDesigner.Runtime.Tasks.Movement;
 
 //スイッチを押すたびに島が回転します
 public class RotateIsland : MonoBehaviour
@@ -21,21 +19,43 @@ public class RotateIsland : MonoBehaviour
     bool onPlayer = false;
     Transform player;
 
+    /// <summary>
+    /// 逆回転するまでの回数(0だと逆回転しなくなります)
+    /// </summary>
+    [SerializeField]
+    int reverseCount = 0;
+    int rotateCount = 0;
+
+    [SerializeField]
+    bool isReverse = false;
+
     void Start()
     {
+        currentRotateY = transform.localEulerAngles.y;
+        targetRotateY = currentRotateY;
+
         GameManager.I.OnPushSwitch += () =>
         {
             if (isWorkCoroutine)
             {
                 StopCoroutine(coroutine);
-                currentRotateY = transform.localEulerAngles.y;
-                targetRotateY = targetRotateY + plusValue;
             }
-            else
+
+            if(reverseCount != 0)
             {
-                currentRotateY = transform.localEulerAngles.y;
-                targetRotateY = currentRotateY + plusValue;
+                rotateCount++;
+                if(rotateCount >= reverseCount)
+                {
+                    isReverse = !isReverse;
+                    rotateCount = 0;
+                }
             }
+
+            if(!isReverse)
+                targetRotateY = targetRotateY + plusValue;
+            else
+                targetRotateY = targetRotateY - plusValue;
+
             isWorkCoroutine = true;
             gameObject.AddComponent<Rigidbody>();
             body = GetComponent<Rigidbody>();
@@ -52,11 +72,12 @@ public class RotateIsland : MonoBehaviour
     IEnumerator Rotate()
     {
         float t = 0.0f;
+        float startRotateY = currentRotateY;
         while (true)
         {
             t += Time.deltaTime;
-            
-            transform.rotation = Quaternion.Euler(0, MovementUtility.FloatLerp(currentRotateY, targetRotateY, t / rotateTime), 0);
+            currentRotateY = TkUtils.FloatLerp(startRotateY, targetRotateY, t / rotateTime);
+            transform.localRotation = Quaternion.Euler(0, currentRotateY, 0);
             if (t > rotateTime) break;
             yield return null;
         }
