@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class HelpManager : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class HelpManager : MonoBehaviour
     Image[] m_Pages;
 
     [SerializeField]
-    RectTransform []Tags;
+    RectTransform[] Tags;
 
     int m_pageCount;
     int PageCount
@@ -26,45 +27,61 @@ public class HelpManager : MonoBehaviour
     }
     int m_oldCount;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         PageCount = 0;
-	}
-	
-	// Update is called once per frame
-	void Update ()
+
+        //ページの有効化
+        for (int i = 0; i < m_Pages.Length; i++)
+        {
+            if (i == m_pageCount)
+            {
+                m_Pages[i].gameObject.SetActive(true);
+                Tags[i].anchoredPosition = new Vector2(100.0f, Tags[i].anchoredPosition.y);
+            }
+            else
+            {
+                m_Pages[i].gameObject.SetActive(false);
+                Tags[i].anchoredPosition = new Vector2(0.0f, Tags[i].anchoredPosition.y);
+            }
+        }
+        m_oldCount = PageCount;
+    }
+
+    // Update is called once per frame
+    void Update()
     {
-		if(MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickDown))
+        if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickDown))
         {
             UtilsSound.SE_Select();
-            PageCount = Mathf.Min(m_Pages.Length-1,PageCount+1);
+            PageCount = Mathf.Min(m_Pages.Length - 1, PageCount + 1);
 
         }
-        else if(MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickUp))
+        else if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickUp))
         {
             UtilsSound.SE_Select();
             PageCount = Mathf.Max(0, PageCount - 1);
 
         }
-	}
+    }
 
     void PageUpdate()
     {
-        if(m_oldCount!=PageCount)
+        if (m_oldCount != PageCount)
         {
             //ページの有効化
-            for(int i= 0;i< m_Pages.Length;i++)
+            for (int i = 0; i < m_Pages.Length; i++)
             {
-                if(i==m_pageCount)
+                if (i == m_pageCount)
                 {
                     m_Pages[i].gameObject.SetActive(true);
-                    Tags[i].anchoredPosition = new Vector2(100.0f,Tags[i].anchoredPosition.y);
+                    StartCoroutine(TagMoveX(Tags[i],0.1f,100.0f));
                 }
                 else
                 {
                     m_Pages[i].gameObject.SetActive(false);
-                    Tags[i].anchoredPosition = new Vector2(0.0f, Tags[i].anchoredPosition.y);
+                    StartCoroutine(TagMoveX(Tags[i], 0.1f, 0.0f));
                 }
             }
             m_oldCount = PageCount;
@@ -73,5 +90,22 @@ public class HelpManager : MonoBehaviour
         {
 
         }
+    }
+
+    IEnumerator TagMoveX(RectTransform target,float duration,float positionX)
+    {
+        float t=0.0f;
+
+        Vector2 startPos = target.anchoredPosition;
+        Vector2 targetpos = new Vector2(positionX,startPos.y);
+
+        while(true)
+        {
+            t += Time.unscaledDeltaTime;
+            target.anchoredPosition = Vector2.Lerp(startPos,targetpos,t/duration);
+            if (t > duration) break;
+            yield return null;
+        }
+        target.anchoredPosition = targetpos;
     }
 }
