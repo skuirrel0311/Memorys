@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Loading : MonoBehaviour {
-
-	// Use this for initialization
-	void Start ()
+    AsyncOperation ao;
+    // Use this for initialization
+    void Start ()
     {
-        SceneManager.LoadSceneAsync("stage"+PlayData.StageNum);	
+        ao =  SceneManager.LoadSceneAsync("stage"+PlayData.StageNum);
+        ao.allowSceneActivation = false;
+        StartCoroutine(TkUtils.Deray(2.0f,()=> { ao.allowSceneActivation = true; }));
 	}
 	
 	// Update is called once per frame
