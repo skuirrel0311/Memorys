@@ -11,7 +11,7 @@ public class Fairy : MonoBehaviour
     public bool canMagic = false;
 
     //見失ったか？
-    bool IsLostTarget;
+    public bool IsLostTarget;
     Vector3 lostPosition;
 
     //警戒度(どの程度警戒しているか)
@@ -44,31 +44,21 @@ public class Fairy : MonoBehaviour
         shakeTimer = new Timer();
         shakeTimer.TimerStart(2.0f, true);
         modelTransform = transform.GetChild(1);
+
+        GameObject plane = GameObject.Find("Plane");
+
+        List<GameObject> wayPointList = new List<GameObject>();
+        for (int i = 0; i < plane.transform.childCount; i++)
+        {
+            wayPointList.Add(plane.transform.GetChild(i).gameObject);
+        }
+
+        GetComponent<BehaviorTree>().GetVariable("WayPoints").SetValue(wayPointList);
     }
 
     void Update()
     {
         ShakePosition();
-        //警戒度がたまりやすくする
-        bool isSeePlayer = (bool)m_tree.GetVariable("IsSeePlayer").GetValue();
-        if (isSeePlayer)
-        {
-            Alertness += Time.deltaTime;
-            IsLostTarget = false;
-        }
-
-        if (IsLostTarget)
-        {
-            Alertness -= Time.deltaTime;
-        }
-
-        Alertness = Mathf.Clamp(Alertness, 0.0f, 3.0f);
-
-        if (Alertness == 3.0f)
-        {
-            canMagic = true;
-        }
-        IsWarning = Alertness > 1.5f;
 
         if (playerFinder != null)
         {
@@ -76,16 +66,52 @@ public class Fairy : MonoBehaviour
             {
                 //todo:距離も考慮
                 IsWarning = true;
-                SetTargetPosition();
             }
         }
 
-        //見失ったか？
-        if (IsWarning)
+        //警戒度がたまりやすくする
+        bool isSeePlayer = (bool)m_tree.GetVariable("IsSeePlayer").GetValue();
+        if (isSeePlayer)
         {
+            Alertness += Time.deltaTime * 2.0f;
+            IsLostTarget = false;
+        }
+        else
+        {
+            Alertness -= Time.deltaTime;
+        }
+
+        Alertness = Mathf.Clamp(Alertness, 0.0f, 3.0f);
+
+
+
+        if (!IsWarning)
+        {
+            IsWarning = Alertness > 0.5f;
+
+            if(IsWarning)
+            {
+                coroutineList.Add(StartCoroutine(SetLight(Color.yellow, 1.0f)));
+            }
+        }
+        else
+        {
+            //見失ったか？
             if (isSeePlayer == false && oldIsSeePlayer == true)
             {
                 IsLostTarget = true;
+                lostPosition = player.transform.position;
+            }
+
+            if (canMagic == false)
+            {
+                canMagic = Alertness >= 2.9f;
+            }
+            if (Alertness <= 0.1f && !canMagic)
+            {
+                //見失った
+                IsWarning = false;
+                coroutineList.Add(StartCoroutine(SetLight(Color.white, 1.0f)));
             }
         }
         SetTargetPosition();
@@ -113,34 +139,10 @@ public class Fairy : MonoBehaviour
 
     public void SetTargetPosition()
     {
-        if (IsLostTarget)
+        if (!IsLostTarget)
             m_tree.GetVariable("TargetPosition").SetValue(player.transform.position);
         else
             m_tree.GetVariable("TargetPosition").SetValue(lostPosition);
-    }
-
-    public IEnumerator RandomWalk()
-    {
-        Vector3 movement = Vector3.zero;
-        float t = 0.0f;
-        while (IsWarning)
-        {
-            t = 0.0f;
-            //todo:ダサいので必修正
-            float range = 0.01f;
-            movement.x = TkUtils.FloatLerp(-range, range, Random.Range(0.0f, 1.0f));
-            movement.y = TkUtils.FloatLerp(-range, range, Random.Range(0.0f, 1.0f));
-            movement.z = TkUtils.FloatLerp(-range, range, Random.Range(0.0f, 1.0f));
-            movement.Normalize();
-            while (true)
-            {
-                t += Time.deltaTime;
-                transform.Translate(movement * 0.1f);
-                if (t > 0.2f) break;
-                yield return null;
-            }
-        }
-        yield return null;
     }
 
     //地形変化を激しくする
@@ -151,10 +153,6 @@ public class Fairy : MonoBehaviour
             for (int i = 0; i < coroutineList.Count; i++) StopCoroutine(coroutineList[i]);
         }
         coroutineList.Add(StartCoroutine(ViolentlyTransition(changeTime)));
-
-        coroutineList.Add(StartCoroutine(RandomWalk()));
-        canMagic = false;
-        //todo:エフェクト
     }
 
     IEnumerator ViolentlyTransition(float changeTime)
@@ -168,12 +166,15 @@ public class Fairy : MonoBehaviour
         GameManager.I.SetIntervalTime(intervalTime);
         coroutineList.Add(StartCoroutine(SetLight(Color.white, 1.0f)));
 
+        IsWarning = false;
+        canMagic = false;
+        Alertness = 0.0f;
         for (int i = coroutineList.Count - 1; i >= 0; i--)
         {
             coroutineList[i] = null;
             coroutineList.Remove(coroutineList[i]);
         }
-        IsWarning = false;
+
     }
 
     IEnumerator SetLight(Color targetLightColor, float time)
