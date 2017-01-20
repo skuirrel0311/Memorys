@@ -6,9 +6,10 @@ using BehaviorDesigner.Runtime;
 public class Fairy : MonoBehaviour
 {
     //警戒しているか？
-    public bool IsWarning { get; private set; }
+    public bool IsWarning;
     bool oldIsSeePlayer;
     public bool canMagic = false;
+    public bool isShout = false;
 
     //見失ったか？
     public bool IsLostTarget;
@@ -21,8 +22,9 @@ public class Fairy : MonoBehaviour
     BehaviorTree m_tree;
     PlayerController player;
     Vector3 targetPosition;
-
-    List<Coroutine> coroutineList = new List<Coroutine>();
+    
+    Coroutine colorCoroutine;
+    Coroutine attackCoroutine;
 
     SoundWaveFinder playerFinder;
 
@@ -62,14 +64,25 @@ public class Fairy : MonoBehaviour
 
         if (playerFinder != null)
         {
-            if (playerFinder.workingTimer.IsWorking)
+            if(IsWarning == false && playerFinder.workingTimer.IsWorking && canMagic == false)
             {
                 //todo:距離も考慮
                 IsWarning = true;
+                Alertness = 2.5f;
+                lostPosition = player.transform.position;
+                IsLostTarget = true;
             }
         }
 
-        //警戒度がたまりやすくする
+        UpdateAlertness();
+
+        SetTargetPosition();
+    }
+
+    void UpdateAlertness()
+    {
+        if (isShout) return;
+
         bool isSeePlayer = (bool)m_tree.GetVariable("IsSeePlayer").GetValue();
         if (isSeePlayer)
         {
@@ -83,16 +96,9 @@ public class Fairy : MonoBehaviour
 
         Alertness = Mathf.Clamp(Alertness, 0.0f, 3.0f);
 
-
-
         if (!IsWarning)
         {
             IsWarning = Alertness > 0.5f;
-
-            if(IsWarning)
-            {
-                coroutineList.Add(StartCoroutine(SetLight(Color.yellow, 1.0f)));
-            }
         }
         else
         {
@@ -107,14 +113,8 @@ public class Fairy : MonoBehaviour
             {
                 canMagic = Alertness >= 2.9f;
             }
-            if (Alertness <= 0.1f && !canMagic)
-            {
-                //見失った
-                IsWarning = false;
-                coroutineList.Add(StartCoroutine(SetLight(Color.white, 1.0f)));
-            }
         }
-        SetTargetPosition();
+
         oldIsSeePlayer = isSeePlayer;
     }
 
@@ -148,33 +148,40 @@ public class Fairy : MonoBehaviour
     //地形変化を激しくする
     public void Magic(float changeTime)
     {
-        if (coroutineList.Count != 0)
+        if (attackCoroutine != null)
         {
-            for (int i = 0; i < coroutineList.Count; i++) StopCoroutine(coroutineList[i]);
+            StopCoroutine(attackCoroutine);
         }
-        coroutineList.Add(StartCoroutine(ViolentlyTransition(changeTime)));
+        attackCoroutine = StartCoroutine(ViolentlyTransition(changeTime));
+        isShout = true;
+        IsWarning = false;
+        Alertness = 0.0f;
     }
 
     IEnumerator ViolentlyTransition(float changeTime)
     {
         float intervalTime = GameManager.I.transitionInterval;
         GameManager.I.SetIntervalTime(intervalTime * 0.02f);
-        coroutineList.Add(StartCoroutine(SetLight(Color.red, 1.0f)));
+        ChangeLight(Color.red);
 
         yield return new WaitForSeconds(changeTime);
 
         GameManager.I.SetIntervalTime(intervalTime);
-        coroutineList.Add(StartCoroutine(SetLight(Color.white, 1.0f)));
+        isShout = false;
+    }
 
-        IsWarning = false;
-        canMagic = false;
-        Alertness = 0.0f;
-        for (int i = coroutineList.Count - 1; i >= 0; i--)
+    public void ChangeLight(Color targetColor)
+    {
+        if(colorCoroutine != null)
         {
-            coroutineList[i] = null;
-            coroutineList.Remove(coroutineList[i]);
+            StopCoroutine(colorCoroutine);
         }
+        colorCoroutine = StartCoroutine(SetLight(targetColor, 1.0f));
+    }
 
+    public void ChangeLight(float r, float g, float b, float a)
+    {
+        ChangeLight(new Color(r, g, b, a));
     }
 
     IEnumerator SetLight(Color targetLightColor, float time)
