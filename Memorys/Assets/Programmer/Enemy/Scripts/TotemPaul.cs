@@ -122,17 +122,23 @@ public class TotemPaul : MonoBehaviour
         if (IsWarning)
         {
             GameObject temp = (GameObject)m_tree.GetVariable("Player").GetValue();
-            if (Random.Range(1, 100) < 5 && temp != null)
-            {
-                return temp.transform.position;
-            }
 
-            //警戒している時はターゲットの位置を更新する
             Vector3 movement = playerController.movement;
-            movement.y = Random.Range(-0.3f, 0.2f);
-            //何フレーム先の座標を読むか *（どのくらいの時間で弾が到着するのか）
-            float futureRate = Random.Range(0.70f, 1.30f) * (transform.position - playerNeck.position).magnitude;
-            targetPosition = playerNeck.position + (movement * futureRate);
+
+            if (IsPlayerNotMove())
+            {
+                //動いていなかったらその場から適当にばらしたところをターゲットにする
+                movement = Vector3.Cross(playerNeck.position - chargeEffect.transform.position, Vector3.up);
+                movement *= Random.Range(-0.2f, 0.2f);
+            }
+            else
+            {
+                movement.y = Random.Range(-0.3f, 0.2f);
+                //何フレーム先の座標を読むか *（どのくらいの時間で弾が到着するのか）
+                float futureRate = Random.Range(0.70f, 1.30f) * (transform.position - playerNeck.position).magnitude;
+                movement *= futureRate;
+            }
+            targetPosition = playerNeck.position + (movement);
         }
         return targetPosition;
     }
@@ -165,6 +171,7 @@ public class TotemPaul : MonoBehaviour
         targetPosition = playerNeck.position;
         attackCoroutine = StartCoroutine(Attacking());
     }
+
     protected virtual IEnumerator Attacking()
     {
         yield return null;
@@ -288,5 +295,18 @@ public class TotemPaul : MonoBehaviour
 
         //todo:緩やかにor演出
         StartCoroutine(SetEmissionColor(GetComponent<Renderer>().materials[0].GetColor("_EmissionColor"), Color.black, 2.0f));
+    }
+
+    private bool IsPlayerNotMove()
+    {
+        Vector3 movement = PlayerController.I.movement;
+        Debug.Log("movement = " + movement);
+        //基準
+        float norm = 0.1f;
+
+        if (movement.x < norm && movement.z < norm) return true;
+
+        return false;
+        
     }
 }
