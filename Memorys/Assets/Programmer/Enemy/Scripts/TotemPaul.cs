@@ -223,6 +223,7 @@ public class TotemPaul : MonoBehaviour
         light.transform.GetChild(0).localScale = new Vector3(scale, 75.0f, scale);
         light.transform.localRotation = Quaternion.Euler(new Vector3(angleY, 0, 0));
         m_tree.GetVariable("ViewDistance").SetValue(range);
+        StartCoroutine(StartUpLight());
     }
 
     protected Material[] GetActiveMaterial()
@@ -271,6 +272,29 @@ public class TotemPaul : MonoBehaviour
 
             t += Time.deltaTime;
             if (t > time) break;
+            yield return null;
+        }
+    }
+
+    IEnumerator StartUpLight()
+    {
+        Light light = transform.GetChild(1).GetComponent<Light>();
+        Transform lightModel = light.transform.GetChild(0);
+        float endLightRange = light.range;
+        Vector3 endModelSize = lightModel.localScale;
+        float t = 0.0f;
+        float progress = 0.0f;
+
+        while(true)
+        {
+            t += Time.deltaTime;
+            progress = t / 0.3f;
+            progress = progress * progress;
+
+            light.range = TkUtils.FloatLerp(0.0f, endLightRange, progress);
+            lightModel.localScale = Vector3.Lerp(Vector3.zero, endModelSize, progress);
+
+            if (t > 0.3f) break;
             yield return null;
         }
     }
