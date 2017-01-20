@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 //スイッチを押すたびに島が回転します
@@ -28,6 +29,9 @@ public class RotateIsland : MonoBehaviour
 
     [SerializeField]
     bool isReverse = false;
+
+    [SerializeField]
+    List<GameObject> atRotateCollisionList = new List<GameObject>();
 
     void Start()
     {
@@ -73,6 +77,12 @@ public class RotateIsland : MonoBehaviour
     {
         float t = 0.0f;
         float startRotateY = currentRotateY;
+        
+        for(int i = 0;i< atRotateCollisionList.Count;i++)
+        {
+            atRotateCollisionList[i].SetActive(true);
+        }
+
         while (true)
         {
             t += Time.deltaTime;
@@ -86,6 +96,11 @@ public class RotateIsland : MonoBehaviour
         if (onPlayer)
         {
             player.parent = null;
+        }
+
+        for (int i = 0; i < atRotateCollisionList.Count; i++)
+        {
+            atRotateCollisionList[i].SetActive(false);
         }
     }
 
