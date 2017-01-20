@@ -55,23 +55,28 @@ public class SniperTotemPaul : TotemPaul
 
         //チャージ開始
         float time = 0.0f;
+        float hideTimer = 0.0f;
         while (true)
         {
             isSeePlayer = (bool)m_tree.GetVariable("IsSeePlayer").GetValue();
             time += Time.deltaTime;
 
+            if (!isSeePlayer) hideTimer += Time.deltaTime;
+            hideTimer = Mathf.Min(hideTimer, 3.0f);
+
             //一度見失って再度発見した
             if (isSeePlayer == true && oldIsSeePlayer == false)
             {
                 //ほとんどチャージし終わっていた
-                if (time > chargeTime * 0.8f)
+                if (hideTimer > chargeTime * 0.8f)
                 {
                     break;
                 }
                 else
                 {
                     //再チャージ
-                    time -= 1.0f;
+                    time -= 1.0f * (hideTimer/3.0f) ;
+                    hideTimer = 0.0f;
                 }
             }
 
