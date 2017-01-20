@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
+using DG.Tweening;
+using UnityEngine.PostProcessing;
 
 //プレイヤーの接触判定用クラス
 public class PlayerOverlap : MonoBehaviour
@@ -20,11 +22,14 @@ public class PlayerOverlap : MonoBehaviour
 
     bool isFound = false;
 
+    GameObject MainCamera;
+
     // Use this for initialization
     void Start()
     {
         HP = maxHP;
         enemies = GameObject.FindGameObjectsWithTag("Enemy").Select(n => n.GetComponent<BehaviorTree>()).ToArray();
+        MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     // Update is called once per frame
@@ -67,7 +72,12 @@ public class PlayerOverlap : MonoBehaviour
         SoundManager.PlaySound("Totem_Shot_impact");
         HP -= point;
         pointGauge.Value = HP;
-        PlayerController.I.currentState = PlayerState.Damage;
+        MainCamera.GetComponent<CameraContoller>().IsWork = false;
+        MainCamera.GetComponent<PostProcessingBehaviour>().profile.vignette.enabled = true;
+        MainCamera.transform.DOShakePosition(0.1f,0.5f,100,90,false,false).OnKill(() => {
+            MainCamera.GetComponent<CameraContoller>().IsWork = true;
+            MainCamera.GetComponent<PostProcessingBehaviour>().profile.vignette.enabled = false;
+        });
         if (HP <= 0)
         {
             Death();

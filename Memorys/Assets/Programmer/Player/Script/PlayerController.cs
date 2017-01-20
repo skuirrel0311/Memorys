@@ -44,8 +44,7 @@ public class PlayerController : MonoBehaviour
     private float jumpTime = 0;
     private float m_accel;
     public bool isJump;
-    private bool isClumbHint;
-
+    bool isLanding;
 
     void Awake()
     {
@@ -64,7 +63,7 @@ public class PlayerController : MonoBehaviour
         isSquat = false;
         m_accel = 0;
         isJump = false;
-        isClumbHint = false;
+        isLanding = false;
     }
 
     void FixedUpdate()
@@ -132,17 +131,27 @@ public class PlayerController : MonoBehaviour
             if (currentState == PlayerState.Fall)
             {
                 currentState = PlayerState.Idle;
+            }
+
+            if(isonGround && body.velocity.y < -0.5f&&!isLanding)
+            {
+                isLanding = true;
                 AkSoundEngine.PostEvent("Player_Landing", gameObject);
+                Debug.Log("landing2");
             }
             if (isonGround)
             {
                 if (isJump)
+                {
                     Debug.Log("landing");
+                }
+
                 isJump = false;
             }
             return;
         }
         currentState = PlayerState.Fall;
+        isLanding = false;
 
         //自動よじ登り
         if (isJump)
@@ -306,12 +315,6 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (!isClumbHint && m_accel>0.5f&&GetForwardObject() != null)
-        {
-            isClumbHint = true;
-            GetComponent<Animator>().CrossFadeInFixedTime("ClamberFailed", 0.1f);
-        }
-
         if (currentState == PlayerState.Jump)
         {
             if (IsOnGround())
