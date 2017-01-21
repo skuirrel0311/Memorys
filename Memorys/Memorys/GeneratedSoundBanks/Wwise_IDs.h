@@ -29,6 +29,7 @@ namespace AK
         static const AkUniqueID GET_SWITCH = 3960233822U;
         static const AkUniqueID MENU_CANCEL = 3180909377U;
         static const AkUniqueID MENU_DECISION = 191248761U;
+        static const AkUniqueID MENU_DECISION_TITLLE = 4089119168U;
         static const AkUniqueID MENU_PAGE = 205371738U;
         static const AkUniqueID MENU_SELECT = 4203375351U;
         static const AkUniqueID OPEN_DOOR = 2934549620U;

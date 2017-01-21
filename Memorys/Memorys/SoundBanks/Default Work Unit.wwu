@@ -13,6 +13,7 @@
 						<ObjectRef Name="Menu_Page" ID="{DE820879-6B8A-4307-B0FD-A0CBBA12DF49}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="BGM_Help" ID="{76DD920A-2939-437D-B209-B2632F842A3B}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Totem_Laser" ID="{E474A20D-615E-43D9-90B6-68FA4FFEF80B}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Menu_Decision_Titlle" ID="{49DE7AAC-20C1-43E1-AD69-C244D24A0CC4}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="BGM_Select" ID="{AD0FC5AC-954B-440B-B390-DE9805791087}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="GameOver" ID="{58DDFACA-32B0-4429-9F49-C3BD95A10D8D}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Player_Discovery" ID="{E110A56D-924D-44AA-B1EC-C3D4585FDAD7}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>

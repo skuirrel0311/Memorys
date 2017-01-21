@@ -23,7 +23,17 @@
 										<Action Name="Play" ID="{B4F1C7B8-B47F-4569-80F5-9BF8B04A4471}" ShortID="292563233" Type="Play" Scope="One" Global="false">
 											<ElementList>
 												<Element ID="{6B977F7D-7912-46BF-9A56-F8EC44990764}" Global="false">
-													<ObjectRef Name="Babble" ID="{C43F348C-A008-4462-8698-3810F53C714E}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+													<ObjectRef Name="BGM_Title_intro" ID="{0BEDB388-1D98-4ABF-80DF-40EB803CCC03}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+												</Element>
+											</ElementList>
+										</Action>
+										<Action Name="Play" ID="{6FAD14A8-E8B2-4D02-9FF7-5F664AA41174}" ShortID="641091957" Type="Play" Scope="One" Global="false">
+											<PropertyList>
+												<Property Name="Delay" Type="Real64" Value="1.7"/>
+											</PropertyList>
+											<ElementList>
+												<Element ID="{0E154FB7-5D48-4054-BE6D-D2E1F1EB71D4}" Global="false">
+													<ObjectRef Name="BGM_Title" ID="{D744D754-8548-47EB-AE93-F674C8A5450A}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 												</Element>
 											</ElementList>
 										</Action>
@@ -541,7 +551,7 @@
 								<Action Name="Play" ID="{6EBAFD87-10EA-4633-AA36-607F66FE299E}" ShortID="781185897" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{36AF0D62-7176-43E6-AAE5-17434883F80B}" Global="false">
-											<ObjectRef Name="Discovery" ID="{E3D96CC0-E8FA-4CDA-85A3-195AEC01494F}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+											<ObjectRef Name="Outro_1" ID="{B69CBD62-C18C-4D7C-9991-21FCCD672000}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -596,6 +606,24 @@
 							</ChildrenList>
 						</Event>
 						<Event Name="Player_Squat" ID="{E9B5775C-1606-4342-997F-E106BA155958}"/>
+						<Event Name="Menu_Decision_Titlle" ID="{49DE7AAC-20C1-43E1-AD69-C244D24A0CC4}">
+							<ChildrenList>
+								<Action Name="Stop" ID="{B1DB1226-FFB8-44A5-9F9D-2A4A9141A57B}" ShortID="268436824" Type="Stop" Scope="One" Global="true">
+									<ElementList>
+										<Element ID="{D5D684C8-2FD8-4661-BAED-8A6B2D0D4DAF}" Global="true">
+											<ObjectRef Name="BGM_Title" ID="{D744D754-8548-47EB-AE93-F674C8A5450A}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+										</Element>
+									</ElementList>
+								</Action>
+								<Action Name="Play" ID="{7BAB8231-CF93-4FE1-9DD1-C326A5D763CC}" ShortID="97226056" Type="Play" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{13D6B76C-3DED-4271-895A-C988E17C8994}" Global="false">
+											<ObjectRef Name="Menu_Decision_Titlle" ID="{8FD65F1E-73F5-4FB8-83B4-6C310AABDC2D}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+										</Element>
+									</ElementList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>

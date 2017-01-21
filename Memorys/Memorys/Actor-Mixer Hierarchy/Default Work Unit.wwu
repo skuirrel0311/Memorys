@@ -28,9 +28,72 @@
 								<ActiveSource Name="Landing_3" ID="{D5126C19-49EB-40FD-9E99-0D5EB8570F19}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
+						<Sound Name="Outro_1" ID="{B69CBD62-C18C-4D7C-9991-21FCCD672000}" ShortID="803875600" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="SFX" ID="{529E8067-04AE-442C-A06A-410650E5C054}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Outro_1" ID="{C483279B-63EB-43FE-8FE0-43326D7BAA74}" ShortID="247793441">
+									<Language>SFX</Language>
+									<AudioFile>Outro_1.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Outro_1" ID="{C483279B-63EB-43FE-8FE0-43326D7BAA74}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</Folder>
-				<Folder Name="BGM" ID="{67D0D0C0-565F-4DA9-9AF9-B209AE1D437F}" ShortID="26531388"/>
+				<Folder Name="BGM" ID="{67D0D0C0-565F-4DA9-9AF9-B209AE1D437F}" ShortID="26531388">
+					<ChildrenList>
+						<Sound Name="BGM_Title" ID="{D744D754-8548-47EB-AE93-F674C8A5450A}" ShortID="543471597" Type="SoundFX">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Music" ID="{1ED28C90-21F1-44AC-9528-1696211B3BDC}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="BGM_Title" ID="{632C21C3-DB6D-4C0E-A4D5-B1B18FDEEBB1}" ShortID="70230508">
+									<Language>SFX</Language>
+									<AudioFile>BGM_Title\BGM_Title.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="BGM_Title" ID="{632C21C3-DB6D-4C0E-A4D5-B1B18FDEEBB1}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="BGM_Title_intro" ID="{0BEDB388-1D98-4ABF-80DF-40EB803CCC03}" ShortID="750331133" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Music" ID="{1ED28C90-21F1-44AC-9528-1696211B3BDC}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="BGM_Title_intro" ID="{70DA17A0-4391-47FA-BBCB-B54D854DB425}" ShortID="543615378">
+									<Language>SFX</Language>
+									<AudioFile>BGM_Title\BGM_Title_intro.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="BGM_Title_intro" ID="{70DA17A0-4391-47FA-BBCB-B54D854DB425}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</Folder>
 				<Folder Name="Ambience" ID="{A49CF3A7-B364-4E4C-BFA9-9C90DE4ADD47}" ShortID="524253980">
 					<ChildrenList>
 						<Sound Name="Babble" ID="{C43F348C-A008-4462-8698-3810F53C714E}" ShortID="39616417" Type="SoundFX">
@@ -82,7 +145,7 @@
 					<PropertyList>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>8</Value>
+								<Value>4</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -378,6 +441,18 @@
 							</ReferenceList>
 							<ChildrenList>
 								<Sound Name="Page_1" ID="{2DF0A37A-FCE7-4F59-845E-3006DBDF0BF8}" ShortID="999470152" Type="SoundFX">
+									<PropertyList>
+										<Property Name="Highpass" Type="int16">
+											<ValueList>
+												<Value>32</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>1000</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
@@ -388,6 +463,9 @@
 									</ReferenceList>
 									<ChildrenList>
 										<AudioFileSource Name="Page_01" ID="{4D03885D-F418-45B9-93F5-F4A50C8FCFB9}" ShortID="969642365">
+											<PropertyList>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+											</PropertyList>
 											<Language>SFX</Language>
 											<AudioFile>Page_1.wav</AudioFile>
 										</AudioFileSource>
@@ -397,6 +475,18 @@
 									</ActiveSourceList>
 								</Sound>
 								<Sound Name="Page_2" ID="{28CB28EA-30EA-4F94-8F13-6001BB7392A6}" ShortID="514960932" Type="SoundFX">
+									<PropertyList>
+										<Property Name="Highpass" Type="int16">
+											<ValueList>
+												<Value>56</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>1000</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
@@ -417,6 +507,35 @@
 								</Sound>
 							</ChildrenList>
 						</RandomSequenceContainer>
+						<Sound Name="Menu_Decision_Titlle" ID="{8FD65F1E-73F5-4FB8-83B4-6C310AABDC2D}" ShortID="600264694" Type="SoundFX">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-4</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Menu_Decision_Titlle" ID="{28818ADF-A552-47EE-9393-C8F35C9DF33E}" ShortID="254536441">
+									<PropertyList>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.206818184118886"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Menu_Decision_Titlle.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Menu_Decision_Titlle" ID="{28818ADF-A552-47EE-9393-C8F35C9DF33E}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</ActorMixer>
 				<ActorMixer Name="enemy" ID="{E8AE238E-3549-4875-B55E-8C4767E42C44}" ShortID="370483415">
@@ -431,7 +550,6 @@
 					<ChildrenList>
 						<Sound Name="Totem_move" ID="{93DF39B4-6C2E-4993-B4C1-B9DC15F88B95}" ShortID="892851723" Type="SoundFX">
 							<PropertyList>
-								<Property Name="IsLoopingInfinite" Type="bool" Value="False"/>
 								<Property Name="Pitch" Type="int32">
 									<ModifierList>
 										<ModifierInfo>
