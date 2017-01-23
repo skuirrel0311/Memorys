@@ -21,8 +21,8 @@ public class TotemPaul : MonoBehaviour
     protected Vector3 targetPosition;
 
     public bool IsAttacking;
-    Coroutine attackCoroutine;
-    public bool IsWarning { get; private set; }
+    protected Coroutine attackCoroutine;
+    public bool IsWarning { get; protected set; }
     //警戒度
     public float Alertness = 0.0f;
 
@@ -191,10 +191,10 @@ public class TotemPaul : MonoBehaviour
     public void StartUp()
     {
         if (IsAwakeActive) return;
-        if(IsCameraEffect)
+        if (IsCameraEffect)
         {
             playerController.currentState = PlayerState.Idle;
-            CameraManager.I.CameraChange(2,1.5f);
+            CameraManager.I.CameraChange(2, 1.5f);
         }
         activateCoroutineList.Add(StartCoroutine("QuickStartUp"));
     }
@@ -285,7 +285,7 @@ public class TotemPaul : MonoBehaviour
         float t = 0.0f;
         float progress = 0.0f;
 
-        while(true)
+        while (true)
         {
             t += Time.deltaTime;
             progress = t / 0.3f;
@@ -307,9 +307,9 @@ public class TotemPaul : MonoBehaviour
             IsAttacking = false;
         }
 
-        foreach (Coroutine coroutine in activateCoroutineList)
+        for (int i = 0; i < activateCoroutineList.Count; i++)
         {
-            StopCoroutine(coroutine);
+            StopCoroutine(activateCoroutineList[i]);
         }
 
         IsDead = true;
@@ -330,6 +330,6 @@ public class TotemPaul : MonoBehaviour
         if (movement.x < norm && movement.z < norm) return true;
 
         return false;
-        
+
     }
 }

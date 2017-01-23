@@ -20,6 +20,9 @@ public class SniperTotemPaul : TotemPaul
     bool oldIsSeePlayer;
     bool isSeePlayer;
 
+    [SerializeField]
+    bool isOnRotateIsrand = false;
+
     public override void Start()
     {
         base.Start();
@@ -42,6 +45,8 @@ public class SniperTotemPaul : TotemPaul
         bullet.SetActive(false);
 
         playerHips = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0);
+
+        if (isOnRotateIsrand) SetOnPushEvent();
     }
 
     //攻撃
@@ -75,7 +80,7 @@ public class SniperTotemPaul : TotemPaul
                 else
                 {
                     //再チャージ
-                    time -= 1.0f * (hideTimer/3.0f) ;
+                    time -= 1.0f * (hideTimer / 3.0f);
                     hideTimer = 0.0f;
                 }
             }
@@ -200,5 +205,31 @@ public class SniperTotemPaul : TotemPaul
         base.Dead();
         lineRenderer.enabled = false;
         chargeEffect.Stop(true);
+    }
+
+    void SetOnPushEvent()
+    {
+        GameManager.I.OnPushSwitch += () =>
+        {
+            if (attackCoroutine != null) StopCoroutine(attackCoroutine);
+            bullet.SetActive(false);
+            chargeEffect.Stop(true);
+            chargeEffect.gameObject.SetActive(false);
+
+            IsAttacking = true;
+
+            lineRenderer.enabled = false;
+            IsWarning = false;
+            Alertness = 0.0f;
+
+            StartCoroutine("AttackInterval");
+        };
+    }
+    
+    IEnumerator AttackInterval()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        IsAttacking = false;
     }
 }
