@@ -153,7 +153,6 @@ public class SelectManager : MonoBehaviour
             if(m_SelectNumber!=1) UtilsSound.SE_MenuPage();
 
             m_SelectNumber = (int)Mathf.Max(1, (float)m_SelectNumber - 1);
-            UtilsSound.SE_MenuPage();
             BestTimeUpdate();
             UpdateTexture();
         }

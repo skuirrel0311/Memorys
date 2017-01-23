@@ -70,11 +70,6 @@
             OnDestroyCancelCallBack();
     }
 
-    public void StageDestroy()
-    {
-        m_StageDestroy++;
-        NotificationSystem.I.Indication("ステージが崩壊！　\n別の場所にターゲットが出現");
-    }
 
     public void GameClear()
     {

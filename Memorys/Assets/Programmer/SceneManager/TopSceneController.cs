@@ -22,10 +22,13 @@ public class TopSceneController : MonoBehaviour
     [SerializeField]
     GameObject TitleMenu;
 
+    [SerializeField]
+    GameObject TitleSound;
+
     float m_Timer;
 
 
-    static bool isAwake=false;
+    static bool isAwake = false;
 
     bool isNext;
     bool isMenu;
@@ -35,16 +38,9 @@ public class TopSceneController : MonoBehaviour
         m_sceneManager = GetComponent<MySceneManager>();
         isNext = false;
         isMenu = false;
-        if (!isAwake)
-        {
-            m_MovieOnUI.Play();
-            isAwake = true;
-        }
-        else
-        {
-            m_MovieOnUI.Stop();
-            m_MovieOnUI.gameObject.SetActive(false);
-        }
+        m_MovieOnUI.Stop();
+        m_MovieOnUI.gameObject.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -52,11 +48,12 @@ public class TopSceneController : MonoBehaviour
     {
         Push_A_Button();
         m_Timer += Time.deltaTime;
-        if(m_Timer>=m_WaitTime&&!m_MovieOnUI.IsPlaying)
+        if (m_Timer >= m_WaitTime && !m_MovieOnUI.IsPlaying)
         {
+            AkSoundEngine.ExecuteActionOnEvent("BGM_Titlle",AkActionOnEventType.AkActionOnEventType_Stop,TitleSound);
             m_MovieOnUI.gameObject.SetActive(true);
             m_MovieOnUI.Play();
-        }  
+        }
     }
     private void Push_A_Button()
     {
@@ -64,18 +61,19 @@ public class TopSceneController : MonoBehaviour
         {
             //入力に使いたいボタンが押されていなければ戻る
             if (!MyInputManager.GetButtonDown(MyInputManager.Button.A)
-                &&!MyInputManager.GetButtonDown(MyInputManager.Button.Start))return;
+                && !MyInputManager.GetButtonDown(MyInputManager.Button.Start))
+                return;
 
             //todo
             //UtilsSound.SE_Decision();
-
+            AkSoundEngine.PostEvent("BGM_Titlle",TitleSound);
             m_MovieOnUI.Stop();
             m_MovieOnUI.gameObject.SetActive(false);
             m_Timer = 0.0f;
             return;
         }
-        if (MyInputManager.GetButtonDown(MyInputManager.Button.A)||
-            MyInputManager.GetButtonDown(MyInputManager.Button.Start)||
+        if (MyInputManager.GetButtonDown(MyInputManager.Button.A) ||
+            MyInputManager.GetButtonDown(MyInputManager.Button.Start) ||
             MyInputManager.GetButtonDown(MyInputManager.Button.B))
         {
             if (!isMenu)
@@ -93,6 +91,7 @@ public class TopSceneController : MonoBehaviour
     {
         if (isNext) return;
         isNext = true;
+        AkSoundEngine.PostEvent("Menu_Decision_Titlle",TitleSound);
         Camera.main.gameObject.transform.DOMoveZ(-65.0f, 2.0f);
         GetComponent<DoorAnimation>().OpenDoor();
         StartCoroutine(TkUtils.DoColor(1.0f, TitleRogo, Color.clear));

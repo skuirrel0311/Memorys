@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
 
         m_WillDestroyObjects = new List<GameObject>();
         // SetWillDestroy();
-        StartCoroutine(TkUtils.Deray(3.0f, () => { NotificationSystem.I.Indication("スイッチを『 " + GameEnd.c_MaxDestroyCalcel.ToString() + " 』個起動し、脱出せよ！"); }));
+        StartCoroutine(TkUtils.Deray(3.0f, () => { NotificationSystem.I.Indication("スイッチを『 " + GameEnd.c_MaxDestroyCalcel.ToString() + " 』個起動し、脱出せよ！",60); }));
         if (!IsFlat)
         {
             SetIntervalTime(transitionInterval);
@@ -226,42 +226,6 @@ public class GameManager : MonoBehaviour
             GameObject g = Instantiate(m_Target, m_TargetPoints[i].transform);
             g.transform.localPosition = Vector3.zero;
         }
-    }
-
-    //ターゲットが破壊しようとするオブジェクトを選択
-    private void SetWillDestroy()
-    {
-        //short[] ary = RandomShuffle();
-        m_WillDestroyObjects.Clear();
-
-        float distance = 50.0f - m_GameEnd.StageDestroyCount * 10.0f;
-        distance *= distance;
-        int wallSeceletCount = 0;
-        for (int i = 0; i < m_FieldObjects.Count; i++)
-        {
-            if (wallSeceletCount <= 5 && m_FieldObjects[i].GetComponent<MeshFilter>().sharedMesh.name == "wall")
-            {
-                wallSeceletCount++;
-                m_WillDestroyObjects.Add(m_FieldObjects[i]);
-                ObjectEmission(m_FieldObjects[i], Color.red);
-            }
-
-            if (Vector3.SqrMagnitude(m_FieldObjects[i].transform.position) > distance)
-            {
-                m_WillDestroyObjects.Add(m_FieldObjects[i]);
-                ObjectEmission(m_FieldObjects[i], Color.red);
-            }
-        }
-    }
-
-    public void FieldObjectDestoy()
-    {
-        for (int i = 0; i < m_WillDestroyObjects.Count; i++)
-        {
-            if (m_WillDestroyObjects[i] != null)
-                StartCoroutine("ObjectDestroy", m_WillDestroyObjects[i]);
-        }
-        m_GameEnd.StageDestroy();
     }
 
     IEnumerator ObjectDestroy(GameObject go)

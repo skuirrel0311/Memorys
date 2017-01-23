@@ -10,14 +10,16 @@ public class NotificationSystem : MonoBehaviour {
     private GameObject m_NotificationImage;
     [SerializeField]
     private Text m_text;
+    private float m_defaultFontSize;
 
 	// Use this for initialization
 	void Awake ()
     {
         I = this;
+        m_defaultFontSize = m_text.fontSize;
 	}
 
-    public void Indication(string message)
+    public void Indication(string message,float fontsize = 30)
     {
         m_NotificationImage.SetActive(true);
         m_text.text = message;

@@ -26,6 +26,7 @@ public class GoalEvent : MonoBehaviour {
         GameManager.I.OnPossibleEscape += () =>
         {
             Debug.Log("OpenDoor");
+            AkSoundEngine.PostEvent("Open_Door",gameObject);
             GameManager.I.IsPlayStop = true;
             PlayerController.I.currentState = PlayerState.Idle;
             CameraManager.I.CameraChange(0,3.0f,true,true,() => { GameManager.I.IsPlayStop = false; });

@@ -109,6 +109,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
         if (GameManager.I.IsPlayStop) return;
         Vector3 movement = transform.position - oldPosition;
         jumpTime += Time.deltaTime;
@@ -125,6 +126,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentState == PlayerState.Jump) return;
         if (currentState == PlayerState.Clamber) return;
+        if (GameEnd.isGameClear) return;
         bool isonGround = IsOnGround();
         if (isonGround || body.velocity.y > -1.5f)
         {
@@ -268,7 +270,7 @@ public class PlayerController : MonoBehaviour
         //当たったオブジェクトの高さの差が小さければよじ登り
         float dis = Mathf.Abs(transform.position.y - go.transform.position.y);
 
-        if (dis <= 2.1f&&dis>=1.8f)
+        if (dis <= 2.8f&&dis>=1.8f)
         {
             currentState = PlayerState.Clamber;
             transform.Translate(0.0f, 0.2f, 0.0f);
