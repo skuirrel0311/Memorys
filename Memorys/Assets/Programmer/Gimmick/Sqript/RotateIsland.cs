@@ -44,6 +44,9 @@ public class RotateIsland : MonoBehaviour
     [SerializeField]
     List<GameObject> atRotatingCollisionList = new List<GameObject>();
 
+    [SerializeField]
+    List<GameObject> onPlayerDesableCollisionList = new List<GameObject>();
+
     void Start()
     {
         currentRotateY = transform.localEulerAngles.y;
@@ -100,8 +103,11 @@ public class RotateIsland : MonoBehaviour
 
         for (int i = 0; i < atRotatedDesableCollisionList.Count; i++)
         {
+            //tempは指定された時だけtrueになる
             bool temp = atRotatedDesableCollisionList[i].name == "Collision" + GameManager.I.m_GameEnd.m_destoryCancelCount.ToString();
-            atRotatedDesableCollisionList[i].SetActive(!temp);
+
+
+            atRotatedDesableCollisionList[i].SetActive(temp == (!atRotatedDesableCollisionList[i].activeSelf));
         }
 
         while (true)
@@ -123,6 +129,11 @@ public class RotateIsland : MonoBehaviour
         {
             atRotatingCollisionList[i].SetActive(false);
         }
+
+        for (int i = 0; i < onPlayerDesableCollisionList.Count; i++)
+        {
+            onPlayerDesableCollisionList[i].SetActive(true);
+        }
     }
 
     void OnCollisionStay(Collision col)
@@ -139,5 +150,9 @@ public class RotateIsland : MonoBehaviour
         if (cols == null) return;
 
         player.parent = cols[0].transform;
+        for(int i = 0;i< onPlayerDesableCollisionList.Count;i++)
+        {
+            onPlayerDesableCollisionList[i].SetActive(false);
+        }
     }
 }
