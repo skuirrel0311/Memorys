@@ -49,6 +49,7 @@ public class InGameCanvasManager : MonoBehaviour
         isPause = ispause;
         if (isPause)
         {
+            AkSoundEngine.SetState("Menu", "Menu");
             isPause = true;
             PauseObject.SetActive(true);
             Time.timeScale = 0.0f;
@@ -57,6 +58,7 @@ public class InGameCanvasManager : MonoBehaviour
         else
         {
             isPause = false;
+            AkSoundEngine.SetState("Menu", "inGame");
             PauseObject.GetComponent<Pause>().HelpDiasable();
             PauseObject.SetActive(false);
             Time.timeScale = 1.0f;

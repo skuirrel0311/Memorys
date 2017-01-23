@@ -3,7 +3,6 @@ using BehaviorDesigner.Runtime;
 
 public class BreakMessage : PopUpMessage
 {
-    GameObject m_Exposion;
 
     //何回ボタンを押せばいいか
     [SerializeField]
@@ -14,10 +13,6 @@ public class BreakMessage : PopUpMessage
 
     SoundWaveFinder finder;
 
-    void Awake()
-    {
-        m_Exposion = Resources.Load("ExplosionMobile") as GameObject;
-    }
 
     public override void Start()
     {
@@ -32,6 +27,7 @@ public class BreakMessage : PopUpMessage
         if (Time.timeScale == 0.0f) return;
         if (GameEnd.isGameEnd) return;
         //todo:押したらどうのこうの
+        origin = transform.position;
         messagePrefab.fillAmount = (float)pushCount / maxPushCount;
         if(IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
         {

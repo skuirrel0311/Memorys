@@ -22,6 +22,7 @@ public class PopUpMessage : MonoBehaviour
         canvasRect = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<RectTransform>();
         origin = transform.position;
         messagePrefab = (Image)Instantiate(messagePrefab, canvasRect.transform);
+        messagePrefab.transform.localScale = Vector3.one*2.0f;
     }
 
     public virtual void Update()
