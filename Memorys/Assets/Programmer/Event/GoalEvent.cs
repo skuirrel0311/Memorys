@@ -29,11 +29,11 @@ public class GoalEvent : MonoBehaviour {
             AkSoundEngine.PostEvent("Open_Door",gameObject);
             GameManager.I.IsPlayStop = true;
             PlayerController.I.currentState = PlayerState.Idle;
-            CameraManager.I.CameraChange(0,3.0f,true,true,() => { GameManager.I.IsPlayStop = false; });
-            RightDoor.transform.DOMoveX(-8.5f,3.0f);
-            LeftDoor.transform.DOMoveX(8.5f,3.0f);
+            CameraManager.I.CameraChange(0,2.5f,true,true,() => { GameManager.I.IsPlayStop = false; });
+            RightDoor.transform.DOMoveX(-8.5f,2.0f);
+            LeftDoor.transform.DOMoveX(8.5f,2.0f);
             UpperFloor.SetActive(true);
-            UpperFloor.transform.DOMoveY(TargetPositionY, 3.0f);
+            UpperFloor.transform.DOMoveY(TargetPositionY, 2.0f);
         };
 	}
 }

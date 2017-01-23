@@ -50,7 +50,7 @@ public class TopSceneController : MonoBehaviour
         m_Timer += Time.deltaTime;
         if (m_Timer >= m_WaitTime && !m_MovieOnUI.IsPlaying)
         {
-            AkSoundEngine.ExecuteActionOnEvent("BGM_Titlle",AkActionOnEventType.AkActionOnEventType_Stop,TitleSound);
+            AkSoundEngine.ExecuteActionOnEvent("BGM_Titlle",AkActionOnEventType.AkActionOnEventType_Stop,TitleSound,1000);
             m_MovieOnUI.gameObject.SetActive(true);
             m_MovieOnUI.Play();
         }
