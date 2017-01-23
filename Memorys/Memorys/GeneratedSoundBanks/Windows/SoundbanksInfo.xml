@@ -49,7 +49,7 @@
 				<Event Id="3281306125" Name="Result_Star" ObjectPath="\Events\Default Work Unit\SE\Jingle\Result_Star"/>
 				<Event Id="3042685367" Name="Totem_Activation" ObjectPath="\Events\Default Work Unit\SE\Totem_Activation"/>
 				<Event Id="2329625548" Name="Totem_Laser" ObjectPath="\Events\Default Work Unit\SE\Totem_Laser" MaxAttenuation="100.000000"/>
-				<Event Id="3607114015" Name="Totem_Laser_charge" ObjectPath="\Events\Default Work Unit\SE\Totem_Laser_charge"/>
+				<Event Id="3607114015" Name="Totem_Laser_charge" ObjectPath="\Events\Default Work Unit\SE\Totem_Laser_charge" MaxAttenuation="100.000000"/>
 				<Event Id="3343999249" Name="Totem_Laser_impact" ObjectPath="\Events\Default Work Unit\SE\Totem_Laser_impact"/>
 				<Event Id="2364382980" Name="Totem_Move" ObjectPath="\Events\Default Work Unit\SE\Totem_Move"/>
 				<Event Id="2592508863" Name="Totem_Shot" ObjectPath="\Events\Default Work Unit\SE\Totem_Shot"/>
@@ -84,9 +84,17 @@
 					<ShortName>Babble.wav</ShortName>
 					<Path>SFX\Babble_3F5F6E3C.wem</Path>
 				</File>
+				<File Id="193645007" Language="SFX">
+					<ShortName>Totem_Laser_charge.wav</ShortName>
+					<Path>SFX\Totem_Laser_charge_A54EFD6A.wem</Path>
+				</File>
 				<File Id="230314246" Language="SFX">
 					<ShortName>Result_Star.wav</ShortName>
 					<Path>SFX\Result_Star_9E69E797.wem</Path>
+				</File>
+				<File Id="247793441" Language="SFX">
+					<ShortName>Outro_1.wav</ShortName>
+					<Path>SFX\Outro_1_9E69E797.wem</Path>
 				</File>
 				<File Id="254536441" Language="SFX">
 					<ShortName>Menu_Decision_Titlle.wav</ShortName>
@@ -143,10 +151,6 @@
 				<File Id="868156345" Language="SFX">
 					<ShortName>Landing\Landing_1.wav</ShortName>
 					<Path>SFX\Landing\Landing_1_CACF8A59.wem</Path>
-				</File>
-				<File Id="950947957" Language="SFX">
-					<ShortName>Open_Door.wav</ShortName>
-					<Path>SFX\Open_Door_9E69E797.wem</Path>
 				</File>
 				<File Id="969642365" Language="SFX">
 					<ShortName>Page_1.wav</ShortName>

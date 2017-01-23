@@ -659,6 +659,56 @@
 								<ActiveSource Name="Totem_Laser_impact" ID="{53C06EC5-F751-4A6D-803D-E8B0B3E05207}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
+						<Sound Name="Totem_Laser_charge" ID="{5BACFDCA-E669-4E28-B53E-38E84455AC76}" ShortID="493966340" Type="SoundFX">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="Pitch" Type="int32">
+									<ValueList>
+										<Value>600</Value>
+									</ValueList>
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{347B973F-8A01-45FB-B6BD-4015B4250CF0}">
+												<PropertyList>
+													<Property Name="Max" Type="Real64" Value="2248"/>
+													<Property Name="Min" Type="Real64" Value="-581"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="PositioningType" Type="int16" Value="1"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-4</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="SE" ID="{06551A6B-829B-43B9-9905-89F62B6C767F}" WorkUnitID="{7F9DC3F7-3499-4AB5-88CC-0738E331008A}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Totem_Laser_charge" ID="{36BE4DF8-5F33-4E3D-88F1-E7CF32B19C8F}" ShortID="193645007">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="2.31796647230321E-02"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Totem_Laser_charge.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Totem_Laser_charge" ID="{36BE4DF8-5F33-4E3D-88F1-E7CF32B19C8F}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</ActorMixer>
 				<ActorMixer Name="switch" ID="{4D6E84F1-006F-4248-A22B-53E9440BCE4A}" ShortID="825074347">

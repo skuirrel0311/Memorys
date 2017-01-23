@@ -56,7 +56,9 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	124329984	Fs_3	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Footsteps\Fs_3_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\player\Footsteps\Fs_3		63064
 	175632178	Page_2	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Page_2_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\menu\Page\Page_2		315064
 	178554552	Babble	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Babble_3F5F6E3C.wem		\Actor-Mixer Hierarchy\Default Work Unit\Ambience\Babble		346564
+	193645007	Totem_Laser_charge	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Totem_Laser_charge_A54EFD6A.wem		\Actor-Mixer Hierarchy\Default Work Unit\enemy\Totem_Laser_charge		203600
 	230314246	Result_Star	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Result_Star_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Jingle\Result_Star		159220
+	247793441	Outro_1	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Outro_1_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Outro_1		488556
 	254536441	Menu_Decision_Titlle	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Menu_Decision_Titlle_6C4592AE.wem		\Actor-Mixer Hierarchy\Default Work Unit\menu\Menu_Decision_Titlle		447852
 	266972089	Fs_4	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Footsteps\Fs_4_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\player\Footsteps\Fs_4		63064
 	341995375	Jump	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Jump(2)_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\player\Jump		157564
@@ -71,7 +73,6 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	821184564	Totem_move	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\ToteMove_683C6BAC.wem		\Actor-Mixer Hierarchy\Default Work Unit\enemy\Totem_move		126064
 	864391788	Search	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Search_23497503.wem		\Actor-Mixer Hierarchy\Default Work Unit\switch\Search		504064
 	868156345	Climb_1	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Landing\Landing_1_CACF8A59.wem		\Actor-Mixer Hierarchy\Default Work Unit\player\Climb\Climb_1		157564
-	950947957	Open_Door	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Open_Door_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\SE\Open_Door		529264
 	969642365	Page_1	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Page_1_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\menu\Page\Page_1		315064
 	984336411	1_Normal	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\1_Normal_4B8CC0C5.wem		\Interactive Music Hierarchy\Default Work Unit\BGM_Main1\Normal\1_Normal\1_Normal		15631816
 	996854392	Totem_Laser	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Totem_Laser_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\enemy\Totem_Laser		285020
