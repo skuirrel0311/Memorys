@@ -324,7 +324,6 @@ public class TotemPaul : MonoBehaviour
     private bool IsPlayerNotMove()
     {
         Vector3 movement = PlayerController.I.movement;
-        Debug.Log("movement = " + movement);
         //基準
         float norm = 0.1f;
 

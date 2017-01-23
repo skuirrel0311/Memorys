@@ -30,8 +30,19 @@ public class RotateIsland : MonoBehaviour
     [SerializeField]
     bool isReverse = false;
 
+    //回ったあとに出てくるコリジョン
     [SerializeField]
-    List<GameObject> atRotateCollisionList = new List<GameObject>();
+    List<GameObject> atRotatedEnableCollisionList = new List<GameObject>();
+
+    //回ったあとに消えるコリジョン
+    [SerializeField]
+    List<GameObject> atRotatedDesableCollisionList = new List<GameObject>();
+
+    /// <summary>
+    /// 回っている時に出てくるコリジョン
+    /// </summary>
+    [SerializeField]
+    List<GameObject> atRotatingCollisionList = new List<GameObject>();
 
     void Start()
     {
@@ -70,7 +81,6 @@ public class RotateIsland : MonoBehaviour
 
     void Update()
     {
-
     }
 
     IEnumerator Rotate()
@@ -78,9 +88,20 @@ public class RotateIsland : MonoBehaviour
         float t = 0.0f;
         float startRotateY = currentRotateY;
         
-        for(int i = 0;i< atRotateCollisionList.Count;i++)
+        for(int i = 0;i< atRotatingCollisionList.Count;i++)
         {
-            atRotateCollisionList[i].SetActive(true);
+            atRotatingCollisionList[i].SetActive(true);
+        }
+
+        for (int i = 0; i < atRotatedEnableCollisionList.Count; i++)
+        {
+            atRotatedEnableCollisionList[i].SetActive(!atRotatedEnableCollisionList[i].activeSelf);
+        }
+
+        for (int i = 0; i < atRotatedDesableCollisionList.Count; i++)
+        {
+            bool temp = atRotatedDesableCollisionList[i].name == "Collision" + GameManager.I.m_GameEnd.m_destoryCancelCount.ToString();
+            atRotatedDesableCollisionList[i].SetActive(!temp);
         }
 
         while (true)
@@ -98,9 +119,9 @@ public class RotateIsland : MonoBehaviour
             player.parent = null;
         }
 
-        for (int i = 0; i < atRotateCollisionList.Count; i++)
+        for (int i = 0; i < atRotatingCollisionList.Count; i++)
         {
-            atRotateCollisionList[i].SetActive(false);
+            atRotatingCollisionList[i].SetActive(false);
         }
     }
 
