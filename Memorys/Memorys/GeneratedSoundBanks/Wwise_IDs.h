@@ -25,7 +25,6 @@ namespace AK
         static const AkUniqueID FOOTSTEPS = 2385628198U;
         static const AkUniqueID GAMECLEAR = 1397260774U;
         static const AkUniqueID GAMEOVER = 4158285989U;
-        static const AkUniqueID GAMESTART = 4058101365U;
         static const AkUniqueID GET_SWITCH = 3960233822U;
         static const AkUniqueID MENU_CANCEL = 3180909377U;
         static const AkUniqueID MENU_DECISION = 191248761U;
@@ -38,6 +37,8 @@ namespace AK
         static const AkUniqueID PLAYER_JUMP = 1305133589U;
         static const AkUniqueID PLAYER_LANDING = 1282282006U;
         static const AkUniqueID PLAYER_SEARCH = 3889015721U;
+        static const AkUniqueID RESULT = 936499202U;
+        static const AkUniqueID RESULT_STAR = 3281306125U;
         static const AkUniqueID TOTEM_ACTIVATION = 3042685367U;
         static const AkUniqueID TOTEM_LASER = 2329625548U;
         static const AkUniqueID TOTEM_LASER_CHARGE = 3607114015U;
@@ -57,7 +58,6 @@ namespace AK
             {
                 static const AkUniqueID EMERGENCY = 867808496U;
                 static const AkUniqueID NORMAL = 1160234136U;
-                static const AkUniqueID STEALTH = 2909291642U;
             } // namespace STATE
         } // namespace BGM_CHANGE
 

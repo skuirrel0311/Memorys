@@ -29,6 +29,15 @@
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="Outro_1" ID="{B69CBD62-C18C-4D7C-9991-21FCCD672000}" ShortID="803875600" Type="SoundFX">
+							<PropertyList>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{41E40E8C-82B3-48EC-81BF-2F0E4463A6C4}"/>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
@@ -45,6 +54,25 @@
 							</ChildrenList>
 							<ActiveSourceList>
 								<ActiveSource Name="Outro_1" ID="{C483279B-63EB-43FE-8FE0-43326D7BAA74}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Open_Door" ID="{F6CE0D95-FEA3-47F3-9F3F-1AD5755F234C}" ShortID="427032018" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="SFX" ID="{529E8067-04AE-442C-A06A-410650E5C054}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Open_Door" ID="{2537C0C6-8E56-4A5C-B95D-798EF02717F2}" ShortID="950947957">
+									<Language>SFX</Language>
+									<AudioFile>Open_Door.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Open_Door" ID="{2537C0C6-8E56-4A5C-B95D-798EF02717F2}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
@@ -586,6 +614,51 @@
 								<ActiveSource Name="ToteMove" ID="{615F0222-41BE-4E23-800B-85D640D8F568}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
+						<Sound Name="Totem_Laser" ID="{B0D7ECCB-123D-40A0-B003-3C0A14EAAF44}" ShortID="945413872" Type="SoundFX">
+							<PropertyList>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="PositioningType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="SE" ID="{06551A6B-829B-43B9-9905-89F62B6C767F}" WorkUnitID="{7F9DC3F7-3499-4AB5-88CC-0738E331008A}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Totem_Laser" ID="{FB90C044-9F21-4C0B-9AC2-6528BC6342B8}" ShortID="996854392">
+									<Language>SFX</Language>
+									<AudioFile>Totem_Laser.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Totem_Laser" ID="{FB90C044-9F21-4C0B-9AC2-6528BC6342B8}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Totem_Laser_impact" ID="{FD2B76DB-7952-4B5B-8A36-19B7217FE890}" ShortID="681677641" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Totem_Laser_impact" ID="{53C06EC5-F751-4A6D-803D-E8B0B3E05207}" ShortID="419326362">
+									<Language>SFX</Language>
+									<AudioFile>Totem_Laser_impact.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Totem_Laser_impact" ID="{53C06EC5-F751-4A6D-803D-E8B0B3E05207}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</ActorMixer>
 				<ActorMixer Name="switch" ID="{4D6E84F1-006F-4248-A22B-53E9440BCE4A}" ShortID="825074347">
@@ -713,6 +786,74 @@
 						</Sound>
 					</ChildrenList>
 				</ActorMixer>
+				<Folder Name="Jingle" ID="{A462D7AA-0B91-43A3-AB21-414689A1D463}" ShortID="580215414">
+					<ChildrenList>
+						<Sound Name="Result" ID="{48E01443-CDD3-4E25-A08F-10F83EE065CD}" ShortID="858916011" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Result" ID="{D8C2E35A-E0C7-4F2C-AD54-ECD4ADC4651B}" ShortID="101943020">
+									<Language>SFX</Language>
+									<AudioFile>Result.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Result" ID="{D8C2E35A-E0C7-4F2C-AD54-ECD4ADC4651B}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Result_Star" ID="{A20261EA-CCF4-4F6E-A138-C694BA6A91EE}" ShortID="31010935" Type="SoundFX">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>1</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Result_Star" ID="{AEEC960F-B48B-42C6-9ABB-FB7ADCADAAAD}" ShortID="230314246">
+									<Language>SFX</Language>
+									<AudioFile>Result_Star.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Result_Star" ID="{AEEC960F-B48B-42C6-9ABB-FB7ADCADAAAD}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="GameClear" ID="{1D55E4C5-D749-4572-AD34-A5243A98E05E}" ShortID="893304676" Type="SoundFX">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="GameClear" ID="{0BBC9182-1120-4F93-BA48-9A5131664D0F}" ShortID="370876679">
+									<Language>SFX</Language>
+									<AudioFile>GameClear.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="GameClear" ID="{0BBC9182-1120-4F93-BA48-9A5131664D0F}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

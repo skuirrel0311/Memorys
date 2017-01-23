@@ -33,7 +33,6 @@
 				<Event Id="2385628198" Name="Footsteps" ObjectPath="\Events\Default Work Unit\SE\Footsteps"/>
 				<Event Id="1397260774" Name="GameClear" ObjectPath="\Events\Default Work Unit\SE\Jingle\GameClear"/>
 				<Event Id="4158285989" Name="GameOver" ObjectPath="\Events\Default Work Unit\SE\Jingle\GameOver"/>
-				<Event Id="4058101365" Name="GameStart" ObjectPath="\Events\Default Work Unit\SE\Jingle\GameStart"/>
 				<Event Id="3960233822" Name="Get_Switch" ObjectPath="\Events\Default Work Unit\SE\Get_Switch"/>
 				<Event Id="3180909377" Name="Menu_Cancel" ObjectPath="\Events\Default Work Unit\SE\Menu_Cancel"/>
 				<Event Id="191248761" Name="Menu_Decision" ObjectPath="\Events\Default Work Unit\SE\Menu_Decision"/>
@@ -46,8 +45,10 @@
 				<Event Id="1305133589" Name="Player_Jump" ObjectPath="\Events\Default Work Unit\SE\Player_Jump"/>
 				<Event Id="1282282006" Name="Player_Landing" ObjectPath="\Events\Default Work Unit\SE\Player_Landing"/>
 				<Event Id="3889015721" Name="Player_Search" ObjectPath="\Events\Default Work Unit\SE\Player_Search"/>
+				<Event Id="936499202" Name="Result" ObjectPath="\Events\Default Work Unit\SE\Jingle\Result"/>
+				<Event Id="3281306125" Name="Result_Star" ObjectPath="\Events\Default Work Unit\SE\Jingle\Result_Star"/>
 				<Event Id="3042685367" Name="Totem_Activation" ObjectPath="\Events\Default Work Unit\SE\Totem_Activation"/>
-				<Event Id="2329625548" Name="Totem_Laser" ObjectPath="\Events\Default Work Unit\SE\Totem_Laser"/>
+				<Event Id="2329625548" Name="Totem_Laser" ObjectPath="\Events\Default Work Unit\SE\Totem_Laser" MaxAttenuation="100.000000"/>
 				<Event Id="3607114015" Name="Totem_Laser_charge" ObjectPath="\Events\Default Work Unit\SE\Totem_Laser_charge"/>
 				<Event Id="3343999249" Name="Totem_Laser_impact" ObjectPath="\Events\Default Work Unit\SE\Totem_Laser_impact"/>
 				<Event Id="2364382980" Name="Totem_Move" ObjectPath="\Events\Default Work Unit\SE\Totem_Move"/>
@@ -62,6 +63,10 @@
 				<File Id="70230508" Language="SFX">
 					<ShortName>BGM_Title\BGM_Title.wav</ShortName>
 					<Path>SFX\BGM_Title\BGM_Title_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="101943020" Language="SFX">
+					<ShortName>Result.wav</ShortName>
+					<Path>SFX\Result_9E69E797.wem</Path>
 				</File>
 				<File Id="112961538" Language="SFX">
 					<ShortName>Landing\Landing_2.wav</ShortName>
@@ -79,9 +84,9 @@
 					<ShortName>Babble.wav</ShortName>
 					<Path>SFX\Babble_3F5F6E3C.wem</Path>
 				</File>
-				<File Id="247793441" Language="SFX">
-					<ShortName>Outro_1.wav</ShortName>
-					<Path>SFX\Outro_1_9E69E797.wem</Path>
+				<File Id="230314246" Language="SFX">
+					<ShortName>Result_Star.wav</ShortName>
+					<Path>SFX\Result_Star_9E69E797.wem</Path>
 				</File>
 				<File Id="254536441" Language="SFX">
 					<ShortName>Menu_Decision_Titlle.wav</ShortName>
@@ -94,6 +99,14 @@
 				<File Id="341995375" Language="SFX">
 					<ShortName>Jump(2).wav</ShortName>
 					<Path>SFX\Jump(2)_9E69E797.wem</Path>
+				</File>
+				<File Id="370876679" Language="SFX">
+					<ShortName>GameClear.wav</ShortName>
+					<Path>SFX\GameClear_9E69E797.wem</Path>
+				</File>
+				<File Id="419326362" Language="SFX">
+					<ShortName>Totem_Laser_impact.wav</ShortName>
+					<Path>SFX\Totem_Laser_impact_9E69E797.wem</Path>
 				</File>
 				<File Id="514799383" Language="SFX">
 					<ShortName>Landing\Landing_3.wav</ShortName>
@@ -131,6 +144,10 @@
 					<ShortName>Landing\Landing_1.wav</ShortName>
 					<Path>SFX\Landing\Landing_1_CACF8A59.wem</Path>
 				</File>
+				<File Id="950947957" Language="SFX">
+					<ShortName>Open_Door.wav</ShortName>
+					<Path>SFX\Open_Door_9E69E797.wem</Path>
+				</File>
 				<File Id="969642365" Language="SFX">
 					<ShortName>Page_1.wav</ShortName>
 					<Path>SFX\Page_1_9E69E797.wem</Path>
@@ -138,6 +155,10 @@
 				<File Id="984336411" Language="SFX">
 					<ShortName>1_Normal.wav</ShortName>
 					<Path>SFX\1_Normal_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="996854392" Language="SFX">
+					<ShortName>Totem_Laser.wav</ShortName>
+					<Path>SFX\Totem_Laser_9E69E797.wem</Path>
 				</File>
 				<File Id="1027748973" Language="SFX">
 					<ShortName>Discovery.wav</ShortName>

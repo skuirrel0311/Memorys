@@ -8,7 +8,6 @@
 						<State Name="None" ID="{82532A0F-58CB-4E8C-82CC-C9BF29FC2354}"/>
 						<State Name="Emergency" ID="{F4645CC1-02A3-455A-B3E0-D5732936B5BC}"/>
 						<State Name="Normal" ID="{5017403C-79BB-436C-8F21-E5C956F6E241}"/>
-						<State Name="Stealth" ID="{15F12046-7A07-4213-B5B6-FCFD05DF3854}"/>
 					</ChildrenList>
 				</StateGroup>
 				<StateGroup Name="Menu" ID="{E6B17BE9-E79B-44BB-963C-4B3D538A3400}">

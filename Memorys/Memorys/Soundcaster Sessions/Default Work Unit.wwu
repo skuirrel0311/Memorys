@@ -80,6 +80,26 @@
 					</CurrentStateList>
 					<CurrentSwitchList ShowAll="true"/>
 				</SoundcasterSession>
+				<SoundcasterSession Name="inGame" ID="{AD2F7BC2-55F2-4394-9BC0-9D32AA52A8E4}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="BGM_Main1" ID="{B2D0307B-5F9B-4C79-A9C5-F85B2DA78A50}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="GameClear" ID="{A490411E-5868-4753-AEFF-63C04C6AB45C}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true">
+						<RTPCValue>
+							<GameParameterRef Name="BGM_transition" ID="{7609EDAB-1F25-4387-823D-009AA919D0B6}"/>
+							<Value>100</Value>
+						</RTPCValue>
+					</RTPCValueList>
+					<CurrentStateList ShowAll="true"/>
+					<CurrentSwitchList ShowAll="true"/>
+				</SoundcasterSession>
 			</ChildrenList>
 		</WorkUnit>
 	</SoundcasterSessions>
