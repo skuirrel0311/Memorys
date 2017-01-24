@@ -33,6 +33,10 @@ public class Fairy : MonoBehaviour
     float startY = 0.0f;
     float targetY = 0.0f;
 
+    [SerializeField]
+    GameObject Waypoints = null;
+
+
     void Start()
     {
         m_tree = GetComponent<BehaviorTree>();
@@ -47,7 +51,7 @@ public class Fairy : MonoBehaviour
         shakeTimer.TimerStart(2.0f, true);
         modelTransform = transform.GetChild(1);
 
-        GameObject plane = GameObject.Find("Plane");
+        GameObject plane = Waypoints;
 
         List<GameObject> wayPointList = new List<GameObject>();
         for (int i = 0; i < plane.transform.childCount; i++)
