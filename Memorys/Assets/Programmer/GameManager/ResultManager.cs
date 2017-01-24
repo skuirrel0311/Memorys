@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.Analytics;
 
 public class ResultManager : MonoBehaviour
 {
@@ -71,6 +72,7 @@ public class ResultManager : MonoBehaviour
         m_sceneManager = GetComponent<MySceneManager>();
         m_SelectState = SelectState.SELECT;
         m_SelectChild = select.GetComponentsInChildren<Image>();
+
         if (PlayData.StageNum >= SelectManager.c_MaxStage)
         {
             IsLast = true;
@@ -94,6 +96,13 @@ public class ResultManager : MonoBehaviour
         PlayerPrefsManager.I.SetClearTime((float)bestTime);
         PlayerPrefsManager.I.Save();
         m_BestTime.text = TkUtils.PlasticTime(bestTime);
+
+        Analytics.CustomEvent("StageClearTime", new Dictionary<string, object>
+        {
+            { "StageNum", PlayData.StageNum},
+            { "ClearTime",  TkUtils.PlasticTime(currntTime)}
+          });
+
     }
 
     public void RankStar(float currntTime)
