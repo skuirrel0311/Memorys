@@ -130,7 +130,7 @@
 								<Action Name="Play" ID="{55DBC31B-A1B8-4D3B-A629-49EA153D8E25}" ShortID="704044132" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{938CB060-00FE-4F71-B24C-6F16463719CF}" Global="false">
-											<ObjectRef Name="Climb_3" ID="{40946851-5263-4EE0-BC73-5F12A09933F4}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+											<ObjectRef Name="Totem_Shot" ID="{3E021177-3252-4835-A7FE-1215E42B7158}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -152,7 +152,7 @@
 								<Action Name="Play" ID="{1255401E-9F9D-40B4-9A87-A4C965C3916D}" ShortID="802905233" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{76E3BBFC-DAEF-4E06-B8F7-455483B32A09}" Global="false">
-											<ObjectRef Name="Climb_3" ID="{40946851-5263-4EE0-BC73-5F12A09933F4}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+											<ObjectRef Name="Totem_Activation" ID="{CF715455-A20E-48F8-811F-33DF5A1AAF5F}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -217,7 +217,7 @@
 								<Action Name="Play" ID="{2FAAA7CE-84D6-49F0-8F83-331F10268CE5}" ShortID="795339542" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{AD797320-35A9-4EFD-BCFA-01725BE3FA8E}" Global="false">
-											<ObjectRef Name="Climb_3" ID="{40946851-5263-4EE0-BC73-5F12A09933F4}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+											<ObjectRef Name="Totem_Shot_impact" ID="{CF79749F-AFCC-4565-B21A-1884B65A13C4}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -283,7 +283,7 @@
 								<Action Name="Play" ID="{85C86906-BF6C-4A1C-B928-33D6AEF58839}" ShortID="88634119" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{14A01E5F-6EA7-40AC-B56F-853CD428EAE2}" Global="false">
-											<ObjectRef Name="Totem_move" ID="{93DF39B4-6C2E-4993-B4C1-B9DC15F88B95}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+											<ObjectRef Name="Enemy_Move" ID="{A9CCD217-DD39-476A-A0D6-BF74BEB5707B}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -294,7 +294,7 @@
 								<Action Name="Play" ID="{C772EF9B-F7AC-4CE7-9E4F-FBEEA341DAA4}" ShortID="354304898" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{3F49C1F9-503A-445A-8127-8B531F545435}" Global="false">
-											<ObjectRef Name="Climb_3" ID="{40946851-5263-4EE0-BC73-5F12A09933F4}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+											<ObjectRef Name="Enemy_Attack" ID="{D6F28D1E-3D67-4124-B2A1-7AEAA5999A80}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -327,7 +327,7 @@
 								<Action Name="Play" ID="{C880C145-3A09-4786-9D6D-678233E5E98D}" ShortID="929164335" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{8BEA49E3-3C7D-4662-9239-DA84099FD61A}" Global="false">
-											<ObjectRef Name="Page" ID="{9A5AEAC7-CA3F-4944-BA8A-74B04A853AB3}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+											<ObjectRef Name="Get_Switch" ID="{E253A32C-D3D4-44E5-BE68-2FD91FFF73A6}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -338,7 +338,7 @@
 								<Action Name="Play" ID="{6EBAFD87-10EA-4633-AA36-607F66FE299E}" ShortID="781185897" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{36AF0D62-7176-43E6-AAE5-17434883F80B}" Global="false">
-											<ObjectRef Name="Open_Door" ID="{F6CE0D95-FEA3-47F3-9F3F-1AD5755F234C}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+											<ObjectRef Name="Outro_1" ID="{B69CBD62-C18C-4D7C-9991-21FCCD672000}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -410,7 +410,6 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Player_Squat" ID="{E9B5775C-1606-4342-997F-E106BA155958}"/>
 						<Event Name="Menu_Decision_Titlle" ID="{49DE7AAC-20C1-43E1-AD69-C244D24A0CC4}">
 							<ChildrenList>
 								<Action Name="Stop" ID="{B1DB1226-FFB8-44A5-9F9D-2A4A9141A57B}" ShortID="268436824" Type="Stop" Scope="One" Global="true">

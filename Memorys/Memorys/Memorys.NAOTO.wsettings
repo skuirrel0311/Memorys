@@ -52,11 +52,12 @@
 				<Property Name="Music Transition List\{D8105976-4560-4C5C-9B08-503227C8D13E}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Music Transition List\{DEB44501-94C5-4E1A-A9B7-A18799C2A3E8}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Music Transition List\{FF5CEC2E-6C94-4D23-A37B-94F9979B183F}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="PluginUserAcknowledge\ConvolutionReverb" Type="bool" Value="True"/>
 				<Property Name="PluginUserAcknowledge\iZotope Hybrid Reverb" Type="bool" Value="True"/>
 				<Property Name="ProjectExplorer\FirstVisible_10_1" Type="string" Value="{4C96B38B-3DB4-40C7-91C9-665510E38993}"/>
 				<Property Name="ProjectExplorer\FirstVisible_11_1" Type="string" Value="{23EC2DE3-3ED8-4B82-AC99-92E25F2E4C6B}"/>
-				<Property Name="ProjectExplorer\FirstVisible_1_1" Type="string" Value="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"/>
-				<Property Name="ProjectExplorer\FirstVisible_3_1" Type="string" Value="{997CB29F-4ED1-4640-BDA9-7C2CB98AEE2E}"/>
+				<Property Name="ProjectExplorer\FirstVisible_1_1" Type="string" Value="{40946851-5263-4EE0-BC73-5F12A09933F4}"/>
+				<Property Name="ProjectExplorer\FirstVisible_3_1" Type="string" Value="{E9AFFE55-0423-41D9-97E2-5420029BA9A6}"/>
 				<Property Name="ProjectExplorer\FirstVisible_4_1" Type="string" Value="{CB6175F1-6080-4A23-92EF-0807E304D0C1}"/>
 				<Property Name="ProjectExplorer\FirstVisible_6_1" Type="string" Value="{C98E673F-A24C-48A8-960F-10565FFE70A0}"/>
 				<Property Name="ProjectExplorer\FirstVisible_8_1" Type="string" Value="{41093F77-829F-4D88-8601-E8B25F3D4781}"/>
@@ -64,7 +65,7 @@
 				<Property Name="ProjectExplorer\x64_Expanded_11_1" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\x64_Expanded_12_1" Type="string" Value="nIriqwKUA0KzpNQFor0veaXR3hmrpL5ElK8SqvHTX5aX+aMNxmxcRbsQca584JRu/GElytaKlkumQ8hUIyJoitVLuiArXINMrwAp7EYRzEo="/>
 				<Property Name="ProjectExplorer\x64_Expanded_13_1" Type="string" Value=""/>
-				<Property Name="ProjectExplorer\x64_Expanded_14_1" Type="string" Value="svXY1S7+nkGPxFCGNOVWqw=="/>
+				<Property Name="ProjectExplorer\x64_Expanded_14_1" Type="string" Value="svXY1S7+nkGPxFCGNOVWq/fDnX+ZNLVKiMwHOOMxAIo="/>
 				<Property Name="ProjectExplorer\x64_Expanded_15_1" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\x64_Expanded_16_1" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\x64_Expanded_17_1" Type="string" Value=""/>
@@ -72,7 +73,7 @@
 				<Property Name="ProjectExplorer\x64_Expanded_19_1" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\x64_Expanded_1_1" Type="string" Value="2KQUFaYdKkGhfnXKDCFJ82R85jrxLk9IusRRfTmfnWY="/>
 				<Property Name="ProjectExplorer\x64_Expanded_20_1" Type="string" Value=""/>
-				<Property Name="ProjectExplorer\x64_Expanded_2_1" Type="string" Value="j5IYIpOW4kWCIebZSSrA2Y4jruhJNXVItV6MR2fkLETH6lqaP8pESbqKdLBKhTqzUECVkkTiqUumWkAXzQ3wyLau5svhOnhMoAHBjOoDuTHA0NBnX1apTZr5sgmuHUN/p/OcpGSzTE6/qZyQ3krdRw=="/>
+				<Property Name="ProjectExplorer\x64_Expanded_2_1" Type="string" Value="qtdipJELo0OrIUFGiaHUY4+SGCKTluJFgiHm2UkqwNmOI67oSTV1SLVejEdn5CxEx+pamj/KREm6inSwSoU6s1BAlZJE4qlLplpAF80N8Mi2rubL4Tp4TKABwYzqA7kxwNDQZ19WqU2a+bIJrh1Df6fznKRks0xOv6mckN5K3Uc="/>
 				<Property Name="ProjectExplorer\x64_Expanded_3_1" Type="string" Value="PToSFzbBYEGnNVoxBEDGm1X+r+kjBNlBl+JUIAKbqaao8xaxLSXnSqPSmIhhWHmk0cDVe0+KuE2PHRdnioct+rzNuR5iHg9Pp744cR9KVvY="/>
 				<Property Name="ProjectExplorer\x64_Expanded_4_1" Type="string" Value="I6PhyScYYkeWDPXmmX6dvQ=="/>
 				<Property Name="ProjectExplorer\x64_Expanded_5_1" Type="string" Value="6Xux5pvnu0SWPEs9U4o0ADTtmJ6lOXRFglZTqJh6qCCeHcBYiyqTS6+x4fOUFJ3F"/>
@@ -108,7 +109,7 @@
 						<Value Platform="Windows"></Value>
 					</ValueList>
 				</Property>
-				<Property Name="Soundcaster\PreviousSession" Type="string" Value="{11231CF2-23C1-4EC6-87A0-66817B79B70C}"/>
+				<Property Name="Soundcaster\PreviousSession" Type="string" Value="{AD2F7BC2-55F2-4394-9BC0-9D32AA52A8E4}"/>
 			</PropertyList>
 		</UserProjectSettings>
 	</UserProjectSettingsInfo>

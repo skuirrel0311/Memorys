@@ -6,7 +6,6 @@ State	ID	Name	State Group			Notes
 	748895195	None	BGM_change			
 	867808496	Emergency	BGM_change			
 	1160234136	Normal	BGM_change			
-	2909291642	Stealth	BGM_change			
 	748895195	None	Menu			
 	984691642	inGame	Menu			
 	2607556080	Menu	Menu			

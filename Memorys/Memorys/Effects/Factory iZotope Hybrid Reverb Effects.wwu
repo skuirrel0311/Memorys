@@ -119,6 +119,8 @@
 						<Property Name="DecayLowRatio" Type="Real32" Value="1.070392"/>
 						<Property Name="DecayMidRatio" Type="Real32" Value="0.9692316"/>
 						<Property Name="DecayTime" Type="Real32" Value="0.4626513"/>
+						<Property Name="EarlyGain" Type="Real32" Value="-50"/>
+						<Property Name="TailGain" Type="Real32" Value="-5"/>
 					</PropertyList>
 					<ChildrenList>
 						<PluginMediaSource Name="Forest" ID="{A34F93CF-3CA4-4F62-8DBB-C9B60D6E58EF}" ShortID="191326382">
@@ -245,6 +247,8 @@
 						<Property Name="DecayLowRatio" Type="Real32" Value="0.6789197"/>
 						<Property Name="DecayMidRatio" Type="Real32" Value="0.3164179"/>
 						<Property Name="DecayTime" Type="Real32" Value="0.2566709"/>
+						<Property Name="EarlyGain" Type="Real32" Value="-20"/>
+						<Property Name="TailGain" Type="Real32" Value="-2"/>
 					</PropertyList>
 					<ChildrenList>
 						<PluginMediaSource Name="Small Wood Room" ID="{1FF68362-3DCD-4F7D-8657-7B574D5C19EF}" ShortID="549794241">

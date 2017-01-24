@@ -56,25 +56,6 @@
 								<ActiveSource Name="Outro_1" ID="{C483279B-63EB-43FE-8FE0-43326D7BAA74}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<Sound Name="Open_Door" ID="{F6CE0D95-FEA3-47F3-9F3F-1AD5755F234C}" ShortID="427032018" Type="SoundFX">
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="SFX" ID="{529E8067-04AE-442C-A06A-410650E5C054}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="Open_Door" ID="{2537C0C6-8E56-4A5C-B95D-798EF02717F2}" ShortID="950947957">
-									<Language>SFX</Language>
-									<AudioFile>Open_Door.wav</AudioFile>
-								</AudioFileSource>
-							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="Open_Door" ID="{2537C0C6-8E56-4A5C-B95D-798EF02717F2}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="BGM" ID="{67D0D0C0-565F-4DA9-9AF9-B209AE1D437F}" ShortID="26531388">
@@ -180,6 +161,9 @@
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+						</Reference>
+						<Reference Name="Effect0" PluginName="Wwise Matrix Reverb" CompanyID="0" PluginID="115" PluginType="3">
+							<ObjectRef Name="Large_Church1" ID="{9B6E8B78-EF8C-494C-AADA-D01CF51B5FAC}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
 						</Reference>
 						<Reference Name="OutputBus">
 							<ObjectRef Name="SFX" ID="{529E8067-04AE-442C-A06A-410650E5C054}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
@@ -443,6 +427,7 @@
 					<ChildrenList>
 						<RandomSequenceContainer Name="Page" ID="{9A5AEAC7-CA3F-4944-BA8A-74B04A853AB3}" ShortID="602713554">
 							<PropertyList>
+								<Property Name="OverrideEffect" Type="bool" Value="True"/>
 								<Property Name="Pitch" Type="int32">
 									<ModifierList>
 										<ModifierInfo>
@@ -458,29 +443,25 @@
 								</Property>
 								<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
 								<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="2"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-5</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="Effect0" PluginName="Wwise Matrix Reverb" CompanyID="0" PluginID="115" PluginType="3">
+									<ObjectRef Name="Small_Wooden_Room1" ID="{F7CBE859-36A8-4174-B553-AE32A7FE95FA}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
 								</Reference>
 								<Reference Name="OutputBus">
 									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<Sound Name="Page_1" ID="{2DF0A37A-FCE7-4F59-845E-3006DBDF0BF8}" ShortID="999470152" Type="SoundFX">
-									<PropertyList>
-										<Property Name="Highpass" Type="int16">
-											<ValueList>
-												<Value>32</Value>
-											</ValueList>
-										</Property>
-										<Property Name="Pitch" Type="int32">
-											<ValueList>
-												<Value>1000</Value>
-											</ValueList>
-										</Property>
-									</PropertyList>
+								<Sound Name="Page_01" ID="{26EC56E1-5320-49F6-9CA1-2695723197BF}" ShortID="554504133" Type="SoundFX">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
@@ -490,31 +471,23 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="Page_01" ID="{4D03885D-F418-45B9-93F5-F4A50C8FCFB9}" ShortID="969642365">
+										<AudioFileSource Name="Page_1" ID="{38FB945B-5DF1-4505-8499-4716AB185604}" ShortID="518758710">
 											<PropertyList>
-												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="FadeInDuration" Type="Real64" Value="1.25555758017493E-02"/>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.209259596695821"/>
 											</PropertyList>
 											<Language>SFX</Language>
 											<AudioFile>Page_1.wav</AudioFile>
+											<ConvertedFileIDList>
+												<File ID="969642365"/>
+											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="Page_01" ID="{4D03885D-F418-45B9-93F5-F4A50C8FCFB9}" Platform="Linked"/>
+										<ActiveSource Name="Page_1" ID="{38FB945B-5DF1-4505-8499-4716AB185604}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
-								<Sound Name="Page_2" ID="{28CB28EA-30EA-4F94-8F13-6001BB7392A6}" ShortID="514960932" Type="SoundFX">
-									<PropertyList>
-										<Property Name="Highpass" Type="int16">
-											<ValueList>
-												<Value>56</Value>
-											</ValueList>
-										</Property>
-										<Property Name="Pitch" Type="int32">
-											<ValueList>
-												<Value>1000</Value>
-											</ValueList>
-										</Property>
-									</PropertyList>
+								<Sound Name="Page_02" ID="{EAA42D58-D6CA-4BA8-A70B-A75271051924}" ShortID="564945165" Type="SoundFX">
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
@@ -524,13 +497,20 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="Page_01" ID="{F16368C9-71A2-44A1-9EA1-C59CEF3083C3}" ShortID="175632178">
+										<AudioFileSource Name="Page_2" ID="{72FDE9DA-16CA-477A-8910-F21E8DD8066B}" ShortID="136838092">
+											<PropertyList>
+												<Property Name="FadeInDuration" Type="Real64" Value="1.11605118237771E-02"/>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.426889577259475"/>
+											</PropertyList>
 											<Language>SFX</Language>
 											<AudioFile>Page_2.wav</AudioFile>
+											<ConvertedFileIDList>
+												<File ID="175632178"/>
+											</ConvertedFileIDList>
 										</AudioFileSource>
 									</ChildrenList>
 									<ActiveSourceList>
-										<ActiveSource Name="Page_01" ID="{F16368C9-71A2-44A1-9EA1-C59CEF3083C3}" Platform="Linked"/>
+										<ActiveSource Name="Page_2" ID="{72FDE9DA-16CA-477A-8910-F21E8DD8066B}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>
@@ -709,6 +689,187 @@
 								<ActiveSource Name="Totem_Laser_charge" ID="{36BE4DF8-5F33-4E3D-88F1-E7CF32B19C8F}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
+						<Sound Name="Totem_Shot" ID="{3E021177-3252-4835-A7FE-1215E42B7158}" ShortID="227879653" Type="SoundFX">
+							<PropertyList>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{3CFE2BCC-B087-4AC5-83BC-D983B1FC5F71}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Max" Type="Real64" Value="200"/>
+													<Property Name="Min" Type="Real64" Value="-200"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="PositioningType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="SE" ID="{06551A6B-829B-43B9-9905-89F62B6C767F}" WorkUnitID="{7F9DC3F7-3499-4AB5-88CC-0738E331008A}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Totem_Shot" ID="{C90CE28A-463F-4CCF-A7B6-2B5604B6DCDE}" ShortID="615801205">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="1.85431851311953E-02"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.101472429745708"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Totem_Shot.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Totem_Shot" ID="{C90CE28A-463F-4CCF-A7B6-2B5604B6DCDE}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Totem_Shot_impact" ID="{CF79749F-AFCC-4565-B21A-1884B65A13C4}" ShortID="845947879" Type="SoundFX">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-4</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Totem_Shot_impact" ID="{1AAF68FF-F9C8-4E4D-AD78-D89266E28FAB}" ShortID="264830239">
+									<PropertyList>
+										<Property Name="FadeOutDuration" Type="Real64" Value="2.62695122691934E-02"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Totem_Shot_impact.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Totem_Shot_impact" ID="{1AAF68FF-F9C8-4E4D-AD78-D89266E28FAB}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Enemy_Move" ID="{A9CCD217-DD39-476A-A0D6-BF74BEB5707B}" ShortID="631941342" Type="SoundFX">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="PositioningType" Type="int16" Value="1"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-12</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="Object_Attenuation" ID="{05033A8B-67C1-4F1E-82C7-2A73B7372E7C}" WorkUnitID="{D5D8F5B2-FE2E-419E-8FC4-508634E556AB}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Enemy_Move" ID="{6EF54F60-369E-472E-AAD0-506598002D25}" ShortID="965042203">
+									<PropertyList>
+										<Property Name="TrimBegin" Type="Real64" Value="0.326574116253644"/>
+										<Property Name="TrimEnd" Type="Real64" Value="0.891124954446064"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Enemy_Move.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Enemy_Move" ID="{6EF54F60-369E-472E-AAD0-506598002D25}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Enemy_Attack" ID="{D6F28D1E-3D67-4124-B2A1-7AEAA5999A80}" ShortID="821046106" Type="SoundFX">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="PositioningType" Type="int16" Value="1"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-8</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="Object_Attenuation" ID="{05033A8B-67C1-4F1E-82C7-2A73B7372E7C}" WorkUnitID="{D5D8F5B2-FE2E-419E-8FC4-508634E556AB}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Enemy_Attack" ID="{3E21815F-8AA8-4D7A-B3D1-686103A0E8D0}" ShortID="715255418">
+									<Language>SFX</Language>
+									<AudioFile>Enemy_Attack.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Enemy_Attack" ID="{3E21815F-8AA8-4D7A-B3D1-686103A0E8D0}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Totem_Activation" ID="{CF715455-A20E-48F8-811F-33DF5A1AAF5F}" ShortID="1000490436" Type="SoundFX">
+							<PropertyList>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="Pitch" Type="int32">
+									<ValueList>
+										<Value>-200</Value>
+									</ValueList>
+								</Property>
+								<Property Name="PositioningType" Type="int16" Value="1"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>2</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="SE" ID="{06551A6B-829B-43B9-9905-89F62B6C767F}" WorkUnitID="{7F9DC3F7-3499-4AB5-88CC-0738E331008A}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Totem_Activation" ID="{92BB017F-34C3-4E3E-8150-60599F1E6000}" ShortID="636760083">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.133929583738257"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.280221898283123"/>
+										<Property Name="TrimBegin" Type="Real64" Value="0.199864148040169"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Totem_Activation.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Totem_Activation" ID="{92BB017F-34C3-4E3E-8150-60599F1E6000}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</ActorMixer>
 				<ActorMixer Name="switch" ID="{4D6E84F1-006F-4248-A22B-53E9440BCE4A}" ShortID="825074347">
@@ -832,6 +993,44 @@
 							</ChildrenList>
 							<ActiveSourceList>
 								<ActiveSource Name="Search" ID="{E9F2B97E-9ED3-4EB1-81F4-B7AACE23985B}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Get_Switch" ID="{E253A32C-D3D4-44E5-BE68-2FD91FFF73A6}" ShortID="431378370" Type="SoundFX">
+							<PropertyList>
+								<Property Name="OverrideEffect" Type="bool" Value="True"/>
+								<Property Name="Pitch" Type="int32">
+									<ValueList>
+										<Value>-600</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>2</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="Effect0" PluginName="Wwise Matrix Reverb" CompanyID="0" PluginID="115" PluginType="3">
+									<ObjectRef Name="Large_Church1" ID="{9B6E8B78-EF8C-494C-AADA-D01CF51B5FAC}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Get_Switch" ID="{39BFD8C6-687A-4764-A488-9C2BFCFDBFCE}" ShortID="187093216">
+									<PropertyList>
+										<Property Name="FadeOutDuration" Type="Real64" Value="1.90582736070619E-02"/>
+									</PropertyList>
+									<Language>SFX</Language>
+									<AudioFile>Get_Switch.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Get_Switch" ID="{39BFD8C6-687A-4764-A488-9C2BFCFDBFCE}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>

@@ -21,15 +21,15 @@
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<IncludedEvents>
-				<Event Id="4051581707" Name="Babble" ObjectPath="\Events\Default Work Unit\BGM\ME\Babble" MaxAttenuation="40.000000"/>
-				<Event Id="2162141673" Name="BGM_Help" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Help" MaxAttenuation="40.000000"/>
+				<Event Id="4051581707" Name="Babble" ObjectPath="\Events\Default Work Unit\BGM\ME\Babble" MaxAttenuation="60.000000"/>
+				<Event Id="2162141673" Name="BGM_Help" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Help" MaxAttenuation="60.000000"/>
 				<Event Id="652491268" Name="BGM_Main1" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Main1"/>
-				<Event Id="652491271" Name="BGM_Main2" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Main2" MaxAttenuation="40.000000"/>
+				<Event Id="652491271" Name="BGM_Main2" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Main2" MaxAttenuation="60.000000"/>
 				<Event Id="4239768699" Name="BGM_Result" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Result" MaxAttenuation="0.000000"/>
-				<Event Id="2333034960" Name="BGM_Select" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Select" MaxAttenuation="40.000000"/>
+				<Event Id="2333034960" Name="BGM_Select" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Select" MaxAttenuation="60.000000"/>
 				<Event Id="3608707068" Name="BGM_Titlle" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Titlle"/>
-				<Event Id="1781417190" Name="Enemy_Attack" ObjectPath="\Events\Default Work Unit\SE\Enemy_Attack"/>
-				<Event Id="2876602209" Name="Enemy_Move" ObjectPath="\Events\Default Work Unit\SE\Enemy_Move"/>
+				<Event Id="1781417190" Name="Enemy_Attack" ObjectPath="\Events\Default Work Unit\SE\Enemy_Attack" MaxAttenuation="60.000000"/>
+				<Event Id="2876602209" Name="Enemy_Move" ObjectPath="\Events\Default Work Unit\SE\Enemy_Move" MaxAttenuation="60.000000"/>
 				<Event Id="2385628198" Name="Footsteps" ObjectPath="\Events\Default Work Unit\SE\Footsteps"/>
 				<Event Id="1397260774" Name="GameClear" ObjectPath="\Events\Default Work Unit\SE\Jingle\GameClear"/>
 				<Event Id="4158285989" Name="GameOver" ObjectPath="\Events\Default Work Unit\SE\Jingle\GameOver"/>
@@ -47,12 +47,12 @@
 				<Event Id="3889015721" Name="Player_Search" ObjectPath="\Events\Default Work Unit\SE\Player_Search"/>
 				<Event Id="936499202" Name="Result" ObjectPath="\Events\Default Work Unit\SE\Jingle\Result"/>
 				<Event Id="3281306125" Name="Result_Star" ObjectPath="\Events\Default Work Unit\SE\Jingle\Result_Star"/>
-				<Event Id="3042685367" Name="Totem_Activation" ObjectPath="\Events\Default Work Unit\SE\Totem_Activation"/>
+				<Event Id="3042685367" Name="Totem_Activation" ObjectPath="\Events\Default Work Unit\SE\Totem_Activation" MaxAttenuation="100.000000"/>
 				<Event Id="2329625548" Name="Totem_Laser" ObjectPath="\Events\Default Work Unit\SE\Totem_Laser" MaxAttenuation="100.000000"/>
 				<Event Id="3607114015" Name="Totem_Laser_charge" ObjectPath="\Events\Default Work Unit\SE\Totem_Laser_charge" MaxAttenuation="100.000000"/>
 				<Event Id="3343999249" Name="Totem_Laser_impact" ObjectPath="\Events\Default Work Unit\SE\Totem_Laser_impact"/>
 				<Event Id="2364382980" Name="Totem_Move" ObjectPath="\Events\Default Work Unit\SE\Totem_Move"/>
-				<Event Id="2592508863" Name="Totem_Shot" ObjectPath="\Events\Default Work Unit\SE\Totem_Shot"/>
+				<Event Id="2592508863" Name="Totem_Shot" ObjectPath="\Events\Default Work Unit\SE\Totem_Shot" MaxAttenuation="100.000000"/>
 				<Event Id="2455001044" Name="Totem_Shot_impact" ObjectPath="\Events\Default Work Unit\SE\Totem_Shot_impact"/>
 			</IncludedEvents>
 			<IncludedMemoryFiles>
@@ -78,15 +78,19 @@
 				</File>
 				<File Id="175632178" Language="SFX">
 					<ShortName>Page_2.wav</ShortName>
-					<Path>SFX\Page_2_9E69E797.wem</Path>
+					<Path>SFX\Page_2_0DD6AFE0.wem</Path>
 				</File>
 				<File Id="178554552" Language="SFX">
 					<ShortName>Babble.wav</ShortName>
 					<Path>SFX\Babble_3F5F6E3C.wem</Path>
 				</File>
+				<File Id="187093216" Language="SFX">
+					<ShortName>Get_Switch.wav</ShortName>
+					<Path>SFX\Get_Switch_EF0B21B4.wem</Path>
+				</File>
 				<File Id="193645007" Language="SFX">
 					<ShortName>Totem_Laser_charge.wav</ShortName>
-					<Path>SFX\Totem_Laser_charge_A54EFD6A.wem</Path>
+					<Path>SFX\Totem_Laser_charge_72D03CBF.wem</Path>
 				</File>
 				<File Id="230314246" Language="SFX">
 					<ShortName>Result_Star.wav</ShortName>
@@ -99,6 +103,10 @@
 				<File Id="254536441" Language="SFX">
 					<ShortName>Menu_Decision_Titlle.wav</ShortName>
 					<Path>SFX\Menu_Decision_Titlle_6C4592AE.wem</Path>
+				</File>
+				<File Id="264830239" Language="SFX">
+					<ShortName>Totem_Shot_impact.wav</ShortName>
+					<Path>SFX\Totem_Shot_impact_63491A78.wem</Path>
 				</File>
 				<File Id="266972089" Language="SFX">
 					<ShortName>Footsteps\Fs_4.wav</ShortName>
@@ -128,6 +136,14 @@
 					<ShortName>Footsteps\Fs_1.wav</ShortName>
 					<Path>SFX\Footsteps\Fs_1_9E69E797.wem</Path>
 				</File>
+				<File Id="615801205" Language="SFX">
+					<ShortName>Totem_Shot.wav</ShortName>
+					<Path>SFX\Totem_Shot_B483A91A.wem</Path>
+				</File>
+				<File Id="636760083" Language="SFX">
+					<ShortName>Totem_Activation.wav</ShortName>
+					<Path>SFX\Totem_Activation_4DF19EC3.wem</Path>
+				</File>
 				<File Id="643066868" Language="SFX">
 					<ShortName>Emergency\1_Emergency\1_Emergency.wav</ShortName>
 					<Path>SFX\Emergency\1_Emergency\1_Emergency_4B8CC0C5.wem</Path>
@@ -135,6 +151,10 @@
 				<File Id="665329611" Language="SFX">
 					<ShortName>Normal_to_Emergency.wav</ShortName>
 					<Path>SFX\Normal_to_Emergency_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="715255418" Language="SFX">
+					<ShortName>Enemy_Attack.wav</ShortName>
+					<Path>SFX\Enemy_Attack_4B8CC0C5.wem</Path>
 				</File>
 				<File Id="753971549" Language="SFX">
 					<ShortName>Footsteps\Fs_2.wav</ShortName>
@@ -152,9 +172,13 @@
 					<ShortName>Landing\Landing_1.wav</ShortName>
 					<Path>SFX\Landing\Landing_1_CACF8A59.wem</Path>
 				</File>
+				<File Id="965042203" Language="SFX">
+					<ShortName>Enemy_Move.wav</ShortName>
+					<Path>SFX\Enemy_Move_71BF3B53.wem</Path>
+				</File>
 				<File Id="969642365" Language="SFX">
 					<ShortName>Page_1.wav</ShortName>
-					<Path>SFX\Page_1_9E69E797.wem</Path>
+					<Path>SFX\Page_1_814E0176.wem</Path>
 				</File>
 				<File Id="984336411" Language="SFX">
 					<ShortName>1_Normal.wav</ShortName>
