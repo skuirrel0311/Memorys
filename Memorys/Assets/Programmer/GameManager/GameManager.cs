@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     private GameObject m_TargetPoint;
     //破壊目標の出現位置
     [SerializeField]
-    private GameObject[] m_TargetPoints = null;
+    public GameObject[] m_TargetPoints = null;
     //フィールド上の破壊可能オブジェクト
     public List<GameObject> m_FieldObjects;
     //ターゲットが破壊を宣言しているオブジェクト

@@ -49,6 +49,7 @@ public class InGameCanvasManager : MonoBehaviour
         isPause = ispause;
         if (isPause)
         {
+            if (GameManager.I.IsPlayStop) return;
             AkSoundEngine.SetState("Menu", "Menu");
             isPause = true;
             PauseObject.SetActive(true);
