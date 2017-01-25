@@ -25,6 +25,7 @@ public class AggloTotemPaul : TotemPaul
         Shot(GetTargetPosition());
 
         //todo:SE
+        AkSoundEngine.PostEvent("Totem_Shot",gameObject);
         yield return intervalWait;
 
         //終了処理

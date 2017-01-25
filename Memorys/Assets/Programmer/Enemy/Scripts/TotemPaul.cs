@@ -196,6 +196,7 @@ public class TotemPaul : MonoBehaviour
             playerController.currentState = PlayerState.Idle;
             CameraManager.I.CameraChange(2, 1.5f);
         }
+        AkSoundEngine.PostEvent("Totem_Activation",gameObject);
         activateCoroutineList.Add(StartCoroutine("QuickStartUp"));
     }
 

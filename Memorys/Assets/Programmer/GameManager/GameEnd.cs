@@ -75,6 +75,7 @@ public class GameEnd
         if (isGameEnd) return;
         isGameEnd = true;
         isGameClear = true;
+        SoundManager.PlaySound("GameClear");
         if (OnGameClearCallBack != null)
             OnGameClearCallBack();
     }
@@ -88,6 +89,7 @@ public class GameEnd
             { "StageNum", PlayData.StageNum},
             { "DethPosition", PlayerController.I.gameObject.transform.position},
           });
+        SoundManager.PlaySound("GameOver");
         isGameEnd = true;
         if (OnGameOverCallBack != null)
             OnGameOverCallBack();
