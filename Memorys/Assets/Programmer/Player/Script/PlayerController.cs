@@ -308,8 +308,11 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(underRay, out hit, distance))
         {
-            gameObject.transform.SetParent(hit.collider.transform);
-            return true;
+            if (hit.transform.tag != "Wall")
+            {
+                gameObject.transform.SetParent(hit.collider.transform);
+                return true;
+            }
         }
         gameObject.transform.parent = null;
         return false;
