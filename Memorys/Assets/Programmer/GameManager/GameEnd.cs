@@ -1,4 +1,7 @@
-﻿public class GameEnd
+﻿using UnityEngine.Analytics;
+using System.Collections.Generic;
+
+public class GameEnd
 {
     //ゲームが終了している
     public static bool isGameEnd;
@@ -48,10 +51,6 @@
             GameManager.I.IsPlayStop = true;
             return;
         }
-        //ゲームがクリアされた
-        if (m_destoryCancelCount >= c_MaxDestroyCalcel)
-        {
-        }
     }
 
     public void DestroyCancel(int enemyNum)
@@ -84,6 +83,11 @@
     {
         if (isGameEnd) return;
         TransitionManager.I.FadeOut(1.0f);
+        Analytics.CustomEvent("GameOver", new Dictionary<string, object>
+        {
+            { "StageNum", PlayData.StageNum},
+            { "DethPosition", PlayerController.I.gameObject.transform.position},
+          });
         isGameEnd = true;
         if (OnGameOverCallBack != null)
             OnGameOverCallBack();

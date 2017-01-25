@@ -102,21 +102,21 @@ public class ResultManager : MonoBehaviour
             { "StageNum", PlayData.StageNum},
             { "ClearTime",  TkUtils.PlasticTime(currntTime)}
           });
-
+        AkSoundEngine.PostEvent("Result",gameObject);
     }
 
     public void RankStar(float currntTime)
     {
-        float starTime = 1.5f;
+        float starTime = 1.8f;
         //クリアタイムのランク表示
         if (currntTime < rankData.Elements[PlayData.StageNum - 1].BestTime)
         {
-            StarEnable(starTime + 0.6f, 2);
+            StarEnable(starTime + 0.9f, 2);
         }
 
         if (currntTime < rankData.Elements[PlayData.StageNum - 1].BetterTime)
         {
-            StarEnable(starTime + 0.3f, 1);
+            StarEnable(starTime + 0.45f, 1);
 
         }
         StarEnable(starTime, 0);
@@ -126,6 +126,7 @@ public class ResultManager : MonoBehaviour
     {
         if (m_time > starTime && !isResultEvent[StarIndex])
         {
+            AkSoundEngine.PostEvent("Result_Star",gameObject);
             isResultEvent[StarIndex] = true;
             StartCoroutine(TkUtils.DoColor(0.2f, m_RankSters[StarIndex], Color.white, true));
             m_RankSters[StarIndex].rectTransform.localScale = Vector3.one * 5;

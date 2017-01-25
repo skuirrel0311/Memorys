@@ -5,6 +5,7 @@ using DG.Tweening;
 using BehaviorDesigner.Runtime;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class GameManager : MonoBehaviour
 {
@@ -104,6 +105,11 @@ public class GameManager : MonoBehaviour
         }
         SetEventPushSwitch();
         InitializeEnemy();
+
+        Analytics.CustomEvent("GameStart", new Dictionary<string, object>
+        {
+            { "StageNum", PlayData.StageNum},
+          });
     }
 
     public void SetIntervalTime(float intervalTime)
