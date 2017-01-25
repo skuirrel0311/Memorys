@@ -26,7 +26,7 @@
 				<Event Id="652491268" Name="BGM_Main1" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Main1"/>
 				<Event Id="652491271" Name="BGM_Main2" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Main2" MaxAttenuation="60.000000"/>
 				<Event Id="4239768699" Name="BGM_Result" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Result" MaxAttenuation="0.000000"/>
-				<Event Id="2333034960" Name="BGM_Select" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Select" MaxAttenuation="60.000000"/>
+				<Event Id="2333034960" Name="BGM_Select" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Select"/>
 				<Event Id="3608707068" Name="BGM_Titlle" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Titlle"/>
 				<Event Id="1781417190" Name="Enemy_Attack" ObjectPath="\Events\Default Work Unit\SE\Enemy_Attack" MaxAttenuation="60.000000"/>
 				<Event Id="2876602209" Name="Enemy_Move" ObjectPath="\Events\Default Work Unit\SE\Enemy_Move" MaxAttenuation="60.000000"/>
@@ -38,7 +38,9 @@
 				<Event Id="191248761" Name="Menu_Decision" ObjectPath="\Events\Default Work Unit\SE\Menu_Decision"/>
 				<Event Id="4089119168" Name="Menu_Decision_Titlle" ObjectPath="\Events\Default Work Unit\SE\Menu_Decision_Titlle"/>
 				<Event Id="205371738" Name="Menu_Page" ObjectPath="\Events\Default Work Unit\SE\Menu_Page"/>
+				<Event Id="2170009975" Name="Menu_Pause" ObjectPath="\Events\Default Work Unit\SE\Menu_Pause"/>
 				<Event Id="4203375351" Name="Menu_Select" ObjectPath="\Events\Default Work Unit\SE\Menu_Select"/>
+				<Event Id="1300576974" Name="Menu_toStage" ObjectPath="\Events\Default Work Unit\SE\Menu_toStage"/>
 				<Event Id="2934549620" Name="Open_Door" ObjectPath="\Events\Default Work Unit\SE\Open_Door"/>
 				<Event Id="3549554524" Name="Player_Climb" ObjectPath="\Events\Default Work Unit\SE\Player_Climb"/>
 				<Event Id="1063083385" Name="Player_Discovery" ObjectPath="\Events\Default Work Unit\SE\Player_Discovery"/>
@@ -60,6 +62,10 @@
 					<ShortName>Intro.wav</ShortName>
 					<Path>SFX\Intro_4B8CC0C5.wem</Path>
 				</File>
+				<File Id="47111829" Language="SFX">
+					<ShortName>Menu_Cancel.wav</ShortName>
+					<Path>SFX\Menu_Cancel_9E69E797.wem</Path>
+				</File>
 				<File Id="70230508" Language="SFX">
 					<ShortName>BGM_Title\BGM_Title.wav</ShortName>
 					<Path>SFX\BGM_Title\BGM_Title_4B8CC0C5.wem</Path>
@@ -78,7 +84,7 @@
 				</File>
 				<File Id="175632178" Language="SFX">
 					<ShortName>Page_2.wav</ShortName>
-					<Path>SFX\Page_2_0DD6AFE0.wem</Path>
+					<Path>SFX\Page_2_9EDE571D.wem</Path>
 				</File>
 				<File Id="178554552" Language="SFX">
 					<ShortName>Babble.wav</ShortName>
@@ -86,11 +92,15 @@
 				</File>
 				<File Id="187093216" Language="SFX">
 					<ShortName>Get_Switch.wav</ShortName>
-					<Path>SFX\Get_Switch_EF0B21B4.wem</Path>
+					<Path>SFX\Get_Switch_52C9AC50.wem</Path>
 				</File>
 				<File Id="193645007" Language="SFX">
 					<ShortName>Totem_Laser_charge.wav</ShortName>
 					<Path>SFX\Totem_Laser_charge_72D03CBF.wem</Path>
+				</File>
+				<File Id="224376954" Language="SFX">
+					<ShortName>Menu_Select(2).wav</ShortName>
+					<Path>SFX\Menu_Select(2)_9E69E797.wem</Path>
 				</File>
 				<File Id="230314246" Language="SFX">
 					<ShortName>Result_Star.wav</ShortName>
@@ -100,17 +110,25 @@
 					<ShortName>Outro_1.wav</ShortName>
 					<Path>SFX\Outro_1_9E69E797.wem</Path>
 				</File>
+				<File Id="252778222" Language="SFX">
+					<ShortName>GameOver.wav</ShortName>
+					<Path>SFX\GameOver_9E69E797.wem</Path>
+				</File>
 				<File Id="254536441" Language="SFX">
 					<ShortName>Menu_Decision_Titlle.wav</ShortName>
 					<Path>SFX\Menu_Decision_Titlle_6C4592AE.wem</Path>
 				</File>
 				<File Id="264830239" Language="SFX">
 					<ShortName>Totem_Shot_impact.wav</ShortName>
-					<Path>SFX\Totem_Shot_impact_63491A78.wem</Path>
+					<Path>SFX\Totem_Shot_impact_5F60B144.wem</Path>
 				</File>
 				<File Id="266972089" Language="SFX">
 					<ShortName>Footsteps\Fs_4.wav</ShortName>
 					<Path>SFX\Footsteps\Fs_4_9E69E797.wem</Path>
+				</File>
+				<File Id="278512158" Language="SFX">
+					<ShortName>BGM_Select_intro.wav</ShortName>
+					<Path>SFX\BGM_Select_intro_BE0888A3.wem</Path>
 				</File>
 				<File Id="341995375" Language="SFX">
 					<ShortName>Jump(2).wav</ShortName>
@@ -124,10 +142,6 @@
 					<ShortName>Totem_Laser_impact.wav</ShortName>
 					<Path>SFX\Totem_Laser_impact_9E69E797.wem</Path>
 				</File>
-				<File Id="514799383" Language="SFX">
-					<ShortName>Landing\Landing_3.wav</ShortName>
-					<Path>SFX\Landing\Landing_3_C333200D.wem</Path>
-				</File>
 				<File Id="543615378" Language="SFX">
 					<ShortName>BGM_Title\BGM_Title_intro.wav</ShortName>
 					<Path>SFX\BGM_Title\BGM_Title_intro_9E69E797.wem</Path>
@@ -138,11 +152,11 @@
 				</File>
 				<File Id="615801205" Language="SFX">
 					<ShortName>Totem_Shot.wav</ShortName>
-					<Path>SFX\Totem_Shot_B483A91A.wem</Path>
+					<Path>SFX\Totem_Shot_5816C65C.wem</Path>
 				</File>
 				<File Id="636760083" Language="SFX">
 					<ShortName>Totem_Activation.wav</ShortName>
-					<Path>SFX\Totem_Activation_4DF19EC3.wem</Path>
+					<Path>SFX\Totem_Activation_233189AC.wem</Path>
 				</File>
 				<File Id="643066868" Language="SFX">
 					<ShortName>Emergency\1_Emergency\1_Emergency.wav</ShortName>
@@ -151,6 +165,10 @@
 				<File Id="665329611" Language="SFX">
 					<ShortName>Normal_to_Emergency.wav</ShortName>
 					<Path>SFX\Normal_to_Emergency_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="700735996" Language="SFX">
+					<ShortName>Menu_Decision(2).wav</ShortName>
+					<Path>SFX\Menu_Decision(2)_9E69E797.wem</Path>
 				</File>
 				<File Id="715255418" Language="SFX">
 					<ShortName>Enemy_Attack.wav</ShortName>
@@ -172,13 +190,17 @@
 					<ShortName>Landing\Landing_1.wav</ShortName>
 					<Path>SFX\Landing\Landing_1_CACF8A59.wem</Path>
 				</File>
+				<File Id="896057578" Language="SFX">
+					<ShortName>Menu_toStage.wav</ShortName>
+					<Path>SFX\Menu_toStage_9E69E797.wem</Path>
+				</File>
 				<File Id="965042203" Language="SFX">
 					<ShortName>Enemy_Move.wav</ShortName>
-					<Path>SFX\Enemy_Move_71BF3B53.wem</Path>
+					<Path>SFX\Enemy_Move_41AF5584.wem</Path>
 				</File>
 				<File Id="969642365" Language="SFX">
 					<ShortName>Page_1.wav</ShortName>
-					<Path>SFX\Page_1_814E0176.wem</Path>
+					<Path>SFX\Page_1_4529527D.wem</Path>
 				</File>
 				<File Id="984336411" Language="SFX">
 					<ShortName>1_Normal.wav</ShortName>
@@ -188,9 +210,9 @@
 					<ShortName>Totem_Laser.wav</ShortName>
 					<Path>SFX\Totem_Laser_9E69E797.wem</Path>
 				</File>
-				<File Id="1027748973" Language="SFX">
-					<ShortName>Discovery.wav</ShortName>
-					<Path>SFX\Discovery_4412753F.wem</Path>
+				<File Id="1031532559" Language="SFX">
+					<ShortName>BGM_Select.wav</ShortName>
+					<Path>SFX\BGM_Select_4B8CC0C5.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>

@@ -30,7 +30,9 @@ namespace AK
         static const AkUniqueID MENU_DECISION = 191248761U;
         static const AkUniqueID MENU_DECISION_TITLLE = 4089119168U;
         static const AkUniqueID MENU_PAGE = 205371738U;
+        static const AkUniqueID MENU_PAUSE = 2170009975U;
         static const AkUniqueID MENU_SELECT = 4203375351U;
+        static const AkUniqueID MENU_TOSTAGE = 1300576974U;
         static const AkUniqueID OPEN_DOOR = 2934549620U;
         static const AkUniqueID PLAYER_CLIMB = 3549554524U;
         static const AkUniqueID PLAYER_DISCOVERY = 1063083385U;

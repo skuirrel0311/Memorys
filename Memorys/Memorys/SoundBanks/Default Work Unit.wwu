@@ -24,6 +24,7 @@
 						<ObjectRef Name="GameClear" ID="{A490411E-5868-4753-AEFF-63C04C6AB45C}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Result" ID="{79505AEB-A158-47AB-887A-AE96EE76140B}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Totem_Shot" ID="{977E7C84-7167-4819-848A-5B4D7F0BAA91}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
+						<ObjectRef Name="Menu_toStage" ID="{CAD8939E-E5DE-4882-B223-B3271075ABA9}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Menu_Select" ID="{557EAAB7-E41F-48AF-A44E-5A23FB5726B2}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="BGM_Titlle" ID="{95D68DEC-5DB7-49BE-AEEF-C473F3D545A4}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Totem_Shot_impact" ID="{355DA83A-3E2B-4A64-A4FD-7A312270DD1D}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>

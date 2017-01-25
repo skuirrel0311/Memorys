@@ -7,6 +7,23 @@
 					<ChildrenList>
 						<Bus Name="Music" ID="{1ED28C90-21F1-44AC-9528-1696211B3BDC}"/>
 						<Bus Name="SFX" ID="{529E8067-04AE-442C-A06A-410650E5C054}">
+							<StateInfo>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="Menu" ID="{E6B17BE9-E79B-44BB-963C-4B3D538A3400}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="Menu" ID="{DEC08FA2-189C-41E5-A235-82C43D2E4046}"/>
+										<State Name="Custom State" ID="{06E885B0-B2FC-4042-A7CE-8FDCA8E1094D}" ShortID="910317865">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-4"/>
+											</PropertyList>
+										</State>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<DuckingList>
 								<DuckItem>
 									<BusRef Name="Music" ID="{1ED28C90-21F1-44AC-9528-1696211B3BDC}"/>
