@@ -33,6 +33,8 @@ public class Bullet : MonoBehaviour
 
     void PlayerHit(GameObject playerObj)
     {
+        //todo:SE
+
         playerHitEffect.transform.parent.position = transform.position;
         playerHitEffect.Play(true);
 
@@ -42,6 +44,8 @@ public class Bullet : MonoBehaviour
 
     void ObjectHit(GameObject otherObj)
     {
+        //todo:SE
+
         string layerName = LayerMask.LayerToName(otherObj.layer);
         if (layerName != "Enemy" && layerName != "Floor") return;
 

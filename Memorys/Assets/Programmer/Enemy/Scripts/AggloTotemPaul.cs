@@ -23,6 +23,8 @@ public class AggloTotemPaul : TotemPaul
 
         //発射
         Shot(GetTargetPosition());
+
+        //todo:SE
         yield return intervalWait;
 
         //終了処理

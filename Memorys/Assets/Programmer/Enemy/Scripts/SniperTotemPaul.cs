@@ -99,6 +99,8 @@ public class SniperTotemPaul : TotemPaul
 
         //発射
         StartCoroutine(Shot(targetPosition, 1));
+        //todo:SE
+
         yield return intervalWait;
 
         //終了処理
