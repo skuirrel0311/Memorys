@@ -10,8 +10,15 @@ public class PlayerPrefsManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake ()
     {
-        I = this;
-        DontDestroyOnLoad(gameObject);
+        if (I == null)
+        {
+            I = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 	}
 
     public void FastSaveInt(string key,int value)

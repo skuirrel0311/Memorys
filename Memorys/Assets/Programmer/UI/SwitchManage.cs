@@ -24,11 +24,24 @@ public class SwitchManage : MonoBehaviour {
 	void Start ()
     {
         PushCount = 0;
+        UnEnabledSwitchImage();
         GameManager.I.m_GameEnd.OnDestroyCancelCallBack += () =>
         {
             SwitchUpdate();
         };
 	}
+
+    void UnEnabledSwitchImage()
+    {
+        for(int i=0;i<SwitchImages.Length;i++)
+        {
+            if(i>=GameManager.I.m_TargetPoints.Length)
+            {
+                SwitchImages[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
 	void PositionUpdate()
     {
         //Vector3 w = RectTransformUtility.WorldToScreenPoint(m_prticleCamera, SwitchImages[PushCount].);
