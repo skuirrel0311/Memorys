@@ -166,7 +166,7 @@ public class ResultManager : MonoBehaviour
             || MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickLeft)
             || MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickRight))
         {
-            m_time += 5.0f;
+           // m_time += 5.0f;
         }
 
     }

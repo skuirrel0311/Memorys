@@ -8,7 +8,7 @@ public class CameraContoller : MonoBehaviour
     [SerializeField]
     public Transform targetObject = null;
 
-    float distance = 33.0f;    //カメラとターゲットの距離
+    float distance = 40.0f;    //カメラとターゲットの距離
     [SerializeField]
     float rotationSpeedX = 150.0f;
     [SerializeField]
@@ -46,6 +46,8 @@ public class CameraContoller : MonoBehaviour
     [SerializeField]
     bool CanMouseControl = false;
 
+    bool isfree;
+
     void Start()
     {
         //ターゲットが入ってなかったらプレイヤーを探す
@@ -53,19 +55,28 @@ public class CameraContoller : MonoBehaviour
         {
             targetObject = GameObject.FindGameObjectWithTag("Player").transform;
         }
-        if(targetObject == null)
+        if (targetObject == null)
         {
             targetObject = GameObject.Find("Player").transform;
         }
+        longitude = 0.0f;
+        isfree = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (targetObject == null) return;
-        
-        if(distance>=5)
+
+        if (distance >= 5)
         {
-            distance -= Time.deltaTime*7.0f;
+            distance -= Time.deltaTime * 7.0f;
+            longitude += Time.deltaTime * 36.0f;
+            GameManager.I.IsPlayStop = true;
+        }
+        else if (!isfree)
+        {
+            isfree = true;
+            GameManager.I.IsPlayStop = false;
         }
 
         if (!IsWork) return;
@@ -79,7 +90,7 @@ public class CameraContoller : MonoBehaviour
         //経度には制限を掛ける
         latitude = Mathf.Clamp(latitude, minLatitude, maxLatitude);
         longitude = longitude % 360.0f;
-        
+
         SphereCameraControl();
     }
 
@@ -87,7 +98,7 @@ public class CameraContoller : MonoBehaviour
     {
         Vector2 rightStick = MyInputManager.GetAxis(MyInputManager.Axis.RightStick);
 
-        if(rightStick == Vector2.zero)
+        if (rightStick == Vector2.zero)
         {
             if (Input.GetKey(KeyCode.LeftArrow)) rightStick.x = -1;
             if (Input.GetKey(KeyCode.RightArrow)) rightStick.x = 1;
@@ -95,7 +106,7 @@ public class CameraContoller : MonoBehaviour
             if (Input.GetKey(KeyCode.DownArrow)) rightStick.y = -1;
         }
 
-        if(CanMouseControl)
+        if (CanMouseControl)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -115,14 +126,14 @@ public class CameraContoller : MonoBehaviour
             //リープ終了時の座標
             Vector3 vec2 = SphereCoordinate(longitude, minLatitude, distance);
             vec2.y = 0.0f;
-            
+
             float t;
             //(開始位置からの移動量) / (全体の移動量) = 0 ～ 1
             if (latitude >= 0.0f)
                 t = (startSlerpLatitude - latitude) / (-minLatitude + startSlerpLatitude);
             else
                 t = ((-latitude) + startSlerpLatitude) / (-minLatitude + startSlerpLatitude);
-            
+
             transform.position = targetObject.position + Vector3.Slerp(vec1, vec2, t);
         }
         else
