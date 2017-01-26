@@ -43,7 +43,7 @@ public class PointGauge : MonoBehaviour
                 if (pointImages[i].color== Color.white)
                 {
                     pointImages[i].color = Color.red;
-                    StartCoroutine(TkUtils.Deray(1.0f,ChangeImageColor, pointImages[i], Color.black * 0.7f));
+                    StartCoroutine(TkUtils.Delay(1.0f,ChangeImageColor, pointImages[i], Color.black * 0.7f));
                 }
             }
             else if(pointImages[i].color != Color.white)
