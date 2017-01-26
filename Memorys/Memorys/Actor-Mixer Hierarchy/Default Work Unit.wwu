@@ -863,51 +863,26 @@
 									<AudioFile>Totem_Laser_charge.wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
+							<StateInfo>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="Menu" ID="{E6B17BE9-E79B-44BB-963C-4B3D538A3400}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="Menu" ID="{DEC08FA2-189C-41E5-A235-82C43D2E4046}"/>
+										<State Name="Custom State" ID="{580C9DD4-D114-4EF4-9E3F-67D123BB2C63}" ShortID="497072590">
+											<PropertyList>
+												<Property Name="Lowpass" Type="int16" Value="30"/>
+												<Property Name="Volume" Type="Real64" Value="-6"/>
+											</PropertyList>
+										</State>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<ActiveSourceList>
 								<ActiveSource Name="Totem_Laser_charge" ID="{36BE4DF8-5F33-4E3D-88F1-E7CF32B19C8F}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-						<Sound Name="Totem_Shot" ID="{3E021177-3252-4835-A7FE-1215E42B7158}" ShortID="227879653" Type="SoundFX">
-							<PropertyList>
-								<Property Name="OverridePositioning" Type="bool" Value="True"/>
-								<Property Name="Pitch" Type="int32">
-									<ModifierList>
-										<ModifierInfo>
-											<Modifier Name="" ID="{3CFE2BCC-B087-4AC5-83BC-D983B1FC5F71}">
-												<PropertyList>
-													<Property Name="Enabled" Type="bool" Value="True"/>
-													<Property Name="Max" Type="Real64" Value="200"/>
-													<Property Name="Min" Type="Real64" Value="-200"/>
-												</PropertyList>
-											</Modifier>
-										</ModifierInfo>
-									</ModifierList>
-								</Property>
-								<Property Name="PositioningType" Type="int16" Value="1"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Attenuation">
-									<ObjectRef Name="SE" ID="{06551A6B-829B-43B9-9905-89F62B6C767F}" WorkUnitID="{7F9DC3F7-3499-4AB5-88CC-0738E331008A}"/>
-								</Reference>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="Totem_Shot" ID="{C90CE28A-463F-4CCF-A7B6-2B5604B6DCDE}" ShortID="615801205">
-									<PropertyList>
-										<Property Name="FadeInDuration" Type="Real64" Value="1.85431851311953E-02"/>
-										<Property Name="FadeOutDuration" Type="Real64" Value="0.101472429745708"/>
-									</PropertyList>
-									<Language>SFX</Language>
-									<AudioFile>Totem_Shot.wav</AudioFile>
-								</AudioFileSource>
-							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="Totem_Shot" ID="{C90CE28A-463F-4CCF-A7B6-2B5604B6DCDE}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="Totem_Shot_impact" ID="{CF79749F-AFCC-4565-B21A-1884B65A13C4}" ShortID="845947879" Type="SoundFX">
@@ -1058,6 +1033,50 @@
 							</ChildrenList>
 							<ActiveSourceList>
 								<ActiveSource Name="Totem_Activation" ID="{92BB017F-34C3-4E3E-8150-60599F1E6000}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Totem_Shot" ID="{E7F1EA7B-C9C2-40DD-AEBE-BF9C752B011A}" ShortID="387417053" Type="SoundFX">
+							<PropertyList>
+								<Property Name="Highpass" Type="int16">
+									<ValueList>
+										<Value>40</Value>
+									</ValueList>
+								</Property>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{280AB688-5538-4464-A1FC-7F8B85901DF6}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Max" Type="Real64" Value="300"/>
+													<Property Name="Min" Type="Real64" Value="-100"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="PositioningType" Type="int16" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="SE" ID="{06551A6B-829B-43B9-9905-89F62B6C767F}" WorkUnitID="{7F9DC3F7-3499-4AB5-88CC-0738E331008A}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Totem_Shot(2)" ID="{83358152-26D9-453C-8268-7D68C0D1B62E}" ShortID="629919090">
+									<Language>SFX</Language>
+									<AudioFile>Totem_Shot(2).wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Totem_Shot(2)" ID="{83358152-26D9-453C-8268-7D68C0D1B62E}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>

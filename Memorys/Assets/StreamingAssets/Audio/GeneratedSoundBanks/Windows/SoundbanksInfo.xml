@@ -128,7 +128,7 @@
 				</File>
 				<File Id="278512158" Language="SFX">
 					<ShortName>BGM_Select_intro.wav</ShortName>
-					<Path>SFX\BGM_Select_intro_BE0888A3.wem</Path>
+					<Path>SFX\BGM_Select_intro_843AC017.wem</Path>
 				</File>
 				<File Id="341995375" Language="SFX">
 					<ShortName>Jump(2).wav</ShortName>
@@ -150,9 +150,9 @@
 					<ShortName>Footsteps\Fs_1.wav</ShortName>
 					<Path>SFX\Footsteps\Fs_1_9E69E797.wem</Path>
 				</File>
-				<File Id="615801205" Language="SFX">
-					<ShortName>Totem_Shot.wav</ShortName>
-					<Path>SFX\Totem_Shot_5816C65C.wem</Path>
+				<File Id="629919090" Language="SFX">
+					<ShortName>Totem_Shot(2).wav</ShortName>
+					<Path>SFX\Totem_Shot(2)_9E69E797.wem</Path>
 				</File>
 				<File Id="636760083" Language="SFX">
 					<ShortName>Totem_Activation.wav</ShortName>

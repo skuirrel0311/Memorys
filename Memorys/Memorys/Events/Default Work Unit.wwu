@@ -140,7 +140,7 @@
 								<Action Name="Play" ID="{55DBC31B-A1B8-4D3B-A629-49EA153D8E25}" ShortID="704044132" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{938CB060-00FE-4F71-B24C-6F16463719CF}" Global="false">
-											<ObjectRef Name="Totem_Shot" ID="{3E021177-3252-4835-A7FE-1215E42B7158}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+											<ObjectRef Name="Totem_Shot" ID="{E7F1EA7B-C9C2-40DD-AEBE-BF9C752B011A}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -290,6 +290,13 @@
 						</Event>
 						<Event Name="Enemy_Move" ID="{14283FB4-F5CF-4284-944F-F70C72471915}">
 							<ChildrenList>
+								<Action Name="Stop" ID="{3D2C90FC-B81F-463C-A758-C8AA56B1342D}" ShortID="763370479" Type="Stop" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{524F0B77-F5A5-4436-8B1C-F8B3C28D8779}" Global="false">
+											<ObjectRef Name="Enemy_Attack" ID="{D6F28D1E-3D67-4124-B2A1-7AEAA5999A80}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+										</Element>
+									</ElementList>
+								</Action>
 								<Action Name="Play" ID="{85C86906-BF6C-4A1C-B928-33D6AEF58839}" ShortID="88634119" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{14A01E5F-6EA7-40AC-B56F-853CD428EAE2}" Global="false">
@@ -301,6 +308,13 @@
 						</Event>
 						<Event Name="Enemy_Attack" ID="{AA72C250-FAF2-413A-A03F-1CA5D6F6D878}">
 							<ChildrenList>
+								<Action Name="Stop" ID="{AAE6F90C-7A66-4606-8207-9219CA705D6A}" ShortID="1014124631" Type="Stop" Scope="One" Global="false">
+									<ElementList>
+										<Element ID="{A56D6287-A61D-4010-A8DF-01047C2AC784}" Global="false">
+											<ObjectRef Name="Enemy_Move" ID="{A9CCD217-DD39-476A-A0D6-BF74BEB5707B}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+										</Element>
+									</ElementList>
+								</Action>
 								<Action Name="Play" ID="{C772EF9B-F7AC-4CE7-9E4F-FBEEA341DAA4}" ShortID="354304898" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{3F49C1F9-503A-445A-8127-8B531F545435}" Global="false">
@@ -358,6 +372,13 @@
 							<ChildrenList>
 								<Event Name="GameClear" ID="{A490411E-5868-4753-AEFF-63C04C6AB45C}">
 									<ChildrenList>
+										<Action Name="Stop" ID="{DA41F0C7-E242-4527-A357-54BE23376C85}" ShortID="90439418" Type="Stop" Scope="One" Global="true">
+											<ElementList>
+												<Element ID="{6ADB7CF6-0478-4916-99DB-EB8101092F72}" Global="true">
+													<ObjectRef Name="Totem_Laser_charge" ID="{5BACFDCA-E669-4E28-B53E-38E84455AC76}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+												</Element>
+											</ElementList>
+										</Action>
 										<Action Name="Stop" ID="{4241493D-07F1-43A7-BEF8-54B960582526}" ShortID="656393986" Type="Stop" Scope="One" Global="true">
 											<ElementList>
 												<Element ID="{07A72134-1E2C-44BF-B146-FCED0D4D8220}" Global="true">
@@ -454,6 +475,13 @@
 						</Event>
 						<Event Name="Menu_toStage" ID="{CAD8939E-E5DE-4882-B223-B3271075ABA9}">
 							<ChildrenList>
+								<Action Name="Stop" ID="{F64CE74A-510A-4951-B4FA-8C3028FE7190}" ShortID="619715308" Type="Stop" Scope="One" Global="true">
+									<ElementList>
+										<Element ID="{E41D3F09-F053-44F1-A10C-94FC4B41847F}" Global="true">
+											<ObjectRef Name="BGM_Select" ID="{FD94BADF-D243-48D1-997B-851CC9B1430A}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+										</Element>
+									</ElementList>
+								</Action>
 								<Action Name="Play" ID="{0FBE34F3-37DF-449B-8FB9-E5837D002048}" ShortID="380324701" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{BD9428BF-147D-4317-A1C5-CF67E5D68BE3}" Global="false">
