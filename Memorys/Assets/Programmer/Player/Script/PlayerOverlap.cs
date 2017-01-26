@@ -74,14 +74,33 @@ public class PlayerOverlap : MonoBehaviour
         pointGauge.Value = HP;
         MainCamera.GetComponent<CameraContoller>().IsWork = false;
         MainCamera.GetComponent<PostProcessingBehaviour>().profile.vignette.enabled = true;
+        if (point == 1)
+        {
+            XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.5f, 0.5f);
+        }
+        else
+        {
+            XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 1.0f, 1.0f);
+        }
+
         MainCamera.transform.DOShakePosition(0.1f,0.5f,100,90,false,false).OnKill(() => {
             MainCamera.GetComponent<CameraContoller>().IsWork = true;
             MainCamera.GetComponent<PostProcessingBehaviour>().profile.vignette.enabled = false;
         });
         if (HP <= 0)
         {
+            StartCoroutine(TkUtils.Deray(1.0f, () => { XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.0f, 0.0f); }));
             Death();
         }
+        else
+        {
+            StartCoroutine(TkUtils.Deray(0.1f, () => { XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.0f, 0.0f); }));
+        }
+    }
+
+    void OnDestroy()
+    {
+        XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0.0f, 0.0f);
     }
 
     public bool IsAlive()
@@ -93,10 +112,10 @@ public class PlayerOverlap : MonoBehaviour
     {
         List<GameObject> enemyList = new List<GameObject>();
         enemyList.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
-
         foreach (GameObject g in enemyList)
         {
             BehaviorTree tree = g.GetComponent<BehaviorTree>();
+
             if (tree != null) tree.DisableBehavior();
         }
     }

@@ -20,6 +20,10 @@ public class GoalEvent : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        StartCoroutine(TkUtils.Vibration(1.7f, 0.5f,()=> 
+        {
+            StartCoroutine(TkUtils.Vibration(0.7f, 1.0f));
+        }));
         RightDoor.transform.DOMoveX(0.0f, 2.0f);
         LeftDoor.transform.DOMoveX(0.0f, 2.0f);
         if (GameManager.I == null) return;
@@ -27,6 +31,7 @@ public class GoalEvent : MonoBehaviour {
         {
             Debug.Log("OpenDoor");
             AkSoundEngine.PostEvent("Open_Door",gameObject);
+            StartCoroutine(TkUtils.Vibration(2.0f, 0.5f));
             GameManager.I.IsPlayStop = true;
             PlayerController.I.currentState = PlayerState.Idle;
             CameraManager.I.CameraChange(0,2.5f,true,true,() => { GameManager.I.IsPlayStop = false; });

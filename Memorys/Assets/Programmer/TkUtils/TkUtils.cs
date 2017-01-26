@@ -5,31 +5,49 @@ using UnityEngine.UI;
 
 public class TkUtils
 {
-    public delegate void AbsChangeColor(Image image,Color color);
-    
-    public static IEnumerator Deray(float duration ,Action action)
+    public delegate void AbsChangeColor(Image image, Color color);
+
+    public static IEnumerator Deray(float duration, Action action)
     {
         yield return new WaitForSeconds(duration);
         action.Invoke();
     }
 
-    public static IEnumerator Deray(float duration, AbsChangeColor action,Image image,Color color)
+    public static IEnumerator Delay(float duration, AbsChangeColor action, Image image, Color color)
     {
         yield return new WaitForSeconds(duration);
         action(image, color);
     }
 
-    public static IEnumerator DoColor(float duration,Image target,Color targetColor,bool isDouble=false)
+    public static IEnumerator Vibration(float duration, float stlength, Action action = null)
+    {
+        XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, stlength, stlength);
+        float t = 0.0f;
+        while (true)
+        {
+            t += Time.deltaTime;
+            float st = (stlength - stlength * (t / duration));
+            XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, st, st);
+            if (t > duration) break;
+            yield return null;
+        }
+        XInputDotNetPure.GamePad.SetVibration(XInputDotNetPure.PlayerIndex.One, 0, 0);
+        if (action != null)
+            action();
+    }
+
+
+    public static IEnumerator DoColor(float duration, Image target, Color targetColor, bool isDouble = false)
     {
         float t = 0;
         Color startColor = target.color;
-        while(true)
+        while (true)
         {
             t += Time.deltaTime;
             if (isDouble)
             {
                 float n = t / duration;
-                target.color = Color.Lerp(startColor, targetColor, n*n);
+                target.color = Color.Lerp(startColor, targetColor, n * n);
             }
             else
             {
@@ -40,7 +58,7 @@ public class TkUtils
         }
     }
 
-    public  static string PlasticTime(int time)
+    public static string PlasticTime(int time)
     {
         string s = string.Empty;
         int h = (int)((float)time / 60.0f);
@@ -65,7 +83,7 @@ public class TkUtils
 
     public static float FloatLerp(float a, float b, float t)
     {
-        t=Mathf.Clamp(t,0,1);
+        t = Mathf.Clamp(t, 0, 1);
 
         return a + ((b - a) * t);
     }
@@ -75,7 +93,7 @@ public class TkUtils
         Vector2 angle = Vector2.zero;
 
         angle.x = Vector2.Angle(new Vector2(position.x, position.z), new Vector2(target.x, target.z));
-        
+
         return angle;
     }
 
