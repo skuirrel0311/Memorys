@@ -176,6 +176,7 @@ public class SelectManager : MonoBehaviour
         if (isNext) return;
         isNext = true;
         UtilsSound.SE_Decision();
+        AkSoundEngine.PostEvent("Menu_toStage",gameObject);
         PlayData.StageNum = m_SelectNumber;
         PlayerPrefs.SetInt("StageNum",m_SelectNumber);
         PlayerPrefs.Save();
