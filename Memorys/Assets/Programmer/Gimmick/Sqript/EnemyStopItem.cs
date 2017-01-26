@@ -35,7 +35,8 @@ public class EnemyStopItem : PopUpMessage
         if (Time.timeScale == 0.0f) return;
         if (IsViewMessage && (MyInputManager.GetButtonDown(MyInputManager.Button.X) || Input.GetKeyDown(KeyCode.Delete)))
         {
-            NotificationSystem.I.Indication("石像が" + (enemies.Length).ToString() + "体停止した……");
+            NotificationSystem.I.Indication("石像が" + (enemies.Length).ToString() + "体、活動を止めた……",35);
+            AkSoundEngine.PostEvent("Get_Switch", gameObject);
             for (int i = 0; i < enemies.Length; i++)
             {
                 enemies[i].Dead();

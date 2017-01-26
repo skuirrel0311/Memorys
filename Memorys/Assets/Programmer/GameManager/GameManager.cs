@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
 
         m_WillDestroyObjects = new List<GameObject>();
         // SetWillDestroy();
-        StartCoroutine(TkUtils.Deray(3.0f, () => { NotificationSystem.I.Indication("スイッチを『 " + GameEnd.c_MaxDestroyCalcel.ToString() + " 』個起動し、脱出せよ！",60); }));
+        StartCoroutine(TkUtils.Deray(3.0f, () => { NotificationSystem.I.Indication("赤いスイッチをすべて起動し、脱出せよ",30); }));
         if (!IsFlat)
         {
             SetIntervalTime(transitionInterval);
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
             //クリア条件を満たしている
             if (m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel)
             {
-                NotificationSystem.I.Indication("脱出可能になった！");
+                NotificationSystem.I.Indication("外へと続く道が出現した",40);
                 if (OnPossibleEscape != null)
                     OnPossibleEscape();
 

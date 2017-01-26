@@ -10,8 +10,6 @@ public class GameEnd
     //何回キャンセルすればゲームクリアになるか
     public static int c_MaxDestroyCalcel = 5;
 
-    //何回ステージが崩壊したらゲームオーバーか
-    private const int c_MaxDestroy = 5;
 
     //ゲームクリアコールバック
     public delegate void VoidCallBack();
@@ -58,10 +56,54 @@ public class GameEnd
         m_destoryCancelCount++;
         if (!(m_destoryCancelCount >= c_MaxDestroyCalcel))
         {
-            if(enemyNum != 0)
-                NotificationSystem.I.Indication("脱出まで　あと『 " + (c_MaxDestroyCalcel - m_destoryCancelCount) + " 』個！\n新たに石像が"+ enemyNum + "体起動した……");
+            int count = (c_MaxDestroyCalcel - m_destoryCancelCount);
+            if (enemyNum != 0)
+            {
+                NotificationSystem.I.Indication("あと『 " +count  + " 』個！\n新たな石像が" + enemyNum + "体起動した……");
+                if (count == 1)
+                {
+                    int r = UnityEngine.Random.Range(0, 2);
+                    if (r == 0)
+                    {
+                        NotificationSystem.I.Indication("最後の１つを発見せよ！！\n新たな石像が" + enemyNum + "体起動した……");
+                    }
+                    else
+                    {
+                        NotificationSystem.I.Indication("残り１つ　これで最後！\n新たな石像が" + enemyNum + "体起動した……");
+                    }
+                }
+                else if (count == 2)
+                {
+                    NotificationSystem.I.Indication("残り２つ　あと一息！\n新たな石像が" + enemyNum + "体起動した……");
+                }
+                else
+                {
+                    NotificationSystem.I.Indication("残り『 " + count + " 』個\n新たな石像が" + enemyNum + "体起動した……");
+                }
+            }
             else
-                NotificationSystem.I.Indication("脱出まで　あと『 " + (c_MaxDestroyCalcel - m_destoryCancelCount) + " 』個！");
+            {
+                if (count == 1)
+                {
+                    int r = UnityEngine.Random.Range(0,2);
+                    if (r == 0)
+                    {
+                        NotificationSystem.I.Indication("最後の１つを発見せよ！！", 40);
+                    }
+                    else
+                    {
+                        NotificationSystem.I.Indication("残り１つ　これで最後！", 40);
+                    }
+                }
+                else if(count==2)
+                {
+                    NotificationSystem.I.Indication("残り２つ　あと一息！",35);
+                }
+                else
+                {
+                    NotificationSystem.I.Indication("残り『 " + count + " 』個");
+                }
+            }
         }
         Update();
         if (m_destoryCancelCount > c_MaxDestroyCalcel) return;

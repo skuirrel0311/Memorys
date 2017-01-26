@@ -111,6 +111,11 @@ public class SniperTotemPaul : TotemPaul
         IsAttacking = false;
     }
 
+    void OnDestroy()
+    {
+        AkSoundEngine.ExecuteActionOnEvent("Totem_Laser_charge", AkActionOnEventType.AkActionOnEventType_Stop, gameObject);
+    }
+
     void Charge(Vector3 target)
     {
         Ray shotRay = GetToPlayerRay(target);
@@ -206,9 +211,11 @@ public class SniperTotemPaul : TotemPaul
     public override void Dead()
     {
         base.Dead();
+        AkSoundEngine.ExecuteActionOnEvent("Totem_Laser_charge", AkActionOnEventType.AkActionOnEventType_Stop, gameObject);
         lineRenderer.enabled = false;
         chargeEffect.Stop(true);
     }
+
 
     void SetOnPushEvent()
     {

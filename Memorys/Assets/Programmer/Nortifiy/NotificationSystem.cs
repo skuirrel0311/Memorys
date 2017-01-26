@@ -22,6 +22,7 @@ public class NotificationSystem : MonoBehaviour {
     public void Indication(string message,float fontsize = 30)
     {
         m_NotificationImage.SetActive(true);
+        m_text.fontSize = (int)fontsize;
         m_text.text = message;
         StartCoroutine("TimeOut");
         //TimeOut().MoveNext();
@@ -55,5 +56,4 @@ public class NotificationSystem : MonoBehaviour {
         m_NotificationImage.SetActive(false);
         Debug.Log("TimeOutBreak");
     }
-
 }
