@@ -130,10 +130,15 @@ public class RotateIsland : MonoBehaviour
             atRotatingCollisionList[i].SetActive(false);
         }
 
-        for (int i = 0; i < onPlayerDesableCollisionList.Count; i++)
+        if (onPlayer)
         {
-            onPlayerDesableCollisionList[i].SetActive(true);
+            for (int i = 0; i < onPlayerDesableCollisionList.Count; i++)
+            {
+                onPlayerDesableCollisionList[i].SetActive(true);
+            }
         }
+
+        onPlayer = false;
     }
 
     void OnCollisionStay(Collision col)

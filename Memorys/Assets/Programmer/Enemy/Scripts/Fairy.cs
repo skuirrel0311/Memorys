@@ -81,6 +81,8 @@ public class Fairy : MonoBehaviour
         UpdateAlertness();
 
         SetTargetPosition();
+
+        
     }
 
     void UpdateAlertness()
@@ -160,6 +162,8 @@ public class Fairy : MonoBehaviour
         isShout = true;
         IsWarning = false;
         Alertness = 0.0f;
+
+        //todo:↑のコルーチンが終わるまで音が変わる
     }
 
     IEnumerator ViolentlyTransition(float changeTime)
