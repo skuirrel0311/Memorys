@@ -47,6 +47,7 @@ public class SniperTotemPaul : TotemPaul
         playerHips = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0);
 
         if (isOnRotateIsrand) SetOnPushEvent();
+
     }
 
     //攻撃
@@ -61,6 +62,7 @@ public class SniperTotemPaul : TotemPaul
         //チャージ開始
         float time = 0.0f;
         float hideTimer = 0.0f;
+        AkSoundEngine.PostEvent("Totem_Laser_charge",gameObject);
         while (true)
         {
             isSeePlayer = (bool)m_tree.GetVariable("IsSeePlayer").GetValue();
@@ -96,11 +98,10 @@ public class SniperTotemPaul : TotemPaul
 
         //チャージ終了
         lineRenderer.enabled = false;
-
+        AkSoundEngine.ExecuteActionOnEvent("Totem_Laser_charge", AkActionOnEventType.AkActionOnEventType_Stop,gameObject);
         //発射
         StartCoroutine(Shot(targetPosition, 1));
-        //todo:SE
-
+        AkSoundEngine.PostEvent("Totem_Laser", gameObject);
         yield return intervalWait;
 
         //終了処理

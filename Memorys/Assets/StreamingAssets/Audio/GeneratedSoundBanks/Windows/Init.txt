@@ -10,6 +10,9 @@ State	ID	Name	State Group			Notes
 	984691642	inGame	Menu			
 	2607556080	Menu	Menu			
 
+Custom State	ID	Name	State Group	Owner		Notes
+	910317865	Menu	Menu	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\SFX		
+
 Audio Bus	ID	Name			Wwise Object Path	Notes
 	393239870	SFX			\Default Work Unit\Master Audio Bus\SFX	
 	805203703	Master Secondary Bus			\Default Work Unit\Master Secondary Bus	

@@ -98,7 +98,7 @@
 						</RTPCValue>
 					</RTPCValueList>
 					<CurrentStateList ShowAll="true">
-						<CurrentStateRef Name="inGame" ID="{8CCAD1A3-D26A-494F-BA12-A0CD04257542}"/>
+						<CurrentStateRef Name="Menu" ID="{DEC08FA2-189C-41E5-A235-82C43D2E4046}"/>
 						<CurrentStateRef Name="Normal" ID="{5017403C-79BB-436C-8F21-E5C956F6E241}"/>
 					</CurrentStateList>
 					<CurrentSwitchList ShowAll="true"/>

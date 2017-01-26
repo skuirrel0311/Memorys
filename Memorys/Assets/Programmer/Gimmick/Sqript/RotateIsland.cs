@@ -154,7 +154,7 @@ public class RotateIsland : MonoBehaviour
 
         if (cols == null) return;
 
-        player.parent = cols[0].transform;
+        //player.parent = cols[0].transform;
         for(int i = 0;i< onPlayerDesableCollisionList.Count;i++)
         {
             onPlayerDesableCollisionList[i].SetActive(false);
