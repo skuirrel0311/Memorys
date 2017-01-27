@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour
     public bool isJump;
     bool isLanding;
 
+    public bool IsOnRotateIsrand = false;
+
     void Awake()
     {
         I = this;

@@ -59,17 +59,17 @@ public class RotateIsland : MonoBehaviour
                 StopCoroutine(coroutine);
             }
 
-            if(reverseCount != 0)
+            if (reverseCount != 0)
             {
                 rotateCount++;
-                if(rotateCount >= reverseCount)
+                if (rotateCount >= reverseCount)
                 {
                     isReverse = !isReverse;
                     rotateCount = 0;
                 }
             }
 
-            if(!isReverse)
+            if (!isReverse)
                 targetRotateY = targetRotateY + plusValue;
             else
                 targetRotateY = targetRotateY - plusValue;
@@ -90,8 +90,8 @@ public class RotateIsland : MonoBehaviour
     {
         float t = 0.0f;
         float startRotateY = currentRotateY;
-        
-        for(int i = 0;i< atRotatingCollisionList.Count;i++)
+
+        for (int i = 0; i < atRotatingCollisionList.Count; i++)
         {
             atRotatingCollisionList[i].SetActive(true);
         }
@@ -125,18 +125,22 @@ public class RotateIsland : MonoBehaviour
             player.parent = null;
         }
 
-        for (int i = 0; i < atRotatingCollisionList.Count; i++)
-        {
-            atRotatingCollisionList[i].SetActive(false);
-        }
-
         if (onPlayer)
         {
             for (int i = 0; i < onPlayerDesableCollisionList.Count; i++)
             {
                 onPlayerDesableCollisionList[i].SetActive(true);
             }
+
+            player.GetComponent<PlayerController>().IsOnRotateIsrand = false;
         }
+
+        for (int i = 0; i < atRotatingCollisionList.Count; i++)
+        {
+            atRotatingCollisionList[i].SetActive(false);
+        }
+
+
 
         onPlayer = false;
     }
@@ -147,15 +151,21 @@ public class RotateIsland : MonoBehaviour
         if (onPlayer) return;
         if (col.gameObject.tag != "Player") return;
 
-        onPlayer = true;
         player = col.transform;
+        if (player.GetComponent<PlayerController>().IsOnRotateIsrand) return;
 
+        onPlayer = true;
+        player.GetComponent<PlayerController>().IsOnRotateIsrand = true;
         Collider[] cols = Physics.OverlapSphere(player.position + Vector3.down, 0.5f);
 
         if (cols == null) return;
 
-        //player.parent = cols[0].transform;
-        for(int i = 0;i< onPlayerDesableCollisionList.Count;i++)
+        if (cols[0].tag == "Wall") return;
+
+
+        player.parent = cols[0].transform;
+
+        for (int i = 0; i < onPlayerDesableCollisionList.Count; i++)
         {
             onPlayerDesableCollisionList[i].SetActive(false);
         }
