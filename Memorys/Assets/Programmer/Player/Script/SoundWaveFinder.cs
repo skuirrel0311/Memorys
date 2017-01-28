@@ -12,11 +12,11 @@ public class SoundWaveFinder : MonoBehaviour
 
     //音が届く最大の距離
     [SerializeField]
-    float maxDistance = 30.0f;
+    float maxDistance = 100.0f;
     //ターゲットを光らせる時間
     [SerializeField]
     float changingTime = 10.0f;
-    
+
     Renderer[] targetRenderers;
     //もともと付いているマテリアル
     Material targetMat;
@@ -25,22 +25,26 @@ public class SoundWaveFinder : MonoBehaviour
 
     bool[] IsWorkingCoroutines;
     Coroutine[] coroutines;
-    
-    [SerializeField]
-    public float power = 0.0f;
 
     [SerializeField]
-    float maxPower = 5.0f;
+    public int power = 0;
+    
+    int maxPower = 2;
     PlayerSixthSense sense;
 
     //ソナーに反応があったか？
     bool IsFound = false;
     float longestWaitTime = 0.0f;
-    
+
     public Timer workingTimer;
 
     [SerializeField]
     Text debugText = null;
+
+    float recoveryTimer = 0.0f;
+
+    public delegate void VoidEvent();
+    public VoidEvent OnUseSonar;
 
     void Start()
     {
@@ -62,20 +66,31 @@ public class SoundWaveFinder : MonoBehaviour
 
         workingTimer = new Timer();
         workingTimer.Stop(true);
+
+        SetUseSonarEvent();
     }
 
     void Update()
     {
+        recoveryTimer += Time.deltaTime;
+
+        if (recoveryTimer > 60.0f)
+        {
+            if((power + 1) <= maxPower) NotificationSystem.I.Indication("ソナーのパワーが溜まった");
+            power = Mathf.Min((power + 1), maxPower);
+            recoveryTimer = 0.0f;
+        }
+
         //消えたスイッチのコルーチンを止める
-        for(int i = 0;i< coroutines.Length;i++)
+        for (int i = 0; i < coroutines.Length; i++)
         {
             if (targetRenderers[i] != null) continue;
-            
+
             if (IsWorkingCoroutines[i]) StopCoroutine(coroutines[i]);
         }
 
         workingTimer.Update();
-        if(workingTimer.IsLimitTime)
+        if (workingTimer.IsLimitTime)
         {
             workingTimer.Stop(true);
         }
@@ -92,13 +107,21 @@ public class SoundWaveFinder : MonoBehaviour
 
         if (MyInputManager.GetButtonDown(MyInputManager.Button.Y) || Input.GetKeyDown(KeyCode.Y))
         {
+            UseSonar();
+        }
+    }
+
+    void SetUseSonarEvent()
+    {
+        OnUseSonar += () =>
+        {
             if (Time.timeScale == 0.0f) return;
             if (power <= 0) return;
             if (GameManager.I.IsPlayStop) return;
-            AkSoundEngine.PostEvent("Player_Search",gameObject);
+            AkSoundEngine.PostEvent("Player_Search", gameObject);
             IsFound = false;
             longestWaitTime = 0.0f;
-            power -= 1.0f;
+            power -= 1;
             //パーティクルを生成
             Destroy(Instantiate(waveParticle, transform.position + (Vector3.up * 1.5f), Quaternion.identity), 1.5f);
 
@@ -115,15 +138,25 @@ public class SoundWaveFinder : MonoBehaviour
                 //１つでも見つかったら
                 StartCoroutine(DrawStarParticle(longestWaitTime));
             }
+        };
+
+    }
+
+    void UseSonar()
+    {
+        if(OnUseSonar != null)
+        {
+            OnUseSonar();
         }
     }
+
     //音波を発生させる
     void SendSoundWave(Renderer target, int index)
     {
         float distance = (target.transform.position - transform.position).magnitude;
 
         //範囲内にあったら光らせる
-        if (distance < maxDistance&&!target.gameObject.GetComponent<BreakMessage>().isPush)
+        if (distance < maxDistance && !target.gameObject.GetComponent<BreakMessage>().isPush)
         {
             IsFound = true;
             //音波が届くまでの時間を求める
@@ -171,7 +204,7 @@ public class SoundWaveFinder : MonoBehaviour
 
         Destroy(Instantiate(starParticle, transform.position + Vector3.up, Quaternion.identity), 1.5f);
     }
-    
+
     //マテリアルを切り替える処理を停止させる
     public void StopSetMaterial(int index = 0)
     {

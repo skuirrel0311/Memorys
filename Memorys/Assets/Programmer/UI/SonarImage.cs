@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SonarImage : MonoBehaviour {
 
     [SerializeField]
-    Image[] m_sonerImage;
+    Image[] m_sonerImage = null;
 
     int point;
 
@@ -19,7 +19,7 @@ public class SonarImage : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        int pow = (int)PlayerController.I.GetComponent<SoundWaveFinder>().power;
+        int pow = PlayerController.I.GetComponent<SoundWaveFinder>().power;
         for (int i = 0; i < m_sonerImage.Length; i++)
         {
             if (i >= pow)
