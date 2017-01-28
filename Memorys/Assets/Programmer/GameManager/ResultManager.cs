@@ -194,7 +194,8 @@ public class ResultManager : MonoBehaviour
         UtilsSound.SE_Decision();
         if (m_SelectState == SelectState.SELECT)
         {
-            SceneManager.LoadSceneAsync("StageSelect");
+            PlayData.StageNum++;
+            SceneManager.LoadSceneAsync("Loading");
         }
         else if (m_SelectState == SelectState.RETRY)
         {
@@ -202,8 +203,7 @@ public class ResultManager : MonoBehaviour
         }
         else if (m_SelectState == SelectState.NEXT)
         {
-            PlayData.StageNum++;
-            SceneManager.LoadSceneAsync("Loading");
+            SceneManager.LoadSceneAsync("StageSelect");
         }
 
     }
