@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
     {
         // I = this;
         IsPlayStop = true;
-        StartCoroutine(GameStartWait(4));
+        StartCoroutine(GameStartWait(8));
         //エフェクトのデータを取得
         GameObject go = Instantiate(Resources.Load("Particle/Select") as GameObject);
         floorObj = Resources.Load("Prefabs/FloorObject") as GameObject;

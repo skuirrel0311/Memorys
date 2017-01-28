@@ -63,6 +63,8 @@ public class CameraManager : MonoBehaviour
     {
         Debug.Log("Callcut");
         CinemaScopeCanvas.SetActive(true);
+        bool isStop = GameManager.I.IsPlayStop;
+        
         GameManager.I.IsPlayStop = true;
         if (FadeIn)
         {
@@ -90,7 +92,10 @@ public class CameraManager : MonoBehaviour
         CinemaScopeCanvas.SetActive(false);
         if (action != null)
             action();
-        GameManager.I.IsPlayStop = false;
+        if (!isStop)
+        {
+            GameManager.I.IsPlayStop = false;
+        }
     }
 
 
