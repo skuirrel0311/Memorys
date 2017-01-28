@@ -76,11 +76,11 @@ public class ResultManager : MonoBehaviour
         if (PlayData.StageNum >= SelectManager.c_MaxStage)
         {
             IsLast = true;
-            m_SelectChild[1].rectTransform.anchoredPosition =new Vector2(m_SelectChild[2].rectTransform.anchoredPosition.x, m_SelectChild[1].rectTransform.anchoredPosition.y);
-            m_SelectChild[2].gameObject.SetActive(false);
+            m_SelectChild[1].rectTransform.anchoredPosition =new Vector2(m_SelectChild[0].rectTransform.anchoredPosition.x+250.0f, m_SelectChild[1].rectTransform.anchoredPosition.y);
+            m_SelectChild[0].gameObject.SetActive(false);
+            m_SelectState = SelectState.RETRY;
         }
         SelectImageChange();
-
 
         LevelText.text = "ステージ " + PlayData.StageNum.ToString();
         currntTime = (int)PlayerPrefsManager.I.GetCurrentClearTime();
@@ -213,22 +213,22 @@ public class ResultManager : MonoBehaviour
         if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickLeft))
         {
             UtilsSound.SE_Select();
-
-            m_SelectState = (SelectState)Mathf.Max(0, (float)m_SelectState - 1);
+            if (IsLast)
+            {
+                m_SelectState = (SelectState)Mathf.Max(1, (float)m_SelectState - 1);
+            }
+            else
+            {
+                m_SelectState = (SelectState)Mathf.Max(0, (float)m_SelectState - 1);
+            }
 
             SelectImageChange();
         }
         else if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickRight))
         {
             UtilsSound.SE_Select();
-            if (IsLast)
-            {
-                m_SelectState = (SelectState)Mathf.Min((float)SelectState.INDEX - 2, (float)m_SelectState + 1);
-            }
-            else
-            {
                 m_SelectState = (SelectState)Mathf.Min((float)SelectState.INDEX - 1, (float)m_SelectState + 1);
-            }
+            
             SelectImageChange();
         }
     }

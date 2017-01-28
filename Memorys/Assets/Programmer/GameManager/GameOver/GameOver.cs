@@ -13,14 +13,26 @@ public class GameOver : MonoBehaviour
     Image StageSelect;
 
     bool isLeft = true;
-    // Use this for initialization
-    void Start()
-    {
-    }
 
+    bool isWait;
+    float timer = 0.0f;
+
+    void OnEnable()
+    {
+        timer = 0.0f;
+        isWait = true;
+    }
+    
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+        if (timer > 0.1f)
+        {
+            isWait = false;
+        }
+        if (isWait) return;
+
         if (MyInputManager.IsJustStickDown(MyInputManager.StickDirection.LeftStickLeft))
         {
             isLeft = true;

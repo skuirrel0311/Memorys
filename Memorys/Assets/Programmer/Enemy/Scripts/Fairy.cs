@@ -80,9 +80,7 @@ public class Fairy : MonoBehaviour
 
         UpdateAlertness();
 
-        SetTargetPosition();
-
-        
+        SetTargetPosition();       
     }
 
     void UpdateAlertness()
@@ -143,6 +141,12 @@ public class Fairy : MonoBehaviour
         modelTransform.localPosition = new Vector3(0, TkUtils.FloatLerp(startY, targetY, shakeTimer.Progress * shakeTimer.Progress), 0);
     }
 
+    void OnDestroy()
+    {
+        AkSoundEngine.ExecuteActionOnEvent("Enemy_Move",AkActionOnEventType.AkActionOnEventType_Stop);
+        AkSoundEngine.ExecuteActionOnEvent("Enemy_Attack", AkActionOnEventType.AkActionOnEventType_Stop);
+    }
+
     public void SetTargetPosition()
     {
         if (!IsLostTarget)
@@ -158,6 +162,8 @@ public class Fairy : MonoBehaviour
         {
             StopCoroutine(attackCoroutine);
         }
+        AkSoundEngine.PostEvent("Enemy_Attack",gameObject);
+        AkSoundEngine.ExecuteActionOnEvent("Enemy_Move", AkActionOnEventType.AkActionOnEventType_Stop,gameObject);
         attackCoroutine = StartCoroutine(ViolentlyTransition(changeTime));
         isShout = true;
         IsWarning = false;
@@ -176,6 +182,8 @@ public class Fairy : MonoBehaviour
 
         GameManager.I.SetIntervalTime(intervalTime);
         isShout = false;
+        AkSoundEngine.PostEvent("Enemy_Move", gameObject);
+        AkSoundEngine.ExecuteActionOnEvent("Enemy_Attack", AkActionOnEventType.AkActionOnEventType_Stop, gameObject);
     }
 
     public void ChangeLight(Color targetColor)
