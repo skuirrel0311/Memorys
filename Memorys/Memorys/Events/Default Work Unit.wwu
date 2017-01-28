@@ -9,6 +9,16 @@
 							<ChildrenList>
 								<Event Name="BGM_Main1" ID="{B2D0307B-5F9B-4C79-A9C5-F85B2DA78A50}">
 									<ChildrenList>
+										<Action Name="Stop" ID="{C0695F89-0D7B-4DC5-A157-7F5E7EF8FB85}" ShortID="755571904" Type="Stop" Scope="One" Global="false">
+											<PropertyList>
+												<Property Name="FadeTime" Type="Real64" Value="2"/>
+											</PropertyList>
+											<ElementList>
+												<Element ID="{F3E2877F-E2A2-4F75-A99C-7D5994457354}" Global="false">
+													<ObjectRef Name="GameOver" ID="{A5B6C507-191E-4597-81DF-D3D90F4F1FB2}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+												</Element>
+											</ElementList>
+										</Action>
 										<Action Name="Play" ID="{C7AF8B2D-6556-4622-B8E0-35CD5E239035}" ShortID="119209016" Type="Play" Scope="One" Global="false">
 											<ElementList>
 												<Element ID="{46616E55-8500-4DD3-AFBB-D3E1136B469C}" Global="false">
@@ -82,7 +92,6 @@
 										</Action>
 									</ChildrenList>
 								</Event>
-								<Event Name="BGM_Result" ID="{5A0FC5E5-703D-40E8-8D0C-A10F8B0D0A3A}"/>
 							</ChildrenList>
 						</Folder>
 						<Folder Name="ME" ID="{7BD5C0D1-8A4F-4DB8-8F1D-17678A872DFA}" ShortID="168785995">
@@ -257,6 +266,16 @@
 						</Event>
 						<Event Name="Menu_Decision" ID="{671B5CBD-6E1A-46D6-A79D-6B7AF842EE3D}">
 							<ChildrenList>
+								<Action Name="Stop" ID="{A8A2549B-A4D6-4681-9944-FAA28986D5C3}" ShortID="291709485" Type="Stop" Scope="One" Global="true">
+									<PropertyList>
+										<Property Name="FadeTime" Type="Real64" Value="1"/>
+									</PropertyList>
+									<ElementList>
+										<Element ID="{B9446D35-4003-4092-9A19-6A621FA0FCA1}" Global="true">
+											<ObjectRef Name="BGM_Result" ID="{5C4BCBEA-35A0-4EAE-A30A-B4D51721C0E1}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+										</Element>
+									</ElementList>
+								</Action>
 								<Action Name="Play" ID="{E1B67628-9CF4-4B3B-BCD7-5DDB49C34169}" ShortID="855972543" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{70562BD7-CB12-4AF9-B20E-E398A47BD893}" Global="false">
@@ -426,6 +445,17 @@
 											<ElementList>
 												<Element ID="{5EBA3226-874B-416B-88DF-020ABD24113C}" Global="false">
 													<ObjectRef Name="Result" ID="{48E01443-CDD3-4E25-A08F-10F83EE065CD}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+												</Element>
+											</ElementList>
+										</Action>
+										<Action Name="Play" ID="{9C6568E1-3EE2-4CF3-8F61-285FA111F941}" ShortID="226595810" Type="Play" Scope="One" Global="false">
+											<PropertyList>
+												<Property Name="Delay" Type="Real64" Value="3.6"/>
+												<Property Name="FadeCurve" Type="int16" Value="8"/>
+											</PropertyList>
+											<ElementList>
+												<Element ID="{10D95D72-3A36-42F5-8674-E67EE8276532}" Global="false">
+													<ObjectRef Name="BGM_Result" ID="{5C4BCBEA-35A0-4EAE-A30A-B4D51721C0E1}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 												</Element>
 											</ElementList>
 										</Action>

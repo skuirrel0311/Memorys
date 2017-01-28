@@ -1930,6 +1930,7 @@
 								<Property Name="ModPhaseSpread" Type="Real32" Value="121"/>
 								<Property Name="ModSmoothing" Type="Real32" Value="100"/>
 								<Property Name="ModWaveform" Type="int32" Value="3"/>
+								<Property Name="OutputGain" Type="Real32" Value="2"/>
 							</PropertyList>
 						</Effect>
 						<Effect Name="Fast_LF_Tremolo_No_Smoothing" ID="{D972718E-231C-4DBF-9288-FCAF4BF47B50}" PluginName="Wwise Tremolo" CompanyID="0" PluginID="131" PluginType="3">

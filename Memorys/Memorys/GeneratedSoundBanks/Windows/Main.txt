@@ -33,7 +33,6 @@ Event	ID	Name			Wwise Object Path	Notes
 	4089119168	Menu_Decision_Titlle			\Default Work Unit\SE\Menu_Decision_Titlle	
 	4158285989	GameOver			\Default Work Unit\SE\Jingle\GameOver	
 	4203375351	Menu_Select			\Default Work Unit\SE\Menu_Select	
-	4239768699	BGM_Result			\Default Work Unit\BGM\Music\BGM_Result	
 
 State Group	ID	Name			Wwise Object Path	Notes
 	1211814768	BGM_change			\Default Work Unit\BGM_change	
@@ -54,6 +53,7 @@ Custom State	ID	Name	State Group	Owner		Notes
 Effect plug-ins	ID	Name	Type				Notes
 	1551236760	Small_Wooden_Room1	Wwise Matrix Reverb			
 	2662085913	Large_Church1	Wwise Matrix Reverb			
+	3354577677	Fast_LF_Tremolo	Wwise Tremolo			
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	36096099	Intro	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Intro_4B8CC0C5.wem		\Interactive Music Hierarchy\Default Work Unit\BGM_Main1\Intro_1\Intro		997400
@@ -74,6 +74,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	264830239	Totem_Shot_impact	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Totem_Shot_impact_5F60B144.wem		\Actor-Mixer Hierarchy\Default Work Unit\enemy\Totem_Shot_impact		81476
 	266972089	Fs_4	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Footsteps\Fs_4_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\player\Footsteps\Fs_4		63064
 	278512158	BGM_Select_intro	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\BGM_Select_intro_843AC017.wem		\Actor-Mixer Hierarchy\Default Work Unit\BGM\BGM_Select_intro		627928
+	309343174	BGM_Result	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\BGM_Result_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\BGM\BGM_Result		1302708
 	341995375	Jump	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Jump(2)_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\player\Jump		157564
 	370876679	GameClear	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\GameClear_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\Jingle\GameClear		318376
 	419326362	Totem_Laser_impact	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Totem_Laser_impact_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\enemy\Totem_Laser_impact		162892

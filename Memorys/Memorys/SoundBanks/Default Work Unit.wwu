@@ -5,7 +5,6 @@
 			<ChildrenList>
 				<SoundBank Name="Main" ID="{7142CB87-4284-4DD7-9B3C-86A46A60A847}">
 					<ObjectInclusionList>
-						<ObjectRef Name="BGM_Result" ID="{5A0FC5E5-703D-40E8-8D0C-A10F8B0D0A3A}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Menu_Pause" ID="{AEB27E80-22C6-40E9-9791-FD296592D53B}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Enemy_Attack" ID="{AA72C250-FAF2-413A-A03F-1CA5D6F6D878}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>
 						<ObjectRef Name="Player_Climb" ID="{41BB2E29-0373-41AC-A69E-156A2ACB3765}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}" Filter="7" Origin="Manual"/>

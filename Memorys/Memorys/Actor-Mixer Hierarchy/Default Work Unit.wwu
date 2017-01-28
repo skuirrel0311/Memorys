@@ -160,6 +160,38 @@
 								<ActiveSource Name="BGM_Select_intro" ID="{D908B8AE-9973-4428-9AED-80AF1969681C}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
+						<Sound Name="BGM_Result" ID="{5C4BCBEA-35A0-4EAE-A30A-B4D51721C0E1}" ShortID="796097450" Type="SoundFX">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="Lowpass" Type="int16">
+									<ValueList>
+										<Value>26</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-1</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="BGM_Result" ID="{5D116B3C-07A0-41AE-A5FC-1C56F5D94B69}" ShortID="309343174">
+									<Language>SFX</Language>
+									<AudioFile>BGM_Result.wav</AudioFile>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="BGM_Result" ID="{5D116B3C-07A0-41AE-A5FC-1C56F5D94B69}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Ambience" ID="{A49CF3A7-B364-4E4C-BFA9-9C90DE4ADD47}" ShortID="524253980">
@@ -179,8 +211,12 @@
 										</ModifierInfo>
 									</ModifierList>
 								</Property>
-								<Property Name="PositioningType" Type="int16" Value="1"/>
 								<Property Name="Spatialization" Type="bool" Value="False"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-96</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Attenuation">
@@ -1037,11 +1073,7 @@
 						</Sound>
 						<Sound Name="Totem_Shot" ID="{E7F1EA7B-C9C2-40DD-AEBE-BF9C752B011A}" ShortID="387417053" Type="SoundFX">
 							<PropertyList>
-								<Property Name="Highpass" Type="int16">
-									<ValueList>
-										<Value>40</Value>
-									</ValueList>
-								</Property>
+								<Property Name="OverrideEffect" Type="bool" Value="True"/>
 								<Property Name="OverridePositioning" Type="bool" Value="True"/>
 								<Property Name="Pitch" Type="int32">
 									<ModifierList>
@@ -1064,6 +1096,9 @@
 								</Reference>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
+								</Reference>
+								<Reference Name="Effect0" CompanyID="4095" PluginID="65535" PluginType="15">
+									<ObjectRef Name="Fast_LF_Tremolo" ID="{3B09A271-D9D4-4A4E-B545-F681E8313E5F}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
 								</Reference>
 								<Reference Name="OutputBus">
 									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3AE67C64-2EF1-484F-BAC4-517D399F9D66}"/>

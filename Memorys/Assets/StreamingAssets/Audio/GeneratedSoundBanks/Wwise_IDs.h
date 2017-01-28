@@ -17,7 +17,6 @@ namespace AK
         static const AkUniqueID BGM_HELP = 2162141673U;
         static const AkUniqueID BGM_MAIN1 = 652491268U;
         static const AkUniqueID BGM_MAIN2 = 652491271U;
-        static const AkUniqueID BGM_RESULT = 4239768699U;
         static const AkUniqueID BGM_SELECT = 2333034960U;
         static const AkUniqueID BGM_TITLLE = 3608707068U;
         static const AkUniqueID ENEMY_ATTACK = 1781417190U;

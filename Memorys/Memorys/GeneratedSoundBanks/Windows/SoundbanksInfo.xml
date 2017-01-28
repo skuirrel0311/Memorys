@@ -21,11 +21,10 @@
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<IncludedEvents>
-				<Event Id="4051581707" Name="Babble" ObjectPath="\Events\Default Work Unit\BGM\ME\Babble" MaxAttenuation="60.000000"/>
-				<Event Id="2162141673" Name="BGM_Help" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Help" MaxAttenuation="60.000000"/>
+				<Event Id="4051581707" Name="Babble" ObjectPath="\Events\Default Work Unit\BGM\ME\Babble"/>
+				<Event Id="2162141673" Name="BGM_Help" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Help"/>
 				<Event Id="652491268" Name="BGM_Main1" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Main1"/>
-				<Event Id="652491271" Name="BGM_Main2" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Main2" MaxAttenuation="60.000000"/>
-				<Event Id="4239768699" Name="BGM_Result" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Result" MaxAttenuation="0.000000"/>
+				<Event Id="652491271" Name="BGM_Main2" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Main2"/>
 				<Event Id="2333034960" Name="BGM_Select" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Select"/>
 				<Event Id="3608707068" Name="BGM_Titlle" ObjectPath="\Events\Default Work Unit\BGM\Music\BGM_Titlle"/>
 				<Event Id="1781417190" Name="Enemy_Attack" ObjectPath="\Events\Default Work Unit\SE\Enemy_Attack" MaxAttenuation="60.000000"/>
@@ -129,6 +128,10 @@
 				<File Id="278512158" Language="SFX">
 					<ShortName>BGM_Select_intro.wav</ShortName>
 					<Path>SFX\BGM_Select_intro_843AC017.wem</Path>
+				</File>
+				<File Id="309343174" Language="SFX">
+					<ShortName>BGM_Result.wav</ShortName>
+					<Path>SFX\BGM_Result_4B8CC0C5.wem</Path>
 				</File>
 				<File Id="341995375" Language="SFX">
 					<ShortName>Jump(2).wav</ShortName>

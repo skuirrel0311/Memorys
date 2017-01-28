@@ -87,8 +87,20 @@
 							<Position X="0" Y="0"/>
 						</Module>
 						<Module>
+							<ObjectRef Name="Result" ID="{79505AEB-A158-47AB-887A-AE96EE76140B}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="0" Y="1"/>
+						</Module>
+						<Module>
 							<ObjectRef Name="GameClear" ID="{A490411E-5868-4753-AEFF-63C04C6AB45C}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
 							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Menu_Decision" ID="{671B5CBD-6E1A-46D6-A79D-6B7AF842EE3D}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
+							<Position X="1" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="GameOver" ID="{A5B6C507-191E-4597-81DF-D3D90F4F1FB2}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+							<Position X="2" Y="1"/>
 						</Module>
 					</ModuleList>
 					<RTPCValueList ShowAll="true">
@@ -98,7 +110,7 @@
 						</RTPCValue>
 					</RTPCValueList>
 					<CurrentStateList ShowAll="true">
-						<CurrentStateRef Name="Menu" ID="{DEC08FA2-189C-41E5-A235-82C43D2E4046}"/>
+						<CurrentStateRef Name="inGame" ID="{8CCAD1A3-D26A-494F-BA12-A0CD04257542}"/>
 						<CurrentStateRef Name="Normal" ID="{5017403C-79BB-436C-8F21-E5C956F6E241}"/>
 					</CurrentStateList>
 					<CurrentSwitchList ShowAll="true"/>
