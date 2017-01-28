@@ -29,10 +29,12 @@ namespace UnityStandardAssets.Water
         private int m_OldRefractionTextureSize;
         private static bool s_InsideWater;
         private Renderer m_Renderer;
+        bool isrender;
 
         void Start()
         {
             m_Renderer = GetComponent<Renderer>();
+            isrender = false;
         }
 
 
@@ -68,7 +70,7 @@ namespace UnityStandardAssets.Water
             m_HardwareWaterSupport = FindHardwareWaterSupport();
             WaterMode mode = GetWaterMode();
 
-            Camera  refractionCamera;
+            Camera refractionCamera;
             CreateWaterObjects(cam, out refractionCamera);
 
             // find out the reflection plane: position and normal in world space
@@ -81,57 +83,36 @@ namespace UnityStandardAssets.Water
             {
                 QualitySettings.pixelLightCount = 0;
             }
+            
 
             UpdateCameraModes(cam, refractionCamera);
-
-
-
             // Render refraction
-            if (mode >= WaterMode.Refractive)
-            {
-                refractionCamera.worldToCameraMatrix = cam.worldToCameraMatrix;
+            refractionCamera.worldToCameraMatrix = cam.worldToCameraMatrix;
 
-                // Setup oblique projection matrix so that near plane is our reflection
-                // plane. This way we clip everything below/above it for free.
-                Vector4 clipPlane = CameraSpacePlane(refractionCamera, pos, normal, -1.0f);
-                refractionCamera.projectionMatrix = cam.CalculateObliqueMatrix(clipPlane);
+            // Setup oblique projection matrix so that near plane is our reflection
+            // plane. This way we clip everything below/above it for free.
+            Vector4 clipPlane = CameraSpacePlane(refractionCamera, pos, normal, -1.0f);
+            refractionCamera.projectionMatrix = cam.CalculateObliqueMatrix(clipPlane);
 
-				// Set custom culling matrix from the current camera
-				refractionCamera.cullingMatrix = cam.projectionMatrix * cam.worldToCameraMatrix;
+            // Set custom culling matrix from the current camera
+            refractionCamera.cullingMatrix = cam.projectionMatrix * cam.worldToCameraMatrix;
 
-				refractionCamera.cullingMask = ~(1 << 4) & refractLayers.value; // never render water layer
-                refractionCamera.targetTexture = m_RefractionTexture;
-                refractionCamera.transform.position = cam.transform.position;
-                refractionCamera.transform.rotation = cam.transform.rotation;
-                refractionCamera.Render();
-                m_Renderer.sharedMaterial.SetTexture("_RefractionTex", m_RefractionTexture);
-            }
+            refractionCamera.cullingMask = ~(1 << 4) & refractLayers.value; // never render water layer
+            refractionCamera.targetTexture = m_RefractionTexture;
+            refractionCamera.transform.position = cam.transform.position;
+            refractionCamera.transform.rotation = cam.transform.rotation;
+            refractionCamera.Render();
+            m_Renderer.sharedMaterial.SetTexture("_RefractionTex", m_RefractionTexture);
+
 
             // Restore pixel light count
             if (disablePixelLights)
             {
                 QualitySettings.pixelLightCount = oldPixelLightCount;
             }
-
-            // Setup shader keywords based on water mode
-            switch (mode)
-            {
-                case WaterMode.Simple:
-                    Shader.EnableKeyword("WATER_SIMPLE");
-                    Shader.DisableKeyword("WATER_REFLECTIVE");
-                    Shader.DisableKeyword("WATER_REFRACTIVE");
-                    break;
-                case WaterMode.Reflective:
-                    Shader.DisableKeyword("WATER_SIMPLE");
-                    Shader.EnableKeyword("WATER_REFLECTIVE");
-                    Shader.DisableKeyword("WATER_REFRACTIVE");
-                    break;
-                case WaterMode.Refractive:
-                    Shader.DisableKeyword("WATER_SIMPLE");
-                    Shader.DisableKeyword("WATER_REFLECTIVE");
-                    Shader.EnableKeyword("WATER_REFRACTIVE");
-                    break;
-            }
+            Shader.DisableKeyword("WATER_SIMPLE");
+            Shader.DisableKeyword("WATER_REFLECTIVE");
+            Shader.EnableKeyword("WATER_REFRACTIVE");
 
             s_InsideWater = false;
         }

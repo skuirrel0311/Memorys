@@ -70,6 +70,7 @@ public class menuSceneController : MonoBehaviour
         }
         else if (m_SelectState== SelectState.EXIT)
         {
+            AkSoundEngine.ExecuteActionOnEvent("BGM_Titlle",AkActionOnEventType.AkActionOnEventType_Stop);
             UtilsSound.SE_Decision();
             Application.Quit();
         }
