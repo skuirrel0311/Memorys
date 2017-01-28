@@ -221,7 +221,11 @@ public class SniperTotemPaul : TotemPaul
     {
         GameManager.I.OnPushSwitch += () =>
         {
-            if (attackCoroutine != null) StopCoroutine(attackCoroutine);
+            if (attackCoroutine != null)
+            {
+                AkSoundEngine.ExecuteActionOnEvent("Totem_Laser_charge", AkActionOnEventType.AkActionOnEventType_Stop, gameObject);
+                StopCoroutine(attackCoroutine);
+            }
             bullet.SetActive(false);
             chargeEffect.Stop(true);
             chargeEffect.gameObject.SetActive(false);
