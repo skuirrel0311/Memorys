@@ -104,10 +104,10 @@ public class RotateIsland : MonoBehaviour
         for (int i = 0; i < atRotatedDesableCollisionList.Count; i++)
         {
             //tempは指定された時だけtrueになる
-            bool temp = atRotatedDesableCollisionList[i].name == "Collision" + GameManager.I.m_GameEnd.m_destoryCancelCount.ToString();
+            bool temp = atRotatedDesableCollisionList[i].name == "Collision" + (GameManager.I.m_GameEnd.m_destoryCancelCount).ToString();
 
-
-            atRotatedDesableCollisionList[i].SetActive(temp == (!atRotatedDesableCollisionList[i].activeSelf));
+            //アクティブをTrueにするのは回り始めたとき
+            if (temp == false) atRotatedDesableCollisionList[i].SetActive(!temp);
         }
 
         while (true)
@@ -125,6 +125,15 @@ public class RotateIsland : MonoBehaviour
             player.parent = null;
         }
 
+        for (int i = 0; i < atRotatedDesableCollisionList.Count; i++)
+        {
+            //tempは指定された時だけtrueになる
+            bool temp = atRotatedDesableCollisionList[i].name == "Collision" + (GameManager.I.m_GameEnd.m_destoryCancelCount - 1).ToString();
+
+            //アクティブを切るのは回り終わったとき
+            if (temp == true) atRotatedDesableCollisionList[i].SetActive(!temp);
+        }
+
         if (onPlayer)
         {
             for (int i = 0; i < onPlayerDesableCollisionList.Count; i++)
@@ -139,8 +148,6 @@ public class RotateIsland : MonoBehaviour
         {
             atRotatingCollisionList[i].SetActive(false);
         }
-
-
 
         onPlayer = false;
     }
