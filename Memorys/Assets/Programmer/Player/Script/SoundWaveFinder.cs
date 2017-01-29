@@ -28,7 +28,7 @@ public class SoundWaveFinder : MonoBehaviour
 
     [SerializeField]
     public int power = 0;
-    
+
     int maxPower = 2;
     PlayerSixthSense sense;
 
@@ -72,11 +72,12 @@ public class SoundWaveFinder : MonoBehaviour
 
     void Update()
     {
-        recoveryTimer += Time.deltaTime;
+        if (((power + 1) <= maxPower) && !GameManager.I.IsPlayStop)
+            recoveryTimer += Time.deltaTime;
 
         if (recoveryTimer > 60.0f)
         {
-            if((power + 1) <= maxPower) NotificationSystem.I.Indication("ソナーのパワーが溜まった");
+            if ((power + 1) <= maxPower) NotificationSystem.I.Indication("ソナーのパワーが溜まった");
             power = Mathf.Min((power + 1), maxPower);
             recoveryTimer = 0.0f;
         }
@@ -144,7 +145,7 @@ public class SoundWaveFinder : MonoBehaviour
 
     void UseSonar()
     {
-        if(OnUseSonar != null)
+        if (OnUseSonar != null)
         {
             OnUseSonar();
         }
