@@ -9,13 +9,10 @@
 							<ChildrenList>
 								<Event Name="BGM_Main1" ID="{B2D0307B-5F9B-4C79-A9C5-F85B2DA78A50}">
 									<ChildrenList>
-										<Action Name="Stop" ID="{C0695F89-0D7B-4DC5-A157-7F5E7EF8FB85}" ShortID="755571904" Type="Stop" Scope="One" Global="false">
-											<PropertyList>
-												<Property Name="FadeTime" Type="Real64" Value="2"/>
-											</PropertyList>
+										<Action Name="Stop" ID="{24739430-388A-47C5-8034-A86FBEF9F01B}" ShortID="745985579" Type="Stop" Scope="One" Global="true">
 											<ElementList>
-												<Element ID="{F3E2877F-E2A2-4F75-A99C-7D5994457354}" Global="false">
-													<ObjectRef Name="GameOver" ID="{A5B6C507-191E-4597-81DF-D3D90F4F1FB2}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+												<Element ID="{11827D86-254B-4726-89C7-992C297DDE65}" Global="true">
+													<ObjectRef Name="GameOver" ID="{503C9233-6C81-444B-BDB4-3CFE5D81C41C}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 												</Element>
 											</ElementList>
 										</Action>
@@ -272,7 +269,7 @@
 									</PropertyList>
 									<ElementList>
 										<Element ID="{B9446D35-4003-4092-9A19-6A621FA0FCA1}" Global="true">
-											<ObjectRef Name="BGM_Result" ID="{5C4BCBEA-35A0-4EAE-A30A-B4D51721C0E1}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+											<ObjectRef Name="BGM_Result" ID="{CBCEEEE9-891D-4516-ABB8-6DB54547AEBE}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 										</Element>
 									</ElementList>
 								</Action>
@@ -433,7 +430,7 @@
 										<Action Name="Play" ID="{4A60B9FD-A846-4D75-AC39-22B752D125E0}" ShortID="726069613" Type="Play" Scope="One" Global="false">
 											<ElementList>
 												<Element ID="{AC2406D3-0545-48C9-AC66-D9424985038C}" Global="false">
-													<ObjectRef Name="GameOver" ID="{A5B6C507-191E-4597-81DF-D3D90F4F1FB2}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+													<ObjectRef Name="GameOver" ID="{503C9233-6C81-444B-BDB4-3CFE5D81C41C}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 												</Element>
 											</ElementList>
 										</Action>
@@ -455,7 +452,7 @@
 											</PropertyList>
 											<ElementList>
 												<Element ID="{10D95D72-3A36-42F5-8674-E67EE8276532}" Global="false">
-													<ObjectRef Name="BGM_Result" ID="{5C4BCBEA-35A0-4EAE-A30A-B4D51721C0E1}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+													<ObjectRef Name="BGM_Result" ID="{CBCEEEE9-891D-4516-ABB8-6DB54547AEBE}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
 												</Element>
 											</ElementList>
 										</Action>
@@ -476,6 +473,17 @@
 						</Folder>
 						<Event Name="Menu_Cancel" ID="{3AFD2B1D-AA29-454E-8CAB-4E4B179191A5}">
 							<ChildrenList>
+								<Action Name="Stop" ID="{777464F7-2EE7-424B-8DDC-FEB6E665AB89}" ShortID="489916613" Type="Stop" Scope="One" Global="true">
+									<PropertyList>
+										<Property Name="FadeCurve" Type="int16" Value="1"/>
+										<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+									</PropertyList>
+									<ElementList>
+										<Element ID="{FE10C912-89C3-4E70-B7E9-07C842E3D473}" Global="true">
+											<ObjectRef Name="BGM_Title" ID="{D744D754-8548-47EB-AE93-F674C8A5450A}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+										</Element>
+									</ElementList>
+								</Action>
 								<Action Name="Play" ID="{A99690CF-533E-4A88-8F41-F0BB25568882}" ShortID="93117650" Type="Play" Scope="One" Global="false">
 									<ElementList>
 										<Element ID="{58CCC906-6390-4CF8-B54D-83ABDA8367DA}" Global="false">

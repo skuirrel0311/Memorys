@@ -109,10 +109,6 @@
 					<ShortName>Outro_1.wav</ShortName>
 					<Path>SFX\Outro_1_9E69E797.wem</Path>
 				</File>
-				<File Id="252778222" Language="SFX">
-					<ShortName>GameOver.wav</ShortName>
-					<Path>SFX\GameOver_9E69E797.wem</Path>
-				</File>
 				<File Id="254536441" Language="SFX">
 					<ShortName>Menu_Decision_Titlle.wav</ShortName>
 					<Path>SFX\Menu_Decision_Titlle_6C4592AE.wem</Path>
@@ -128,10 +124,6 @@
 				<File Id="278512158" Language="SFX">
 					<ShortName>BGM_Select_intro.wav</ShortName>
 					<Path>SFX\BGM_Select_intro_843AC017.wem</Path>
-				</File>
-				<File Id="309343174" Language="SFX">
-					<ShortName>BGM_Result.wav</ShortName>
-					<Path>SFX\BGM_Result_4B8CC0C5.wem</Path>
 				</File>
 				<File Id="341995375" Language="SFX">
 					<ShortName>Jump(2).wav</ShortName>
@@ -177,9 +169,17 @@
 					<ShortName>Enemy_Attack.wav</ShortName>
 					<Path>SFX\Enemy_Attack_4B8CC0C5.wem</Path>
 				</File>
+				<File Id="753787035" Language="SFX">
+					<ShortName>BGM_Result(2).wav</ShortName>
+					<Path>SFX\BGM_Result(2)_4B8CC0C5.wem</Path>
+				</File>
 				<File Id="753971549" Language="SFX">
 					<ShortName>Footsteps\Fs_2.wav</ShortName>
 					<Path>SFX\Footsteps\Fs_2_9E69E797.wem</Path>
+				</File>
+				<File Id="783954042" Language="SFX">
+					<ShortName>GameOver(2).wav</ShortName>
+					<Path>SFX\GameOver(2)_9E69E797.wem</Path>
 				</File>
 				<File Id="821184564" Language="SFX">
 					<ShortName>ToteMove.wav</ShortName>

@@ -99,7 +99,11 @@
 							<Position X="1" Y="1"/>
 						</Module>
 						<Module>
-							<ObjectRef Name="GameOver" ID="{A5B6C507-191E-4597-81DF-D3D90F4F1FB2}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+							<ObjectRef Name="BGM_Title" ID="{D744D754-8548-47EB-AE93-F674C8A5450A}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+							<Position X="2" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Menu_Cancel" ID="{3AFD2B1D-AA29-454E-8CAB-4E4B179191A5}" WorkUnitID="{17123A3D-C136-4160-A735-5A310440C69B}"/>
 							<Position X="2" Y="1"/>
 						</Module>
 					</ModuleList>

@@ -66,6 +66,12 @@
 						<Sound Name="BGM_Title" ID="{D744D754-8548-47EB-AE93-F674C8A5450A}" ShortID="543471597" Type="SoundFX">
 							<PropertyList>
 								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+								<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
+								<Property Name="MaxSoundPerInstance" Type="int16">
+									<ValueList>
+										<Value>1</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -160,14 +166,9 @@
 								<ActiveSource Name="BGM_Select_intro" ID="{D908B8AE-9973-4428-9AED-80AF1969681C}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<Sound Name="BGM_Result" ID="{5C4BCBEA-35A0-4EAE-A30A-B4D51721C0E1}" ShortID="796097450" Type="SoundFX">
+						<Sound Name="BGM_Result" ID="{CBCEEEE9-891D-4516-ABB8-6DB54547AEBE}" ShortID="155258563" Type="SoundFX">
 							<PropertyList>
 								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-								<Property Name="Lowpass" Type="int16">
-									<ValueList>
-										<Value>26</Value>
-									</ValueList>
-								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
 										<Value>-1</Value>
@@ -183,13 +184,13 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="BGM_Result" ID="{5D116B3C-07A0-41AE-A5FC-1C56F5D94B69}" ShortID="309343174">
+								<AudioFileSource Name="BGM_Result(2)" ID="{4100A2C8-133A-4B88-920C-56959313FB21}" ShortID="753787035">
 									<Language>SFX</Language>
-									<AudioFile>BGM_Result.wav</AudioFile>
+									<AudioFile>BGM_Result(2).wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="BGM_Result" ID="{5D116B3C-07A0-41AE-A5FC-1C56F5D94B69}" Platform="Linked"/>
+								<ActiveSource Name="BGM_Result(2)" ID="{4100A2C8-133A-4B88-920C-56959313FB21}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
@@ -1009,7 +1010,10 @@
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
 								</Reference>
-								<Reference Name="Effect0" PluginName="Wwise Matrix Reverb" CompanyID="0" PluginID="115" PluginType="3">
+								<Reference Name="Effect0" PluginName="Wwise Tremolo" CompanyID="0" PluginID="131" PluginType="3">
+									<ObjectRef Name="Aliasing" ID="{4CCC0D23-78CD-4B09-A62B-D3CB5E071A2F}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+								</Reference>
+								<Reference Name="Effect1" PluginName="Wwise Matrix Reverb" CompanyID="0" PluginID="115" PluginType="3">
 									<ObjectRef Name="Large_Church1" ID="{9B6E8B78-EF8C-494C-AADA-D01CF51B5FAC}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
 								</Reference>
 								<Reference Name="OutputBus">
@@ -1345,7 +1349,7 @@
 								<ActiveSource Name="GameClear" ID="{0BBC9182-1120-4F93-BA48-9A5131664D0F}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
-						<Sound Name="GameOver" ID="{A5B6C507-191E-4597-81DF-D3D90F4F1FB2}" ShortID="724379439" Type="SoundFX">
+						<Sound Name="GameOver" ID="{503C9233-6C81-444B-BDB4-3CFE5D81C41C}" ShortID="144611124" Type="SoundFX">
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6BFF7063-C5DB-4ADC-87C1-454B616F6F8B}"/>
@@ -1355,13 +1359,13 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="GameOver" ID="{394D8E93-CD45-4510-868D-91CF267DF3DC}" ShortID="252778222">
+								<AudioFileSource Name="GameOver(2)" ID="{A7F12E9B-4D38-490E-B9FB-6CE5D8389697}" ShortID="783954042">
 									<Language>SFX</Language>
-									<AudioFile>GameOver.wav</AudioFile>
+									<AudioFile>GameOver(2).wav</AudioFile>
 								</AudioFileSource>
 							</ChildrenList>
 							<ActiveSourceList>
-								<ActiveSource Name="GameOver" ID="{394D8E93-CD45-4510-868D-91CF267DF3DC}" Platform="Linked"/>
+								<ActiveSource Name="GameOver(2)" ID="{A7F12E9B-4D38-490E-B9FB-6CE5D8389697}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
