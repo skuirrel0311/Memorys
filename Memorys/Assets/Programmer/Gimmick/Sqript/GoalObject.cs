@@ -6,15 +6,18 @@ public class GoalObject : PopUpMessage
 {
     Transform arrow;
     LineRenderer lineRenderer;
-
+    [SerializeField]
+    bool isArrow = false;
     public override void Start()
     {
-        arrow = GameObject.FindGameObjectWithTag("Player").transform.GetChild(2);
+        if (isArrow)
+            arrow = GameObject.FindGameObjectWithTag("Player").transform.GetChild(2);
         //lineRenderer = arrow.GetComponentInChildren<LineRenderer>();
 
         if (arrow == null)
         {
             Debug.Log("lineRenderer is null");
+            base.Start();
             return;
         }
         arrow.gameObject.SetActive(false);
@@ -24,20 +27,20 @@ public class GoalObject : PopUpMessage
     public override void Update()
     {
         if (arrow == null) return;
-        if(CanGameEnd)
+        if (CanGameEnd)
         {
             //arrowの向きを決める。
             Vector3 vec = Vector3.Normalize(transform.position - arrow.position);
 
             //lineを描画する。
             arrow.gameObject.SetActive(true);
-            arrow.rotation =Quaternion.Euler(0, Mathf.Atan2(vec.x,vec.z)*Mathf.Rad2Deg,0);
+            arrow.rotation = Quaternion.Euler(0, Mathf.Atan2(vec.x, vec.z) * Mathf.Rad2Deg, 0);
         }
     }
 
     bool CanGameEnd
     {
-        get{ return GameManager.I.m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel; }
+        get { return GameManager.I.m_GameEnd.m_destoryCancelCount >= GameEnd.c_MaxDestroyCalcel; }
     }
 
 

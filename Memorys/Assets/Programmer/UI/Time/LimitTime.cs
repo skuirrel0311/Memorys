@@ -19,7 +19,7 @@ public class LimitTime : MonoBehaviour
         {
            numberSprites[i] = Resources.Load<Sprite>("Time/time_" + i.ToString());
         }
-        DrawTime(1234, 4);
+        DrawTime(0, 4);
 
         GameManager.I.m_GameEnd.OnGameClearCallBack += () =>
          {
