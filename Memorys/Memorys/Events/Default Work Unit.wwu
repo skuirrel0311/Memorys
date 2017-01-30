@@ -83,7 +83,7 @@
 										<Action Name="Play" ID="{976AB033-CC87-4B69-B2A3-50838519D82D}" ShortID="370643094" Type="Play" Scope="One" Global="false">
 											<ElementList>
 												<Element ID="{806AA353-1EC2-41C1-8186-01C7E1F5D3C2}" Global="false">
-													<ObjectRef Name="Babble" ID="{C43F348C-A008-4462-8698-3810F53C714E}" WorkUnitID="{92954050-E244-4BA9-A65A-4017CD0DF0C8}"/>
+													<ObjectRef Name="BGM_Main2" ID="{9208EB7D-49CE-4FD6-BDE7-52D8692C8BCF}" WorkUnitID="{19DED1A5-A4AB-44BE-94AF-12AAF1D35F96}"/>
 												</Element>
 											</ElementList>
 										</Action>

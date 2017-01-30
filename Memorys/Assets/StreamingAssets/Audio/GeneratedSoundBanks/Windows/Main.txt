@@ -49,6 +49,7 @@ State	ID	Name	State Group			Notes
 Custom State	ID	Name	State Group	Owner		Notes
 	497072590	Menu	Menu	\Actor-Mixer Hierarchy\Default Work Unit\enemy\Totem_Laser_charge		
 	629612108	Menu	Menu	\Interactive Music Hierarchy\Default Work Unit\BGM_Main1		
+	724802495	Menu	Menu	\Interactive Music Hierarchy\Default Work Unit\BGM_Main2		
 
 Effect plug-ins	ID	Name	Type				Notes
 	1551236760	Small_Wooden_Room1	Wwise Matrix Reverb			
@@ -97,4 +98,5 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	984336411	1_Normal	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\1_Normal_4B8CC0C5.wem		\Interactive Music Hierarchy\Default Work Unit\BGM_Main1\Normal\1_Normal\1_Normal		15631816
 	996854392	Totem_Laser	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\Totem_Laser_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\enemy\Totem_Laser		285020
 	1031532559	BGM_Select	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\BGM_Select_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Default Work Unit\BGM\BGM_Select		2870304
+	1047707794	2_Normal	C:\Users\NAOTO\Documents\Memorys\Memorys\Memorys\.cache\Windows\SFX\2_Normal_4B8CC0C5.wem		\Interactive Music Hierarchy\Default Work Unit\BGM_Main2\Normal\2_Normal\2_Normal		15631816
 

@@ -217,6 +217,10 @@
 					<ShortName>BGM_Select.wav</ShortName>
 					<Path>SFX\BGM_Select_4B8CC0C5.wem</Path>
 				</File>
+				<File Id="1047707794" Language="SFX">
+					<ShortName>2_Normal.wav</ShortName>
+					<Path>SFX\2_Normal_4B8CC0C5.wem</Path>
+				</File>
 			</IncludedMemoryFiles>
 		</SoundBank>
 	</SoundBanks>
