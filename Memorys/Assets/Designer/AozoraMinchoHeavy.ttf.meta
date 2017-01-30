@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 199fdc41e26248c4082613981d324f0a
+timeCreated: 1485678411
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aozora Mincho
+  fontNames:
+  - Aozora Mincho
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
